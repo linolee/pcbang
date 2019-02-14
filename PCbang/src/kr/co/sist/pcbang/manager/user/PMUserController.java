@@ -142,9 +142,7 @@ public class PMUserController extends WindowAdapter implements ActionListener, M
 				new PMUserDetailView(udvo);
 				
 			}
-		
 		}
-		
 	}
 	
 	@Override
