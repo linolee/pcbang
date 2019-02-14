@@ -21,7 +21,6 @@ public class PMUserView extends JFrame {
 	 private DefaultTableModel dtmMember;
 	
 	public PMUserView() {
-		System.out.println("commit test");
 		jlSearch = new JLabel("회원조회");
 		jlId = new JLabel("아이디");
 		jlName = new JLabel("이름");
