@@ -58,6 +58,4 @@ public class PMSeatView extends JPanel{
 		return btnSet;
 	}
 	
-	
-	
 }

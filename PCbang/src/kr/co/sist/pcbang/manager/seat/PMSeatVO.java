@@ -3,6 +3,7 @@ package kr.co.sist.pcbang.manager.seat;
 public class PMSeatVO {
 	Integer seatNum;
 	String pcIP, pcStatus, user, msgStatus;
+	
 	public Integer getSeatNum() {
 		return seatNum;
 	}

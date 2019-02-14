@@ -5,8 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
+import kr.co.sist.pcbang.manager.seat.set.PMSeatSetLocVO;
 
 public class PMSeatDAO {
 
@@ -39,15 +43,17 @@ public class PMSeatDAO {
 		return con;
 	}// getConn
 
-	public Set<PMSeatLocVO> selectSeatInfo() throws SQLException{
-		Set<PMSeatLocVO> seat = new HashSet<>(); 
+	public PMSeatVO[][] selectSeatSetInfo() throws SQLException{
+		
+		List<PMSeatSetLocVO> tempArr = new ArrayList<>();//DB의 정보를 담을 Arr를 생성
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		StringBuilder selectPC = new StringBuilder();
 		selectPC
-		.append("	select x_Coor, y_Coor, seat_num, pc_ip, pc_status	")
+		.append("	select x_Coor, y_Coor, seat_num, pc_ip, admin_id	")
 		.append("	from pc")
 		;
 		
@@ -55,11 +61,14 @@ public class PMSeatDAO {
 		pstmt = con.prepareStatement(selectPC.toString());
 		rs = pstmt.executeQuery();
 		
-		PMSeatLocVO pmsvo;
+		PMSeatSetLocVO pmssvo;
 		while (rs.next()) {
+			pmssvo = new PMSeatSetLocVO(rs.getInt("x_Coor"), rs.getInt("x_Coor"), rs.getInt("seat_num"), rs.getString("pc_ip"), rs.getString("admin_id"));
+			
 			/////////////////////////////////////////////////////////////////////////////////////
 		}
 		
+		PMSeatVO[][] seat; 
 		return seat;
 	}
 	
