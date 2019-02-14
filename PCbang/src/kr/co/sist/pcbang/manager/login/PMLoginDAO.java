@@ -29,9 +29,9 @@ public class PMLoginDAO {
 	} // getInstance
 	
 	private Connection getConn() throws SQLException {
-		String url = "jdbc:oracle:thin:@localhost:1521:orcl";
-		String id = "scott";
-		String pass = "tiger";
+		String url = "jdbc:oracle:thin:@211.63.89.152:1521:orcl";
+		String id = "zizon";
+		String pass = "darkness";
 		Connection con = DriverManager.getConnection(url, id, pass);
 		return con;
 	} //getConn
