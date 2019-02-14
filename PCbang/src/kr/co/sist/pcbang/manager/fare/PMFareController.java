@@ -24,8 +24,6 @@ public class PMFareController extends WindowAdapter implements ActionListener {
 		PMFareVO fvo = null;
 		int time = 60;
 		
-//		System.out.println(Integer.parseInt(fv.getMjtfs()[9].getText()));
-	
 		for(int i=0; i<10;i++) {
 		fvo = new PMFareVO((time*(i+1)), Integer.parseInt(fv.getMjtfs()[i].getText()), Integer.parseInt(fv.getGjtfs()[i].getText()));
 		f_dao.updatePrice(fvo);
