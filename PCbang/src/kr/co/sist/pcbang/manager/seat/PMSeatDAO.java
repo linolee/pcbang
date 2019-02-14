@@ -69,7 +69,6 @@ public class PMSeatDAO {
 		}//현재 DB의 PC 정보를 Arr에 저장
 		PMSeatSetVO[][] seatSet;
 		seatSet = new PMSeatSetVO[10][10];
-		PMSeatSetVO pmssv;
 		
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -81,14 +80,14 @@ public class PMSeatDAO {
 			seatSet[tempPmsslvo.getxCoor()][tempPmsslvo.getyCoor()] = new PMSeatSetVO(tempPmsslvo.getSeatNum(), tempPmsslvo.getPcIP(), tempPmsslvo.getAdminID());
 		}//Arr에 저장된 값을 seatSet에 저장
 		
-		
+		//////////////////////////////////////////////////////////////////
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
 				System.out.print(seatSet[i][j]);
 			}
 			System.out.println();
 		}
-		
+		////////////////////////////////////////////////////////////////
 		return seatSet;
 	}
 	

@@ -2,8 +2,8 @@ package kr.co.sist.pcbang.manager.seat.set;
 
 public class PMSeatSetVO {
 
-	Integer seatNum;
-	String pcIP, adminID;
+	private Integer seatNum;
+	private String pcIP, adminID;
 	
 	public PMSeatSetVO(Integer seatNum, String pcIP, String adminID) {
 		super();

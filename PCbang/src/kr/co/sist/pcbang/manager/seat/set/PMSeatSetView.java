@@ -27,7 +27,7 @@ public class PMSeatSetView extends JDialog{
 		btnSeat = new JButton[10][10];
 		for (int i = 0; i < btnSeat.length; i++) {
 			for (int j = 0; j < btnSeat[i].length; j++) {
-				btnSeat[i][j] = new JButton("<"+i+","+j+">");
+				btnSeat[i][j] = new JButton();
 			}
 		}
 		
