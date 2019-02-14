@@ -16,8 +16,6 @@ import javax.swing.table.DefaultTableModel;
 import kr.co.sist.pcbang.manager.user.detail.PMUserDetailVO;
 import kr.co.sist.pcbang.manager.user.detail.PMUserDetailView;
 
-
-
 public class PMUserController extends WindowAdapter implements ActionListener, MouseListener {
 
 	private static PMUserController uc;
