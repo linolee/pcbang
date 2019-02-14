@@ -21,7 +21,7 @@ public class PMUserView extends JFrame {
 	 private DefaultTableModel dtmMember;
 	
 	public PMUserView() {
-		
+		System.out.println("commit test");
 		jlSearch = new JLabel("회원조회");
 		jlId = new JLabel("아이디");
 		jlName = new JLabel("이름");
@@ -55,7 +55,6 @@ public class PMUserView extends JFrame {
 		jtMember.getColumnModel().getColumn(8).setPreferredWidth(10);
 		jtMember.getColumnModel().getColumn(9).setPreferredWidth(10);
 		jtMember.getColumnModel().getColumn(10).setPreferredWidth(100);
-//		
 //		jtMember.setRowHeight(110);
 		
 		JScrollPane jspMember = new JScrollPane(jtMember);
