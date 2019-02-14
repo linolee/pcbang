@@ -37,8 +37,6 @@ public class PMUserController extends WindowAdapter implements ActionListener, M
 		return uc;
 	}
 	
-	
-	
 	public void selectUser() {
 		DefaultTableModel dtmUser = uv.getDtmMember();
 		dtmUser.setRowCount(0);
@@ -80,8 +78,6 @@ public class PMUserController extends WindowAdapter implements ActionListener, M
 //			se.printStackTrace();
 		}
 	}
-	
-	
 	
 	@Override
 	public void windowClosing(WindowEvent e) {
