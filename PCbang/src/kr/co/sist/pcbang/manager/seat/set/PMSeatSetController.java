@@ -2,6 +2,7 @@ package kr.co.sist.pcbang.manager.seat.set;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import kr.co.sist.pcbang.manager.seat.PMSeatDAO;
 
@@ -35,7 +36,11 @@ public class PMSeatSetController implements ActionListener{
 		
 	}
 	private void seatLoad() {
-		
+		try {
+			PMSeatSetVO[][] seatSet = pms_dao.selectSeatSetInfo();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	private void seatReset() {
 		

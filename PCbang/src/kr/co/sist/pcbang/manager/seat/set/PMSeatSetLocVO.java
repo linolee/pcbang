@@ -15,8 +15,8 @@ public class PMSeatSetLocVO {
 	
 	@Override
 	public String toString() {
-		return "PMSeatSetLocVO [xCoor=" + xCoor + ", yCoor=" + yCoor + ", seatNum=" + seatNum + ", pcIP=" + pcIP
-				+ ", adminID=" + adminID + "]";
+		return "(" + xCoor + "," + yCoor + ")" + seatNum + "/" + pcIP
+				+ "/" + adminID;
 	}
 
 	public Integer getxCoor() {
