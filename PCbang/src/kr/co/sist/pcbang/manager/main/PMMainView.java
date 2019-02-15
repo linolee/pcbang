@@ -22,6 +22,7 @@ public class PMMainView extends JFrame{
 	private JButton jbtLogOut, jbtAccount, jbtNoticeSave;
 	private JTextArea jtaNotice;
 	private JLabel jlBoard, jlOrderNum, jlMsgNum, jlTodayMoneyNum, jlOrder, jlMsg, jlTodayMoney;
+	private JPanel seat, order, statistics, member, menu, price;
 	
 	public static String adminId;	
 	
@@ -62,12 +63,12 @@ public class PMMainView extends JFrame{
 		jspBoard.setBorder(new TitledBorder("현황"));
 		jspNotice.setBorder(new TitledBorder("공지사항"));
 		
-	    JPanel seat = new PMSeatView();
-	    JPanel order = new JPanel();
-	    JPanel statistics = new JPanel();
-	    JPanel member = new JPanel();
-	    JPanel menu = new JPanel();
-	    JPanel price = new JPanel();
+	    seat = new PMSeatView();
+	    order = new JPanel();
+	    statistics = new JPanel();
+	    member = new JPanel();
+	    menu = new JPanel();
+	    price = new JPanel();
 	    
 	    jtb.add("좌석", seat );		
 	    jtb.add("주문", order );		
@@ -88,7 +89,7 @@ public class PMMainView extends JFrame{
 		add(jlOrderNum);
 		add(jlMsgNum);
 		add(jlTodayMoneyNum);
-		add("Center",jtb);
+		add(jtb);
 		
 		jlBoard.setBackground(Color.white);
 		jlOrder.setHorizontalAlignment(JTextField.CENTER);
