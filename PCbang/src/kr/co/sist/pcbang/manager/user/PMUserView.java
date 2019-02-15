@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
-public class PMUserView extends JFrame {
+public class PMUserView extends JPanel {
 	
 	 private JLabel jlSearch, jlId, jlName;
 	 private JTextField jtfId, jtfName;
@@ -38,7 +38,6 @@ public class PMUserView extends JFrame {
 				return false;
 			}
 		};
-		
 		
 		jtMember = new JTable(dtmMember); 
 
@@ -79,7 +78,7 @@ public class PMUserView extends JFrame {
 		add(jpMember);
 		
 		PMUserController uc = new PMUserController(this);
-		addWindowFocusListener(uc);
+//		addWindowFocusListener(uc);
 		jtfId.addActionListener(uc);
 		jtfName.addActionListener(uc);
 		jbtnSearch.addActionListener(uc);
@@ -88,9 +87,9 @@ public class PMUserView extends JFrame {
 		
 		uc.selectUser();
 		
-		setResizable(false);
+//		setResizable(false);
 		setVisible(true);	
-		setBounds(100, 100, 1300, 700);
+		setBounds(100, 100, 1000, 600);
 		
 	}
 	
