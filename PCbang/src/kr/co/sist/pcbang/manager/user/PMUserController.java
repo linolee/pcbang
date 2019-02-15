@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import kr.co.sist.pcbang.manager.main.PMMainView;
 import kr.co.sist.pcbang.manager.user.detail.PMUserDetailVO;
 import kr.co.sist.pcbang.manager.user.detail.PMUserDetailView;
 

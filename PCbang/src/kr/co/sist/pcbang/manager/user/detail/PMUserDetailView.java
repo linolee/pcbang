@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import kr.co.sist.pcbang.manager.main.PMMainView;
+
 
 
 @SuppressWarnings("serial")
@@ -15,9 +17,8 @@ public class PMUserDetailView extends JFrame {
 	 private JLabel jlMemberUpdate, jlName, jlId, jlGender, jlInputDate, jlEmail, jlTel, jlBirth, jlLeftTime;
 	 private JTextField jtfName, jtfId, jtfGender, jtfInputDate, jtfEmail, jtfTel, jtfBirth, jtfLeftTime;
 	 private JButton jbtnUpdate, jbtnCancel;
-	
+	 
 	 public PMUserDetailView(PMUserDetailVO udvo) {
-		 
 		 setLayout(null);
 		 jlMemberUpdate = new JLabel("회원정보 수정");
 		 jlName = new JLabel("이름");
@@ -109,8 +110,8 @@ public class PMUserDetailView extends JFrame {
 		jbtnCancel.addActionListener(udc);
 		
 		setVisible(true);
+	
 		setBounds(100, 100, 500, 400);
-		 
 	 }
 
 	public JLabel getJlMemberUpdate() {
