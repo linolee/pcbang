@@ -53,7 +53,7 @@ public class PMUserView extends JPanel {
 		jtMember.getColumnModel().getColumn(8).setPreferredWidth(10);
 		jtMember.getColumnModel().getColumn(9).setPreferredWidth(10);
 		jtMember.getColumnModel().getColumn(10).setPreferredWidth(100);
-//		jtMember.setRowHeight(110);
+		jtMember.setRowHeight(55);
 		
 		JScrollPane jspMember = new JScrollPane(jtMember);
 		
@@ -87,7 +87,6 @@ public class PMUserView extends JPanel {
 		
 		uc.selectUser();
 		
-//		setResizable(false);
 		setVisible(true);	
 		setBounds(100, 100, 1000, 600);
 		

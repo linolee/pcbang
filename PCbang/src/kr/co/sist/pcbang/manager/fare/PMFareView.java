@@ -4,7 +4,6 @@ import java.awt.GridLayout;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
@@ -17,6 +16,7 @@ public class PMFareView extends JPanel {
 	 private PMFareDAO f_dao;
 	
 	public PMFareView() {
+
 		f_dao = PMFareDAO.getInstance();
 	
 		JPanel mainPanel = new JPanel();
@@ -26,8 +26,8 @@ public class PMFareView extends JPanel {
 		
 		setLayout(null);
 		
-		jpFareMember.setBorder(new TitledBorder("È¸¿ø"));
-		jpFareGuest.setBorder(new TitledBorder("ºñÈ¸¿ø"));
+		jpFareMember.setBorder(new TitledBorder("íšŒì›"));
+		jpFareGuest.setBorder(new TitledBorder("ë¹„íšŒì›"));
 		
 		mainPanel.setLayout(new GridLayout(1,2));
 		jpFareMember.setLayout(new GridLayout(10,2));
@@ -49,17 +49,17 @@ public class PMFareView extends JPanel {
 		
 		for(int i=0;i<mjtfs.length;i++) {
 			mjtfs[i]=new JTextField(String.valueOf(memberFare[i]));
-			mjtfs[i].setBorder(new TitledBorder(i+1+"½Ã°£"));
+			mjtfs[i].setBorder(new TitledBorder(i+1+"ì‹œê°„"));
 			jpFareMember.add(mjtfs[i]);
 		}
 		
 		for(int i=0;i<gjtfs.length;i++) {
 			gjtfs[i]=new JTextField(String.valueOf(guestFare[i]));
-			gjtfs[i].setBorder(new TitledBorder(i+1+"½Ã°£"));
+			gjtfs[i].setBorder(new TitledBorder(i+1+"ì‹œê°„"));
 			jpFareGuest.add(gjtfs[i]);
 		}
 		
-		jbtnUpdate = new JButton("¼öÁ¤");
+		jbtnUpdate = new JButton("ìˆ˜ì •");
 		
 //		mainPanel.setLayout(null);
 //		jpFareMember.setBounds(0, 0, 500, 400);
@@ -82,7 +82,9 @@ public class PMFareView extends JPanel {
 		
 		
 		setVisible(true);
+
 		setBounds(100, 100, 1000, 600);
+
 	}
 
 	public JTextField[] getMjtfs() {
@@ -97,7 +99,5 @@ public class PMFareView extends JPanel {
 		return jbtnUpdate;
 	}
 
-	public static void main(String[] args) {
-		new PMFareView();
-	}
+
 }
