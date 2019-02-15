@@ -10,20 +10,21 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
-public class PMFareView extends JFrame {
+public class PMFareView extends JPanel {
 
 	 private JTextField[] mjtfs, gjtfs;
 	 private JButton jbtnUpdate;
 	 private PMFareDAO f_dao;
 	
-	public PMFareView(PMFareVO fvo) {
-		super("요금제 변경");
+	public PMFareView() {
 		f_dao = PMFareDAO.getInstance();
 	
 		JPanel mainPanel = new JPanel();
 		
 		JPanel jpFareMember = new JPanel();
 		JPanel jpFareGuest = new JPanel();
+		
+		setLayout(null);
 		
 		jpFareMember.setBorder(new TitledBorder("회원"));
 		jpFareGuest.setBorder(new TitledBorder("비회원"));
@@ -60,18 +61,28 @@ public class PMFareView extends JFrame {
 		
 		jbtnUpdate = new JButton("수정");
 		
+//		mainPanel.setLayout(null);
+//		jpFareMember.setBounds(0, 0, 500, 400);
+//		jpFareGuest.setBounds(500, 0, 500, 400);
+		
 		mainPanel.add(jpFareMember);
 		mainPanel.add(jpFareGuest);
 		
-		add(mainPanel);
-		add("South",jbtnUpdate);
+		JPanel honPanel = new JPanel();
+		honPanel.add("Center", mainPanel);
+		honPanel.add("South",  jbtnUpdate);
+		
+		honPanel.setBounds(0, 0, 1000, 600);
+		
+		add(honPanel);
 		
 		PMFareController fc = new PMFareController(this);
 		jbtnUpdate.addActionListener(fc);
 		
+		
+		
 		setVisible(true);
-		setBounds(100, 100, 600, 500);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1000, 600);
 	}
 
 	public JTextField[] getMjtfs() {
@@ -87,6 +98,6 @@ public class PMFareView extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new PMFareView(null);
+		new PMFareView();
 	}
 }

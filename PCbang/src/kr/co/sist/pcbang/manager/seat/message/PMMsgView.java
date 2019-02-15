@@ -35,11 +35,47 @@ public class PMMsgView extends JDialog{
 		add("Center", jspTalkDisplay);
 		add("South", pnlS);
 
+		PMClient client = new PMClient(this);
+		jbtSendMsg.addActionListener(client);
+		
+		
 		setBounds(100, 100, 600, 300);
 		setVisible(true);
 		
 	}
 	
+	public JTextArea getJtaMsg() {
+		return jtaMsg;
+	}
+
+
+
+
+
+	public JTextField getJtfMsg() {
+		return jtfMsg;
+	}
+
+
+
+
+
+	public JButton getJbtSendMsg() {
+		return jbtSendMsg;
+	}
+
+
+
+
+
+	public JScrollPane getJspTalkDisplay() {
+		return jspTalkDisplay;
+	}
+
+
+
+
+
 	public static void main(String[] args) {
 		new PMMsgView();
 	}
