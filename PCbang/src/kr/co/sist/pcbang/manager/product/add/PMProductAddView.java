@@ -24,7 +24,7 @@ public class PMProductAddView extends JDialog {
 	private JButton jbImg, jbAdd, jbEnd;
 	
 	public PMProductAddView(PMProductView pmpv, PMProductController pmpc) {
-//		super(pmpv, "상품 정보 추가", true); 
+//		super(pmpv, "상품 정보 추가", true);  
 		
 		ImageIcon iiProduct = new ImageIcon("C:/dev/workspace/lunch_prj/src/kr/co/sist/lunch/admin/img/no_img.jpg");
 		jlImg = new JLabel(iiProduct);
