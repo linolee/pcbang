@@ -196,7 +196,7 @@ public class PMSeatDAO {
 				if (tempPmslvo.getMemberId() != null) {// 회원값이 있다면
 					user = tempPmslvo.getMemberId();
 				} else if (tempPmslvo.getCardNum() != null) {// 카드 값이 있다면
-					user = tempPmslvo.getCardNum();
+					user = "guest_" + tempPmslvo.getCardNum();
 				} else {// 둘 다 없다면
 					user = "";
 				}
