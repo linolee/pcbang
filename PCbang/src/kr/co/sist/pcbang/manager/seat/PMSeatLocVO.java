@@ -1,29 +1,53 @@
 package kr.co.sist.pcbang.manager.seat;
 
 public class PMSeatLocVO {
-	Integer xCoor, yCoor, seatNum;
-	String pcIP, pcStatus, user, msgStatus;
+	private Integer xCoor, yCoor, seatNum;
+	private String pcIP, pcStatus, memberId, cardNum, msgStatus;
+
+	public PMSeatLocVO(Integer xCoor, Integer yCoor, Integer seatNum, String pcIP, String pcStatus, String memberId,
+			String cardNum) {
+		super();
+		this.xCoor = xCoor;
+		this.yCoor = yCoor;
+		this.seatNum = seatNum;
+		this.pcIP = pcIP;
+		this.pcStatus = pcStatus;
+		this.memberId = memberId;
+		this.cardNum = cardNum;
+	}
+
 	public Integer getxCoor() {
 		return xCoor;
 	}
+
 	public Integer getyCoor() {
 		return yCoor;
 	}
+
 	public Integer getSeatNum() {
 		return seatNum;
 	}
+
 	public String getPcIP() {
 		return pcIP;
 	}
+
 	public String getPcStatus() {
 		return pcStatus;
 	}
-	public String getUser() {
-		return user;
+
+	public String getMemberId() {
+		return memberId;
 	}
-	public String getMsgStatus() {
-		return msgStatus;
+
+	public String getCardNum() {
+		return cardNum;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "PMSeatLocVO [xCoor=" + xCoor + ", yCoor=" + yCoor + ", seatNum=" + seatNum + ", pcIP=" + pcIP
+				+ ", pcStatus=" + pcStatus + ", memberId=" + memberId + ", cardNum=" + cardNum + "]";
+	}
+
 }

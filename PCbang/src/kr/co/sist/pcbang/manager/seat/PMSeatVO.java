@@ -1,8 +1,8 @@
 package kr.co.sist.pcbang.manager.seat;
 
 public class PMSeatVO {
-	Integer seatNum;
-	String pcIP, pcStatus, user, msgStatus;
+	private Integer seatNum;
+	private String pcIP, pcStatus, user, msgStatus;
 	
 	public PMSeatVO(Integer seatNum, String pcIP, String pcStatus, String user, String msgStatus) {
 		super();
