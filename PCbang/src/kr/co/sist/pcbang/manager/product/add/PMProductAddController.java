@@ -13,11 +13,10 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import admin.model.PMProductDAO;
-import admin.view.PMProductAddView;
-import admin.vo.PMProductAddVO;
 import kr.co.sist.lunch.admin.model.LunchAdminDAO;
 import kr.co.sist.lunch.admin.run.LunchAdminMain;
+import kr.co.sist.pcbang.manager.product.PMProductController;
+import kr.co.sist.pcbang.manager.product.PMProductDAO;
 
 public class PMProductAddController extends WindowAdapter implements ActionListener{
 	private PMProductAddView pmpav;

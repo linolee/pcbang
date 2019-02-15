@@ -12,6 +12,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import kr.co.sist.pcbang.manager.product.PMProductView;
 import kr.co.sist.pcbang.manager.seat.PMSeatView;
 
 
@@ -66,7 +67,7 @@ public class PMMainView extends JFrame{
 	    JPanel order = new JPanel();
 	    JPanel statistics = new JPanel();
 	    JPanel member = new JPanel();
-	    JPanel menu = new JPanel();
+	    JPanel menu = new PMProductView();
 	    JPanel price = new JPanel();
 	    
 	    jtb.add("ÁÂ¼®", seat );		

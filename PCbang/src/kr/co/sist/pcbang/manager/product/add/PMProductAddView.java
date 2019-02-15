@@ -10,8 +10,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import admin.controller.PMProductAddController;
-import admin.controller.PMProductController;
+import kr.co.sist.pcbang.manager.product.PMProductController;
 import kr.co.sist.pcbang.manager.product.PMProductView;
 
 @SuppressWarnings("serial")
