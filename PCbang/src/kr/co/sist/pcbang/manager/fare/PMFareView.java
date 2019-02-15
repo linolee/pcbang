@@ -4,20 +4,19 @@ import java.awt.GridLayout;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
-public class PMFareView extends JFrame {
+public class PMFareView extends JPanel {
 
 	 private JTextField[] mjtfs, gjtfs;
 	 private JButton jbtnUpdate;
 	 private PMFareDAO f_dao;
 	
-	public PMFareView(PMFareVO fvo) {
-		super("요금제 변경");
+	public PMFareView() {
+//		super("요금제 변경");
 		f_dao = PMFareDAO.getInstance();
 	
 		JPanel mainPanel = new JPanel();
@@ -71,7 +70,7 @@ public class PMFareView extends JFrame {
 		
 		setVisible(true);
 		setBounds(100, 100, 600, 500);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	public JTextField[] getMjtfs() {
@@ -86,7 +85,4 @@ public class PMFareView extends JFrame {
 		return jbtnUpdate;
 	}
 
-	public static void main(String[] args) {
-		new PMFareView(null);
-	}
 }

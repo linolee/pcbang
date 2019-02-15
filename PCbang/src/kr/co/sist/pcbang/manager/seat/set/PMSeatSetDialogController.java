@@ -3,6 +3,8 @@ package kr.co.sist.pcbang.manager.seat.set;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 public class PMSeatSetDialogController implements ActionListener {
 
 	PMSeatSetDialogView pmssdv;
@@ -29,7 +31,7 @@ public class PMSeatSetDialogController implements ActionListener {
 			// 좌석번호가 100 이하의 정수인지 체크
 			int seatNum = Integer.parseInt(input);
 			if (seatNum > 100) {
-				System.out.println("100 이하의 정수 입력");/////////////////// JoptionPane으로 변경해야함
+				JOptionPane.showMessageDialog(pmssdv, "100 이하의 정수를 입력해주세요.");
 				flag = false;
 			}
 			// 좌석번호가 중복되는지 체크
@@ -38,12 +40,12 @@ public class PMSeatSetDialogController implements ActionListener {
 				for (int j = 0; j < seat[i].length; j++) {
 					if (seat[i][j].getSeatNum() == seatNum) {
 						flag = false;
-						System.out.println("좌석 번호가 이미 할당되었습니다. 다른 번호를 할당해주세요.");/////////////////// JoptionPane으로 변경해야함
+						JOptionPane.showMessageDialog(pmssdv, "좌석 번호가 이미 할당되었습니다. 다른 번호를 할당해주세요.");
 					}
 				}
 			}
 		} catch (NumberFormatException nfe) {
-			System.out.println("100 이하의 정수 입력");/////////////////// JoptionPane으로 변경해야함
+			JOptionPane.showMessageDialog(pmssdv, "100 이하의 정수를 입력해주세요.");
 			flag = false;
 		}
 
@@ -62,7 +64,7 @@ public class PMSeatSetDialogController implements ActionListener {
 			}
 
 			if (ipArr.length != 4) {
-				System.out.println("올바른 IP 입력 - 길이");//////////// JoptionPane
+				JOptionPane.showMessageDialog(pmssdv, "올바른 IP를 입력해주세요.");
 				flag = false;
 			}
 			for (int i = 0; i < ipArr.length; i++) {
@@ -71,7 +73,7 @@ public class PMSeatSetDialogController implements ActionListener {
 				}
 			}
 		} catch (NumberFormatException nfe) {
-			System.out.println("올바른 IP 입력- 숫자");/////////////////// JoptionPane으로 변경해야함
+			JOptionPane.showMessageDialog(pmssdv, "올바른 IP를 입력해주세요.");
 		}
 
 		// 좌석번호가 중복되는지 체크
@@ -80,8 +82,7 @@ public class PMSeatSetDialogController implements ActionListener {
 			for (int j = 0; j < seat[i].length; j++) {
 				if (seat[i][j].getPcIP().equals(input)) {
 					flag = false;
-					
-					System.out.println("IP가 이미 "+seat[i][j].getSeatNum()+"번 좌석에 할당되었습니다. 다른 IP를 할당해주세요.");/////////////////// JoptionPane으로 변경해야함
+					JOptionPane.showMessageDialog(pmssdv, "IP가 이미 "+seat[i][j].getSeatNum()+"번 좌석에 할당되었습니다. 다른 IP를 할당해주세요.");
 				} // end if
 			} // end inner for
 		} // end outer for
