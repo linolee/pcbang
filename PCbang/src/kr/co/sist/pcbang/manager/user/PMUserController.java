@@ -16,8 +16,6 @@ import javax.swing.table.DefaultTableModel;
 import kr.co.sist.pcbang.manager.user.detail.PMUserDetailVO;
 import kr.co.sist.pcbang.manager.user.detail.PMUserDetailView;
 
-
-
 public class PMUserController extends WindowAdapter implements ActionListener, MouseListener {
 
 	private static PMUserController uc;
@@ -36,8 +34,6 @@ public class PMUserController extends WindowAdapter implements ActionListener, M
 		}
 		return uc;
 	}
-	
-	
 	
 	public void selectUser() {
 		DefaultTableModel dtmUser = uv.getDtmMember();
@@ -80,8 +76,6 @@ public class PMUserController extends WindowAdapter implements ActionListener, M
 //			se.printStackTrace();
 		}
 	}
-	
-	
 	
 	@Override
 	public void windowClosing(WindowEvent e) {
@@ -148,9 +142,7 @@ public class PMUserController extends WindowAdapter implements ActionListener, M
 				new PMUserDetailView(udvo);
 				
 			}
-		
 		}
-		
 	}
 	
 	@Override
