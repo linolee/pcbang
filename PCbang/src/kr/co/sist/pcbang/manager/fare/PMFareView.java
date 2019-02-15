@@ -1,5 +1,6 @@
 package kr.co.sist.pcbang.manager.fare;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.sql.SQLException;
 
@@ -24,12 +25,11 @@ public class PMFareView extends JPanel {
 		JPanel jpFareMember = new JPanel();
 		JPanel jpFareGuest = new JPanel();
 		
-		setLayout(null);
+		setLayout(new BorderLayout());
 		
 		jpFareMember.setBorder(new TitledBorder("회원"));
 		jpFareGuest.setBorder(new TitledBorder("비회원"));
 		
-		mainPanel.setLayout(new GridLayout(1,2));
 		jpFareMember.setLayout(new GridLayout(10,2));
 		jpFareGuest.setLayout(new GridLayout(10,2));
 		
@@ -61,29 +61,19 @@ public class PMFareView extends JPanel {
 		
 		jbtnUpdate = new JButton("수정");
 		
-//		mainPanel.setLayout(null);
-//		jpFareMember.setBounds(0, 0, 500, 400);
-//		jpFareGuest.setBounds(500, 0, 500, 400);
+		mainPanel.setLayout(new GridLayout(1,2));
 		
 		mainPanel.add(jpFareMember);
 		mainPanel.add(jpFareGuest);
 		
-		JPanel honPanel = new JPanel();
-		honPanel.add("Center", mainPanel);
-		honPanel.add("South",  jbtnUpdate);
+		add("Center", mainPanel);
+		add("South",  jbtnUpdate);
 		
-		honPanel.setBounds(0, 0, 1000, 600);
-		
-		add(honPanel);
 		
 		PMFareController fc = new PMFareController(this);
 		jbtnUpdate.addActionListener(fc);
 		
-		
-		
 		setVisible(true);
-
-		setBounds(100, 100, 1000, 600);
 
 	}
 
