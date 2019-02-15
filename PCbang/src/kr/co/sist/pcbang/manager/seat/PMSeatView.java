@@ -23,6 +23,15 @@ public class PMSeatView extends JPanel{
 		
 		setLayout(null);
 		
+		btnMsg.setBounds(0, 0, 150, 30);
+		btnDetail.setBounds(0, 30, 150, 30);
+		
+		add(btnMsg);
+		add(btnDetail);
+		
+		btnMsg.setVisible(false);
+		btnDetail.setVisible(false);
+		
 		add(btnSet);
 		
 		JPanel pnlMain = new JPanel(new GridLayout(btnSeat.length, btnSeat[0].length));
