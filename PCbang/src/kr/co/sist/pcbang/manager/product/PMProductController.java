@@ -17,7 +17,7 @@ import admin.vo.PMProductVO;
 
 public class PMProductController extends MouseAdapter implements ActionListener{
 
-	private PMProductView pmpv;
+	private PMProductView pmpv;  
 	private PMProductDAO pmp_dao;
 		
 	public PMProductController(PMProductView pmpv) {
