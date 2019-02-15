@@ -137,7 +137,6 @@ public class PMUserController implements ActionListener, MouseListener {
 			}
 		}
 	}
-	
 	@Override
 	public void mouseEntered(MouseEvent e) {}
 
@@ -149,5 +148,4 @@ public class PMUserController implements ActionListener, MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {}
-	
 }
