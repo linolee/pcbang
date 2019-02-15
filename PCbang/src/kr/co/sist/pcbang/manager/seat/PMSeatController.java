@@ -10,10 +10,11 @@ import java.net.Socket;
 import java.sql.SQLException;
 import java.util.List;
 
+import kr.co.sist.pcbang.manager.seat.detail.PMSeatDetailView;
 import kr.co.sist.pcbang.manager.seat.message.PMClient;
 import kr.co.sist.pcbang.manager.seat.set.PMSeatSetView;
 
-public class PMSeatController extends WindowAdapter implements Runnable, ActionListener{
+public class PMSeatController extends WindowAdapter implements Runnable, ActionListener {
 	private PMSeatView pmsv;
 	private Socket serverSocket;
 	private List<PMClient> clientSocket;
@@ -63,42 +64,40 @@ public class PMSeatController extends WindowAdapter implements Runnable, ActionL
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == pmsv.getBtnSet()) {
+		if (e.getSource() == pmsv.getBtnSet()) {// 좌석 수정버튼이 눌렸을 때
 			openSeatSet();
 		}
 
 		for (int i = 0; i < seat.length; i++) {
 			for (int j = 0; j < seat[i].length; j++) {
-				if (e.getSource() == pmsv.getBtnSeat()[i][j]) {
-					pmsv.getBtnMsg().setVisible(true);
-					pmsv.getBtnDetail().setVisible(true);
-					pmsv.setLocation(pmsv.getX(), pmsv.getY());
-					System.out.println(pmsv.getX()+"+"+ pmsv.getY());
-					
-					System.out.println(i + "," + j + "버튼 클릭");
-				}else {
-					pmsv.getBtnMsg().setVisible(false);
-					pmsv.getBtnDetail().setVisible(false);
-				}
-			}
-		}
+				if (e.getSource() == pmsv.getBtnSeat()[i][j]) {// 각 좌석 버튼이 클릭 됐을 때
+					if (seat[i][j].getSeatNum() != 0) {// 좌석번호가 0이 아니고
+						if (seat[i][j].getUser().equals("")) {// 사용자가 없다면
+							openSeatDetail(i, j);// 좌석 상세정보를 열고
+							System.out.println("좌석상세정보");
+						} else {// 사용자가 있다면
+							visibleMsg();// 해당 사용자와의 채팅창을 연다.
+							System.out.println(i + "," + j + "사용자와의 메세지창 보이기");
+						}
+					}
+				} // end if
+			} // end inner for
+		} // end outer for
 	}
 
-	
 	private void openSeatSet() {
 		new PMSeatSetView();
 	}
 
 	private void openPopBtn() {
-		
+
 	}
 
-	private void openSeatDetail() {
-
+	private void openSeatDetail(int i, int j) {
+		new PMSeatDetailView(this, i, j);
 	}
 
 	private void visibleMsg() {
-
 	}
 
 	public void run() {
@@ -115,6 +114,26 @@ public class PMSeatController extends WindowAdapter implements Runnable, ActionL
 
 	private void readSeatInfo() {
 
+	}
+
+	public PMSeatView getPmsv() {
+		return pmsv;
+	}
+
+	public Socket getServerSocket() {
+		return serverSocket;
+	}
+
+	public List<PMClient> getClientSocket() {
+		return clientSocket;
+	}
+
+	public PMSeatDAO getPms_dao() {
+		return pms_dao;
+	}
+
+	public PMSeatVO[][] getSeat() {
+		return seat;
 	}
 
 }
