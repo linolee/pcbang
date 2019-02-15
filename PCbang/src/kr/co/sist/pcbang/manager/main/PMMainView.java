@@ -12,7 +12,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import kr.co.sist.pcbang.manager.fare.PMFareView;
 import kr.co.sist.pcbang.manager.seat.PMSeatView;
+import kr.co.sist.pcbang.manager.user.PMUserView;
 
 
 @SuppressWarnings("serial")
@@ -66,9 +68,9 @@ public class PMMainView extends JFrame{
 	    seat = new PMSeatView();
 	    order = new JPanel();
 	    statistics = new JPanel();
-	    member = new JPanel();
+	    member = new PMUserView();
 	    menu = new JPanel();
-	    price = new JPanel();
+	    price = new PMFareView();
 	    
 	    jtb.add("谅籍", seat );		
 	    jtb.add("林巩", order );		
@@ -76,7 +78,6 @@ public class PMMainView extends JFrame{
 	    jtb.add("雀盔包府" ,member );		
 	    jtb.add("惑前包府" ,menu );		
 	    jtb.add("夸陛力包府" ,price );		
-
 		
 		add(jspBoard);
 		add(jspNotice);
