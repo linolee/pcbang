@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 import kr.co.sist.pcbang.manager.seat.PMSeatDAO;
 
 public class PMSeatSetController implements ActionListener{
@@ -24,15 +26,22 @@ public class PMSeatSetController implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == pmssv.getBtnSeatSave()) {//현재 좌석 저장 버튼
-			seatSave(seat);
-			seatSet();
+			if (JOptionPane.showConfirmDialog(pmssv, "DB 좌석 정보에 현재 설정한 좌석 정보를 덮어씁니다. 이전 DB 좌석 정보는 저장되지 않습니다.") == JOptionPane.OK_OPTION) {
+				seatSave(seat);
+				seatSet();
+			}
 		}
 		if (e.getSource() == pmssv.getBtnSeatLoad()) {//기존 좌석 불러오기 버튼
-			seatLoad();
-			seatSet();
+			if (JOptionPane.showConfirmDialog(pmssv, "현재 설정한 좌석 정보에 DB 좌석 정보를 덮어씁니다. 현재 좌석 정보는 저장되지 않습니다.") == JOptionPane.OK_OPTION) {
+				seatLoad();
+				seatSet();
+			}
 		}
 		if (e.getSource() == pmssv.getBtnSeatReset()) {//좌석 비우기 버튼
-			seatReset();
+			if (JOptionPane.showConfirmDialog(pmssv, "현재 설정한 좌석 정보를 삭제합니다. 현재 좌석 정보는 저장되지 않습니다.") == JOptionPane.OK_OPTION) {
+				seatReset();
+				seatSet();
+			}
 		}
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -45,6 +54,14 @@ public class PMSeatSetController implements ActionListener{
 	}
 	
 	private void seatSave(PMSeatSetVO[][] seat) {
+		try {
+			Integer totalDelete = pms_dao.deleteSeatSetInfo();
+			Integer totalInsert = pms_dao.insertSeatSetInfo(seat);
+			System.out.println(totalDelete+"개 좌석정보 DB에서 삭제 완료");/////////////////////////JOptionPane처리할것
+			System.out.println(totalInsert+"개 좌석정보 DB에 입력완료");/////////////////////////JOptionPane처리할것
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	private void seatLoad() {
@@ -55,15 +72,21 @@ public class PMSeatSetController implements ActionListener{
 		}//DB에서 좌석정보를 받아와서 변수에 저장.
 	}
 	private void seatReset() {
-		
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				seat[i][j] = new PMSeatSetVO(0, "", "");
+			}//inner for
+		}//outer 
 	}
-	private void seatSet() {
+	public void seatSet() {
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
 				pmssv.getBtnSeat()[i][j].setText(seat[i][j].getSeatNum().toString());//seat와 btnSeat의 정보를 맞추기
 				if (seat[i][j].getSeatNum() == 0) {
 					pmssv.getBtnSeat()[i][j].setBackground(Color.GRAY);//좌석번호가 0이라면 배경색을 회색으로 바꾸기
-				}//end if
+				}else {
+					pmssv.getBtnSeat()[i][j].setBackground(Color.WHITE);
+				}
 			}//end inner for
 		}//end outer for
 	}
