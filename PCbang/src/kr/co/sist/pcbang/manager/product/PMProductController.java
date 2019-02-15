@@ -7,61 +7,68 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-import admin.model.PMProductDAO;
-import admin.view.PMProductAddView;
-import admin.view.PMProductView;
-import admin.vo.PMProductVO;
+import kr.co.sist.pcbang.manager.product.add.PMProductAddView;
 
-public class PMProductController extends MouseAdapter implements ActionListener{
+public class PMProductController extends MouseAdapter implements ActionListener {
 
-	private PMProductView pmpv;  
-	private PMProductDAO pmp_dao;
-		
+	private PMProductView pmpv;
+	private PMProductDAO pmpdao;
+
 	public PMProductController(PMProductView pmpv) {
-		this.pmpv=pmpv;
-		pmp_dao = PMProductDAO.getInstance();
-		//상품 목록을 초기화한다.
-		setProduct();
-	}//PMProductController
+		this.pmpv = pmpv;
+		pmpdao = PMProductDAO.getInstance();
+		// 상품 목록을 초기화한다.
+		setPrd();
+	}// PMProductController
 
 	/**
 	 * JTable에 DB에서 조회한 상품 정보를 보여준다.
 	 */
-	public void setProduct() {
+	public void setPrd() {
 		DefaultTableModel dtmPrd = pmpv.getDtmPrd();
 		dtmPrd.setRowCount(0); // View창에 있는 걸 지워주고
 
 		try {
 			// DB에서 상품 정보를 조회
-			List<PMProductVO> listproduct = pmp_dao.selectPrd();
+			List<PMProductVO> listproduct = pmpdao.selectPrd();
+			
 			// JTable에 조회한 정보를 출력
-
-			PMProductVO pmp_vo = null;
-//			String imgPath = "C:/dev/workspace/lunch_prj/src/kr/co/sist/lunch/admin/img/s_";
+			PMProductVO pmpvo = null;
+			String imgPath = "C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img";
 
 			Object[] rowData = null;
 			for (int i = 0; i < listproduct.size(); i++) {
-				pmp_vo = listproduct.get(i);
+				pmpvo = listproduct.get(i);
 				// DTM에 넣을 때는 1차원배열 혹은 벡터로 넣어야 함
 				// DTM에 데이터를 추가하기 위한 1차원배열(Vector)을 생성하고 데이터를 추가
 				rowData = new Object[6];
-				rowData[0] = pmp_vo.getMenuCode();
-				rowData[1] = pmp_vo.getMenuName();
-//				rowData[2] = new ImageIcon(imgPath + lv.getImg());
-				rowData[2] = new Integer(i+1);//이미지 넣을 곳
-				rowData[3] = new Integer(pmp_vo.getPrice());
-				rowData[4] = new Integer(pmp_vo.getQuan());
-				rowData[5] = new Integer(pmp_vo.getTotal());
+				rowData[0] = pmpvo.getMenuCode();
+				rowData[1] = pmpvo.getMenuName();
+				rowData[2] = new ImageIcon(imgPath + pmpvo.getImg());
+				rowData[3] = new Integer(pmpvo.getPrice());
+				rowData[4] = new Integer(pmpvo.getQuan());
+				rowData[5] = new Integer(pmpvo.getTotal());
 
 				// DTM에 추가
 				dtmPrd.addRow(rowData);
 			} // end for
 
 			if (listproduct.isEmpty()) {// 입력된 상품이 없을 때
-				JOptionPane.showMessageDialog(pmpv, "입력된 제품이 없습니다.");
+
+					rowData = new Object[6];
+					rowData[0] = "";
+					rowData[1] = "입력된";
+					rowData[2] = "상품이";
+					rowData[3] = "없습니다";
+					rowData[4] = "";
+					rowData[5] = "";
+
+					// DTM에 추가
+					dtmPrd.addRow(rowData);
 			} // end if
 
 		} catch (SQLException e) {
@@ -69,21 +76,58 @@ public class PMProductController extends MouseAdapter implements ActionListener{
 			e.printStackTrace();
 		} // end catch
 	}// setProduct
+
+	/**
+	 * 카테고리와 상품명으로 찾기
+	 */
+	public void searchPrd() {
+		DefaultTableModel dtmSearch=pmpv.getDtmPrd();
+		dtmSearch.setRowCount(0);
+		
+		String category=pmpv.getJcbPrdCategory().getSelectedItem().toString();
+		String menuName=pmpv.getJtfPrdName().getText();
+		try {
+			List<PMSchProductVO> list_pmspvo=pmpdao.searchPrd(category.toString(), menuName);
+			Object[] rowData=null;
+			PMSchProductVO pmspvo=null;
+			for(int i=0; i<list_pmspvo.size(); i++) {
+				pmspvo=list_pmspvo.get(i);
+				rowData=new Object[6];
+				rowData[0]=(pmspvo.getMenuCode());
+				rowData[1]=(pmspvo.getMenuName());
+				rowData[2]=(pmspvo.getImg());
+				rowData[3]=(pmspvo.getPrice());
+				rowData[4]=(pmspvo.getQuan());
+				rowData[5]=(pmspvo.getPrice()*pmspvo.getQuan());
+
+				// DTM에 추가
+				dtmSearch.addRow(rowData);
+			} // end for
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		} // end catch
+	}//searchPrd
+	
+	
+	///////////////초기화 내용추가 필요
+	public void reset() {}
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == pmpv.getJbtAddPrd()) { // 도시락 추가 버튼
 			new PMProductAddView(pmpv, this);
 		} // end if
-		
-		if(ae.getSource()==pmpv.getJbtSchPrd()) {//조회 버튼
-			
+
+		if (ae.getSource() == pmpv.getJbtSchPrd()) {// 조회 버튼
+			searchPrd();
 		}
-		if(ae.getSource()==pmpv.getJbtRstPrd()) {//초기화 버튼
-			
+		if (ae.getSource() == pmpv.getJbtRstPrd()) {// 초기화 버튼
+			reset();
 		}
-	}//actionPerformed
-	
+	}// actionPerformed
+
+//////////////////////////////////////////////////////////////////
+// mouseCliecked만 씀	
 	@Override
 	public void mouseClicked(MouseEvent me) {
 //		if (me.getSource() == lmv.getJtb()) {
@@ -98,19 +142,13 @@ public class PMProductController extends MouseAdapter implements ActionListener{
 //			} // end if
 //		} // end if
 	}
-	
+
 	@Override
-	public void mousePressed(MouseEvent e) {
-	}
+	public void mousePressed(MouseEvent e) {	}
 	@Override
-	public void mouseReleased(MouseEvent e) {
-	}
+	public void mouseReleased(MouseEvent e) {	}
 	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
+	public void mouseEntered(MouseEvent e) {	}
 	@Override
-	public void mouseExited(MouseEvent e) {
-	}
-	
-	
-}//class
+	public void mouseExited(MouseEvent e) {	}
+}// class

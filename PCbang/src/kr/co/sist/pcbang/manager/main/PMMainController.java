@@ -7,6 +7,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 
 import kr.co.sist.pcbang.manager.login.PMLoginView;
 import kr.co.sist.pcbang.manager.magageraccount.PMManagerAccountView;
@@ -17,33 +21,77 @@ public class PMMainController extends WindowAdapter implements ActionListener, M
 	private PMMainView pmmv;
 	private PMMainDAO pmm_dao;
 	private static String adminId;
-	
+
 	public PMMainController(PMMainView pmmv) {
 		this.pmmv = pmmv;
+		setNotice();
 	} // PMMainController
 	
-	@Override
-	public void run() {
+	/* 공지사항 추가 메소드 */
+	private void addNotice() throws SQLException{
+		
+		JTextArea jtaNotice = pmmv.getJtaNotice();
+		
+		if(jtaNotice.getText().equals("")) {
+			JOptionPane.showMessageDialog(pmmv, "공지사항을 입력하세요.");
+			jtaNotice.requestFocus();
+			return;
+		} // end if
+		
+		//입력한 값으로 객체 생성
+		PMMainVO pmmVO = new PMMainVO(jtaNotice.getText());
+		
+		//계정 추가 dao호출
+		PMMainDAO.getInstance().insertNotice(pmmVO);
 
-	} // run
+		JOptionPane.showMessageDialog(pmmv, "공지사항이 변경되었습니다.");		
+		
+	} // addNotice
 
-	@Override
-	public void mouseClicked(MouseEvent we) {
+	/* 공지사항에 보여주기 */
+	public void setNotice() {
+		JTextArea jtaNotice = pmmv.getJtaNotice();
+		String noticeText = "";
 
-	} // mouseClicked
-
-
+		try {
+			noticeText = PMMainDAO.getInstance().selectNotice();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		jtaNotice.setText(noticeText);
+		
+	} // setNotice
+	
 	@Override
 	public void actionPerformed(ActionEvent we) {
 		if(we.getSource()==pmmv.getJbtAccount()) {
-			PMManagerAccountView pmmav = new PMManagerAccountView();
+			new PMManagerAccountView();
 		} // end if
 				
 		if(we.getSource()==pmmv.getJbtLogOut()) {
 			new PMLoginView();
 			pmmv.setVisible(false);
+		} // end if
+		
+		if(we.getSource()==pmmv.getJbtNoticeSave()) {
+			try {
+				addNotice();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	} // actionPerformed
+	
+	@Override
+	public void run() {
+
+	} // run
+	
+	@Override
+	public void mouseClicked(MouseEvent we) {
+		
+	} // mouseClicked
 	
 	@Override
 	public void windowClosing(WindowEvent we) {

@@ -10,11 +10,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
-
-import kr.co.sist.pcbang.manager.fare.PMFareView;
-import kr.co.sist.pcbang.manager.seat.PMSeatView;
-import kr.co.sist.pcbang.manager.user.PMUserView;
 
 
 @SuppressWarnings("serial")
@@ -24,7 +19,6 @@ public class PMMainView extends JFrame{
 	private JButton jbtLogOut, jbtAccount, jbtNoticeSave;
 	private JTextArea jtaNotice;
 	private JLabel jlBoard, jlOrderNum, jlMsgNum, jlTodayMoneyNum, jlOrder, jlMsg, jlTodayMoney;
-	private JPanel seat, order, statistics, member, menu, price;
 	
 	public static String adminId;	
 	
@@ -50,7 +44,7 @@ public class PMMainView extends JFrame{
 		setLayout(null);
 
 		jspBoard.setBounds(10,30, 120, 110);
-		jspNotice.setBounds(10,250, 120, 100);
+		jspNotice.setBounds(10,250, 120, 90);
 		jbtLogOut.setBounds(10, 145, 120, 30);
 		jbtAccount.setBounds(10, 180, 120, 30);
 		jbtNoticeSave.setBounds(10, 215, 120, 30);
@@ -62,15 +56,12 @@ public class PMMainView extends JFrame{
 		jlTodayMoneyNum.setBounds(10, 590, 120, 30);
 		jtb.setBounds(150, 30, 1000, 600);
 		
-		jspBoard.setBorder(new TitledBorder("현황"));
-		jspNotice.setBorder(new TitledBorder("공지사항"));
-		
-	    seat = new PMSeatView();
-	    order = new JPanel();
-	    statistics = new JPanel();
-	    member = new PMUserView();
-	    menu = new JPanel();
-	    price = new PMFareView();
+	    JPanel seat = new JPanel();
+	    JPanel order = new JPanel();
+	    JPanel statistics = new JPanel();
+	    JPanel member = new JPanel();
+	    JPanel menu = new JPanel();
+	    JPanel price = new JPanel();
 	    
 	    jtb.add("좌석", seat );		
 	    jtb.add("주문", order );		
@@ -78,6 +69,7 @@ public class PMMainView extends JFrame{
 	    jtb.add("회원관리" ,member );		
 	    jtb.add("상품관리" ,menu );		
 	    jtb.add("요금제관리" ,price );		
+
 		
 		add(jspBoard);
 		add(jspNotice);
@@ -90,7 +82,7 @@ public class PMMainView extends JFrame{
 		add(jlOrderNum);
 		add(jlMsgNum);
 		add(jlTodayMoneyNum);
-		add(jtb);
+		add("Center",jtb);
 		
 		jlBoard.setBackground(Color.white);
 		jlOrder.setHorizontalAlignment(JTextField.CENTER);
@@ -120,6 +112,8 @@ public class PMMainView extends JFrame{
 		addWindowListener(pmmc);
 		jbtAccount.addActionListener(pmmc);
 		jbtLogOut.addActionListener(pmmc);
+		jbtNoticeSave.addActionListener(pmmc);
+		
 		
 		setBounds(400, 100, 1200, 700);
 		setVisible(true);

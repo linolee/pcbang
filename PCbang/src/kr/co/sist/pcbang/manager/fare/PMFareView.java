@@ -16,7 +16,7 @@ public class PMFareView extends JPanel {
 	 private PMFareDAO f_dao;
 	
 	public PMFareView() {
-//		super("¿ä±İÁ¦ º¯°æ");
+
 		f_dao = PMFareDAO.getInstance();
 	
 		JPanel mainPanel = new JPanel();
@@ -24,8 +24,10 @@ public class PMFareView extends JPanel {
 		JPanel jpFareMember = new JPanel();
 		JPanel jpFareGuest = new JPanel();
 		
-		jpFareMember.setBorder(new TitledBorder("È¸¿ø"));
-		jpFareGuest.setBorder(new TitledBorder("ºñÈ¸¿ø"));
+		setLayout(null);
+		
+		jpFareMember.setBorder(new TitledBorder("íšŒì›"));
+		jpFareGuest.setBorder(new TitledBorder("ë¹„íšŒì›"));
 		
 		mainPanel.setLayout(new GridLayout(1,2));
 		jpFareMember.setLayout(new GridLayout(10,2));
@@ -47,30 +49,42 @@ public class PMFareView extends JPanel {
 		
 		for(int i=0;i<mjtfs.length;i++) {
 			mjtfs[i]=new JTextField(String.valueOf(memberFare[i]));
-			mjtfs[i].setBorder(new TitledBorder(i+1+"½Ã°£"));
+			mjtfs[i].setBorder(new TitledBorder(i+1+"ì‹œê°„"));
 			jpFareMember.add(mjtfs[i]);
 		}
 		
 		for(int i=0;i<gjtfs.length;i++) {
 			gjtfs[i]=new JTextField(String.valueOf(guestFare[i]));
-			gjtfs[i].setBorder(new TitledBorder(i+1+"½Ã°£"));
+			gjtfs[i].setBorder(new TitledBorder(i+1+"ì‹œê°„"));
 			jpFareGuest.add(gjtfs[i]);
 		}
 		
-		jbtnUpdate = new JButton("¼öÁ¤");
+		jbtnUpdate = new JButton("ìˆ˜ì •");
+		
+//		mainPanel.setLayout(null);
+//		jpFareMember.setBounds(0, 0, 500, 400);
+//		jpFareGuest.setBounds(500, 0, 500, 400);
 		
 		mainPanel.add(jpFareMember);
 		mainPanel.add(jpFareGuest);
 		
-		add(mainPanel);
-		add("South",jbtnUpdate);
+		JPanel honPanel = new JPanel();
+		honPanel.add("Center", mainPanel);
+		honPanel.add("South",  jbtnUpdate);
+		
+		honPanel.setBounds(0, 0, 1000, 600);
+		
+		add(honPanel);
 		
 		PMFareController fc = new PMFareController(this);
 		jbtnUpdate.addActionListener(fc);
 		
+		
+		
 		setVisible(true);
-		setBounds(100, 100, 600, 500);
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		setBounds(100, 100, 1000, 600);
+
 	}
 
 	public JTextField[] getMjtfs() {
@@ -84,5 +98,6 @@ public class PMFareView extends JPanel {
 	public JButton getJbtnUpdate() {
 		return jbtnUpdate;
 	}
+
 
 }

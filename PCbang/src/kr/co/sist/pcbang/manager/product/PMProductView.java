@@ -145,5 +145,4 @@ public class PMProductView extends JPanel{
 	}
 	
 
-	
 }//class
