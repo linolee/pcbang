@@ -13,7 +13,9 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import kr.co.sist.pcbang.manager.product.PMProductView;
+import kr.co.sist.pcbang.manager.fare.PMFareView;
 import kr.co.sist.pcbang.manager.seat.PMSeatView;
+import kr.co.sist.pcbang.manager.user.PMUserView;
 
 
 @SuppressWarnings("serial")
@@ -23,6 +25,7 @@ public class PMMainView extends JFrame{
 	private JButton jbtLogOut, jbtAccount, jbtNoticeSave;
 	private JTextArea jtaNotice;
 	private JLabel jlBoard, jlOrderNum, jlMsgNum, jlTodayMoneyNum, jlOrder, jlMsg, jlTodayMoney;
+	private JPanel seat, order, statistics, member, menu, price;
 	
 	public static String adminId;	
 	
@@ -69,6 +72,12 @@ public class PMMainView extends JFrame{
 	    JPanel member = new JPanel();
 	    JPanel menu = new PMProductView();
 	    JPanel price = new JPanel();
+	    seat = new PMSeatView();
+	    order = new JPanel();
+	    statistics = new JPanel();
+	    member = new PMUserView();
+	    menu = new JPanel();
+	    price = new PMFareView();
 	    
 	    jtb.add("谅籍", seat );		
 	    jtb.add("林巩", order );		
@@ -76,7 +85,6 @@ public class PMMainView extends JFrame{
 	    jtb.add("雀盔包府" ,member );		
 	    jtb.add("惑前包府" ,menu );		
 	    jtb.add("夸陛力包府" ,price );		
-
 		
 		add(jspBoard);
 		add(jspNotice);
@@ -89,7 +97,7 @@ public class PMMainView extends JFrame{
 		add(jlOrderNum);
 		add(jlMsgNum);
 		add(jlTodayMoneyNum);
-		add("Center",jtb);
+		add(jtb);
 		
 		jlBoard.setBackground(Color.white);
 		jlOrder.setHorizontalAlignment(JTextField.CENTER);
