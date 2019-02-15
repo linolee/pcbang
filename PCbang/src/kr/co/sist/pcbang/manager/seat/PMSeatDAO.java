@@ -58,37 +58,112 @@ public class PMSeatDAO {
 		.append("	from pc")
 		;
 		
-		con = getConn();
-		pstmt = con.prepareStatement(selectPC.toString());
-		rs = pstmt.executeQuery();
-		
-		PMSeatSetLocVO pmsslvo;
-		while (rs.next()) {
-			pmsslvo = new PMSeatSetLocVO(rs.getInt("x_Coor"), rs.getInt("y_Coor"), rs.getInt("seat_num"), rs.getString("pc_ip"), rs.getString("admin_id"));
-			tempArr.add(pmsslvo);
-		}//현재 DB의 PC 정보를 Arr에 저장
-		PMSeatSetVO[][] seatSet;
-		seatSet = new PMSeatSetVO[10][10];
-		
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				seatSet[i][j] = new PMSeatSetVO(0, "", "");
+		try {
+			con = getConn();
+			pstmt = con.prepareStatement(selectPC.toString());
+			rs = pstmt.executeQuery();
+			
+			PMSeatSetLocVO pmsslvo;
+			while (rs.next()) {
+				pmsslvo = new PMSeatSetLocVO(rs.getInt("x_Coor"), rs.getInt("y_Coor"), rs.getInt("seat_num"), rs.getString("pc_ip"), rs.getString("admin_id"));
+				tempArr.add(pmsslvo);
+			}//현재 DB의 PC 정보를 Arr에 저장
+			PMSeatSetVO[][] seatSet;
+			seatSet = new PMSeatSetVO[10][10];
+			for (int i = 0; i < 10; i++) {
+				for (int j = 0; j < 10; j++) {
+					seatSet[i][j] = new PMSeatSetVO(0, "", "");
+				}
+			}//빈 값을 seatSet에 저장
+			
+			for (PMSeatSetLocVO tempPmsslvo : tempArr) {
+				seatSet[tempPmsslvo.getxCoor()][tempPmsslvo.getyCoor()] = new PMSeatSetVO(tempPmsslvo.getSeatNum(), tempPmsslvo.getPcIP(), tempPmsslvo.getAdminID());
+			}//Arr에 저장된 값을 seatSet에 저장
+			//////////////////////////////////////////////////////////////////
+//			for (int i = 0; i < 10; i++) {
+//				for (int j = 0; j < 10; j++) {
+//					System.out.print(seatSet[i][j]);
+//				}
+//				System.out.println();
+//			}
+			////////////////////////////////////////////////////////////////
+			return seatSet;
+		} finally {
+			if (rs != null) {
+				rs.close();
 			}
-		}//빈 값을 seatSet에 저장
-
-		for (PMSeatSetLocVO tempPmsslvo : tempArr) {
-			seatSet[tempPmsslvo.getxCoor()][tempPmsslvo.getyCoor()] = new PMSeatSetVO(tempPmsslvo.getSeatNum(), tempPmsslvo.getPcIP(), tempPmsslvo.getAdminID());
-		}//Arr에 저장된 값을 seatSet에 저장
-		
-		//////////////////////////////////////////////////////////////////
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				System.out.print(seatSet[i][j]);
+			if (pstmt != null) {
+				pstmt.close();
 			}
-			System.out.println();
+			if (con != null) {
+				con.close();
+			}
 		}
-		////////////////////////////////////////////////////////////////
-		return seatSet;
+	}
+	
+	public Integer insertSeatSetInfo(PMSeatSetVO[][] seat) throws SQLException{
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		StringBuilder insertPC = new StringBuilder();
+		insertPC
+		.append("	insert into pc (x_Coor, y_Coor, seat_num, pc_ip, admin_id) values	")
+		.append("	(?,?,?,?,?)	")
+		;
+		
+		Integer totalInsert = 0;
+		
+		try {
+			con = getConn();
+			pstmt = con.prepareStatement(insertPC.toString());
+			for (int i = 0; i < seat.length; i++) {
+				for (int j = 0; j < seat[i].length; j++) {//모든 좌석에 대해
+					if (seat[i][j].getSeatNum() != 0) {//좌석 번호가 0이 아닐 때
+						pstmt.setInt(1, i);
+						pstmt.setInt(2, j);
+						pstmt.setInt(3, seat[i][j].getSeatNum());
+						pstmt.setString(4, seat[i][j].getPcIP());
+						pstmt.setString(5, seat[i][j].getAdminID());
+						//해당하는 값을 입력
+						totalInsert += pstmt.executeUpdate();//DB에 값을 입력하고 입력한 행수를 저장
+					}//end if
+				}//end inner for
+			}//end outer for
+			
+			return totalInsert;
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (con != null) {
+				con.close();
+			}
+		}
+	}
+	
+	public Integer deleteSeatSetInfo() throws SQLException{
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		String deletePC = "	delete pc " ;
+		
+		Integer totalDelete = 0;
+		
+		try {
+			con = getConn();
+			pstmt = con.prepareStatement(deletePC.toString());
+			totalDelete = pstmt.executeUpdate();//DB에 지운 행수를 저장
+			return totalDelete;
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (con != null) {
+				con.close();
+			}
+		}
 	}
 	
 }
