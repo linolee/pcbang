@@ -12,8 +12,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+<<<<<<< HEAD
+import kr.co.sist.pcbang.manager.fare.PMFareView;
+=======
 import kr.co.sist.pcbang.manager.product.PMProductView;
+>>>>>>> refs/heads/Minjeong
 import kr.co.sist.pcbang.manager.seat.PMSeatView;
+import kr.co.sist.pcbang.manager.user.PMUserView;
 
 
 @SuppressWarnings("serial")
@@ -23,6 +28,7 @@ public class PMMainView extends JFrame{
 	private JButton jbtLogOut, jbtAccount, jbtNoticeSave;
 	private JTextArea jtaNotice;
 	private JLabel jlBoard, jlOrderNum, jlMsgNum, jlTodayMoneyNum, jlOrder, jlMsg, jlTodayMoney;
+	private JPanel seat, order, statistics, member, menu, price;
 	
 	public static String adminId;	
 	
@@ -63,12 +69,21 @@ public class PMMainView extends JFrame{
 		jspBoard.setBorder(new TitledBorder("현황"));
 		jspNotice.setBorder(new TitledBorder("공지사항"));
 		
+<<<<<<< HEAD
+	    seat = new PMSeatView();
+	    order = new JPanel();
+	    statistics = new JPanel();
+	    member = new PMUserView();
+	    menu = new JPanel();
+	    price = new PMFareView();
+=======
 	    JPanel seat = new PMSeatView();
 	    JPanel order = new JPanel();
 	    JPanel statistics = new JPanel();
 	    JPanel member = new JPanel();
 	    JPanel menu = new PMProductView();
 	    JPanel price = new JPanel();
+>>>>>>> refs/heads/Minjeong
 	    
 	    jtb.add("좌석", seat );		
 	    jtb.add("주문", order );		
@@ -76,7 +91,6 @@ public class PMMainView extends JFrame{
 	    jtb.add("회원관리" ,member );		
 	    jtb.add("상품관리" ,menu );		
 	    jtb.add("요금제관리" ,price );		
-
 		
 		add(jspBoard);
 		add(jspNotice);
@@ -89,7 +103,7 @@ public class PMMainView extends JFrame{
 		add(jlOrderNum);
 		add(jlMsgNum);
 		add(jlTodayMoneyNum);
-		add("Center",jtb);
+		add(jtb);
 		
 		jlBoard.setBackground(Color.white);
 		jlOrder.setHorizontalAlignment(JTextField.CENTER);

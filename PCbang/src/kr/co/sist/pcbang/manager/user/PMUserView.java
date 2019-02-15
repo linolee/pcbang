@@ -3,7 +3,6 @@ package kr.co.sist.pcbang.manager.user;
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,6 +30,7 @@ public class PMUserView extends JPanel {
 		jbtnSearch = new JButton("조회");
 		jbtnReset = new JButton("초기화");
 		
+		setLayout(null);
 		
 		String[] memberColumns = {"순차", "아이디", "이름", "생년월일", "성별", "전화번호", "이메일",  "상세주소", "잔여시간", "총 사용 금액", "입력일"};
 		dtmMember = new DefaultTableModel(memberColumns, 0){
@@ -53,7 +53,7 @@ public class PMUserView extends JPanel {
 		jtMember.getColumnModel().getColumn(8).setPreferredWidth(10);
 		jtMember.getColumnModel().getColumn(9).setPreferredWidth(10);
 		jtMember.getColumnModel().getColumn(10).setPreferredWidth(100);
-//		jtMember.setRowHeight(110);
+		jtMember.setRowHeight(55);
 		
 		JScrollPane jspMember = new JScrollPane(jtMember);
 		
@@ -74,7 +74,7 @@ public class PMUserView extends JPanel {
 		jpMember.add("Center",jspMember);
 		jpMember.add("North",jpMemberNorth);
 		
-		
+		jpMember.setBounds(0, 0, 1000, 600);
 		add(jpMember);
 		
 		PMUserController uc = new PMUserController(this);
@@ -87,7 +87,6 @@ public class PMUserView extends JPanel {
 		
 		uc.selectUser();
 		
-//		setResizable(false);
 		setVisible(true);	
 		setBounds(100, 100, 1000, 600);
 		

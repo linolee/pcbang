@@ -97,7 +97,7 @@ public class PMProductAddController extends WindowAdapter implements ActionListe
 //		} catch (SQLException se) {
 //			JOptionPane.showMessageDialog(lav, "DB에서 문제가 발생하였습니다.");
 //			se.printStackTrace();
-//		}//end catch
+//		}//end catch 
 //	}//addPrd
 	
 	@Override
