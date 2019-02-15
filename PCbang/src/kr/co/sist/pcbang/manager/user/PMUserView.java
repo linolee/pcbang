@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
-public class PMUserView extends JFrame {
+public class PMUserView extends JPanel {
 	
 	 private JLabel jlSearch, jlId, jlName;
 	 private JTextField jtfId, jtfName;
@@ -21,7 +21,6 @@ public class PMUserView extends JFrame {
 	 private DefaultTableModel dtmMember;
 	
 	public PMUserView() {
-		
 		jlSearch = new JLabel("회원조회");
 		jlId = new JLabel("아이디");
 		jlName = new JLabel("이름");
@@ -40,7 +39,6 @@ public class PMUserView extends JFrame {
 			}
 		};
 		
-		
 		jtMember = new JTable(dtmMember); 
 
 		jtMember.getTableHeader().setReorderingAllowed(false);	
@@ -55,7 +53,6 @@ public class PMUserView extends JFrame {
 		jtMember.getColumnModel().getColumn(8).setPreferredWidth(10);
 		jtMember.getColumnModel().getColumn(9).setPreferredWidth(10);
 		jtMember.getColumnModel().getColumn(10).setPreferredWidth(100);
-//		
 //		jtMember.setRowHeight(110);
 		
 		JScrollPane jspMember = new JScrollPane(jtMember);
@@ -81,7 +78,7 @@ public class PMUserView extends JFrame {
 		add(jpMember);
 		
 		PMUserController uc = new PMUserController(this);
-		addWindowFocusListener(uc);
+//		addWindowFocusListener(uc);
 		jtfId.addActionListener(uc);
 		jtfName.addActionListener(uc);
 		jbtnSearch.addActionListener(uc);
@@ -90,9 +87,9 @@ public class PMUserView extends JFrame {
 		
 		uc.selectUser();
 		
-		setResizable(false);
+//		setResizable(false);
 		setVisible(true);	
-		setBounds(100, 100, 1300, 700);
+		setBounds(100, 100, 1000, 600);
 		
 	}
 	

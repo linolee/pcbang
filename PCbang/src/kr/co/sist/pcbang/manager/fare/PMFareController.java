@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-public class PMFareController extends WindowAdapter implements ActionListener {
+public class PMFareController implements ActionListener {
 	
 	private PMFareView fv;
 	private PMFareDAO f_dao;
@@ -33,11 +33,6 @@ public class PMFareController extends WindowAdapter implements ActionListener {
 		} // end if
 	}
 	
-	@Override
-	public void windowClosing(WindowEvent e) { 
-		fv.dispose();
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		

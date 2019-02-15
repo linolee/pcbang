@@ -108,11 +108,8 @@ public class PMUserDetailView extends JFrame {
 		jbtnUpdate.addActionListener(udc);
 		jbtnCancel.addActionListener(udc);
 		
-		
-		
 		setVisible(true);
 		setBounds(100, 100, 500, 400);
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		 
 	 }
 
