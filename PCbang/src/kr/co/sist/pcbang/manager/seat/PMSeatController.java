@@ -1,5 +1,6 @@
 package kr.co.sist.pcbang.manager.seat;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -19,13 +20,14 @@ public class PMSeatController extends WindowAdapter implements Runnable, ActionL
 	private Socket serverSocket;
 	private List<PMClient> clientSocket;
 	private PMSeatDAO pms_dao;
-	private PMSeatLocVO[][] seat;
+	private PMSeatVO[][] seat;
 		
 	public PMSeatController(PMSeatView pmsv) {
 		//DAO연결
 		this.pmsv = pmsv;
 		pms_dao = PMSeatDAO.getInstance();
 		setServer();
+		seatLoad();
 		setBtnSeat();
 	}//constructor
 	
@@ -34,7 +36,33 @@ public class PMSeatController extends WindowAdapter implements Runnable, ActionL
 	}
 	
 	private void setBtnSeat() {
-		
+		for (int i = 0; i < seat.length; i++) {
+			for (int j = 0; j < seat[i].length; j++) {
+				pmsv.getBtnSeat()[i][j].setText(seat[i][j].getSeatNum().toString());
+				pmsv.getBtnSeat()[i][j].addActionListener(this);
+				if (seat[i][j].getSeatNum() == 0) {//좌석 번호가 0이라면 검은색
+					pmsv.getBtnSeat()[i][j].setBackground(Color.BLACK);
+				}else if (!seat[i][j].getUser().equals("")) {//유저가 컴퓨터에 있다면 초록색
+					pmsv.getBtnSeat()[i][j].setBackground(Color.GREEN);
+				}else {//없다면 회색
+					pmsv.getBtnSeat()[i][j].setBackground(Color.GRAY);
+				}
+				
+//				if (seat[i][j].getPcStatus().equals("")) {
+//					
+//				}
+				/////////////////////////////상태에 따라 색 추가//////////////////////////////////////////
+				
+			}
+		}
+	}
+	
+	private void seatLoad() {
+		try {
+			seat = pms_dao.selectSeatInfo();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

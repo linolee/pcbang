@@ -166,5 +166,74 @@ public class PMSeatDAO {
 		}
 	}
 	
+	public PMSeatVO[][] selectSeatInfo() throws SQLException{
+		
+		List<PMSeatLocVO> tempArr = new ArrayList<>();//DB의 정보를 담을 Arr를 생성
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StringBuilder selectPC = new StringBuilder();
+		selectPC
+		.append("	select x_Coor, y_Coor, seat_num, pc_ip, pc_status, member_id, card_num	")
+		.append("	from pc")
+		;
+		
+		try {
+			con = getConn();
+			pstmt = con.prepareStatement(selectPC.toString());
+			rs = pstmt.executeQuery();
+			
+			PMSeatLocVO pmslvo;
+			while (rs.next()) {
+				pmslvo = new PMSeatLocVO(rs.getInt("x_Coor"), rs.getInt("y_Coor"), rs.getInt("seat_num"), rs.getString("pc_ip"), rs.getString("pc_status")
+						, rs.getString("member_Id"), rs.getString("card_Num"));
+				tempArr.add(pmslvo);
+			}//현재 DB의 PC 정보를 Arr에 저장
+			PMSeatVO[][] seat;
+			seat = new PMSeatVO[10][10];
+			for (int i = 0; i < 10; i++) {
+				for (int j = 0; j < 10; j++) {
+					seat[i][j] = new PMSeatVO(0, "", "", "", "");
+				}
+			}//빈 값을 seatSet에 저장
+			String user = "";//비회원인지 회원인지에 따라 seat에 다른 값을 입력하기 위한 변수
+			for (PMSeatLocVO tempPmslvo : tempArr) {
+				
+				if (tempPmslvo.getMemberId() != null) {//회원값이 있다면
+					user = tempPmslvo.getMemberId();
+				} else if (tempPmslvo.getCardNum() != null) {//카드 값이 있다면
+					user = tempPmslvo.getCardNum();
+				} else {// 둘 다 없다면
+					user = "";
+				}
+				
+//				seat[tempPmslvo.getxCoor()][tempPmslvo.getyCoor()] = new PMSeatVO(tempPmslvo.getSeatNum(), tempPmslvo.getPcIP(), tempPmslvo.getPcStatus(),
+//						!tempPmslvo.getMemberId().equals(null)?tempPmslvo.getMemberId():tempPmslvo.getCardNum(), "N");
+				seat[tempPmslvo.getxCoor()][tempPmslvo.getyCoor()] = new PMSeatVO(tempPmslvo.getSeatNum(), tempPmslvo.getPcIP(), tempPmslvo.getPcStatus(),
+						user, "N");
+			}//Arr에 저장된 값을 seatSet에 저장
+			//////////////////////////////////////////////////////////////////
+//			for (int i = 0; i < 10; i++) {
+//				for (int j = 0; j < 10; j++) {
+//					System.out.print(seat[i][j]);
+//				}
+//				System.out.println();
+//			}
+			////////////////////////////////////////////////////////////////
+			return seat;
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (con != null) {
+				con.close();
+			}
+		}
+	}
+	
 }
 
