@@ -8,11 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import admin.view.PMProductAddView;
-import admin.view.PMProductView;
-import admin.vo.PMProductAddVO;
-import admin.vo.PMProductDetailVO;
-import admin.vo.PMProductVO;
+import kr.co.sist.pcbang.manager.product.add.PMProductAddVO;
+import kr.co.sist.pcbang.manager.product.detail.PMProductDetailVO;
 
 public class PMProductDAO {
 
@@ -114,7 +111,7 @@ public class PMProductDAO {
 			// 2.
 			con = getConn();
 			// 3.
-			String selectMenuCode = "select lunch_name, img, price, category from menu where menu_code=?";
+			String selectMenuCode = "select menu_name, img, price, category from menu where menu_code=?";
 			pstmt = con.prepareStatement(selectMenuCode);
 			// 4.
 			pstmt.setString(1, code);
@@ -141,7 +138,55 @@ public class PMProductDAO {
 	}// selectDetailPrd
 
 	
-	/////////////////////////////////2월 14일 할일////
+	/////////////////PMProductVO가 필요가 없나?////
+	/**
+	 * 상품을 카테고리와 코드로 검색하는 일
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<PMSchProductVO> searchPrd(String category, String menuName) throws SQLException{
+		List<PMSchProductVO> listsearch = new ArrayList<PMSchProductVO>();
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+		//1.
+		//2.
+			con = getConn();
+		//3.
+			StringBuilder searchPrd = new StringBuilder();
+			searchPrd
+			.append("	select m.menu_code, m.menu_name, m.img, m.menu_price, o.quan, (m.menu_price)*(o.quan) total ")
+			.append("	from menu m, ordering o				")
+			.append("	where o.menu_code=m.menu_code		")
+			.append("	and m.category=	?")
+			.append("	and m.menu_name= ?	")
+			.append("	order by m.menu_code	");
+		
+			pstmt=con.prepareStatement(searchPrd.toString());
+			//4.
+				pstmt.setString(1, category);
+				pstmt.setString(2, menuName);
+			//5.
+				rs=pstmt.executeQuery();
+				PMSchProductVO pmspvo=null;
+				while(rs.next()) {
+					pmspvo = new PMSchProductVO(rs.getString("MENU_CODE"), rs.getString("MENU_NAME"), rs.getString("IMG"),
+							rs.getInt("menu_price"), rs.getInt("QUAN"), rs.getInt("total"));
+					listsearch.add(pmspvo);
+				}//end while
+			}finally {
+			//6.
+				if(rs!=null) {rs.close();}//end if
+				if(pstmt!=null) {pstmt.close();}//end if
+				if(con!=null) {con.close();}//end if
+			}//end finally
+			
+			return listsearch;
+	}//searchPrd
+	
 	/**
 	 * 상품 정보를 추가하는 일
 	 * 
@@ -183,7 +228,13 @@ public class PMProductDAO {
 
 	}// insertLunch
 
-	public boolean deleteLunch(String code) throws SQLException {
+	/**
+	 * 상품을 삭제한다
+	 * @param code
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean deletePrd(String code) throws SQLException {
 		boolean flag = false;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -193,8 +244,8 @@ public class PMProductDAO {
 			// 2.
 			con = getConn();
 			// 3.
-			String deleteLunch = "DELETE FROM LUNCH WHERE LUNCH_CODE = ? ";
-			pstmt = con.prepareStatement(deleteLunch);
+			String deleteMenu = "DELETE FROM menu WHERE LUNCH_CODE = ? ";
+			pstmt = con.prepareStatement(deleteMenu);
 			// 4.
 			pstmt.setString(1, code);
 			// 5.
@@ -215,15 +266,14 @@ public class PMProductDAO {
 		return flag;
 	}// deleteLunch
 
+	
 	/**
-	 * 도시락 코드, 도시락명, 이미지, 가격, 특장점을 입력받아 도시락코드에 해당하는 도시락을 변경. 이미지가 ""라면 이미지는 변경하지
-	 * 않는다.
-	 * 
-	 * @param luvo
+	 * 상품명을 입력받아 업데이트
+	 * @param pmpuvo
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean updateLunch(LunchUpdateVO luvo) throws SQLException {
+	public boolean updatePrd(PMProductUpdateVO pmpuvo) throws SQLException {
 		boolean flag = false;
 
 		Connection con = null;
@@ -234,24 +284,24 @@ public class PMProductDAO {
 			// 2.
 			con = getConn();
 			// 3.
-			StringBuilder updateLunch = new StringBuilder();
-			updateLunch.append(" update Lunch ").append(" set lunch_name=?, ").append(" 	price=?, spec=? ");
+			StringBuilder updatePrd = new StringBuilder();
+			updatePrd.append(" update menu ").append(" set menu_name=?, ").append(" 	price=?, category=? ");
 
-			if (!luvo.getImg().equals("")) {
-				updateLunch.append(", img=? ");
+			if (!pmpuvo.getImg().equals("")) {
+				updatePrd.append(", img=? ");
 			} // end if
-			updateLunch.append("where lunch_code=?");
-			pstmt = con.prepareStatement(updateLunch.toString());
+			updatePrd.append("where menu_name=?");
+			pstmt = con.prepareStatement(updatePrd.toString());
 			// 4.
-			pstmt.setString(1, luvo.getLunch_name());
-			pstmt.setInt(2, luvo.getPrice());
-			pstmt.setString(3, luvo.getSpec());
+			pstmt.setString(1, pmpuvo.getMenuName());
+			pstmt.setInt(2, pmpuvo.getPrice());
+			pstmt.setString(3, pmpuvo.getCategory());
 
 			int index = 4; // index에 3을 넣으면
-			if (!luvo.getImg().equals("")) {
-				pstmt.setString(index++, luvo.getImg()); // ++index
+			if (!pmpuvo.getImg().equals("")) {
+				pstmt.setString(index++, pmpuvo.getImg()); // ++index
 			} // end if
-			pstmt.setString(index, luvo.getLunch_code());
+			pstmt.setString(index, pmpuvo.getMenuName());
 
 			// 5.
 			int cnt = pstmt.executeUpdate();
@@ -269,6 +319,6 @@ public class PMProductDAO {
 		} // end finally
 
 		return flag;
-	}// updateLunch
+	}// updatePrd
 
 }// class

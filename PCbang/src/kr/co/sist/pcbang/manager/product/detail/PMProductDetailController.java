@@ -5,8 +5,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import admin.model.PMProductDAO;
-import admin.view.PMProductDetailView;
+import kr.co.sist.pcbang.manager.product.PMProductController;
+import kr.co.sist.pcbang.manager.product.PMProductDAO;
+
 
 public class PMProductDetailController extends WindowAdapter implements ActionListener{
 
