@@ -12,6 +12,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import kr.co.sist.pcbang.manager.seat.PMSeatView;
+
 
 @SuppressWarnings("serial")
 public class PMMainView extends JFrame{
@@ -60,7 +62,7 @@ public class PMMainView extends JFrame{
 		jspBoard.setBorder(new TitledBorder("현황"));
 		jspNotice.setBorder(new TitledBorder("공지사항"));
 		
-	    JPanel seat = new JPanel();
+	    JPanel seat = new PMSeatView();
 	    JPanel order = new JPanel();
 	    JPanel statistics = new JPanel();
 	    JPanel member = new JPanel();
