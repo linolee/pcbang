@@ -21,7 +21,9 @@ public class PMSeatView extends JPanel{
 			}
 		}
 		
-		add("South", btnSet);
+		setLayout(null);
+		
+		add(btnSet);
 		
 		JPanel pnlMain = new JPanel(new GridLayout(btnSeat.length, btnSeat[0].length));
 		for (int i = 0; i < btnSeat.length; i++) {
@@ -30,7 +32,10 @@ public class PMSeatView extends JPanel{
 			}
 		}
 		
-		add("Center", pnlMain);
+		add(pnlMain);
+		
+		btnSet.setBounds(900, 0, 100, 20);
+		pnlMain.setBounds(0, 20, 1000, 550);
 		
 		PMSeatController pmsc = new PMSeatController(this);
 		btnSet.addActionListener(pmsc);
