@@ -33,7 +33,18 @@ public class PULoginDAO {
 		return con;
 	}//getConn
 	
-	public String selectNotice() {
+	public String selectNotice() throws SQLException{
 		return "공지사항";
 	}//selectNotice
+	
+	public char selectStatus() throws SQLException{
+		return 'o';
+	}
+
+	public String login(PUCertificationVO pucvo) throws SQLException {
+		return "user";
+	}
+
+	public void login(int guestNum) throws SQLException {
+	}
 }//class
