@@ -3,18 +3,17 @@ package kr.co.sist.pcbang.manager.seat.set;
 public class PMSeatSetVO {
 
 	private Integer seatNum;
-	private String pcIP, adminID;
+	private String pcIP;
 	
-	public PMSeatSetVO(Integer seatNum, String pcIP, String adminID) {
+	public PMSeatSetVO(Integer seatNum, String pcIP) {
 		super();
 		this.seatNum = seatNum;
 		this.pcIP = pcIP;
-		this.adminID = adminID;
 	}
 	
 	@Override
 	public String toString() {
-		return "["+seatNum + "/" + pcIP + "/" + adminID+"]";
+		return "["+seatNum + "/" + pcIP + "]";
 	}
 
 	public Integer getSeatNum() {
@@ -22,8 +21,5 @@ public class PMSeatSetVO {
 	}
 	public String getPcIP() {
 		return pcIP;
-	}
-	public String getAdminID() {
-		return adminID;
 	}
 }

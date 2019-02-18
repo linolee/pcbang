@@ -10,14 +10,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.TitledBorder;
-
-import kr.co.sist.pcbang.manager.fare.PMFareView;
-import kr.co.sist.pcbang.manager.product.PMProductView;
-import kr.co.sist.pcbang.manager.fare.PMFareView;
-import kr.co.sist.pcbang.manager.seat.PMSeatView;
-import kr.co.sist.pcbang.manager.user.PMUserView;
-
 
 @SuppressWarnings("serial")
 public class PMMainView extends JFrame{
@@ -26,24 +18,23 @@ public class PMMainView extends JFrame{
 	private JButton jbtLogOut, jbtAccount, jbtNoticeSave;
 	private JTextArea jtaNotice;
 	private JLabel jlBoard, jlOrderNum, jlMsgNum, jlTodayMoneyNum, jlOrder, jlMsg, jlTodayMoney;
-	private JPanel seat, order, statistics, member, menu, price;
 	
 	public static String adminId;	
 	
 	public PMMainView(String adminName) {
-		super("ê´€ë¦¬ì ì‹œìŠ¤í…œ [ ë¡œê·¸ì¸ ê³„ì • : "+adminName+" ]");
+		super("°ü¸®ÀÚ ½Ã½ºÅÛ [ ·Î±×ÀÎ °èÁ¤ : "+adminName+" ]");
 		
 		jtb = new JTabbedPane();
-		jbtLogOut = new JButton("ë¡œê·¸ì•„ì›ƒ");
-		jbtAccount = new JButton("ê³„ì •ê´€ë¦¬");
-		jbtNoticeSave = new JButton("ê³µì§€ì‚¬í•­ì €ì¥");
-		jlBoard = new JLabel();						//í˜„í™©
-		jtaNotice = new JTextArea();				//ê³µì§€ì‚¬í•­
-		jlOrder = new JLabel("ì£¼ë¬¸");
+		jbtLogOut = new JButton("·Î±×¾Æ¿ô");
+		jbtAccount = new JButton("°èÁ¤°ü¸®");
+		jbtNoticeSave = new JButton("°øÁö»çÇ×ÀúÀå");
+		jlBoard = new JLabel();						//ÇöÈ²
+		jtaNotice = new JTextArea();				//°øÁö»çÇ×
+		jlOrder = new JLabel("ÁÖ¹®");
 		jlOrderNum = new JLabel("0");
-		jlMsg = new JLabel("ë©”ì„¸ì§€");
+		jlMsg = new JLabel("¸Ş¼¼Áö");
 		jlMsgNum = new JLabel("0");
-		jlTodayMoney = new JLabel("ê¸ˆì¼ë§¤ì¶œ");
+		jlTodayMoney = new JLabel("±İÀÏ¸ÅÃâ");
 		jlTodayMoneyNum = new JLabel("0");
 		
 		JScrollPane jspBoard = new JScrollPane(jlBoard);
@@ -52,7 +43,7 @@ public class PMMainView extends JFrame{
 		setLayout(null);
 
 		jspBoard.setBounds(10,30, 120, 110);
-		jspNotice.setBounds(10,250, 120, 100);
+		jspNotice.setBounds(10,250, 120, 90);
 		jbtLogOut.setBounds(10, 145, 120, 30);
 		jbtAccount.setBounds(10, 180, 120, 30);
 		jbtNoticeSave.setBounds(10, 215, 120, 30);
@@ -64,31 +55,20 @@ public class PMMainView extends JFrame{
 		jlTodayMoneyNum.setBounds(10, 590, 120, 30);
 		jtb.setBounds(150, 30, 1000, 600);
 		
-		jspBoard.setBorder(new TitledBorder("í˜„í™©"));
-		jspNotice.setBorder(new TitledBorder("ê³µì§€ì‚¬í•­"));
-	    seat = new PMSeatView();
-	    order = new JPanel();
-	    statistics = new JPanel();
-	    member = new PMUserView();
-	    menu = new JPanel();
-	    price = new PMFareView();
-	    JPanel seat = new PMSeatView();
+	    JPanel seat = new JPanel();
 	    JPanel order = new JPanel();
 	    JPanel statistics = new JPanel();
 	    JPanel member = new JPanel();
-	    JPanel menu = new PMProductView();
+	    JPanel menu = new JPanel();
 	    JPanel price = new JPanel();
-	    statistics = new JPanel();
-	    member = new PMUserView();
-	    menu = new JPanel();
-	    price = new PMFareView();
 	    
-	    jtb.add("ì¢Œì„", seat );		
-	    jtb.add("ì£¼ë¬¸", order );		
-	    jtb.add("í†µê³„", statistics );		
-	    jtb.add("íšŒì›ê´€ë¦¬" ,member );		
-	    jtb.add("ìƒí’ˆê´€ë¦¬" ,menu );		
-	    jtb.add("ìš”ê¸ˆì œê´€ë¦¬" ,price );		
+	    jtb.add("ÁÂ¼®", seat );		
+	    jtb.add("ÁÖ¹®", order );		
+	    jtb.add("Åë°è", statistics );		
+	    jtb.add("È¸¿ø°ü¸®" ,member );		
+	    jtb.add("»óÇ°°ü¸®" ,menu );		
+	    jtb.add("¿ä±İÁ¦°ü¸®" ,price );		
+
 		
 		add(jspBoard);
 		add(jspNotice);
@@ -101,7 +81,7 @@ public class PMMainView extends JFrame{
 		add(jlOrderNum);
 		add(jlMsgNum);
 		add(jlTodayMoneyNum);
-		add(jtb);
+		add("Center",jtb);
 		
 		jlBoard.setBackground(Color.white);
 		jlOrder.setHorizontalAlignment(JTextField.CENTER);
@@ -131,6 +111,8 @@ public class PMMainView extends JFrame{
 		addWindowListener(pmmc);
 		jbtAccount.addActionListener(pmmc);
 		jbtLogOut.addActionListener(pmmc);
+		jbtNoticeSave.addActionListener(pmmc);
+		
 		
 		setBounds(400, 100, 1200, 700);
 		setVisible(true);
@@ -189,8 +171,5 @@ public class PMMainView extends JFrame{
 	public static String getAdminId() {
 		return adminId;
 	}
-
-
-	
 	
 }//class

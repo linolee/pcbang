@@ -3,9 +3,6 @@ package kr.co.sist.pcbang.manager.seat;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.List;
@@ -14,7 +11,7 @@ import kr.co.sist.pcbang.manager.seat.detail.PMSeatDetailView;
 import kr.co.sist.pcbang.manager.seat.message.PMClient;
 import kr.co.sist.pcbang.manager.seat.set.PMSeatSetView;
 
-public class PMSeatController extends WindowAdapter implements Runnable, ActionListener {
+public class PMSeatController implements Runnable, ActionListener {
 	private PMSeatView pmsv;
 	private Socket serverSocket;
 	private List<PMClient> clientSocket;
@@ -34,7 +31,7 @@ public class PMSeatController extends WindowAdapter implements Runnable, ActionL
 
 	}
 
-	private void setBtnSeat() {
+	public void setBtnSeat() {
 		for (int i = 0; i < seat.length; i++) {
 			for (int j = 0; j < seat[i].length; j++) {
 				pmsv.getBtnSeat()[i][j].setText(seat[i][j].getSeatNum().toString());
@@ -42,6 +39,16 @@ public class PMSeatController extends WindowAdapter implements Runnable, ActionL
 					pmsv.getBtnSeat()[i][j].setBackground(Color.BLACK);
 				} else if (!seat[i][j].getUser().equals("")) {// 유저가 컴퓨터에 있다면 초록색
 					pmsv.getBtnSeat()[i][j].setBackground(Color.GREEN);
+					if (seat[i][j].getMessageStatus().equals("Y") && seat[i][j].getOrderStatus().equals("Y")) {// 메세지와
+																												// 주문이 둘
+																												// 다 있다면
+						pmsv.getBtnSeat()[i][j].setBackground(Color.ORANGE);
+					} else if (seat[i][j].getOrderStatus().equals("Y")) {// 주문만 있다면
+						pmsv.getBtnSeat()[i][j].setBackground(Color.YELLOW);
+					} else if (seat[i][j].getMessageStatus().equals("Y")) {// 메세지만 있다면
+						pmsv.getBtnSeat()[i][j].setBackground(Color.RED);
+					}
+
 				} else {// 없다면 회색
 					pmsv.getBtnSeat()[i][j].setBackground(Color.GRAY);
 				}
@@ -55,7 +62,7 @@ public class PMSeatController extends WindowAdapter implements Runnable, ActionL
 		} // end outer for
 	}
 
-	private void seatLoad() {
+	public void seatLoad() {
 		try {
 			seat = pms_dao.selectSeatInfo();
 		} catch (SQLException e) {
@@ -86,11 +93,7 @@ public class PMSeatController extends WindowAdapter implements Runnable, ActionL
 	}
 
 	private void openSeatSet() {
-		new PMSeatSetView();
-	}
-
-	private void openPopBtn() {
-
+		new PMSeatSetView(this);
 	}
 
 	private void openSeatDetail(int i, int j) {

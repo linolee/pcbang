@@ -2,18 +2,20 @@ package kr.co.sist.pcbang.manager.seat;
 
 public class PMSeatLocVO {
 	private Integer xCoor, yCoor, seatNum;
-	private String pcIP, pcStatus, memberId, cardNum, msgStatus;
+	private String pcIP, memberId, cardNum, pcStatus, messageStatus, orderStatus;
 
-	public PMSeatLocVO(Integer xCoor, Integer yCoor, Integer seatNum, String pcIP, String pcStatus, String memberId,
-			String cardNum) {
+	public PMSeatLocVO(Integer xCoor, Integer yCoor, Integer seatNum, String pcIP, String memberId, String cardNum,
+			String pcStatus, String messageStatus, String orderStatus) {
 		super();
 		this.xCoor = xCoor;
 		this.yCoor = yCoor;
 		this.seatNum = seatNum;
 		this.pcIP = pcIP;
-		this.pcStatus = pcStatus;
 		this.memberId = memberId;
 		this.cardNum = cardNum;
+		this.pcStatus = pcStatus;
+		this.messageStatus = messageStatus;
+		this.orderStatus = orderStatus;
 	}
 
 	public Integer getxCoor() {
@@ -32,10 +34,6 @@ public class PMSeatLocVO {
 		return pcIP;
 	}
 
-	public String getPcStatus() {
-		return pcStatus;
-	}
-
 	public String getMemberId() {
 		return memberId;
 	}
@@ -44,10 +42,16 @@ public class PMSeatLocVO {
 		return cardNum;
 	}
 
-	@Override
-	public String toString() {
-		return "PMSeatLocVO [xCoor=" + xCoor + ", yCoor=" + yCoor + ", seatNum=" + seatNum + ", pcIP=" + pcIP
-				+ ", pcStatus=" + pcStatus + ", memberId=" + memberId + ", cardNum=" + cardNum + "]";
+	public String getPcStatus() {
+		return pcStatus;
+	}
+
+	public String getMessageStatus() {
+		return messageStatus;
+	}
+
+	public String getOrderStatus() {
+		return orderStatus;
 	}
 
 }

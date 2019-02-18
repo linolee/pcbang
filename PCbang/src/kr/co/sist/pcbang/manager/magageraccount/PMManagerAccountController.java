@@ -48,8 +48,6 @@ public class PMManagerAccountController extends WindowAdapter implements ActionL
 
 			} // end for
 			
-			System.out.println(listAccount);
-			
 			if (listAccount.isEmpty()) {// 계정이 없을 때
 				JOptionPane.showMessageDialog(pmmav, "관리자 계정이 없습니다.");
 			} // end if

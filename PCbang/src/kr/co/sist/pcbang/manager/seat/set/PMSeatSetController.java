@@ -3,13 +3,15 @@ package kr.co.sist.pcbang.manager.seat.set;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
 import kr.co.sist.pcbang.manager.seat.PMSeatDAO;
 
-public class PMSeatSetController implements ActionListener{
+public class PMSeatSetController extends WindowAdapter implements ActionListener{
 	private PMSeatSetView pmssv;
 	private PMSeatDAO pms_dao;
 	private PMSeatSetVO[][] seat;
@@ -49,7 +51,7 @@ public class PMSeatSetController implements ActionListener{
 					PMSeatSetDialogView pmssdv = new PMSeatSetDialogView(i, j, this);//좌석설정 다이얼로그 불러오기
 					if (seat[i][j].getSeatNum() != 0) {//좌석번호가 0이 아니라면 좌석의 정보를 입력창에 출력해준다.
 						pmssdv.getJtfSeatNum().setText(seat[i][j].getSeatNum().toString());
-						pmssdv.getJtfIDAddr().setText(seat[i][j].getPcIP());
+						pmssdv.getJtfIPAddr().setText(seat[i][j].getPcIP());
 					}
 				}
 			}//inner for
@@ -78,7 +80,7 @@ public class PMSeatSetController implements ActionListener{
 	private void seatReset() {
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				seat[i][j] = new PMSeatSetVO(0, "", "");
+				seat[i][j] = new PMSeatSetVO(0, "");
 			}//inner for
 		}//outer 
 	}
@@ -99,4 +101,10 @@ public class PMSeatSetController implements ActionListener{
 		return seat;
 	}
 	
+	@Override
+	public void windowClosing(WindowEvent e) {
+		pmssv.getPmsc().seatLoad();
+		pmssv.getPmsc().setBtnSeat();
+		super.windowClosing(e);
+	}
 }
