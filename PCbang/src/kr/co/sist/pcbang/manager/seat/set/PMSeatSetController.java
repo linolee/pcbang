@@ -3,13 +3,15 @@ package kr.co.sist.pcbang.manager.seat.set;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
 import kr.co.sist.pcbang.manager.seat.PMSeatDAO;
 
-public class PMSeatSetController implements ActionListener{
+public class PMSeatSetController extends WindowAdapter implements ActionListener{
 	private PMSeatSetView pmssv;
 	private PMSeatDAO pms_dao;
 	private PMSeatSetVO[][] seat;
@@ -99,4 +101,10 @@ public class PMSeatSetController implements ActionListener{
 		return seat;
 	}
 	
+	@Override
+	public void windowClosing(WindowEvent e) {
+		pmssv.getPmsc().seatLoad();
+		pmssv.getPmsc().setBtnSeat();
+		super.windowClosing(e);
+	}
 }
