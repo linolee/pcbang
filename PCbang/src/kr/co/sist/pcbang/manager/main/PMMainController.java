@@ -15,7 +15,6 @@ import javax.swing.JTextArea;
 import kr.co.sist.pcbang.manager.login.PMLoginView;
 import kr.co.sist.pcbang.manager.magageraccount.PMManagerAccountView;
 
-
 public class PMMainController extends WindowAdapter implements ActionListener, MouseListener, Runnable {
 
 	private PMMainView pmmv;
@@ -79,8 +78,8 @@ public class PMMainController extends WindowAdapter implements ActionListener, M
 				addNotice();
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}
-		}
+			} // end catch
+		} //end if
 	} // actionPerformed
 	
 	@Override
@@ -119,3 +118,4 @@ public class PMMainController extends WindowAdapter implements ActionListener, M
 	public void mouseExited(MouseEvent e) {
 	}
 } // class
+

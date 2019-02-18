@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import kr.co.sist.pcbang.manager.magageraccount.PMManagerAccountController;
 
 @SuppressWarnings("serial")
 public class PMManagerAddAccountView extends JFrame{
@@ -16,7 +17,7 @@ public class PMManagerAddAccountView extends JFrame{
 	private JPasswordField jpfAddPass;
 	
 	
-	public PMManagerAddAccountView() {
+	public PMManagerAddAccountView(PMManagerAccountController pmmac) {
 		super("관리자 계정 추가");
 		
 		jtfAddId = new JTextField();
@@ -48,7 +49,7 @@ public class PMManagerAddAccountView extends JFrame{
 		add(jbtAdd);		
 		add(jbtCancle);		
 		
-		PMManagerAddAccountController pmmaac = new PMManagerAddAccountController(this);
+		PMManagerAddAccountController pmmaac = new PMManagerAddAccountController(this, pmmac);
 		addWindowListener(pmmaac);
 		jbtCancle.addActionListener(pmmaac);
 		jtfAddId.addActionListener(pmmaac);
