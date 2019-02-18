@@ -100,7 +100,7 @@ public class PMSeatDAO {
 	public Integer insertSeatSetInfo(PMSeatSetVO[][] seat) throws SQLException {
 
 		Connection con = null;
-		PreparedStatement pstmt= null, pstmt2 = null;
+		PreparedStatement pstmt= null, pstmt2 = null;//pstmt = pc테이블에 정보를 삽입, pstmt2 = pc_status 테이블에 정보를 삽입
 
 		StringBuilder insertPC = new StringBuilder();
 		insertPC.append("	insert into pc (x_Coor, y_Coor, seat_num, pc_ip) values	")
@@ -144,13 +144,12 @@ public class PMSeatDAO {
 	public Integer deleteSeatSetInfo() throws SQLException {
 
 		Connection con = null;
-		PreparedStatement pstmt = null, pstmt2 = null;;
+		PreparedStatement pstmt = null;
 
 		Integer totalDelete = 0;
 
 		try {
 			con = getConn();
-			pstmt2 = con.prepareStatement("	delete pc_status	");
 			pstmt = con.prepareStatement("	delete pc ");
 			totalDelete = pstmt.executeUpdate();// DB에 지운 행수를 저장
 			return totalDelete;
