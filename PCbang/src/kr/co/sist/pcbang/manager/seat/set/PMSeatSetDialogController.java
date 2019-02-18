@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 public class PMSeatSetDialogController implements ActionListener {
 
-	PMSeatSetDialogView pmssdv;
+	private PMSeatSetDialogView pmssdv;
 
 	public PMSeatSetDialogController(PMSeatSetDialogView pmssdv) {
 		this.pmssdv = pmssdv;
