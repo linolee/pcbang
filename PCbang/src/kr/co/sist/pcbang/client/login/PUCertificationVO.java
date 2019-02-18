@@ -1,5 +1,6 @@
 package kr.co.sist.pcbang.client.login;
 
+
 public class PUCertificationVO {
 	private String memberId, memberPass;
 

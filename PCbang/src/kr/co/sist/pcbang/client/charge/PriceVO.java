@@ -22,5 +22,6 @@ public class PriceVO {
 		return chargeTime + ", " + price;
 	}
 
+	
 }
 

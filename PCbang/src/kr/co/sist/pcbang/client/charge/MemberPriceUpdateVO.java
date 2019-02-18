@@ -13,4 +13,5 @@ public class MemberPriceUpdateVO {
 		return id;
 	}
 	
+	
 }

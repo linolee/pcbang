@@ -3,6 +3,7 @@ package kr.co.sist.pcbang.client.login.finduser;
 public class PUFindUserVO {
 	private String userName, userPhone;
 
+	
 	public PUFindUserVO(String userName, String userPhone) {
 		this.userName = userName;
 		this.userPhone = userPhone;

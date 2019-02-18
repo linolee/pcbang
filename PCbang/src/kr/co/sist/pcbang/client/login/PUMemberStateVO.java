@@ -2,6 +2,7 @@ package kr.co.sist.pcbang.client.login;
 
 public class PUMemberStateVO {
 
+	
 	private String memberId;
 	private int pcIp;
 	

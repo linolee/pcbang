@@ -54,5 +54,6 @@ public class PUChargeController extends WindowAdapter implements ActionListener 
 	public void windowClosing(WindowEvent we) {
 		pucv.dispose();
 	}//windowClosing
+	
 }//class
 

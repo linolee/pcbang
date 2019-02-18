@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+
 @SuppressWarnings("serial")
 public class PUChargeView extends JFrame{
 

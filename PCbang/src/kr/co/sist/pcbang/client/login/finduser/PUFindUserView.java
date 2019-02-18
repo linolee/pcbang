@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+
 @SuppressWarnings("serial")
 public class PUFindUserView extends JFrame {
 
