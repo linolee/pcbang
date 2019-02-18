@@ -24,13 +24,19 @@ public class PMFareController implements ActionListener {
 		PMFareVO fvo = null;
 		int time = 60;
 		
+		try {
+		
 		for(int i=0; i<10;i++) {
 		fvo = new PMFareVO((time*(i+1)), Integer.parseInt(fv.getMjtfs()[i].getText()), Integer.parseInt(fv.getGjtfs()[i].getText()));
 		f_dao.updatePrice(fvo);
 		} // for
 		if(f_dao.updatePrice(fvo)) {
 			JOptionPane.showMessageDialog(fv, "수정완료");
-		} // end if
+		} 
+		
+		} catch(NumberFormatException nfe) {
+			JOptionPane.showMessageDialog(fv,  "입력값을 확인해주세요");
+		}
 	}
 	
 	@Override
