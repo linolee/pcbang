@@ -4,8 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
-
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
@@ -77,7 +78,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 					}//end else
 				}else if(loginStatus().equals("x")) {
 					//이미 로그인 되어있는데=>자리변경 신청안함
-					JOptionPane.showMessageDialog(pulv, "자리변경을 신청해 주세요!");
+					JOptionPane.showMessageDialog(pulv, "자리변경을 먼저 신청해 주세요!");
 				}//end else
 				
 				
@@ -85,7 +86,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 				JTextField jtf2=pulv.getJtfCardNum();
 				int card=Integer.parseInt(jtf2.getText().trim());
 				
-				if(loginStatus()=="o") {//로그인 가능한 상태인지
+				if(loginStatus().equals("o")) {//로그인 가능한 상태인지
 					//로그인
 					if(login(card)) {
 						new PUMainView();//new PUMainView(memberName);
@@ -95,7 +96,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 					}else {
 						JOptionPane.showMessageDialog(pulv, "카드번호를 확인해주세요");
 					}
-				}else if(loginStatus()=="c") {
+				}else if(loginStatus().equals("c")) {
 					//이미 로그인 되어있는데=>자리변경 신청함
 					if(login(card)) {
 						new PUMainView();//new PUMainView(memberName);
@@ -105,24 +106,27 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 					}else {
 						JOptionPane.showMessageDialog(pulv, "카드번호를 확인해주세요");
 					}
-				}else if(loginStatus()=="x") {
+				}else if(loginStatus().equals("x")) {
 					//이미 로그인 되어있는데=>자리변경 신청안함
-					JOptionPane.showMessageDialog(pulv, "자리변경을 신청해 주세요!");
+					JOptionPane.showMessageDialog(pulv, "자리변경을 먼저 신청해 주세요!");
 				}//end else
 			}//end else
 			
 		}//end if
 		if(ae.getSource()==pulv.getJbtMembership()) {
-			
+			JOptionPane.showMessageDialog(pulv, "회원가입!");
 		}//end if
 		if(ae.getSource()==pulv.getJbtFind()) {
-			
+			JOptionPane.showMessageDialog(pulv, "아이디/비밀번호 찾기!");
 		}//end if
 	}//actionPerformed
 	
 	@Override
 	public void windowClosing(WindowEvent we) {
-		pulv.dispose();
+		int flag=JOptionPane.showConfirmDialog(pulv, "로그인 하지 않으시면 사용이 불가능 합니다.\n그래도 종료하시겠습니까?");
+		if(flag==0) {
+			pulv.dispose();
+		}//end if
 	}//windowClosing
 	
 	/**
@@ -171,25 +175,37 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 			}//end if
 //		}else {
 //			System.out.println("로그인해 주세요!");
-		}
+		}//end else
 		return flagmember;
 	}//checkNull
 	
 	/**
-	 * 아이디가 로그인 중인지 확인, 이동가능한 상태인지 확인=>회원인지 비회원인지 어케 알음?!
+	 * 아이디가 로그인 중인지 확인, 이동가능한 상태인지 확인
 	 * @return 
 	 */
-	private String loginStatus() {
+	private String loginStatus() {//o,c,x가 나와야한다
 		String flag="";
 		char status;
-		try {
-			status = pul_dao.selectStatus();
-			flag=String.valueOf(status);
-			//flag=String.valueOf("o");
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}//end catch
+		JTextField jtfid=pulv.getJtfId();
+		JTextField jtfcard=pulv.getJtfCardNum();
+		
+		String id=jtfid.getText().trim();
+		String cardNum=jtfcard.getText().trim();
+		if(checkMember()) {//회원이면
+			try {
+				status = pul_dao.memberIdStatus(id);
+				flag=String.valueOf(status);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}//end catch
+		}else{//비회원이면
+			try {
+				status = pul_dao.guestIdStatus(Integer.parseInt(cardNum));
+				flag=String.valueOf(status);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}//end catch
+		}//end else
 		return flag;
 	}//loginStatus
 	
@@ -200,15 +216,20 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	 */
 	private boolean login(int guestNum) {
 		boolean flag=false;
-		PULoginDAO pul_dao=PULoginDAO.getInstance();
+		InetAddress ip;
 		try {
-			pul_dao.login(guestNum);
+			ip = InetAddress.getLocalHost();
+			PULoginDAO pul_dao=PULoginDAO.getInstance();
+			pul_dao.changeGuestStatus(guestNum, String.valueOf(ip));
 //			pul_dao.login(100);//100번을 조회해서 없으면
 			flag=true;
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(pulv, "DB에서 문제가 발생했습니다.");//<쿼리쪽에 문제가 없음을 보았음으로 DB탓
 			e.printStackTrace();
-		}//end catch
+		} catch (UnknownHostException uhe) {
+			JOptionPane.showMessageDialog(pulv, "ip조회 실패");//<쿼리쪽에 문제가 없음을 보았음으로 DB탓
+			uhe.printStackTrace();
+		} 
 		return flag;
 	}//login guest
 	

@@ -36,8 +36,11 @@ public class PULoginDAO {
 	public String selectNotice() throws SQLException{
 		return "공지사항";
 	}//selectNotice
-	
-	public char selectStatus() throws SQLException{
+
+	public char memberIdStatus(String id) throws SQLException{
+		return 'o';
+	}
+	public char guestIdStatus(int cardNum) throws SQLException{
 		return 'o';
 	}
 
@@ -45,6 +48,9 @@ public class PULoginDAO {
 		return "user";
 	}
 
-	public void login(int guestNum) throws SQLException {
+	public void changeMemberStatus(String memberId, String ip) throws SQLException {
+	}
+	
+	public void changeGuestStatus(int guestNum, String ip) throws SQLException {
 	}
 }//class
