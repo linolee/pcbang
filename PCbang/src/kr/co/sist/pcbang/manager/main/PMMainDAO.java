@@ -40,25 +40,20 @@ public class PMMainDAO {
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;		
-		//ㅇㅅㅇ
 		try {
-			// 1.
-			// 2.
 			con = getConn();
-			// 3.
+
 			StringBuilder insertNotice = new StringBuilder();
 			
 			insertNotice.append("insert into pc_notice").append("(admin_notice, notice_input_date)")
 					.append("values(?,sysdate)");
 			pstmt = con.prepareStatement(insertNotice.toString());
 			
-			// 4.바인드 변수 값넣기
 			pstmt.setString(1, pmmVO.getAdminNotice());
-			System.out.println();
-			// 5.
+		}catch (Exception e) {
 			pstmt.executeUpdate();
+		
 		} finally {
-			// 6.
 			if (pstmt != null) {
 				pstmt.close();
 			} // end if
@@ -66,7 +61,6 @@ public class PMMainDAO {
 				con.close();
 			} // end if
 		} // end finally
-				System.out.println("123");
 	} // insertNotice
 	
 	public String selectNotice(/*PMMainVO pmmVO*/) throws SQLException {	
@@ -100,7 +94,6 @@ public class PMMainDAO {
 				con.close();
 			} // end if
 		}
-		System.out.println(noticeView);
 		return noticeView;
 	} // selectNotice
 	

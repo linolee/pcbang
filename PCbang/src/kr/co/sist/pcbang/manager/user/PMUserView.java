@@ -13,14 +13,13 @@ import javax.swing.table.DefaultTableModel;
 @SuppressWarnings("serial")
 public class PMUserView extends JPanel {
 	
-	 private JLabel jlSearch, jlId, jlName;
+	 private JLabel jlId, jlName;
 	 private JTextField jtfId, jtfName;
 	 private JButton jbtnSearch, jbtnReset;
 	 private JTable jtMember;
 	 private DefaultTableModel dtmMember;
 	
 	public PMUserView() {
-		jlSearch = new JLabel("회원조회");
 		jlId = new JLabel("아이디");
 		jlName = new JLabel("이름");
 		
@@ -62,7 +61,6 @@ public class PMUserView extends JPanel {
 		
 		JPanel jpMemberNorth = new JPanel();
 		
-		jpMemberNorth.add(jlSearch);
 		jpMemberNorth.add(jlId);
 		jpMemberNorth.add(jtfId);
 		jpMemberNorth.add(jlName);
@@ -78,7 +76,6 @@ public class PMUserView extends JPanel {
 		add(jpMember);
 		
 		PMUserController uc = new PMUserController(this);
-//		addWindowFocusListener(uc);
 		jtfId.addActionListener(uc);
 		jtfName.addActionListener(uc);
 		jbtnSearch.addActionListener(uc);
@@ -92,9 +89,6 @@ public class PMUserView extends JPanel {
 		
 	}
 	
-	
-	
-
 	public JTextField getJtfId() {
 		return jtfId;
 	}

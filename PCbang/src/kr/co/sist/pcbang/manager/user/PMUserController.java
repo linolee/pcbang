@@ -71,7 +71,7 @@ public class PMUserController implements ActionListener, MouseListener {
 			}
 		} catch(SQLException se) {
 			JOptionPane.showMessageDialog(uv,  "아이디 혹은 이름을 입력해주세요");
-//			se.printStackTrace();
+			// se.printStackTrace();
 		}
 	}
 	
@@ -137,17 +137,12 @@ public class PMUserController implements ActionListener, MouseListener {
 			}
 		}
 	}
-	
 	@Override
 	public void mouseEntered(MouseEvent e) {}
-
 	@Override
 	public void mouseExited(MouseEvent e) {}
-
 	@Override
 	public void mousePressed(MouseEvent e) {}
-
 	@Override
 	public void mouseReleased(MouseEvent e) {}
-	
 }
