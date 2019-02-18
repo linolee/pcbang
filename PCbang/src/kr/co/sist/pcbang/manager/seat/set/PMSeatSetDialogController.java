@@ -64,7 +64,7 @@ public class PMSeatSetDialogController implements ActionListener {
 	private boolean checkIPAddr() {
 		boolean flag = true;
 		// IP주소가 형식에 맞는지 체크
-		String input = pmssdv.getJtfIDAddr().getText().trim();
+		String input = pmssdv.getJtfIPAddr().getText().trim();
 		String[] inputArr = input.split("\\.");
 		try {
 			Integer[] ipArr = new Integer[inputArr.length];
@@ -106,11 +106,11 @@ public class PMSeatSetDialogController implements ActionListener {
 	private void changeSeatInfo() {// 좌석정보를 입력한 값으로 변경
 		pmssdv.getPmssc().getSeat()[pmssdv.getX()][pmssdv.getY()] = new PMSeatSetVO(
 				Integer.parseInt(pmssdv.getJtfSeatNum().getText().trim()),
-				pmssdv.getJtfIDAddr().getText().trim(), "Admin");
+				pmssdv.getJtfIPAddr().getText().trim());
 	}
 	
 	private void resetSeatInfo() {// 좌석정보를 입력한 값으로 변경
-		pmssdv.getPmssc().getSeat()[pmssdv.getX()][pmssdv.getY()] = new PMSeatSetVO(0, "", "");
+		pmssdv.getPmssc().getSeat()[pmssdv.getX()][pmssdv.getY()] = new PMSeatSetVO(0, "");
 	}
 
 }
