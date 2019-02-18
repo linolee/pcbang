@@ -43,14 +43,14 @@ public class PMUserView extends JPanel {
 		jtMember.getTableHeader().setReorderingAllowed(false);	
 		
 		jtMember.getColumnModel().getColumn(0).setPreferredWidth(10);
-		jtMember.getColumnModel().getColumn(1).setPreferredWidth(20);
-		jtMember.getColumnModel().getColumn(2).setPreferredWidth(25);
+		jtMember.getColumnModel().getColumn(1).setPreferredWidth(40);
+		jtMember.getColumnModel().getColumn(2).setPreferredWidth(40);
 		jtMember.getColumnModel().getColumn(3).setPreferredWidth(35);
 		jtMember.getColumnModel().getColumn(4).setPreferredWidth(10);
-		jtMember.getColumnModel().getColumn(6).setPreferredWidth(150);
-		jtMember.getColumnModel().getColumn(7).setPreferredWidth(210);
-		jtMember.getColumnModel().getColumn(8).setPreferredWidth(10);
-		jtMember.getColumnModel().getColumn(9).setPreferredWidth(10);
+		jtMember.getColumnModel().getColumn(6).setPreferredWidth(110);
+		jtMember.getColumnModel().getColumn(7).setPreferredWidth(175);
+		jtMember.getColumnModel().getColumn(8).setPreferredWidth(20);
+		jtMember.getColumnModel().getColumn(9).setPreferredWidth(40);
 		jtMember.getColumnModel().getColumn(10).setPreferredWidth(100);
 		jtMember.setRowHeight(55);
 		
