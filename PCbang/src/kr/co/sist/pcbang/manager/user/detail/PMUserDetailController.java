@@ -26,12 +26,12 @@ public class PMUserDetailController extends WindowAdapter implements ActionListe
 	}
 	
 	public void updateUser() {
+		try {
 		PMUpdateVO upvo = null;
 		upvo = new PMUpdateVO
 				(udv.getJtfEmail().getText(), udv.getJtfTel().getText(), udv.getJtfBirth().getText(), udv.getJtfId().getText(), 
 						Integer.parseInt(udv.getJtfLeftTime().getText()));
 		
-		try {
 			if(u_dao.updateMemberData(upvo)) {
 				JOptionPane.showMessageDialog(udv, "회원정보가 변경되었습니다");
 				udv.dispose();
@@ -42,7 +42,9 @@ public class PMUserDetailController extends WindowAdapter implements ActionListe
 			e.printStackTrace();
 		} catch(NullPointerException ne) {
 			JOptionPane.showMessageDialog(udv, "빈칸을 입력할 수 없습니다");
-		}
+		} catch(NumberFormatException nfe) {
+		JOptionPane.showMessageDialog(udv, "빈칸을 입력할 수 없습니다");
+	} 
 		
 	}
 	
