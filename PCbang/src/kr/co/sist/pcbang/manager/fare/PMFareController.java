@@ -2,11 +2,11 @@ package kr.co.sist.pcbang.manager.fare;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 public class PMFareController implements ActionListener {
 	
@@ -39,16 +39,53 @@ public class PMFareController implements ActionListener {
 		}
 	}
 	
+	public void selectFare() throws SQLException{
+		Integer[] memberFare=null;
+		Integer[] guestFare=null;
+		
+		try {
+			memberFare = f_dao.selectMemberFare();
+			guestFare = f_dao.selectGuestFare();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		JTextField[] mjtfs = null;
+		JTextField[] gjtfs = null;
+		
+		mjtfs = fv.getMjtfs();
+		gjtfs = fv.getGjtfs();
+		
+		for(int i=0;i<mjtfs.length;i++) {
+			mjtfs[i].setText(String.valueOf(memberFare[i]));
+		}
+		
+		for(int i=0;i<gjtfs.length;i++) {
+			gjtfs[i].setText(String.valueOf(guestFare[i]));
+		}
+	}
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		
 		if(ae.getSource() == fv.getJbtnUpdate()) {
-			try {
+						try {
 				updateFare();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
+		
+		if(ae.getSource() == fv.getJbtnReset()) {
+			try {
+				selectFare();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 	
 }

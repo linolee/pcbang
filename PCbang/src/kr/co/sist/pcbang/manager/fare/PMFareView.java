@@ -2,6 +2,7 @@ package kr.co.sist.pcbang.manager.fare;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Panel;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
@@ -13,7 +14,7 @@ import javax.swing.border.TitledBorder;
 public class PMFareView extends JPanel {
 
 	 private JTextField[] mjtfs, gjtfs;
-	 private JButton jbtnUpdate;
+	 private JButton jbtnUpdate, jbtnReset;
 	 private PMFareDAO f_dao;
 	
 	public PMFareView() {
@@ -30,8 +31,9 @@ public class PMFareView extends JPanel {
 		jpFareMember.setBorder(new TitledBorder("회원"));
 		jpFareGuest.setBorder(new TitledBorder("비회원"));
 		
-		jpFareMember.setLayout(new GridLayout(10,2));
-		jpFareGuest.setLayout(new GridLayout(10,2));
+		
+		jpFareMember.setLayout(new GridLayout(10,1));
+		jpFareGuest.setLayout(new GridLayout(10,1));
 		
 		mjtfs=new JTextField[10];
 		gjtfs=new JTextField[10];
@@ -59,19 +61,29 @@ public class PMFareView extends JPanel {
 			jpFareGuest.add(gjtfs[i]);
 		}
 		
+		
+		
 		jbtnUpdate = new JButton("수정");
+		jbtnReset = new JButton("초기화");
+		
 		
 		mainPanel.setLayout(new GridLayout(1,2));
 		
 		mainPanel.add(jpFareMember);
 		mainPanel.add(jpFareGuest);
 		
+		Panel southPnl = new Panel();
+		southPnl.add(jbtnUpdate);
+		southPnl.add(jbtnReset);
+		
 		add("Center", mainPanel);
-		add("South",  jbtnUpdate);
+		add("South", southPnl);
 		
 		
 		PMFareController fc = new PMFareController(this);
 		jbtnUpdate.addActionListener(fc);
+		jbtnReset.addActionListener(fc);
+		
 		
 		setVisible(true);
 
@@ -87,6 +99,10 @@ public class PMFareView extends JPanel {
 
 	public JButton getJbtnUpdate() {
 		return jbtnUpdate;
+	}
+
+	public JButton getJbtnReset() {
+		return jbtnReset;
 	}
 
 
