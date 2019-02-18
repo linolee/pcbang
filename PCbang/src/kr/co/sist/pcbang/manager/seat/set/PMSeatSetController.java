@@ -49,7 +49,7 @@ public class PMSeatSetController implements ActionListener{
 					PMSeatSetDialogView pmssdv = new PMSeatSetDialogView(i, j, this);//좌석설정 다이얼로그 불러오기
 					if (seat[i][j].getSeatNum() != 0) {//좌석번호가 0이 아니라면 좌석의 정보를 입력창에 출력해준다.
 						pmssdv.getJtfSeatNum().setText(seat[i][j].getSeatNum().toString());
-						pmssdv.getJtfIDAddr().setText(seat[i][j].getPcIP());
+						pmssdv.getJtfIPAddr().setText(seat[i][j].getPcIP());
 					}
 				}
 			}//inner for
@@ -78,7 +78,7 @@ public class PMSeatSetController implements ActionListener{
 	private void seatReset() {
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				seat[i][j] = new PMSeatSetVO(0, "", "");
+				seat[i][j] = new PMSeatSetVO(0, "");
 			}//inner for
 		}//outer 
 	}
