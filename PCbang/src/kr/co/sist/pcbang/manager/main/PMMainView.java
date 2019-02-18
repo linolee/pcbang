@@ -11,12 +11,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import kr.co.sist.pcbang.manager.fare.PMFareView;
-import kr.co.sist.pcbang.manager.product.PMProductView;
-import kr.co.sist.pcbang.manager.seat.PMSeatView;
-import kr.co.sist.pcbang.manager.user.PMUserView;
-
-
 @SuppressWarnings("serial")
 public class PMMainView extends JFrame{
 
@@ -61,12 +55,12 @@ public class PMMainView extends JFrame{
 		jlTodayMoneyNum.setBounds(10, 590, 120, 30);
 		jtb.setBounds(150, 30, 1000, 600);
 		
-	    JPanel seat = new PMSeatView();
+	    JPanel seat = new JPanel();
 	    JPanel order = new JPanel();
 	    JPanel statistics = new JPanel();
-	    JPanel member = new PMUserView();
-	    JPanel menu = new PMProductView();
-	    JPanel price = new PMFareView();
+	    JPanel member = new JPanel();
+	    JPanel menu = new JPanel();
+	    JPanel price = new JPanel();
 	    
 	    jtb.add("ÁÂ¼®", seat );		
 	    jtb.add("ÁÖ¹®", order );		
@@ -177,8 +171,5 @@ public class PMMainView extends JFrame{
 	public static String getAdminId() {
 		return adminId;
 	}
-
-
-	
 	
 }//class
