@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 import kr.co.sist.pcbang.manager.fare.PMFareView;
 import kr.co.sist.pcbang.manager.product.PMProductView;
@@ -50,7 +51,7 @@ public class PMMainView extends JFrame{
 		setLayout(null);
 
 		jspBoard.setBounds(10,30, 120, 110);
-		jspNotice.setBounds(10,250, 120, 90);
+		jspNotice.setBounds(10,250, 120, 105);
 		jbtLogOut.setBounds(10, 145, 120, 30);
 		jbtAccount.setBounds(10, 180, 120, 30);
 		jbtNoticeSave.setBounds(10, 215, 120, 30);
@@ -89,6 +90,9 @@ public class PMMainView extends JFrame{
 		add(jlMsgNum);
 		add(jlTodayMoneyNum);
 		add("Center",jtb);
+		
+		jspBoard.setBorder(new TitledBorder("현황"));
+		jspNotice.setBorder(new TitledBorder("공지사항"));
 		
 		jlBoard.setBackground(Color.white);
 		jlOrder.setHorizontalAlignment(JTextField.CENTER);
