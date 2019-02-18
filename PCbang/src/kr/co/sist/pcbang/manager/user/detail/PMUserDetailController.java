@@ -40,6 +40,8 @@ public class PMUserDetailController extends WindowAdapter implements ActionListe
 		}catch (SQLException e) {
 			JOptionPane.showMessageDialog(udv, "스미마셍");
 			e.printStackTrace();
+		} catch(NullPointerException ne) {
+			JOptionPane.showMessageDialog(udv, "빈칸을 입력할 수 없습니다");
 		}
 		
 	}
