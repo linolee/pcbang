@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 public class PMSeatSetDialogController implements ActionListener {
 
-	PMSeatSetDialogView pmssdv;
+	private PMSeatSetDialogView pmssdv;
 
 	public PMSeatSetDialogController(PMSeatSetDialogView pmssdv) {
 		this.pmssdv = pmssdv;
@@ -38,14 +38,18 @@ public class PMSeatSetDialogController implements ActionListener {
 			if (seatNum > 100 && seatNum>0) {
 				JOptionPane.showMessageDialog(pmssdv, "100 이하의 정수를 입력해주세요.");
 				flag = false;
+				return flag;
 			}
 			// 좌석번호가 중복되는지 체크
 			PMSeatSetVO[][] seat = pmssdv.getPmssc().getSeat();
-			for (int i = 0; i < seat.length; i++) {
-				for (int j = 0; j < seat[i].length; j++) {
-					if (seat[i][j].getSeatNum() == seatNum) {
-						flag = false;
-						JOptionPane.showMessageDialog(pmssdv, "좌석 번호가 이미 할당되었습니다. 다른 번호를 할당해주세요.");
+			if (!seat[pmssdv.getX()][pmssdv.getY()].getSeatNum().equals(Integer.parseInt(input))) {//처음 불러온 좌석번호와 입력한 좌석번호가 다를 때 
+				for (int i = 0; i < seat.length; i++) {
+					for (int j = 0; j < seat[i].length; j++) {
+						if (seat[i][j].getSeatNum() == seatNum) {
+							flag = false;
+							JOptionPane.showMessageDialog(pmssdv, "좌석 번호가 이미 할당되었습니다. 다른 번호를 할당해주세요.");
+							return flag;
+						}
 					}
 				}
 			}
@@ -60,7 +64,7 @@ public class PMSeatSetDialogController implements ActionListener {
 	private boolean checkIPAddr() {
 		boolean flag = true;
 		// IP주소가 형식에 맞는지 체크
-		String input = pmssdv.getJtfIDAddr().getText().trim();
+		String input = pmssdv.getJtfIPAddr().getText().trim();
 		String[] inputArr = input.split("\\.");
 		try {
 			Integer[] ipArr = new Integer[inputArr.length];
@@ -83,14 +87,17 @@ public class PMSeatSetDialogController implements ActionListener {
 
 		// 좌석번호가 중복되는지 체크
 		PMSeatSetVO[][] seat = pmssdv.getPmssc().getSeat();
-		for (int i = 0; i < seat.length; i++) {
-			for (int j = 0; j < seat[i].length; j++) {
-				if (seat[i][j].getPcIP().equals(input)) {
-					flag = false;
-					JOptionPane.showMessageDialog(pmssdv, "IP가 이미 "+seat[i][j].getSeatNum()+"번 좌석에 할당되었습니다. 다른 IP를 할당해주세요.");
-				} // end if
-			} // end inner for
-		} // end outer for
+		if (!seat[pmssdv.getX()][pmssdv.getY()].getPcIP().equals(input)) {//처음 불러온 IP와 입력한 IP가 다를 때
+			for (int i = 0; i < seat.length; i++) {
+				for (int j = 0; j < seat[i].length; j++) {
+					if (seat[i][j].getPcIP().equals(input)) {
+						flag = false;
+						JOptionPane.showMessageDialog(pmssdv, "IP가 이미 "+seat[i][j].getSeatNum()+"번 좌석에 할당되었습니다. 다른 IP를 할당해주세요.");
+					} // end if
+				} // end inner for
+			} // end outer for
+		}
+
 
 		// IP주소가 중복되는지 체크
 		return flag;
@@ -99,11 +106,11 @@ public class PMSeatSetDialogController implements ActionListener {
 	private void changeSeatInfo() {// 좌석정보를 입력한 값으로 변경
 		pmssdv.getPmssc().getSeat()[pmssdv.getX()][pmssdv.getY()] = new PMSeatSetVO(
 				Integer.parseInt(pmssdv.getJtfSeatNum().getText().trim()),
-				pmssdv.getJtfIDAddr().getText().trim(), "Admin");
+				pmssdv.getJtfIPAddr().getText().trim());
 	}
 	
 	private void resetSeatInfo() {// 좌석정보를 입력한 값으로 변경
-		pmssdv.getPmssc().getSeat()[pmssdv.getX()][pmssdv.getY()] = new PMSeatSetVO(0, "", "");
+		pmssdv.getPmssc().getSeat()[pmssdv.getX()][pmssdv.getY()] = new PMSeatSetVO(0, "");
 	}
 
 }
