@@ -11,6 +11,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import kr.co.sist.pcbang.manager.product.PMProductView;
+
 @SuppressWarnings("serial")
 public class PMMainView extends JFrame{
 
@@ -59,14 +61,14 @@ public class PMMainView extends JFrame{
 	    JPanel order = new JPanel();
 	    JPanel statistics = new JPanel();
 	    JPanel member = new JPanel();
-	    JPanel menu = new JPanel();
+	    JPanel menu = new PMProductView();
 	    JPanel price = new JPanel();
 	    
 	    jtb.add("谅籍", seat );		
 	    jtb.add("林巩", order );		
 	    jtb.add("烹拌", statistics );		
 	    jtb.add("雀盔包府" ,member );		
-	    jtb.add("惑前包府" ,menu );		
+	    jtb.add("惑前包府" , menu);		
 	    jtb.add("夸陛力包府" ,price );		
 
 		

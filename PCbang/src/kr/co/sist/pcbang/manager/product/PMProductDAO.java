@@ -10,6 +10,7 @@ import java.util.List;
 
 import kr.co.sist.pcbang.manager.product.add.PMProductAddVO;
 import kr.co.sist.pcbang.manager.product.detail.PMProductDetailVO;
+import kr.co.sist.pcbang.manager.product.detail.PMProductUpdateVO;
 
 public class PMProductDAO {
 
@@ -213,6 +214,7 @@ public class PMProductDAO {
 			pstmt.setString(2, pmpav.getMenuName());
 			pstmt.setInt(3, pmpav.getPrice());
 			pstmt.setString(4, pmpav.getImg());
+			pstmt.setString(5, "2019-02-18");
 			pstmt.setString(6, PMProductView.adminId);
 			// 5.
 			pstmt.executeUpdate(); // insert되거나 예외이거나 둘 중 하나

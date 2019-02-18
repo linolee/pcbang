@@ -1,10 +1,13 @@
 package kr.co.sist.pcbang.manager.product.add;
 
+import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -81,16 +84,15 @@ public class PMProductAddController extends WindowAdapter implements ActionListe
 //			LunchAdminDAO.getInstance().insertLunch(lavo);//에러가 나지 않는 경우 DB에 추가
 			
 			//리스트 갱신
-//			lmc.setLunch();
-//			
-//			//다음 도시락의 입력을 편하게 하기 위해서 입력폼 초기화
-//			jtfName.setText("");
-//			jtfPrice.setText("");
-//			jtaSpec.setText("");
-//			
-//			lav.getJlLunchImg().setIcon(new ImageIcon("C:/dev/workspace/lunch_prj/src/kr/co/sist/lunch/admin/img/no_img.jpg"));
-//			
-//			JOptionPane.showMessageDialog(lav, "도시락이 추가되었습니다.");
+			pmpc.setPrd();
+			
+			//다음 도시락의 입력을 편하게 하기 위해서 입력폼 초기화
+			jtfName.setText("");
+			jtfPrice.setText("");
+			
+			pmpav.getjlImg().setIcon(new ImageIcon("C:/dev/workspace/lunch_prj/src/kr/co/sist/lunch/admin/img/no_img.jpg"));
+			
+			JOptionPane.showMessageDialog(pmpav, "도시락이 추가되었습니다.");
 		} catch (IOException ie) {
 			JOptionPane.showMessageDialog(pmpav, "파일 업로드 실패");
 			ie.printStackTrace();
@@ -100,12 +102,71 @@ public class PMProductAddController extends WindowAdapter implements ActionListe
 		}//end catch 
 	}//addPrd
 	
+	/**
+	 * 큰 이미지명을 가진 File객체를 입력하여 업로드 폴더에 큰 이미지와
+	 * 작은 이미지(s_)를 업로드한다.
+	 * @param file
+	 */
 	private void uploadImg(File file) throws IOException{
+		FileInputStream fis = null;
+		FileOutputStream fos = null;
+		try {
+			// PMProductDetailController에 modify큰이미지,
+			byte[] readData = new byte[512];
+			String uploadPath = "C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img/";
+
+			int len = 0;
+			// 작은 이미지 업로드
+			fis = new FileInputStream(file.getParent() + "/s_" + file.getName());// getParent를 쓰면 폴더까지가 나옴
+			fos = new FileOutputStream(uploadPath + "s_" + file.getName());
+			while ((len = fis.read(readData)) != -1) {
+				fos.write(readData, 0, len);
+				fos.flush();
+			} // end while
+
+			fis.close();
+			fos.close();
+
+			// 큰 이미지 업로드
+			fis = new FileInputStream(file);
+			len = 0; // len을 0으로 초기화
+			fos = new FileOutputStream(uploadPath + file.getName());
+
+			while ((len = fis.read(readData)) != -1) {
+				fos.write(readData, 0, len);
+				fos.flush();
+		}//end while
+			
+		}finally {
+			if(fis!=null) {fis.close();}//end if
+			if(fos!=null) {fos.close();}//end if
+		}//end finally
 		
 	}//uploadImg
 	
 	private void setImg() {
+		FileDialog fdOpen = new FileDialog(pmpav, "상품이미지 선택", FileDialog.LOAD);
+		fdOpen.setVisible(true);
 		
+		String path = fdOpen.getDirectory();
+		String name=fdOpen.getFile();
+		
+		boolean flag = false;
+		if(path!=null) {
+			String[] extFlag = {"jpg","gif","jpeg","png","bmp"};
+			for(String ext:extFlag) {
+				if(name.toLowerCase().endsWith(ext)) { //업로드 가능 확장자
+					flag=true;
+				}//end if
+			}//end for
+			if(flag) {
+				uploadImg=path+name;
+				pmpav.getjlImg().setIcon(new ImageIcon(uploadImg));
+				}else {
+					JOptionPane.showMessageDialog(pmpav, name+"은 이미지가 아닙니다.");
+				}//end else
+					
+		}//end if
 	}//setImg
 	
 	@Override
@@ -121,7 +182,6 @@ public class PMProductAddController extends WindowAdapter implements ActionListe
 		if(ae.getSource()==pmpav.getJbAdd()) {
 			addPrd();
 		}//end if
-		
 		if(ae.getSource()==pmpav.getJbEnd()) {
 			pmpav.dispose();
 		}//end if
