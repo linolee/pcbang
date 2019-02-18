@@ -97,7 +97,7 @@ public class PMProductView extends JPanel{
 	setVisible(true);
 	}//PMProductView
 
-	private void setCategory() {//현재년도의 4년 전까지
+	private void setCategory() {
 		String[] category = {"음료", "스낵", "라면"};
 		for(int i=0; i<category.length; i++) {
 		dcCategory.addElement(category[i]);

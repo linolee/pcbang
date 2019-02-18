@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import kr.co.sist.pcbang.manager.product.PMProductController;
 import kr.co.sist.pcbang.manager.product.PMProductView;
 
+@SuppressWarnings("serial")
 public class PMProductDetailView extends JDialog {
 
 	private JLabel jlImg;
@@ -22,7 +23,6 @@ public class PMProductDetailView extends JDialog {
 	private JButton jbImg, jbUpdate, jbDelete, jbEnd;
 	
 	public PMProductDetailView(PMProductView pmpv, PMProductDetailVO pmpdvo, PMProductController pmpc) {
-//		super(pmpv, "상품 상세 정보", true);
 	
 		ImageIcon iiProduct = new ImageIcon("C:/dev/workspace/lunch_prj/src/kr/co/sist/lunch/admin/img/no_img.jpg");
 		jlImg = new JLabel(iiProduct);

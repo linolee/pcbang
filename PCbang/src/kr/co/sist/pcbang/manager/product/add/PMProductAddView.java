@@ -23,14 +23,14 @@ public class PMProductAddView extends JDialog {
 	private JButton jbImg, jbAdd, jbEnd;
 	
 	public PMProductAddView(PMProductView pmpv, PMProductController pmpc) {
-//		super(pmpv, "상품 정보 추가", true);  
 		
 		ImageIcon iiProduct = new ImageIcon("C:/dev/workspace/lunch_prj/src/kr/co/sist/lunch/admin/img/no_img.jpg");
 		jlImg = new JLabel(iiProduct);
 		jtfMenuName = new JTextField();
 		jtfPrice = new JTextField();
 		
-		jcbPrdCategory = new JComboBox<String>();
+		dcCategory = new DefaultComboBoxModel<String>();
+		jcbPrdCategory = new JComboBox<String>(dcCategory);
 		
 		jbImg = new JButton("이미지 선택");
 		jbAdd = new JButton("추가");
@@ -42,7 +42,7 @@ public class PMProductAddView extends JDialog {
 		jlDetailTitle.setFont(new Font("나눔고딕", Font.BOLD, 25));
 		
 		//배치
-		jlDetailTitle.setBounds(10,25,250,30);
+		jlDetailTitle.setBounds(20,25,250,30);
 		jlImg.setBounds(10,60,244,220);
 		jbImg.setBounds(80, 290, 120, 25);
 		
@@ -56,7 +56,7 @@ public class PMProductAddView extends JDialog {
 		
 		jtfMenuName.setBounds(340,65,185,25);
 		jcbPrdCategory.setBounds(340,95,185,25);
-		jtfPrice.setBounds(340,125,185,100);
+		jtfPrice.setBounds(340,125,185,25);
 		
 		jbAdd.setBounds(320,300,80,30);
 		jbEnd.setBounds(410,300,80,30);
@@ -73,6 +73,8 @@ public class PMProductAddView extends JDialog {
 		add(jbAdd);
 		add(jbEnd);
 		
+		setCategory(); //Category 설정 ->일단 메소드로 만들어놨으나 DB에서 가져올 수 있도록 바꿔줘야함
+		
 		//이벤트 등록
 		PMProductAddController pmpac = new PMProductAddController(this, pmpc);
 		addWindowListener(pmpac);
@@ -85,6 +87,15 @@ public class PMProductAddView extends JDialog {
 		setResizable(false);
 	}
 
+	////////////////////카테고리 나중에 DB에서 불러올 수 있도록 변경//////////////////////
+	private void setCategory() {
+		String[] category = {"음료", "스낵", "라면"};
+		for(int i=0; i<category.length; i++) {
+		dcCategory.addElement(category[i]);
+		}//end for
+	}//setCategory
+
+	
 	public JLabel getjlImg() {
 		return jlImg;
 	}
