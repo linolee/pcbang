@@ -1,11 +1,7 @@
 package kr.co.sist.pcbang.manager.seat.set;
 
-import java.awt.Panel;
-
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
