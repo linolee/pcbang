@@ -2,38 +2,41 @@ package kr.co.sist.pcbang.manager.seat;
 
 public class PMSeatVO {
 	private Integer seatNum;
-	private String pcIP, pcStatus, user, msgStatus;
-	
-	public PMSeatVO(Integer seatNum, String pcIP, String pcStatus, String user, String msgStatus) {
+	private String pcIP, user, pcStatus, messageStatus, orderStatus;
+
+	public PMSeatVO(Integer seatNum, String pcIP, String user, String pcStatus, String messageStatus,
+			String orderStatus) {
 		super();
 		this.seatNum = seatNum;
 		this.pcIP = pcIP;
-		this.pcStatus = pcStatus;
 		this.user = user;
-		this.msgStatus = msgStatus;
-	}
-	
-	@Override
-	public String toString() {
-		return "PMSeatVO [seatNum=" + seatNum + ", pcIP=" + pcIP + ", pcStatus=" + pcStatus + ", user=" + user
-				+ ", msgStatus=" + msgStatus + "]";
+		this.pcStatus = pcStatus;
+		this.messageStatus = messageStatus;
+		this.orderStatus = orderStatus;
 	}
 
 	public Integer getSeatNum() {
 		return seatNum;
 	}
+
 	public String getPcIP() {
 		return pcIP;
 	}
-	public String getPcStatus() {
-		return pcStatus;
-	}
+
 	public String getUser() {
 		return user;
 	}
-	public String getMsgStatus() {
-		return msgStatus;
+
+	public String getPcStatus() {
+		return pcStatus;
 	}
-	
-	
+
+	public String getMessageStatus() {
+		return messageStatus;
+	}
+
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+
 }
