@@ -1,5 +1,4 @@
 package kr.co.sist.pcbang.client.login.newuser;
-
 import java.awt.Color;
 
 import javax.swing.JButton;
@@ -15,6 +14,7 @@ public class PUPolicyView extends JFrame{
 	private JCheckBox jcb1, jcb2, jcb3;
 	private JTextArea jtaCare1, jtaCare2, jtaCare3;
 	private JButton jbtOk, jbtcancel;
+	private JLabel msgJoin1, msgJoin2, msgJoin3, msgJoin4, msgJoin5;
 	
 	public PUPolicyView() {
 		super("※ 개인정보 보호");	
@@ -33,7 +33,18 @@ public class PUPolicyView extends JFrame{
 		JScrollPane jspCare2 = new JScrollPane(jtaCare2);
 		JScrollPane jspCare3 = new JScrollPane(jtaCare3);
 		
+		msgJoin1 = new JLabel();
+		msgJoin2 = new JLabel();
+		msgJoin3 = new JLabel();
+		msgJoin4 = new JLabel();
+		msgJoin5 = new JLabel();
+		
 		setLayout(null);
+		msgJoin1.setText("개인정보보호법시행에 따라 개인정보 수집 및 이용에 관한 내용");
+		msgJoin2.setText("확인 뒤 동의해야 회원가입이 가능합니다.");
+		msgJoin3.setText("개정된 주민등록법에 의해 타인의 주민등록번호를 부정 사용");
+		msgJoin4.setText("하는 자는 3년 이하의 징역 또는 1천 만원 이하의 벌금이 부과될");
+		msgJoin5.setText("수 있습니다.");
 		
 		jtaCare1.setText("수집하는 개인정보의 항목\n" +
 				"수집하는 목적/방법에 따라 수집하는 개인정보 항목은 다음과 같습니다.\n" + 
@@ -73,6 +84,11 @@ public class PUPolicyView extends JFrame{
 				"- 본인확인에 관한 기록 보존 이유 : 정보통신 이용촉진 및 정보보호 등에 관한 법률 보존 기간 : 6개월 \r\n" + 
 				"- 방문에 관한 기록 보존 이유 : 통신 비밀 보호법 보존 기간 : 3개월");
 		
+		msgJoin1.setBounds(10, 10, 375, 30);
+		msgJoin2.setBounds(10, 25, 375, 30);
+		msgJoin3.setBounds(10, 60, 375, 30);
+		msgJoin4.setBounds(10, 75, 375, 30);
+		msgJoin5.setBounds(10, 90, 375, 30);
 		jspCare1.setBounds(10, 130, 375, 110);
 		jspCare2.setBounds(10, 270, 375, 110);
 		jspCare3.setBounds(10, 410, 375, 110);
@@ -82,6 +98,11 @@ public class PUPolicyView extends JFrame{
 		jbtOk.setBounds(90, 580, 80, 40);
 		jbtcancel.setBounds(230, 580, 80, 40);
 		
+		add(msgJoin1);
+		add(msgJoin2);
+		add(msgJoin3);
+		add(msgJoin4);
+		add(msgJoin5);
 		add(jspCare1);
 		add(jspCare2);
 		add(jspCare3);
@@ -91,6 +112,10 @@ public class PUPolicyView extends JFrame{
 		add(jbtOk);
 		add(jbtcancel);
 
+		msgJoin3.setForeground(Color.RED);
+		msgJoin4.setForeground(Color.RED);
+		msgJoin5.setForeground(Color.RED);
+		
 		jtaCare1.setBackground(Color.white);
 		jtaCare2.setBackground(Color.white);
 		jtaCare3.setBackground(Color.white);
@@ -122,49 +147,33 @@ public class PUPolicyView extends JFrame{
 		return jcb1;
 	}
 
-
-
 	public JCheckBox getJcb2() {
 		return jcb2;
 	}
-
-
 
 	public JCheckBox getJcb3() {
 		return jcb3;
 	}
 
-
-
 	public JTextArea getJtaCare1() {
 		return jtaCare1;
 	}
-
-
 
 	public JTextArea getJtaCare2() {
 		return jtaCare2;
 	}
 
-
-
 	public JTextArea getJtaCare3() {
 		return jtaCare3;
 	}
-
-
 
 	public JButton getJbtOk() {
 		return jbtOk;
 	}
 
-
-
 	public JButton getJbtcancel() {
 		return jbtcancel;
 	}
-
-
 
 	public static void main(String[] args) {
 		new PUPolicyView();
