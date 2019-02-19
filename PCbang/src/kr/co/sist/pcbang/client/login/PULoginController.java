@@ -13,10 +13,11 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import kr.co.sist.pcbang.client.login.newuser.PUPolicyView;
 import kr.co.sist.pcbang.client.main.PUMainView;
 
 /**
- * Å¬¶óÀÌ¾ğÆ® ·Î±×ÀÎ
+ * í´ë¼ì´ì–¸íŠ¸ ë¡œê·¸ì¸
  * @author owner
  */
 public class PULoginController extends WindowAdapter implements ActionListener{
@@ -32,43 +33,43 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if(ae.getSource()==pulv.getJbtStart()) {//·Î±×ÀÎ
+		if(ae.getSource()==pulv.getJbtStart()) {//ë¡œê·¸ì¸
 //			new PUMainView();
 //			pulv.dispose();
 			
-			if(checkMember()) {//È¸¿øÀÌ¸é
+			if(checkMember()) {//íšŒì›ì´ë©´
 				JTextField jtf=pulv.getJtfId();
 				JPasswordField jpf=pulv.getJpfPass();
 				
 				String id=jtf.getText().trim();
 				String pass=new String (jpf.getPassword());
 				
-				if(loginStatus().equals("o")) {//·Î±×ÀÎ °¡´ÉÇÑ »óÅÂÀÎÁö
-					//·Î±×ÀÎ
+				if(loginStatus().equals("o")) {//ë¡œê·¸ì¸ ê°€ëŠ¥í•œ ìƒíƒœì¸ì§€
+					//ë¡œê·¸ì¸
 					PUCertificationVO pucvo=new PUCertificationVO(id, pass);
 					String memberName=login(pucvo);
 					
-					if(memberName.equals("")) {//¼öÇàÇÑ °á°ú°¡ ""¶ó¸é 
-						JOptionPane.showMessageDialog(pulv, "¾ÆÀÌµğ³ª ºñ¹Ğ¹øÈ£¸¦ È®ÀÎÇÏ¼¼¿ä.");
+					if(memberName.equals("")) {//ìˆ˜í–‰í•œ ê²°ê³¼ê°€ ""ë¼ë©´ 
+						JOptionPane.showMessageDialog(pulv, "ì•„ì´ë””ë‚˜ ë¹„ë°€ë²ˆí˜¸ë¥¼ í™•ì¸í•˜ì„¸ìš”.");
 						jtf.setText("");
 						jpf.setText("");
 						jtf.requestFocus();
 					}else {
 						//System.out.println(id);
-						PUMainView.userId=id;//·Î±×ÀÎÀÌ ¼º°øÇß´Ù¸é id¸¦ ¸ğµç°´Ã¼¿¡¼­ »ç¿ëÇÒ ¼ö ÀÖµµ·Ï static º¯¼ö·Î ¼³Á¤ÇÑ´Ù.
+						PUMainView.userId=id;//ë¡œê·¸ì¸ì´ ì„±ê³µí–ˆë‹¤ë©´ idë¥¼ ëª¨ë“ ê°ì²´ì—ì„œ ì‚¬ìš©í•  ìˆ˜ ìˆë„ë¡ static ë³€ìˆ˜ë¡œ ì„¤ì •í•œë‹¤.
 						PUMainView.cardNum="";
 						new PUMainView();//new PUMainView(memberName);
 						pulv.dispose();
 					}//end else
 				}else if(loginStatus().equals("c")) {
-					//ÀÌ¹Ì ·Î±×ÀÎ µÇ¾îÀÖ´Âµ¥=>ÀÚ¸®º¯°æ ½ÅÃ»ÇÔ
-					System.out.println("ÀÚ¸®º¯°æÇÑ »óÅÂÀÔ´Ï´Ù->·Î±×ÀÎ");
+					//ì´ë¯¸ ë¡œê·¸ì¸ ë˜ì–´ìˆëŠ”ë°=>ìë¦¬ë³€ê²½ ì‹ ì²­í•¨
+					System.out.println("ìë¦¬ë³€ê²½í•œ ìƒíƒœì…ë‹ˆë‹¤->ë¡œê·¸ì¸");
 
 					PUCertificationVO pucvo=new PUCertificationVO(id, pass);
 					String memberName=login(pucvo);
 					
-					if(memberName.equals("")) {//¼öÇàÇÑ °á°ú°¡ ""¶ó¸é 
-						JOptionPane.showMessageDialog(pulv, "¾ÆÀÌµğ³ª ºñ¹Ğ¹øÈ£¸¦ È®ÀÎÇÏ¼¼¿ä.");
+					if(memberName.equals("")) {//ìˆ˜í–‰í•œ ê²°ê³¼ê°€ ""ë¼ë©´ 
+						JOptionPane.showMessageDialog(pulv, "ì•„ì´ë””ë‚˜ ë¹„ë°€ë²ˆí˜¸ë¥¼ í™•ì¸í•˜ì„¸ìš”.");
 						jtf.setText("");
 						jpf.setText("");
 						jtf.requestFocus();
@@ -79,62 +80,67 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 						pulv.dispose();
 					}//end else
 				}else if(loginStatus().equals("x")) {
-					//ÀÌ¹Ì ·Î±×ÀÎ µÇ¾îÀÖ´Âµ¥=>ÀÚ¸®º¯°æ ½ÅÃ»¾ÈÇÔ
-					JOptionPane.showMessageDialog(pulv, "ÀÚ¸®º¯°æÀ» ¸ÕÀú ½ÅÃ»ÇØ ÁÖ¼¼¿ä!");
+					//ì´ë¯¸ ë¡œê·¸ì¸ ë˜ì–´ìˆëŠ”ë°=>ìë¦¬ë³€ê²½ ì‹ ì²­ì•ˆí•¨
+					JOptionPane.showMessageDialog(pulv, "ìë¦¬ë³€ê²½ì„ ë¨¼ì € ì‹ ì²­í•´ ì£¼ì„¸ìš”!");
 				}//end else
 				
 				
-			}else{//ºñÈ¸¿øÀÌ¸é
+			}else{//ë¹„íšŒì›ì´ë©´
 				JTextField jtf2=pulv.getJtfCardNum();
 				int card=Integer.parseInt(jtf2.getText().trim());
 				
-				if(loginStatus().equals("o")) {//·Î±×ÀÎ °¡´ÉÇÑ »óÅÂÀÎÁö
-					//·Î±×ÀÎ
+				if(loginStatus().equals("o")) {//ë¡œê·¸ì¸ ê°€ëŠ¥í•œ ìƒíƒœì¸ì§€
+					//ë¡œê·¸ì¸
 					if(login(card)) {
 						//System.out.println(card);
-						PUMainView.userId="";//·Î±×ÀÎÀÌ ¼º°øÇß´Ù¸é id¸¦ ¸ğµç°´Ã¼¿¡¼­ »ç¿ëÇÒ ¼ö ÀÖµµ·Ï static º¯¼ö·Î ¼³Á¤ÇÑ´Ù.
+						PUMainView.userId="";//ë¡œê·¸ì¸ì´ ì„±ê³µí–ˆë‹¤ë©´ idë¥¼ ëª¨ë“ ê°ì²´ì—ì„œ ì‚¬ìš©í•  ìˆ˜ ìˆë„ë¡ static ë³€ìˆ˜ë¡œ ì„¤ì •í•œë‹¤.
 						PUMainView.cardNum=String.valueOf(card);
 						new PUMainView();//new PUMainView(memberName);
 						pulv.dispose();
 					}else {
-						JOptionPane.showMessageDialog(pulv, "Ä«µå¹øÈ£¸¦ È®ÀÎÇØÁÖ¼¼¿ä");
+						JOptionPane.showMessageDialog(pulv, "ì¹´ë“œë²ˆí˜¸ë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”");
 					}
 				}else if(loginStatus().equals("c")) {
-					//ÀÌ¹Ì ·Î±×ÀÎ µÇ¾îÀÖ´Âµ¥=>ÀÚ¸®º¯°æ ½ÅÃ»ÇÔ
+					//ì´ë¯¸ ë¡œê·¸ì¸ ë˜ì–´ìˆëŠ”ë°=>ìë¦¬ë³€ê²½ ì‹ ì²­í•¨
 					if(login(card)) {
 						new PUMainView();//new PUMainView(memberName);
-						PUMainView.userId="";//·Î±×ÀÎÀÌ ¼º°øÇß´Ù¸é id¸¦ ¸ğµç°´Ã¼¿¡¼­ »ç¿ëÇÒ ¼ö ÀÖµµ·Ï static º¯¼ö·Î ¼³Á¤ÇÑ´Ù.
+						PUMainView.userId="";//ë¡œê·¸ì¸ì´ ì„±ê³µí–ˆë‹¤ë©´ idë¥¼ ëª¨ë“ ê°ì²´ì—ì„œ ì‚¬ìš©í•  ìˆ˜ ìˆë„ë¡ static ë³€ìˆ˜ë¡œ ì„¤ì •í•œë‹¤.
 						PUMainView.cardNum=String.valueOf(card);
 						pulv.dispose();
 					}else {
-						JOptionPane.showMessageDialog(pulv, "Ä«µå¹øÈ£¸¦ È®ÀÎÇØÁÖ¼¼¿ä");
+						JOptionPane.showMessageDialog(pulv, "ì¹´ë“œë²ˆí˜¸ë¥¼ í™•ì¸í•´ì£¼ì„¸ìš”");
 					}
 				}else if(loginStatus().equals("x")) {
-					//ÀÌ¹Ì ·Î±×ÀÎ µÇ¾îÀÖ´Âµ¥=>ÀÚ¸®º¯°æ ½ÅÃ»¾ÈÇÔ
-					JOptionPane.showMessageDialog(pulv, "ÀÚ¸®º¯°æÀ» ¸ÕÀú ½ÅÃ»ÇØ ÁÖ¼¼¿ä!");
+					//ì´ë¯¸ ë¡œê·¸ì¸ ë˜ì–´ìˆëŠ”ë°=>ìë¦¬ë³€ê²½ ì‹ ì²­ì•ˆí•¨
+					JOptionPane.showMessageDialog(pulv, "ìë¦¬ë³€ê²½ì„ ë¨¼ì € ì‹ ì²­í•´ ì£¼ì„¸ìš”!");
 				}//end else
 			}//end else
 			
 		}//end if
 		if(ae.getSource()==pulv.getJbtMembership()) {
-			JOptionPane.showMessageDialog(pulv, "È¸¿ø°¡ÀÔ!");
+
+			new PUPolicyView();
+			pulv.dispose();
+
+			JOptionPane.showMessageDialog(pulv, "íšŒì›ê°€ì…!");
+
 		}//end if
 		if(ae.getSource()==pulv.getJbtFind()) {
-			JOptionPane.showMessageDialog(pulv, "¾ÆÀÌµğ/ºñ¹Ğ¹øÈ£ Ã£±â!");
+			JOptionPane.showMessageDialog(pulv, "ì•„ì´ë””/ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°!");
 		}//end if
 	}//actionPerformed
 	
 	@Override
 	public void windowClosing(WindowEvent we) {
-		int flag=JOptionPane.showConfirmDialog(pulv, "·Î±×ÀÎ ÇÏÁö ¾ÊÀ¸½Ã¸é »ç¿ëÀÌ ºÒ°¡´É ÇÕ´Ï´Ù.\n±×·¡µµ Á¾·áÇÏ½Ã°Ú½À´Ï±î?");
+		int flag=JOptionPane.showConfirmDialog(pulv, "ë¡œê·¸ì¸ í•˜ì§€ ì•Šìœ¼ì‹œë©´ ì‚¬ìš©ì´ ë¶ˆê°€ëŠ¥ í•©ë‹ˆë‹¤.\nê·¸ë˜ë„ ì¢…ë£Œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
 		if(flag==0) {
 			pulv.dispose();
 		}//end if
 	}//windowClosing
 	
 	/**
-	 * È¸¿ø, ºñÈ¸¿ø ±¸ºĞ
-	 * @return false´Â ºñÈ¸¿ø true´Â È¸¿ø
+	 * íšŒì›, ë¹„íšŒì› êµ¬ë¶„
+	 * @return falseëŠ” ë¹„íšŒì› trueëŠ” íšŒì›
 	 */
 	private boolean checkMember() {
 		boolean flagmember=true;
@@ -153,40 +159,40 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 				jtf1.setText("");
 				jtf1.requestFocus();
 				flagId=true;
-				System.out.println("¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä");
-				JOptionPane.showMessageDialog(pulv, "¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä.");
+				System.out.println("ì•„ì´ë””ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”");
+				JOptionPane.showMessageDialog(pulv, "ì•„ì´ë””ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”.");
 			}else if(pass.trim().equals("")) {
-				jpf.setText("");//°ø¹éÀ» ÀÔ·ÂÇÏ°í ¿£ÅÍÄ£ °æ¿ì JPasswordFieldÀÇ °ªÀ» ÃÊ±âÈ­
+				jpf.setText("");//ê³µë°±ì„ ì…ë ¥í•˜ê³  ì—”í„°ì¹œ ê²½ìš° JPasswordFieldì˜ ê°’ì„ ì´ˆê¸°í™”
 				jpf.requestFocus();
 				flagPass=true;
-				System.out.println("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä");
-				JOptionPane.showMessageDialog(pulv, "ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä.");
+				System.out.println("ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”");
+				JOptionPane.showMessageDialog(pulv, "ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”.");
 			}//end if
 			if(!flagId&&!flagPass) {
-				flagmember=true;//È¸¿ø
-				//System.out.println("È¸¿ø ÀÔ´Ï´Ù.");
+				flagmember=true;//íšŒì›
+				//System.out.println("íšŒì› ì…ë‹ˆë‹¤.");
 			}//end if
 		}else if(jtf1.getText().trim().equals("") && pass.trim().equals("")){
 			if(jtf2.getText().trim().equals("")) {
 				jtf2.setText("");
 				jtf2.requestFocus();
 				flagCard=true;
-				System.out.println("ºñÈ¸¿ø Ä«µå¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä");
+				System.out.println("ë¹„íšŒì› ì¹´ë“œë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”");
 			}//end if
 			if(!flagCard) {
-				flagmember=false;//ºñÈ¸¿ø
+				flagmember=false;//ë¹„íšŒì›
 			}//end if
 //		}else {
-//			System.out.println("·Î±×ÀÎÇØ ÁÖ¼¼¿ä!");
+//			System.out.println("ë¡œê·¸ì¸í•´ ì£¼ì„¸ìš”!");
 		}//end else
 		return flagmember;
 	}//checkNull
 	
 	/**
-	 * ¾ÆÀÌµğ°¡ ·Î±×ÀÎ ÁßÀÎÁö È®ÀÎ, ÀÌµ¿°¡´ÉÇÑ »óÅÂÀÎÁö È®ÀÎ
+	 * ì•„ì´ë””ê°€ ë¡œê·¸ì¸ ì¤‘ì¸ì§€ í™•ì¸, ì´ë™ê°€ëŠ¥í•œ ìƒíƒœì¸ì§€ í™•ì¸
 	 * @return 
 	 */
-	private String loginStatus() {//o,c,x°¡ ³ª¿Í¾ßÇÑ´Ù
+	private String loginStatus() {//o,c,xê°€ ë‚˜ì™€ì•¼í•œë‹¤
 		String flag="";
 		char status;
 		JTextField jtfid=pulv.getJtfId();
@@ -194,14 +200,14 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 		
 		String id=jtfid.getText().trim();
 		String cardNum=jtfcard.getText().trim();
-		if(checkMember()) {//È¸¿øÀÌ¸é
+		if(checkMember()) {//íšŒì›ì´ë©´
 			try {
 				status = pul_dao.memberIdStatus(id);
 				flag=String.valueOf(status);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}//end catch
-		}else{//ºñÈ¸¿øÀÌ¸é
+		}else{//ë¹„íšŒì›ì´ë©´
 			try {
 				status = pul_dao.guestIdStatus(Integer.parseInt(cardNum));
 				flag=String.valueOf(status);
@@ -213,7 +219,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	}//loginStatus
 	
 	/**
-	 * ºñÈ¸¿ø ·Î±×ÀÎ
+	 * ë¹„íšŒì› ë¡œê·¸ì¸
 	 * @param guestNum
 	 * @return
 	 */
@@ -224,20 +230,20 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 			ip = InetAddress.getLocalHost();
 			PULoginDAO pul_dao=PULoginDAO.getInstance();
 			pul_dao.changeGuestStatus(guestNum, String.valueOf(ip));
-//			pul_dao.login(100);//100¹øÀ» Á¶È¸ÇØ¼­ ¾øÀ¸¸é
+//			pul_dao.login(100);//100ë²ˆì„ ì¡°íšŒí•´ì„œ ì—†ìœ¼ë©´
 			flag=true;
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(pulv, "DB¿¡¼­ ¹®Á¦°¡ ¹ß»ıÇß½À´Ï´Ù.");//<Äõ¸®ÂÊ¿¡ ¹®Á¦°¡ ¾øÀ½À» º¸¾ÒÀ½À¸·Î DBÅ¿
+			JOptionPane.showMessageDialog(pulv, "DBì—ì„œ ë¬¸ì œê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");//<ì¿¼ë¦¬ìª½ì— ë¬¸ì œê°€ ì—†ìŒì„ ë³´ì•˜ìŒìœ¼ë¡œ DBíƒ“
 			e.printStackTrace();
 		} catch (UnknownHostException uhe) {
-			JOptionPane.showMessageDialog(pulv, "ipÁ¶È¸ ½ÇÆĞ");//<Äõ¸®ÂÊ¿¡ ¹®Á¦°¡ ¾øÀ½À» º¸¾ÒÀ½À¸·Î DBÅ¿
+			JOptionPane.showMessageDialog(pulv, "ipì¡°íšŒ ì‹¤íŒ¨");//<ì¿¼ë¦¬ìª½ì— ë¬¸ì œê°€ ì—†ìŒì„ ë³´ì•˜ìŒìœ¼ë¡œ DBíƒ“
 			uhe.printStackTrace();
 		} 
 		return flag;
 	}//login guest
 	
 	/**
-	 * È¸¿ø ·Î±×ÀÎ
+	 * íšŒì› ë¡œê·¸ì¸
 	 * @param pucvo
 	 * @return
 	 */
@@ -248,7 +254,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 		try {
 			adminName=pul_dao.login(pucvo);
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(pulv, "DB¿¡¼­ ¹®Á¦°¡ ¹ß»ıÇß½À´Ï´Ù.");//<Äõ¸®ÂÊ¿¡ ¹®Á¦°¡ ¾øÀ½À» º¸¾ÒÀ½À¸·Î DBÅ¿
+			JOptionPane.showMessageDialog(pulv, "DBì—ì„œ ë¬¸ì œê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");//<ì¿¼ë¦¬ìª½ì— ë¬¸ì œê°€ ì—†ìŒì„ ë³´ì•˜ìŒìœ¼ë¡œ DBíƒ“
 			e.printStackTrace();
 		}//end catch
 		
@@ -256,7 +262,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	}//login member
 	
 	/**
-	 * °øÁö»çÇ× ºÒ·¯¿À±â
+	 * ê³µì§€ì‚¬í•­ ë¶ˆëŸ¬ì˜¤ê¸°
 	 * @return
 	 */
 	private void setNotice() {
