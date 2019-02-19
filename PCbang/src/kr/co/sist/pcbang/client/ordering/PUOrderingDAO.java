@@ -16,7 +16,7 @@ public class PUOrderingDAO {
 		}//end catch
 	}//PUOrderingDAO
 	
-	private static PUOrderingDAO getInstance() {
+	public static PUOrderingDAO getInstance() {
 		if(puo_dao==null) {
 			puo_dao=new PUOrderingDAO();
 		}//end if
