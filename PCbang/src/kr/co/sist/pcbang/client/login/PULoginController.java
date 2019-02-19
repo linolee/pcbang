@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
@@ -53,9 +54,10 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 						jpf.setText("");
 						jtf.requestFocus();
 					}else {
-						new PUMainView();//new PUMainView(memberName);
+						//System.out.println(id);
 						PUMainView.userId=id;//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
 						PUMainView.cardNum="";
+						new PUMainView();//new PUMainView(memberName);
 						pulv.dispose();
 					}//end else
 				}else if(loginStatus().equals("c")) {
@@ -72,7 +74,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 						jtf.requestFocus();
 					}else {
 						new PUMainView();//new PUMainView(memberName);
-						PUMainView.userId=id;//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
+						PUMainView.userId=id;
 						PUMainView.cardNum="";
 						pulv.dispose();
 					}//end else
@@ -89,9 +91,10 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 				if(loginStatus().equals("o")) {//로그인 가능한 상태인지
 					//로그인
 					if(login(card)) {
-						new PUMainView();//new PUMainView(memberName);
+						//System.out.println(card);
 						PUMainView.userId="";//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
 						PUMainView.cardNum=String.valueOf(card);
+						new PUMainView();//new PUMainView(memberName);
 						pulv.dispose();
 					}else {
 						JOptionPane.showMessageDialog(pulv, "카드번호를 확인해주세요");
