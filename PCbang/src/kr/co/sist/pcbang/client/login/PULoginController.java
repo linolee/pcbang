@@ -11,6 +11,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import kr.co.sist.pcbang.client.login.newuser.PUPolicyView;
 import kr.co.sist.pcbang.client.main.PUMainView;
 
 /**
@@ -113,7 +114,8 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 			
 		}//end if
 		if(ae.getSource()==pulv.getJbtMembership()) {
-			
+			new PUPolicyView();
+			pulv.dispose();
 		}//end if
 		if(ae.getSource()==pulv.getJbtFind()) {
 			
