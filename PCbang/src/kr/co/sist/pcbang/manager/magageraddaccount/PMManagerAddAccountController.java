@@ -78,11 +78,15 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 		} // end if
 
 		if (ae.getSource() == pmmaav.getJbtAdd()) {
+			switch (JOptionPane.showConfirmDialog(pmmaav, "정말 추가하시겠습니까?")) {
+			case JOptionPane.OK_OPTION:
 			try {
 				addAccount();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} // end catch
+			break;
+			} // end switch
 		} // end if
 	}// actionPerformed
 
