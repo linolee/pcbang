@@ -31,6 +31,9 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 			PrdImgList.add(tempName);
 		}//end for
 		
+		FileServer fs = new FileServer();
+		fs.start();
+
 		this.pmpv = pmpv;
 		pmpdao = PMProductDAO.getInstance();
 		// 상품 목록을 초기화한다.
@@ -50,7 +53,7 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 
 			// JTable에 조회한 정보를 출력
 			PMProductVO pmpvo = null;
-			String imgPath = "C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img";
+			String imgPath = "";
 
 			Object[] rowData = null;
 			for (int i = 0; i < listproduct.size(); i++) {
@@ -170,4 +173,5 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 	@Override
 	public void mouseExited(MouseEvent e) {
 	}
+	
 }// class
