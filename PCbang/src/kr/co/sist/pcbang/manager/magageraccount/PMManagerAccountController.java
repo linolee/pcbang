@@ -13,7 +13,6 @@ import javax.swing.table.DefaultTableModel;
 
 import kr.co.sist.pcbang.manager.magageraddaccount.PMManagerAddAccountView;
 
-
 public class PMManagerAccountController extends WindowAdapter implements ActionListener {
 
 	private PMManagerAccountView pmmav;
@@ -68,7 +67,7 @@ public class PMManagerAccountController extends WindowAdapter implements ActionL
 		}//end if
 		
 		if(ae.getSource()==pmmav.getJbtAdd()) {
-			new PMManagerAddAccountView();
+			new PMManagerAddAccountView(this);
 		}// end if
 	} // actionPerformed
 

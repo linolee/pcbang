@@ -18,9 +18,9 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 	private PMManagerAddAccountView pmmaav;
 	private PMManagerAccountController pmmac;
 
-	public PMManagerAddAccountController(PMManagerAddAccountView pmmaav /*, PMManagerAccountController pmmac */) {
+	public PMManagerAddAccountController(PMManagerAddAccountView pmmaav, PMManagerAccountController pmmac) {
 		this.pmmaav = pmmaav;
-//		this.pmmac = pmmac;
+		this.pmmac = pmmac;
 	}
 
 	/* 계정 추가 메소드 */
@@ -58,7 +58,7 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 		PMManagerAddAccountDAO.getInstance().insertAccount(pmmaaVO);
 
 		// 리스트 갱신 -> 추가 후 진행할 것
-//		pmmac.setAccount();
+		pmmac.setAccount();
 
 		// 다음 계정의 입력을 편하게 하기 위해서 입력 폼 초기화
 		jtfId.setText("");
@@ -78,12 +78,16 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 		} // end if
 
 		if (ae.getSource() == pmmaav.getJbtAdd()) {
+			switch (JOptionPane.showConfirmDialog(pmmaav, "정말 추가하시겠습니까?")) {
+			case JOptionPane.OK_OPTION:
 			try {
 				addAccount();
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}
-		}
+			} // end catch
+			break;
+			} // end switch
+		} // end if
 	}// actionPerformed
 
 	@Override
@@ -92,3 +96,4 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 	}
 
 }// class
+
