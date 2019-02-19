@@ -17,6 +17,11 @@ import kr.co.sist.pcbang.manager.product.PMProductView;
 import kr.co.sist.pcbang.manager.seat.PMSeatView;
 import kr.co.sist.pcbang.manager.user.PMUserView;
 
+import kr.co.sist.pcbang.manager.fare.PMFareView;
+import kr.co.sist.pcbang.manager.product.PMProductView;
+import kr.co.sist.pcbang.manager.seat.PMSeatView;
+import kr.co.sist.pcbang.manager.user.PMUserView;
+
 
 @SuppressWarnings("serial")
 public class PMMainView extends JFrame{

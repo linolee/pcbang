@@ -58,9 +58,9 @@ public class PMLoginDAO {
 		pstmt.setString(2, pmlvo.getPass());
 		
 		rs = pstmt.executeQuery();
-		
 		if(rs.next()) {
 			adminName=rs.getString("admin_name");
+			System.out.println(rs.getString("admin_name"));
 		} // end if
 		}finally {
 			
