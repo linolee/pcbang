@@ -59,6 +59,9 @@ public class PUNewUserView extends JFrame {
 		JLabel jlDetailAddr = new JLabel(" 惑技林家");
 		JLabel jlEmail = new JLabel(" 捞皋老");
 
+		JLabel jlhyphen1 = new JLabel("-");
+		JLabel jlhyphen2 = new JLabel("-");
+		
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(jrbMale); 
 		bg.add(jrbFemale);
@@ -85,7 +88,9 @@ public class PUNewUserView extends JFrame {
 		jrbFemale.setBounds(210, 250, 60, 30);
 		jlPhone.setBounds(50, 290, 90, 30);
 		jtfPhone1.setBounds(150, 290, 40, 30);
+		jlhyphen1.setBounds(193, 290, 40, 30);
 		jtfPhone2.setBounds(200, 290, 50, 30);
+		jlhyphen2.setBounds(253, 290, 50, 30);
 		jtfPhone3.setBounds(260, 290, 50, 30);
 		jlAddr.setBounds(50, 330, 90, 30);
 		jtfAddr.setBounds(150, 330, 90, 30);
@@ -106,7 +111,7 @@ public class PUNewUserView extends JFrame {
 		add(jlPassCheck);		add(jpfPassCheck);
 		add(jlbrith);			add(jcYear);	add(jcMonth);	add(jcDay);
 		add(jlgender);			add(jrbMale);	add(jrbFemale);
-		add(jlPhone);
+		add(jlPhone);			add(jlhyphen1); add(jlhyphen2);
 		add(jtfPhone1);
 		add(jtfPhone2);
 		add(jtfPhone3);
