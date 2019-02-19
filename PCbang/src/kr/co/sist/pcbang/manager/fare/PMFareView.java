@@ -1,23 +1,24 @@
 package kr.co.sist.pcbang.manager.fare;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Panel;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
-public class PMFareView extends JFrame {
+public class PMFareView extends JPanel {
 
 	 private JTextField[] mjtfs, gjtfs;
-	 private JButton jbtnUpdate;
+	 private JButton jbtnUpdate, jbtnReset;
 	 private PMFareDAO f_dao;
 	
-	public PMFareView(PMFareVO fvo) {
-		super("ø‰±›¡¶ ∫Ø∞Ê");
+	public PMFareView() {
+
 		f_dao = PMFareDAO.getInstance();
 	
 		JPanel mainPanel = new JPanel();
@@ -25,12 +26,14 @@ public class PMFareView extends JFrame {
 		JPanel jpFareMember = new JPanel();
 		JPanel jpFareGuest = new JPanel();
 		
-		jpFareMember.setBorder(new TitledBorder("»∏ø¯"));
-		jpFareGuest.setBorder(new TitledBorder("∫Ò»∏ø¯"));
+		setLayout(new BorderLayout());
 		
-		mainPanel.setLayout(new GridLayout(1,2));
-		jpFareMember.setLayout(new GridLayout(10,2));
-		jpFareGuest.setLayout(new GridLayout(10,2));
+		jpFareMember.setBorder(new TitledBorder("ÌöåÏõê"));
+		jpFareGuest.setBorder(new TitledBorder("ÎπÑÌöåÏõê"));
+		
+		
+		jpFareMember.setLayout(new GridLayout(10,1));
+		jpFareGuest.setLayout(new GridLayout(10,1));
 		
 		mjtfs=new JTextField[10];
 		gjtfs=new JTextField[10];
@@ -48,30 +51,42 @@ public class PMFareView extends JFrame {
 		
 		for(int i=0;i<mjtfs.length;i++) {
 			mjtfs[i]=new JTextField(String.valueOf(memberFare[i]));
-			mjtfs[i].setBorder(new TitledBorder(i+1+"Ω√∞£"));
+			mjtfs[i].setBorder(new TitledBorder(i+1+"ÏãúÍ∞Ñ"));
 			jpFareMember.add(mjtfs[i]);
 		}
 		
 		for(int i=0;i<gjtfs.length;i++) {
 			gjtfs[i]=new JTextField(String.valueOf(guestFare[i]));
-			gjtfs[i].setBorder(new TitledBorder(i+1+"Ω√∞£"));
+			gjtfs[i].setBorder(new TitledBorder(i+1+"ÏãúÍ∞Ñ"));
 			jpFareGuest.add(gjtfs[i]);
 		}
 		
-		jbtnUpdate = new JButton("ºˆ¡§");
+		
+		
+		jbtnUpdate = new JButton("ÏàòÏ†ï");
+		jbtnReset = new JButton("Ï¥àÍ∏∞Ìôî");
+		
+		
+		mainPanel.setLayout(new GridLayout(1,2));
 		
 		mainPanel.add(jpFareMember);
 		mainPanel.add(jpFareGuest);
 		
-		add(mainPanel);
-		add("South",jbtnUpdate);
+		Panel southPnl = new Panel();
+		southPnl.add(jbtnUpdate);
+		southPnl.add(jbtnReset);
+		
+		add("Center", mainPanel);
+		add("South", southPnl);
+		
 		
 		PMFareController fc = new PMFareController(this);
 		jbtnUpdate.addActionListener(fc);
+		jbtnReset.addActionListener(fc);
+		
 		
 		setVisible(true);
-		setBounds(100, 100, 600, 500);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 	}
 
 	public JTextField[] getMjtfs() {
@@ -86,7 +101,9 @@ public class PMFareView extends JFrame {
 		return jbtnUpdate;
 	}
 
-	public static void main(String[] args) {
-		new PMFareView(null);
+	public JButton getJbtnReset() {
+		return jbtnReset;
 	}
+
+
 }

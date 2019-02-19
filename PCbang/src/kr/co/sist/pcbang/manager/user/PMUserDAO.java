@@ -199,17 +199,4 @@ public class PMUserDAO {
 		return flag;
 	}
 	
-	
-
-//	public static void main(String[] args) {
-//		try {
-////			System.out.println(getInstance().searchUserData("id3","πÈ¿Œ¿Á3"));
-//			System.out.println(getInstance().userData());
-//			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
-	
 }

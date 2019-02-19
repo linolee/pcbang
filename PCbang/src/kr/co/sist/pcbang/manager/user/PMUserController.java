@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -16,9 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import kr.co.sist.pcbang.manager.user.detail.PMUserDetailVO;
 import kr.co.sist.pcbang.manager.user.detail.PMUserDetailView;
 
-
-
-public class PMUserController extends WindowAdapter implements ActionListener, MouseListener {
+public class PMUserController implements ActionListener, MouseListener {
 
 	private static PMUserController uc;
 	private static PMUserView uv;
@@ -36,8 +32,6 @@ public class PMUserController extends WindowAdapter implements ActionListener, M
 		}
 		return uc;
 	}
-	
-	
 	
 	public void selectUser() {
 		DefaultTableModel dtmUser = uv.getDtmMember();
@@ -77,17 +71,10 @@ public class PMUserController extends WindowAdapter implements ActionListener, M
 			}
 		} catch(SQLException se) {
 			JOptionPane.showMessageDialog(uv,  "아이디 혹은 이름을 입력해주세요");
-//			se.printStackTrace();
+			// se.printStackTrace();
 		}
 	}
 	
-	
-	
-	@Override
-	public void windowClosing(WindowEvent e) {
-		uv.dispose();
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		
@@ -148,21 +135,14 @@ public class PMUserController extends WindowAdapter implements ActionListener, M
 				new PMUserDetailView(udvo);
 				
 			}
-		
 		}
-		
 	}
-	
 	@Override
 	public void mouseEntered(MouseEvent e) {}
-
 	@Override
 	public void mouseExited(MouseEvent e) {}
-
 	@Override
 	public void mousePressed(MouseEvent e) {}
-
 	@Override
 	public void mouseReleased(MouseEvent e) {}
-	
 }

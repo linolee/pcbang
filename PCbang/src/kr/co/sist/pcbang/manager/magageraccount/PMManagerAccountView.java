@@ -28,12 +28,14 @@ public class PMManagerAccountView extends JFrame {
 
 		JScrollPane jspJTable = new JScrollPane(jtAccount);
 		
+		jtAccount.getTableHeader().setReorderingAllowed(false);	
+		
 		jtAccount.getColumnModel().getColumn(0).setPreferredWidth(90);
 		jtAccount.getColumnModel().getColumn(1).setPreferredWidth(125);
 		jtAccount.getColumnModel().getColumn(2).setPreferredWidth(255);
 		
 		//테이블의 높이 
-		jtAccount.setRowHeight(50);		
+		jtAccount.setRowHeight(40);		
 		
 		jbtAdd = new JButton("계정추가");
 		jbtOk = new JButton("확인");

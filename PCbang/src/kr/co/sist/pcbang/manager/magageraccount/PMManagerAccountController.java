@@ -13,7 +13,6 @@ import javax.swing.table.DefaultTableModel;
 
 import kr.co.sist.pcbang.manager.magageraddaccount.PMManagerAddAccountView;
 
-
 public class PMManagerAccountController extends WindowAdapter implements ActionListener {
 
 	private PMManagerAccountView pmmav;
@@ -48,8 +47,6 @@ public class PMManagerAccountController extends WindowAdapter implements ActionL
 
 			} // end for
 			
-			System.out.println(listAccount);
-			
 			if (listAccount.isEmpty()) {// 계정이 없을 때
 				JOptionPane.showMessageDialog(pmmav, "관리자 계정이 없습니다.");
 			} // end if
@@ -70,7 +67,7 @@ public class PMManagerAccountController extends WindowAdapter implements ActionL
 		}//end if
 		
 		if(ae.getSource()==pmmav.getJbtAdd()) {
-			new PMManagerAddAccountView();
+			new PMManagerAddAccountView(this);
 		}// end if
 	} // actionPerformed
 
