@@ -19,6 +19,8 @@ public class PUMainView extends JFrame{
 	
 	public static String userId;
 	public static String cardNum;
+	public String id=userId;
+	public String card=cardNum;
 	//public static String seatNum;
 	
 	public PUMainView() {

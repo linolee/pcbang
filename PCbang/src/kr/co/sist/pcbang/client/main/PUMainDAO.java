@@ -1,5 +1,6 @@
 package kr.co.sist.pcbang.client.main;
 
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.Connection;
@@ -87,9 +88,13 @@ public class PUMainDAO {
 		//2.
 			con=getConn();
 		//3.
-			String selectInfo="SELECT MEMBER_ID, MEMBER_REST_TIME , MEMBER_NAME FROM PC_MEMBER WHERE MEMBER_ID=?";
-			pstmt=con.prepareStatement(selectInfo);
-			pstmt.setString(1, id);
+			if(!id.equals("")) {//아이디를 가진다면 회원
+				String selectInfo="SELECT MEMBER_ID, MEMBER_REST_TIME , MEMBER_NAME FROM PC_MEMBER WHERE MEMBER_ID=?";
+				pstmt=con.prepareStatement(selectInfo);
+				pstmt.setString(1, id);
+			}else if(!cardNum.equals("")) {//카드번호를 가진다면 비회원
+				
+			}//end else
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				puminfovo=new PUMainInfoVO(rs.getString("MEMBER_REST_TIME"), rs.getString("MEMBER_NAME"));
@@ -103,7 +108,58 @@ public class PUMainDAO {
 		return puminfovo;
 	}//selectInfo
 	
+	/**
+	 * 자리이동이 가능한 상태로 변경->'c'
+	 * @param seatNum
+	 * @throws SQLException
+	 */
+	public void updateSeat(int seatNum) throws SQLException{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		
+		try {
+			con=getConn();
+		//3.
+			StringBuilder updateSeat=new StringBuilder();
+			updateSeat.append("UPDATE PC_STATUS SET PC_STATUS='C' WHERE SEAT_NUM=?");
+			pstmt=con.prepareStatement(updateSeat.toString());
+		//4.바인드변수 값넣기
+			pstmt.setString(1, String.valueOf(seatNum));
+		//5.
+			pstmt.executeUpdate();
+		}finally {
+			//6.
+			if(pstmt!=null) {pstmt.close();}//end if
+			if(con!=null) {con.close();}//end if
+		}//end finally
+	}//updateSeat
 	
+	/**
+	 * 로그아웃할 때 pc테이블 업데이트
+	 * @param pumlogvo
+	 */
+	public void updatePC(String id, String cardNum) {
+		if(!id.equals("")) {//아이디를 가진다면 회원
+			
+		}else if(!cardNum.equals("")) {//카드번호를 가진다면 비회원
+			
+		}//end else
+	}//updatePC
 	
+	/**
+	 * 로그아웃 할때 저장된 메세지 초기화
+	 * @param seatNum
+	 */
+	public void updateMsg(int seatNum) {
+		
+	}//updateMsg
+	
+	/**
+	 * 로그아웃할 때 log저장
+	 * @param pumLogvo
+	 */
+	public void updateLog(PUMainUserLogVO pumLogvo) {
+		
+	}//updateMsg
 	
 }//class
