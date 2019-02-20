@@ -2,11 +2,9 @@ package kr.co.sist.pcbang.client.login;
 
 public class PUMemberStateVO {
 
+	private String memberId, pcIp;
 	
-	private String memberId;
-	private int pcIp;
-	
-	public PUMemberStateVO(String memberId, int pcIp) {
+	public PUMemberStateVO(String memberId, String pcIp) {
 		this.memberId = memberId;
 		this.pcIp = pcIp;
 	}
@@ -15,7 +13,7 @@ public class PUMemberStateVO {
 		return memberId;
 	}
 
-	public int getPcIp() {
+	public String getPcIp() {
 		return pcIp;
 	}
 

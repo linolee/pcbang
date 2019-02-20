@@ -1,3 +1,4 @@
+
 package kr.co.sist.pcbang.client.login;
 
 import java.awt.event.ActionEvent;
@@ -13,11 +14,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import kr.co.sist.pcbang.client.login.newuser.PUPolicyView;
 import kr.co.sist.pcbang.client.main.PUMainView;
 
 /**
- * 클라이언트 로그인
+ * Ŭ���̾�Ʈ �α���
  * @author owner
  */
 public class PULoginController extends WindowAdapter implements ActionListener{
@@ -33,114 +33,139 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if(ae.getSource()==pulv.getJbtStart()) {//로그인
-//			new PUMainView();
-//			pulv.dispose();
+		if(ae.getSource()==pulv.getJbtStart()) {//�α���
 			
-			if(checkMember()) {//회원이면
+			if(checkMember()) {//ȸ���̸�
 				JTextField jtf=pulv.getJtfId();
 				JPasswordField jpf=pulv.getJpfPass();
 				
 				String id=jtf.getText().trim();
 				String pass=new String (jpf.getPassword());
 				
-				if(loginStatus().equals("o")) {//로그인 가능한 상태인지
-					//로그인
+//				if(loginStatus().equals("o")) {//�α��� ������ ��������
+//					//�α���
+//					PUCertificationVO pucvo=new PUCertificationVO(id, pass);
+//					String memberName=login(pucvo);
+//					
+//					if(memberName.equals("")) {//������ ��� ""��� 
+//						JOptionPane.showMessageDialog(pulv, "���̵� ��й�ȣ�� Ȯ���ϼ���.");
+//						jtf.setText("");
+//						jpf.setText("");
+//						jtf.requestFocus();
+//					}else {
+//						PUMainView.userId=id;//�α����� �����ߴٸ� id�� ��簴ü���� ����� �� �ֵ��� static ����� ����Ѵ�.
+//						PUMainView.cardNum="";
+//						new PUMainView();//new PUMainView(memberName);
+//						pulv.dispose();
+//					}//end else
+//				}else if(loginStatus().equals("c")) {
+				
+				if(pul_dao.selectPcId(id)) {//PC���̺� �ȸ�Ǵ� id�� ��ٸ� �α���
+					//�α���
 					PUCertificationVO pucvo=new PUCertificationVO(id, pass);
 					String memberName=login(pucvo);
 					
-					if(memberName.equals("")) {//수행한 결과가 ""라면 
-						JOptionPane.showMessageDialog(pulv, "아이디나 비밀번호를 확인하세요.");
+					if(memberName.equals("")) {//������ ��� ""��� 
+						JOptionPane.showMessageDialog(pulv, "���̵� ��й�ȣ�� Ȯ���ϼ���.");
 						jtf.setText("");
 						jpf.setText("");
 						jtf.requestFocus();
 					}else {
-						//System.out.println(id);
-						PUMainView.userId=id;//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
+						PUMainView.userId=id;//�α����� �����ߴٸ� id�� ��簴ü���� ����� �� �ֵ��� static ����� ����Ѵ�.
 						PUMainView.cardNum="";
 						new PUMainView();//new PUMainView(memberName);
 						pulv.dispose();
 					}//end else
-				}else if(loginStatus().equals("c")) {
-					//이미 로그인 되어있는데=>자리변경 신청함
-					System.out.println("자리변경한 상태입니다->로그인");
-
-					PUCertificationVO pucvo=new PUCertificationVO(id, pass);
-					String memberName=login(pucvo);
-					
-					if(memberName.equals("")) {//수행한 결과가 ""라면 
-						JOptionPane.showMessageDialog(pulv, "아이디나 비밀번호를 확인하세요.");
-						jtf.setText("");
-						jpf.setText("");
-						jtf.requestFocus();
-					}else {
-						new PUMainView();//new PUMainView(memberName);
-						PUMainView.userId=id;
-						PUMainView.cardNum="";
-						pulv.dispose();
+				}else {//�ִٸ� �α����� �ȵŴµ�,�ڸ��̵��̸�~
+					if(loginStatus().equals("c")) {
+						//�̹� �α��� �Ǿ��ִµ�=>�ڸ����� ��û��
+						System.out.println("�ڸ������� �����Դϴ�->�α���");
+						
+						PUCertificationVO pucvo=new PUCertificationVO(id, pass);
+						String memberName=login(pucvo);
+						
+						if(memberName.equals("")) {//������ ��� ""��� 
+							JOptionPane.showMessageDialog(pulv, "���̵� ��й�ȣ�� Ȯ���ϼ���.");
+							jtf.setText("");
+							jpf.setText("");
+							jtf.requestFocus();
+						}else {
+							new PUMainView();
+							PUMainView.userId=id;
+							PUMainView.cardNum="";
+							pulv.dispose();
+						}//end else
+//					}else if(loginStatus().equals("x")) {
+					}else{
+						//�̹� �α��� �Ǿ��ִµ�=>�ڸ����� ��û����
+						JOptionPane.showMessageDialog(pulv, "�ڸ������ ���� ��û�� �ּ���!");
 					}//end else
-				}else if(loginStatus().equals("x")) {
-					//이미 로그인 되어있는데=>자리변경 신청안함
-					JOptionPane.showMessageDialog(pulv, "자리변경을 먼저 신청해 주세요!");
 				}//end else
 				
-				
-			}else{//비회원이면
+			}else{//��ȸ���̸�
 				JTextField jtf2=pulv.getJtfCardNum();
 				int card=Integer.parseInt(jtf2.getText().trim());
 				
-				if(loginStatus().equals("o")) {//로그인 가능한 상태인지
-					//로그인
+//				if(loginStatus().equals("o")) {//�α��� ������ ��������
+//					//�α���
+//					if(login(card)) {
+//						PUMainView.userId="";//�α����� �����ߴٸ� id�� ��簴ü���� ����� �� �ֵ��� static ����� ����Ѵ�.
+//						PUMainView.cardNum=String.valueOf(card);
+//						new PUMainView();
+//						pulv.dispose();
+//					}else {
+//						JOptionPane.showMessageDialog(pulv, "ī���ȣ�� Ȯ�����ּ���");
+//					}
+//				}else if(loginStatus().equals("c")) {
+				if(pul_dao.selectPcCard(card)) {//PC���̺� �ȸ�Ǵ� id�� ��ٸ� �α���
+					//�α���
 					if(login(card)) {
-						//System.out.println(card);
-						PUMainView.userId="";//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
+						PUMainView.userId="";//�α����� �����ߴٸ� id�� ��簴ü���� ����� �� �ֵ��� static ����� ����Ѵ�.
 						PUMainView.cardNum=String.valueOf(card);
-						new PUMainView();//new PUMainView(memberName);
+						new PUMainView();
 						pulv.dispose();
 					}else {
-						JOptionPane.showMessageDialog(pulv, "카드번호를 확인해주세요");
+						JOptionPane.showMessageDialog(pulv, "ī���ȣ�� Ȯ�����ּ���");
 					}
-				}else if(loginStatus().equals("c")) {
-					//이미 로그인 되어있는데=>자리변경 신청함
-					if(login(card)) {
-						new PUMainView();//new PUMainView(memberName);
-						PUMainView.userId="";//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
-						PUMainView.cardNum=String.valueOf(card);
-						pulv.dispose();
-					}else {
-						JOptionPane.showMessageDialog(pulv, "카드번호를 확인해주세요");
-					}
-				}else if(loginStatus().equals("x")) {
-					//이미 로그인 되어있는데=>자리변경 신청안함
-					JOptionPane.showMessageDialog(pulv, "자리변경을 먼저 신청해 주세요!");
+				}else {//�ִٸ� �α����� �ȵŴµ�,�ڸ��̵��̸�~
+					if(loginStatus().equals("c")) {
+						//�̹� �α��� �Ǿ��ִµ�=>�ڸ����� ��û��
+						if(login(card)) {
+							new PUMainView();
+							PUMainView.userId="";//�α����� �����ߴٸ� id�� ��簴ü���� ����� �� �ֵ��� static ����� ����Ѵ�.
+							PUMainView.cardNum=String.valueOf(card);
+							pulv.dispose();
+						}else {
+							JOptionPane.showMessageDialog(pulv, "ī���ȣ�� Ȯ�����ּ���");
+						}//end else
+//					}else if(loginStatus().equals("x")) {
+					}else{
+						//�̹� �α��� �Ǿ��ִµ�=>�ڸ����� ��û����
+						JOptionPane.showMessageDialog(pulv, "�ڸ������ ���� ��û�� �ּ���!");
+					}//end else
 				}//end else
 			}//end else
 			
 		}//end if
 		if(ae.getSource()==pulv.getJbtMembership()) {
-
-			new PUPolicyView();
-			pulv.dispose();
-
-			JOptionPane.showMessageDialog(pulv, "회원가입!");
-
+			JOptionPane.showMessageDialog(pulv, "ȸ����!");
 		}//end if
 		if(ae.getSource()==pulv.getJbtFind()) {
-			JOptionPane.showMessageDialog(pulv, "아이디/비밀번호 찾기!");
+			JOptionPane.showMessageDialog(pulv, "���̵�/��й�ȣ ã��!");
 		}//end if
 	}//actionPerformed
 	
 	@Override
 	public void windowClosing(WindowEvent we) {
-		int flag=JOptionPane.showConfirmDialog(pulv, "로그인 하지 않으시면 사용이 불가능 합니다.\n그래도 종료하시겠습니까?");
+		int flag=JOptionPane.showConfirmDialog(pulv, "�α��� ���� ����ø� ����� �Ұ��� �մϴ�.\n�׷��� ����Ͻðڽ�ϱ�?");
 		if(flag==0) {
 			pulv.dispose();
 		}//end if
 	}//windowClosing
 	
 	/**
-	 * 회원, 비회원 구분
-	 * @return false는 비회원 true는 회원
+	 * ȸ��, ��ȸ�� ����
+	 * @return false�� ��ȸ�� true�� ȸ��
 	 */
 	private boolean checkMember() {
 		boolean flagmember=true;
@@ -159,40 +184,39 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 				jtf1.setText("");
 				jtf1.requestFocus();
 				flagId=true;
-				System.out.println("아이디를 입력해 주세요");
-				JOptionPane.showMessageDialog(pulv, "아이디를 입력해 주세요.");
+				System.out.println("���̵� �Է��� �ּ���");
+				JOptionPane.showMessageDialog(pulv, "���̵� �Է��� �ּ���.");
 			}else if(pass.trim().equals("")) {
-				jpf.setText("");//공백을 입력하고 엔터친 경우 JPasswordField의 값을 초기화
+				jpf.setText("");//���� �Է��ϰ� ����ģ ��� JPasswordField�� ��� �ʱ�ȭ
 				jpf.requestFocus();
 				flagPass=true;
-				System.out.println("비밀번호를 입력해 주세요");
-				JOptionPane.showMessageDialog(pulv, "비밀번호를 입력해 주세요.");
+				System.out.println("��й�ȣ�� �Է��� �ּ���");
+				JOptionPane.showMessageDialog(pulv, "��й�ȣ�� �Է��� �ּ���.");
 			}//end if
 			if(!flagId&&!flagPass) {
-				flagmember=true;//회원
-				//System.out.println("회원 입니다.");
+				flagmember=true;//ȸ��
 			}//end if
 		}else if(jtf1.getText().trim().equals("") && pass.trim().equals("")){
 			if(jtf2.getText().trim().equals("")) {
 				jtf2.setText("");
 				jtf2.requestFocus();
 				flagCard=true;
-				System.out.println("비회원 카드번호를 입력해주세요");
+				System.out.println("��ȸ�� ī���ȣ�� �Է����ּ���");
 			}//end if
 			if(!flagCard) {
-				flagmember=false;//비회원
+				flagmember=false;//��ȸ��
 			}//end if
 //		}else {
-//			System.out.println("로그인해 주세요!");
+//			System.out.println("�α����� �ּ���!");
 		}//end else
 		return flagmember;
 	}//checkNull
 	
 	/**
-	 * 아이디가 로그인 중인지 확인, 이동가능한 상태인지 확인
+	 * ���̵� �α��� ������ Ȯ��, �̵������� �������� Ȯ��
 	 * @return 
 	 */
-	private String loginStatus() {//o,c,x가 나와야한다
+	private String loginStatus() {//o,c,x�� ���;��Ѵ�
 		String flag="";
 		char status;
 		JTextField jtfid=pulv.getJtfId();
@@ -200,16 +224,16 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 		
 		String id=jtfid.getText().trim();
 		String cardNum=jtfcard.getText().trim();
-		if(checkMember()) {//회원이면
+		if(checkMember()) {//ȸ���̸�
 			try {
-				status = pul_dao.memberIdStatus(id);
+				status = pul_dao.selectMemberIdStatus(id);
 				flag=String.valueOf(status);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}//end catch
-		}else{//비회원이면
+		}else{//��ȸ���̸�
 			try {
-				status = pul_dao.guestIdStatus(Integer.parseInt(cardNum));
+				status = pul_dao.selectGuestIdStatus(Integer.parseInt(cardNum));
 				flag=String.valueOf(status);
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -219,7 +243,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	}//loginStatus
 	
 	/**
-	 * 비회원 로그인
+	 * ��ȸ�� �α���
 	 * @param guestNum
 	 * @return
 	 */
@@ -229,21 +253,22 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 		try {
 			ip = InetAddress.getLocalHost();
 			PULoginDAO pul_dao=PULoginDAO.getInstance();
-			pul_dao.changeGuestStatus(guestNum, String.valueOf(ip));
-//			pul_dao.login(100);//100번을 조회해서 없으면
+			PUGuestStateVO pugsvo=new PUGuestStateVO(guestNum, String.valueOf(ip));
+			
+			pul_dao.updateGuestState(pugsvo);
 			flag=true;
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(pulv, "DB에서 문제가 발생했습니다.");//<쿼리쪽에 문제가 없음을 보았음으로 DB탓
+			JOptionPane.showMessageDialog(pulv, "DB���� ����� �߻��߽�ϴ�.");
 			e.printStackTrace();
 		} catch (UnknownHostException uhe) {
-			JOptionPane.showMessageDialog(pulv, "ip조회 실패");//<쿼리쪽에 문제가 없음을 보았음으로 DB탓
+			JOptionPane.showMessageDialog(pulv, "ip�ȸ ����");
 			uhe.printStackTrace();
-		} 
+		} //end catch
 		return flag;
 	}//login guest
 	
 	/**
-	 * 회원 로그인
+	 * ȸ�� �α���
 	 * @param pucvo
 	 * @return
 	 */
@@ -252,9 +277,9 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 		
 		PULoginDAO pul_dao=PULoginDAO.getInstance();
 		try {
-			adminName=pul_dao.login(pucvo);
+			adminName=String.valueOf(pul_dao.selectMemberLogin(pucvo));
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(pulv, "DB에서 문제가 발생했습니다.");//<쿼리쪽에 문제가 없음을 보았음으로 DB탓
+			JOptionPane.showMessageDialog(pulv, "DB���� ����� �߻��߽�ϴ�.");
 			e.printStackTrace();
 		}//end catch
 		
@@ -262,7 +287,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	}//login member
 	
 	/**
-	 * 공지사항 불러오기
+	 * ������� �ҷ����
 	 * @return
 	 */
 	private void setNotice() {
