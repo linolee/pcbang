@@ -23,17 +23,14 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 
 	public PMProductController(PMProductView pmpv) {
 		PrdImgList=new ArrayList<String>();
-		//¼­¹ö¿¡ Á¸ÀçÇÏ´Â ÀÌ¹ÌÁö ÀÔ·Â
+		//ì„œë²„ì— ì¡´ì¬í•˜ëŠ” ì´ë¯¸ì§€ ì…ë ¥
 		
-		//ÀÌ¹ÌÁö¸¦ ±Ùµ¥ FileServer·Î µ¹·Á¾ß ÇÏ´Âµ¥ ¾îµğ¼­ µ¹¸®Áö????
+		//ì´ë¯¸ì§€ë¥¼ ê·¼ë° FileServerë¡œ ëŒë ¤ì•¼ í•˜ëŠ”ë° ì–´ë””ì„œ ëŒë¦¬ì§€????
 //		File file = new File("C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img");
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 		String path = this.getClass().getResource("/").getPath()+"kr/co/sist/pcbang/manager/product/img"; 
 		File file = new File(path);
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
+
 		for(String tempName:file.list()) {
 			PrdImgList.add(tempName);
 		}//end for
@@ -43,30 +40,30 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 
 		this.pmpv = pmpv;
 		pmpdao = PMProductDAO.getInstance();
-		// »óÇ° ¸ñ·ÏÀ» ÃÊ±âÈ­ÇÑ´Ù.
+		// ìƒí’ˆ ëª©ë¡ì„ ì´ˆê¸°í™”í•œë‹¤.
 		setPrd();
 	}// PMProductController
 
 	/**
-	 * JTable¿¡ DB¿¡¼­ Á¶È¸ÇÑ »óÇ° Á¤º¸¸¦ º¸¿©ÁØ´Ù.
+	 * JTableì— DBì—ì„œ ì¡°íšŒí•œ ìƒí’ˆ ì •ë³´ë¥¼ ë³´ì—¬ì¤€ë‹¤.
 	 */
 	public void setPrd() {
 		DefaultTableModel dtmPrd = pmpv.getDtmPrd();
-		dtmPrd.setRowCount(0); // ViewÃ¢¿¡ ÀÖ´Â °É Áö¿öÁÖ°í
+		dtmPrd.setRowCount(0); // Viewì°½ì— ìˆëŠ” ê±¸ ì§€ì›Œì£¼ê³ 
 
 		try {
-			// DB¿¡¼­ »óÇ° Á¤º¸¸¦ Á¶È¸
+			// DBì—ì„œ ìƒí’ˆ ì •ë³´ë¥¼ ì¡°íšŒ
 			List<PMProductVO> listproduct = pmpdao.selectPrd();
 
-			// JTable¿¡ Á¶È¸ÇÑ Á¤º¸¸¦ Ãâ·Â
+			// JTableì— ì¡°íšŒí•œ ì •ë³´ë¥¼ ì¶œë ¥
 			PMProductVO pmpvo = null;
 			String imgPath = "";
 
 			Object[] rowData = null;
 			for (int i = 0; i < listproduct.size(); i++) {
 				pmpvo = listproduct.get(i);
-				// DTM¿¡ ³ÖÀ» ¶§´Â 1Â÷¿ø¹è¿­ È¤Àº º¤ÅÍ·Î ³Ö¾î¾ß ÇÔ
-				// DTM¿¡ µ¥ÀÌÅÍ¸¦ Ãß°¡ÇÏ±â À§ÇÑ 1Â÷¿ø¹è¿­(Vector)À» »ı¼ºÇÏ°í µ¥ÀÌÅÍ¸¦ Ãß°¡
+				// DTMì— ë„£ì„ ë•ŒëŠ” 1ì°¨ì›ë°°ì—´ í˜¹ì€ ë²¡í„°ë¡œ ë„£ì–´ì•¼ í•¨
+				// DTMì— ë°ì´í„°ë¥¼ ì¶”ê°€í•˜ê¸° ìœ„í•œ 1ì°¨ì›ë°°ì—´(Vector)ì„ ìƒì„±í•˜ê³  ë°ì´í„°ë¥¼ ì¶”ê°€
 				rowData = new Object[6];
 				rowData[0] = pmpvo.getMenuCode();
 				rowData[1] = pmpvo.getMenuName();
@@ -75,32 +72,32 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 				rowData[4] = new Integer(pmpvo.getQuan());
 				rowData[5] = new Integer(pmpvo.getTotal());
 
-				// DTM¿¡ Ãß°¡
+				// DTMì— ì¶”ê°€
 				dtmPrd.addRow(rowData);
 			} // end for
 
-			if (listproduct.isEmpty()) {// ÀÔ·ÂµÈ »óÇ°ÀÌ ¾øÀ» ¶§
+			if (listproduct.isEmpty()) {// ì…ë ¥ëœ ìƒí’ˆì´ ì—†ì„ ë•Œ
 
 				rowData = new Object[6];
 				rowData[0] = "";
-				rowData[1] = "ÀÔ·ÂµÈ";
-				rowData[2] = "»óÇ°ÀÌ";
-				rowData[3] = "¾ø½À´Ï´Ù";
+				rowData[1] = "ì…ë ¥ëœ";
+				rowData[2] = "ìƒí’ˆì´";
+				rowData[3] = "ì—†ìŠµë‹ˆë‹¤";
 				rowData[4] = "";
 				rowData[5] = "";
 
-				// DTM¿¡ Ãß°¡
+				// DTMì— ì¶”ê°€
 				dtmPrd.addRow(rowData);
 			} // end if
 
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(pmpv, "DB¿¡¼­ µ¥ÀÌÅÍ¸¦ ¹Ş¾Æ¿À´Â Áß ¹®Á¦ ¹ß»ı");
+			JOptionPane.showMessageDialog(pmpv, "DBì—ì„œ ë°ì´í„°ë¥¼ ë°›ì•„ì˜¤ëŠ” ì¤‘ ë¬¸ì œ ë°œìƒ");
 			e.printStackTrace();
 		} // end catch
 	}// setProduct
 
 	/**
-	 * Ä«Å×°í¸®¿Í »óÇ°¸íÀ¸·Î Ã£±â
+	 * ì¹´í…Œê³ ë¦¬ì™€ ìƒí’ˆëª…ìœ¼ë¡œ ì°¾ê¸°
 	 */
 	public void searchPrd() {
 		DefaultTableModel dtmSearch = pmpv.getDtmPrd();
@@ -122,7 +119,7 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 				rowData[4] = (pmspvo.getQuan());
 				rowData[5] = (pmspvo.getPrice() * pmspvo.getQuan());
 
-				// DTM¿¡ Ãß°¡
+				// DTMì— ì¶”ê°€
 				dtmSearch.addRow(rowData);
 			} // end for
 		} catch (SQLException e1) {
@@ -130,36 +127,36 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 		} // end catch
 	}// searchPrd
 
-	/////////////// ÃÊ±âÈ­ ³»¿ëÃß°¡ ÇÊ¿ä
+	/////////////// ì´ˆê¸°í™” ë‚´ìš©ì¶”ê°€ í•„ìš”
 	public void reset() {
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if (ae.getSource() == pmpv.getJbtAddPrd()) { // µµ½Ã¶ô Ãß°¡ ¹öÆ°
+		if (ae.getSource() == pmpv.getJbtAddPrd()) { // ë„ì‹œë½ ì¶”ê°€ ë²„íŠ¼
 			new PMProductAddView(pmpv, this);
 		} // end if
 
-		if (ae.getSource() == pmpv.getJbtSchPrd()) {// Á¶È¸ ¹öÆ°
+		if (ae.getSource() == pmpv.getJbtSchPrd()) {// ì¡°íšŒ ë²„íŠ¼
 			searchPrd();
 		}
-		if (ae.getSource() == pmpv.getJbtRstPrd()) {// ÃÊ±âÈ­ ¹öÆ°
+		if (ae.getSource() == pmpv.getJbtRstPrd()) {// ì´ˆê¸°í™” ë²„íŠ¼
 			reset();
 		}
 	}// actionPerformed
 
 //////////////////////////////////////////////////////////////////
-// mouseCliecked¸¸ ¾¸	
+// mouseClieckedë§Œ ì”€	
 	@Override
 	public void mouseClicked(MouseEvent me) {
 //		if (me.getSource() == lmv.getJtb()) {
-//			if (lmv.getJtb().getSelectedIndex() == 1) {// µÎ¹øÂ° ÅÇ(ÁÖ¹®)¿¡¼­ ÀÌº¥Æ® ¹ß»ı
-//				// ÁÖ¹®ÇöÈ²À» °è¼Ó Á¶È¸ÇÏ¿© ½Ç½Ã°£À¸·Î ½Ç½Ã°£À¸·Î DB¸¦ Á¶È¸ÇÏ¿© °»½Å
-//				if (threadOrdering == null) { // ÀÌ°É¾²Áö¾ÊÀ¸¸é °è¼ÓÇØ¼­ °´Ã¼°¡ ¸¸µé¾îÁü
+//			if (lmv.getJtb().getSelectedIndex() == 1) {// ë‘ë²ˆì§¸ íƒ­(ì£¼ë¬¸)ì—ì„œ ì´ë²¤íŠ¸ ë°œìƒ
+//				// ì£¼ë¬¸í˜„í™©ì„ ê³„ì† ì¡°íšŒí•˜ì—¬ ì‹¤ì‹œê°„ìœ¼ë¡œ ì‹¤ì‹œê°„ìœ¼ë¡œ DBë¥¼ ì¡°íšŒí•˜ì—¬ ê°±ì‹ 
+//				if (threadOrdering == null) { // ì´ê±¸ì“°ì§€ì•Šìœ¼ë©´ ê³„ì†í•´ì„œ ê°ì²´ê°€ ë§Œë“¤ì–´ì§
 //					threadOrdering = new Thread(this);
 //					threadOrdering.start();
 //				} // end if
-//					// ÇöÀç±îÁöÀÇ ÁÖ¹®»çÇ×À» Á¶È¸ (¾²·¹µå·Î µ¹·Á¾ß ÇÔ)
+//					// í˜„ì¬ê¹Œì§€ì˜ ì£¼ë¬¸ì‚¬í•­ì„ ì¡°íšŒ (ì“°ë ˆë“œë¡œ ëŒë ¤ì•¼ í•¨)
 //				searchOrder();
 //			} // end if
 //		} // end if
