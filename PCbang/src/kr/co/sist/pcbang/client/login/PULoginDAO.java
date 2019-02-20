@@ -1,6 +1,5 @@
 package kr.co.sist.pcbang.client.login;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -43,11 +42,7 @@ private static PULoginDAO pul_dao;
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-<<<<<<< HEAD
-		String userId="";
-=======
 		String userStatus="";
->>>>>>> branch 'master' of https://github.com/linolee/pcbang.git
 		
 		try {
 		//1.
@@ -56,8 +51,8 @@ private static PULoginDAO pul_dao;
 		//3.
 			StringBuilder status=new StringBuilder();
 			
-			status.append("select member_id ").append(" from pc ")
-			.append(" where member_id='").append(id).append("'");
+			status.append("select pc_status ").append(" from pc ")
+			.append(" where admin_id='").append(id).append("'");
 			
 			pstmt=con.prepareStatement(status.toString());
 		//4.
@@ -65,11 +60,7 @@ private static PULoginDAO pul_dao;
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
-<<<<<<< HEAD
-				userId=rs.getString("member_id");
-=======
 				userStatus=rs.getString("pc_status");
->>>>>>> branch 'master' of https://github.com/linolee/pcbang.git
 			}//end if
 			
 		}finally {
@@ -79,26 +70,14 @@ private static PULoginDAO pul_dao;
 			if( con != null ) { con.close(); }//end if
 		}//end finally
 		
-<<<<<<< HEAD
-		return userId;
-=======
 		return userStatus;
->>>>>>> branch 'master' of https://github.com/linolee/pcbang.git
 	}//memberIdStatus
 	
-<<<<<<< HEAD
-	public int selectGuestIdStatus(int cardNum) throws SQLException {
-=======
 	public String selectGuestIdStatus(int cardNum) throws SQLException {
->>>>>>> branch 'master' of https://github.com/linolee/pcbang.git
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-<<<<<<< HEAD
-		int cardNumber=0;
-=======
 		String userStatus="";
->>>>>>> branch 'master' of https://github.com/linolee/pcbang.git
 		
 		try {
 			//1.
@@ -107,7 +86,7 @@ private static PULoginDAO pul_dao;
 			//3.
 			StringBuilder status=new StringBuilder();
 			
-			status.append("select card_num ").append(" from pc ")
+			status.append("select pc_status ").append(" from pc ")
 			.append(" where card_num=").append(cardNum);
 			
 			pstmt=con.prepareStatement(status.toString());
@@ -116,11 +95,7 @@ private static PULoginDAO pul_dao;
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
-<<<<<<< HEAD
-				cardNumber=rs.getInt("card_num");
-=======
 				userStatus=rs.getString("pc_status");
->>>>>>> branch 'master' of https://github.com/linolee/pcbang.git
 			}//end if
 			
 		}finally {
@@ -130,11 +105,7 @@ private static PULoginDAO pul_dao;
 			if( con != null ) { con.close(); }//end if
 		}//end finally
 		
-<<<<<<< HEAD
-		return cardNumber;
-=======
 		return userStatus;
->>>>>>> branch 'master' of https://github.com/linolee/pcbang.git
 	}//guestIdStatus
 	
 	public int selectMemberLogin(PUCertificationVO pucvo) throws SQLException {
