@@ -23,7 +23,7 @@ public class PUPolicyController extends WindowAdapter implements ActionListener 
 				new PUNewUserView();
 				pupv.dispose();
 			} else {
-				JOptionPane.showMessageDialog(pupv, "약관에 동의하세요.");
+				JOptionPane.showMessageDialog(pupv, "모든 약관에 동의하세요.");
 			}
 		} // end if
 
