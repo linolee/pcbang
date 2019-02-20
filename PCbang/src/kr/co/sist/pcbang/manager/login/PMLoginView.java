@@ -19,7 +19,7 @@ public class PMLoginView extends JFrame {
 	private JTextField jpfPass2;
 	
 	public PMLoginView() {
-		super("Double Dragon PC规 包府磊");
+		super("PC规 包府磊");
 		
 		jtfId = new JTextField();
 		jpfPass = new JPasswordField();
