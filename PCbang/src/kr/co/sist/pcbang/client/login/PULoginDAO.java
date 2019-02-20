@@ -43,7 +43,11 @@ private static PULoginDAO pul_dao;
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
+<<<<<<< HEAD
 		String userId="";
+=======
+		String userStatus="";
+>>>>>>> branch 'master' of https://github.com/linolee/pcbang.git
 		
 		try {
 		//1.
@@ -61,7 +65,11 @@ private static PULoginDAO pul_dao;
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
+<<<<<<< HEAD
 				userId=rs.getString("member_id");
+=======
+				userStatus=rs.getString("pc_status");
+>>>>>>> branch 'master' of https://github.com/linolee/pcbang.git
 			}//end if
 			
 		}finally {
@@ -71,14 +79,26 @@ private static PULoginDAO pul_dao;
 			if( con != null ) { con.close(); }//end if
 		}//end finally
 		
+<<<<<<< HEAD
 		return userId;
+=======
+		return userStatus;
+>>>>>>> branch 'master' of https://github.com/linolee/pcbang.git
 	}//memberIdStatus
 	
+<<<<<<< HEAD
 	public int selectGuestIdStatus(int cardNum) throws SQLException {
+=======
+	public String selectGuestIdStatus(int cardNum) throws SQLException {
+>>>>>>> branch 'master' of https://github.com/linolee/pcbang.git
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
+<<<<<<< HEAD
 		int cardNumber=0;
+=======
+		String userStatus="";
+>>>>>>> branch 'master' of https://github.com/linolee/pcbang.git
 		
 		try {
 			//1.
@@ -96,7 +116,11 @@ private static PULoginDAO pul_dao;
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
+<<<<<<< HEAD
 				cardNumber=rs.getInt("card_num");
+=======
+				userStatus=rs.getString("pc_status");
+>>>>>>> branch 'master' of https://github.com/linolee/pcbang.git
 			}//end if
 			
 		}finally {
@@ -106,7 +130,11 @@ private static PULoginDAO pul_dao;
 			if( con != null ) { con.close(); }//end if
 		}//end finally
 		
+<<<<<<< HEAD
 		return cardNumber;
+=======
+		return userStatus;
+>>>>>>> branch 'master' of https://github.com/linolee/pcbang.git
 	}//guestIdStatus
 	
 	public int selectMemberLogin(PUCertificationVO pucvo) throws SQLException {
@@ -262,4 +290,3 @@ private static PULoginDAO pul_dao;
 	}//guestCheck
 	
 }
-
