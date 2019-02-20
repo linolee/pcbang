@@ -1,13 +1,11 @@
 package kr.co.sist.pcbang.client.login;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-
 
 public class PULoginDAO {
 private static PULoginDAO pul_dao;
@@ -41,12 +39,11 @@ private static PULoginDAO pul_dao;
 		return con;
 	}//getConn
 	
-	public boolean selectMemberIdStatus(String id) throws SQLException {
+	public String selectMemberIdStatus(String id) throws SQLException {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		boolean statusFlag=false;
-		String userStatus="";
+		String userId="";
 		
 		try {
 		//1.
@@ -55,8 +52,8 @@ private static PULoginDAO pul_dao;
 		//3.
 			StringBuilder status=new StringBuilder();
 			
-			status.append("select pc_status ").append(" from pc ")
-			.append(" where admin_id='").append(id).append("'");
+			status.append("select member_id ").append(" from pc ")
+			.append(" where member_id='").append(id).append("'");
 			
 			pstmt=con.prepareStatement(status.toString());
 		//4.
@@ -64,11 +61,7 @@ private static PULoginDAO pul_dao;
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
-				userStatus=rs.getString("pc_status");
-			}//end if
-			
-			if(userStatus.toLowerCase().equals("y")) {
-				statusFlag=true;
+				userId=rs.getString("member_id");
 			}//end if
 			
 		}finally {
@@ -78,15 +71,14 @@ private static PULoginDAO pul_dao;
 			if( con != null ) { con.close(); }//end if
 		}//end finally
 		
-		return statusFlag;
+		return userId;
 	}//memberIdStatus
 	
-	public boolean selectGuestIdStatus(int cardNum) throws SQLException {
+	public int selectGuestIdStatus(int cardNum) throws SQLException {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		boolean statusFlag=false;
-		String userStatus="";
+		int cardNumber=0;
 		
 		try {
 			//1.
@@ -95,7 +87,7 @@ private static PULoginDAO pul_dao;
 			//3.
 			StringBuilder status=new StringBuilder();
 			
-			status.append("select pc_status ").append(" from pc ")
+			status.append("select card_num ").append(" from pc ")
 			.append(" where card_num=").append(cardNum);
 			
 			pstmt=con.prepareStatement(status.toString());
@@ -104,11 +96,7 @@ private static PULoginDAO pul_dao;
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
-				userStatus=rs.getString("pc_status");
-			}//end if
-			
-			if(userStatus.toLowerCase().equals("y")) {
-				statusFlag=true;
+				cardNumber=rs.getInt("card_num");
 			}//end if
 			
 		}finally {
@@ -118,7 +106,7 @@ private static PULoginDAO pul_dao;
 			if( con != null ) { con.close(); }//end if
 		}//end finally
 		
-		return statusFlag;
+		return cardNumber;
 	}//guestIdStatus
 	
 	public int selectMemberLogin(PUCertificationVO pucvo) throws SQLException {
@@ -208,7 +196,7 @@ private static PULoginDAO pul_dao;
 			pstmt=con.prepareStatement(updateOrder);
 		//4.
 			pstmt.setString(1, pumsvo.getMemberId());
-			pstmt.setInt(2, pumsvo.getPcIp());
+			pstmt.setString(2, pumsvo.getPcIp());
 		//5.
 			pstmt.executeUpdate();
 		}finally {
@@ -231,7 +219,7 @@ private static PULoginDAO pul_dao;
 			pstmt=con.prepareStatement(updateOrder);
 			//4.
 			pstmt.setInt(1, pugsvo.getCardNum());
-			pstmt.setInt(2, pugsvo.getPcIp());
+			pstmt.setString(2, pugsvo.getPcIp());
 			//5.
 			pstmt.executeUpdate();
 		}finally {
