@@ -6,8 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
-
 public class PULoginDAO {
 private static PULoginDAO pul_dao;
 	
