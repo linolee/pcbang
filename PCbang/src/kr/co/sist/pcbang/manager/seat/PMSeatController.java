@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import kr.co.sist.pcbang.manager.seat.detail.PMSeatDetailView;
 import kr.co.sist.pcbang.manager.seat.message.PMClient;
 import kr.co.sist.pcbang.manager.seat.message.PMMsgView;
@@ -24,6 +26,7 @@ public class PMSeatController implements Runnable, ActionListener {
 	private List<PMClient> clientSocketList;
 	private PMSeatDAO pms_dao;
 	private PMSeatVO[][] seat;
+	private Thread threadServer; // 접속자에 대한 처리를 하기 위한 thread
 
 	public PMSeatController(PMSeatView pmsv) {
 		// DAO연결
@@ -35,9 +38,6 @@ public class PMSeatController implements Runnable, ActionListener {
 		setBtnSeat();
 	}// constructor
 
-	private void setServer() {
-
-	}
 
 	public void setBtnSeat() {
 		for (int i = 0; i < seat.length; i++) {
@@ -111,6 +111,11 @@ public class PMSeatController implements Runnable, ActionListener {
 	private void visibleMsg() {
 	}
 
+	private void setServer() {
+		threadServer = new Thread(this);
+		threadServer.start();// start() -> run()
+	}
+	
 	public void run() {
 		try {
 			// 서버소켓을 열고 접속자 소켓을 받는다.
@@ -122,11 +127,14 @@ public class PMSeatController implements Runnable, ActionListener {
 
 	}
 
-	private void recieveClient() throws IOException{
-		serverSocket = new ServerSocket(55000);
-		Socket clientSocket = serverSocket.accept();
-		PMClient client = new PMClient(clientSocket, new DataInputStream(clientSocket.getInputStream()), new DataOutputStream(clientSocket.getOutputStream()), clientSocketList);
-		clientSocketList.add(client);
+	private void recieveClient() throws IOException {
+		serverSocket = new ServerSocket(55000);//서버 소켓을 열고
+		Socket clientSocket = serverSocket.accept();//클라이언트가 접속할 경우 소켓을 받아서
+		PMClient client = new PMClient(clientSocket, new DataInputStream(clientSocket.getInputStream()),
+				new DataOutputStream(clientSocket.getOutputStream()), clientSocketList);//클라이언트 객체를 만들고
+		clientSocketList.add(client);//리스트에 넣는다.
+//		client.run();//클라이언트의 Thread를 실행한다.
+		System.out.println(clientSocket.getInetAddress());
 	}
 
 	private void readSeatInfo() {
