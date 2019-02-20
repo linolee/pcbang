@@ -16,7 +16,7 @@ public class PMMsgView extends JDialog{
 	private JButton jbtSendMsg;
 	private JScrollPane jspTalkDisplay;
 	
-	public PMMsgView() {
+	public PMMsgView(PMClient client) {
 		jtaMsg = new JTextArea();
 		jtfMsg = new JTextField(45);
 		jbtSendMsg = new JButton("Àü¼Û");

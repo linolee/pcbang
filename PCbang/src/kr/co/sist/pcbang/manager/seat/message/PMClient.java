@@ -7,41 +7,32 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-public class PMClient extends WindowAdapter implements Runnable, ActionListener{
+public class PMClient extends Thread implements Runnable, ActionListener{
 	
 	private PMMsgView mv;
 	private Socket client;
 	private DataInputStream dis;
 	private DataOutputStream dos;
+	private List<PMClient> clientSocketList;
 	
-	public PMClient(PMMsgView mv) {
-		this.mv = mv;
+	public PMClient(Socket client, DataInputStream dis, DataOutputStream dos, List<PMClient> clientSocketList) {
+		mv = new PMMsgView(this);
+		this.client = client;
+		this.dis = dis;
+		this.dos = dos;
+		this.clientSocketList = clientSocketList;
 	}
-	
-	
+
+
 	@Override
 	public void run() {
-		if(dis!=null) {
-			try {
-				String revMsg = "";
-				JScrollPane jsp = mv.getJspTalkDisplay();
-				while(true) {
-					revMsg = dis.readUTF();
-					
-					mv.getJtaMsg().append(revMsg+"\n");
-					jsp.getVerticalScrollBar().setValue(jsp.getVerticalScrollBar().getMaximum());
-				}
-				
-			} catch(IOException ie) {
-				JOptionPane.showMessageDialog(mv, "서버가 종료되었습니다");
-				ie.printStackTrace();
-			}
-		}
+		
 	} // run
 	
 	public void readStream() {
