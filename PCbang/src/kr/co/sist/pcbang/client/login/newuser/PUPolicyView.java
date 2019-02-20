@@ -175,8 +175,4 @@ public class PUPolicyView extends JFrame{
 		return jbtcancel;
 	}
 
-	public static void main(String[] args) {
-		new PUPolicyView();
-	}
-	
 } // class
