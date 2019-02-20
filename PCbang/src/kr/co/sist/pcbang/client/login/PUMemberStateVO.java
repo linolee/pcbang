@@ -1,23 +1,22 @@
 package kr.co.sist.pcbang.client.login;
 
+
 public class PUMemberStateVO {
 
-	
-	private String memberId;
-	private int pcIp;
-	
-	public PUMemberStateVO(String memberId, int pcIp) {
-		this.memberId = memberId;
-		this.pcIp = pcIp;
-	}
+		private String memberId, pcIp;
+		
+		public PUMemberStateVO(String memberId, String pcIp) {
+			this.memberId = memberId;
+			this.pcIp = pcIp;
+		}
 
-	public String getMemberId() {
-		return memberId;
-	}
+		public String getMemberId() {
+			return memberId;
+		}
 
-	public int getPcIp() {
-		return pcIp;
-	}
+		public String getPcIp() {
+			return pcIp;
+		}
 
-}
+	}
 
