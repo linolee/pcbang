@@ -1,4 +1,3 @@
-
 package kr.co.sist.pcbang.client.login;
 
 import java.awt.event.ActionEvent;
@@ -17,7 +16,7 @@ import javax.swing.JTextField;
 import kr.co.sist.pcbang.client.main.PUMainView;
 
 /**
- * Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ® ï¿½Î±ï¿½ï¿½ï¿½
+ * Å¬¶óÀÌ¾ðÆ® ·Î±×ÀÎ
  * @author owner
  */
 public class PULoginController extends WindowAdapter implements ActionListener{
@@ -33,59 +32,59 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if(ae.getSource()==pulv.getJbtStart()) {//ï¿½Î±ï¿½ï¿½ï¿½
+		if(ae.getSource()==pulv.getJbtStart()) {//·Î±×ÀÎ
 			
-			if(checkMember()) {//È¸ï¿½ï¿½ï¿½Ì¸ï¿½
+			if(checkMember()) {//È¸¿øÀÌ¸é
 				JTextField jtf=pulv.getJtfId();
 				JPasswordField jpf=pulv.getJpfPass();
 				
 				String id=jtf.getText().trim();
 				String pass=new String (jpf.getPassword());
 				
-//				if(loginStatus().equals("o")) {//ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-//					//ï¿½Î±ï¿½ï¿½ï¿½
+//				if(loginStatus().equals("o")) {//·Î±×ÀÎ °¡´ÉÇÑ »óÅÂÀÎÁö
+//					//·Î±×ÀÎ
 //					PUCertificationVO pucvo=new PUCertificationVO(id, pass);
 //					String memberName=login(pucvo);
 //					
-//					if(memberName.equals("")) {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ""ï¿½ï¿½ï¿½ 
-//						JOptionPane.showMessageDialog(pulv, "ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+//					if(memberName.equals("")) {//¼öÇàÇÑ °á°ú°¡ ""¶ó¸é 
+//						JOptionPane.showMessageDialog(pulv, "¾ÆÀÌµð³ª ºñ¹Ð¹øÈ£¸¦ È®ÀÎÇÏ¼¼¿ä.");
 //						jtf.setText("");
 //						jpf.setText("");
 //						jtf.requestFocus();
 //					}else {
-//						PUMainView.userId=id;//ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´Ù¸ï¿½ idï¿½ï¿½ ï¿½ï¿½ç°´Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ static ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+//						PUMainView.userId=id;//·Î±×ÀÎÀÌ ¼º°øÇß´Ù¸é id¸¦ ¸ðµç°´Ã¼¿¡¼­ »ç¿ëÇÒ ¼ö ÀÖµµ·Ï static º¯¼ö·Î ¼³Á¤ÇÑ´Ù.
 //						PUMainView.cardNum="";
 //						new PUMainView();//new PUMainView(memberName);
 //						pulv.dispose();
 //					}//end else
 //				}else if(loginStatus().equals("c")) {
 				
-				if(pul_dao.selectPcId(id)) {//PCï¿½ï¿½ï¿½Ìºï¿½ ï¿½È¸ï¿½Ç´ï¿½ idï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½ ï¿½Î±ï¿½ï¿½ï¿½
-					//ï¿½Î±ï¿½ï¿½ï¿½
+				if(pul_dao.selectPcId(id)) {//PCÅ×ÀÌºí¿¡ Á¶È¸µÇ´Â id°¡ ¾ø´Ù¸é ·Î±×ÀÎ
+					//·Î±×ÀÎ
 					PUCertificationVO pucvo=new PUCertificationVO(id, pass);
 					String memberName=login(pucvo);
 					
-					if(memberName.equals("")) {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ""ï¿½ï¿½ï¿½ 
-						JOptionPane.showMessageDialog(pulv, "ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+					if(memberName.equals("")) {//¼öÇàÇÑ °á°ú°¡ ""¶ó¸é 
+						JOptionPane.showMessageDialog(pulv, "¾ÆÀÌµð³ª ºñ¹Ð¹øÈ£¸¦ È®ÀÎÇÏ¼¼¿ä.");
 						jtf.setText("");
 						jpf.setText("");
 						jtf.requestFocus();
 					}else {
-						PUMainView.userId=id;//ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´Ù¸ï¿½ idï¿½ï¿½ ï¿½ï¿½ç°´Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ static ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+						PUMainView.userId=id;//·Î±×ÀÎÀÌ ¼º°øÇß´Ù¸é id¸¦ ¸ðµç°´Ã¼¿¡¼­ »ç¿ëÇÒ ¼ö ÀÖµµ·Ï static º¯¼ö·Î ¼³Á¤ÇÑ´Ù.
 						PUMainView.cardNum="";
 						new PUMainView();//new PUMainView(memberName);
 						pulv.dispose();
 					}//end else
-				}else {//ï¿½Ö´Ù¸ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ÈµÅ´Âµï¿½,ï¿½Ú¸ï¿½ï¿½Ìµï¿½ï¿½Ì¸ï¿½~
+				}else {//ÀÖ´Ù¸é ·Î±×ÀÎÀÌ ¾ÈµÅ´Âµ¥,ÀÚ¸®ÀÌµ¿ÀÌ¸é~
 					if(loginStatus().equals("c")) {
-						//ï¿½Ì¹ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½Ö´Âµï¿½=>ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½
-						System.out.println("ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½->ï¿½Î±ï¿½ï¿½ï¿½");
+						//ÀÌ¹Ì ·Î±×ÀÎ µÇ¾îÀÖ´Âµ¥=>ÀÚ¸®º¯°æ ½ÅÃ»ÇÔ
+						System.out.println("ÀÚ¸®º¯°æÇÑ »óÅÂÀÔ´Ï´Ù->·Î±×ÀÎ");
 						
 						PUCertificationVO pucvo=new PUCertificationVO(id, pass);
 						String memberName=login(pucvo);
 						
-						if(memberName.equals("")) {//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ""ï¿½ï¿½ï¿½ 
-							JOptionPane.showMessageDialog(pulv, "ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ È®ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+						if(memberName.equals("")) {//¼öÇàÇÑ °á°ú°¡ ""¶ó¸é 
+							JOptionPane.showMessageDialog(pulv, "¾ÆÀÌµð³ª ºñ¹Ð¹øÈ£¸¦ È®ÀÎÇÏ¼¼¿ä.");
 							jtf.setText("");
 							jpf.setText("");
 							jtf.requestFocus();
@@ -97,75 +96,75 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 						}//end else
 //					}else if(loginStatus().equals("x")) {
 					}else{
-						//ï¿½Ì¹ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½Ö´Âµï¿½=>ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½
-						JOptionPane.showMessageDialog(pulv, "ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½!");
+						//ÀÌ¹Ì ·Î±×ÀÎ µÇ¾îÀÖ´Âµ¥=>ÀÚ¸®º¯°æ ½ÅÃ»¾ÈÇÔ
+						JOptionPane.showMessageDialog(pulv, "ÀÚ¸®º¯°æÀ» ¸ÕÀú ½ÅÃ»ÇØ ÁÖ¼¼¿ä!");
 					}//end else
 				}//end else
 				
-			}else{//ï¿½ï¿½È¸ï¿½ï¿½ï¿½Ì¸ï¿½
+			}else{//ºñÈ¸¿øÀÌ¸é
 				JTextField jtf2=pulv.getJtfCardNum();
 				int card=Integer.parseInt(jtf2.getText().trim());
 				
-//				if(loginStatus().equals("o")) {//ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-//					//ï¿½Î±ï¿½ï¿½ï¿½
+//				if(loginStatus().equals("o")) {//·Î±×ÀÎ °¡´ÉÇÑ »óÅÂÀÎÁö
+//					//·Î±×ÀÎ
 //					if(login(card)) {
-//						PUMainView.userId="";//ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´Ù¸ï¿½ idï¿½ï¿½ ï¿½ï¿½ç°´Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ static ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+//						PUMainView.userId="";//·Î±×ÀÎÀÌ ¼º°øÇß´Ù¸é id¸¦ ¸ðµç°´Ã¼¿¡¼­ »ç¿ëÇÒ ¼ö ÀÖµµ·Ï static º¯¼ö·Î ¼³Á¤ÇÑ´Ù.
 //						PUMainView.cardNum=String.valueOf(card);
 //						new PUMainView();
 //						pulv.dispose();
 //					}else {
-//						JOptionPane.showMessageDialog(pulv, "Ä«ï¿½ï¿½ï¿½È£ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½");
+//						JOptionPane.showMessageDialog(pulv, "Ä«µå¹øÈ£¸¦ È®ÀÎÇØÁÖ¼¼¿ä");
 //					}
 //				}else if(loginStatus().equals("c")) {
-				if(pul_dao.selectPcCard(card)) {//PCï¿½ï¿½ï¿½Ìºï¿½ ï¿½È¸ï¿½Ç´ï¿½ idï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½ ï¿½Î±ï¿½ï¿½ï¿½
-					//ï¿½Î±ï¿½ï¿½ï¿½
+				if(pul_dao.selectPcCard(card)) {//PCÅ×ÀÌºí¿¡ Á¶È¸µÇ´Â id°¡ ¾ø´Ù¸é ·Î±×ÀÎ
+					//·Î±×ÀÎ
 					if(login(card)) {
-						PUMainView.userId="";//ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´Ù¸ï¿½ idï¿½ï¿½ ï¿½ï¿½ç°´Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ static ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+						PUMainView.userId="";//·Î±×ÀÎÀÌ ¼º°øÇß´Ù¸é id¸¦ ¸ðµç°´Ã¼¿¡¼­ »ç¿ëÇÒ ¼ö ÀÖµµ·Ï static º¯¼ö·Î ¼³Á¤ÇÑ´Ù.
 						PUMainView.cardNum=String.valueOf(card);
 						new PUMainView();
 						pulv.dispose();
 					}else {
-						JOptionPane.showMessageDialog(pulv, "Ä«ï¿½ï¿½ï¿½È£ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½");
+						JOptionPane.showMessageDialog(pulv, "Ä«µå¹øÈ£¸¦ È®ÀÎÇØÁÖ¼¼¿ä");
 					}
-				}else {//ï¿½Ö´Ù¸ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ÈµÅ´Âµï¿½,ï¿½Ú¸ï¿½ï¿½Ìµï¿½ï¿½Ì¸ï¿½~
+				}else {//ÀÖ´Ù¸é ·Î±×ÀÎÀÌ ¾ÈµÅ´Âµ¥,ÀÚ¸®ÀÌµ¿ÀÌ¸é~
 					if(loginStatus().equals("c")) {
-						//ï¿½Ì¹ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½Ö´Âµï¿½=>ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½
+						//ÀÌ¹Ì ·Î±×ÀÎ µÇ¾îÀÖ´Âµ¥=>ÀÚ¸®º¯°æ ½ÅÃ»ÇÔ
 						if(login(card)) {
 							new PUMainView();
-							PUMainView.userId="";//ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß´Ù¸ï¿½ idï¿½ï¿½ ï¿½ï¿½ç°´Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ static ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+							PUMainView.userId="";//·Î±×ÀÎÀÌ ¼º°øÇß´Ù¸é id¸¦ ¸ðµç°´Ã¼¿¡¼­ »ç¿ëÇÒ ¼ö ÀÖµµ·Ï static º¯¼ö·Î ¼³Á¤ÇÑ´Ù.
 							PUMainView.cardNum=String.valueOf(card);
 							pulv.dispose();
 						}else {
-							JOptionPane.showMessageDialog(pulv, "Ä«ï¿½ï¿½ï¿½È£ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½");
+							JOptionPane.showMessageDialog(pulv, "Ä«µå¹øÈ£¸¦ È®ÀÎÇØÁÖ¼¼¿ä");
 						}//end else
 //					}else if(loginStatus().equals("x")) {
 					}else{
-						//ï¿½Ì¹ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½Ö´Âµï¿½=>ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½
-						JOptionPane.showMessageDialog(pulv, "ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½!");
+						//ÀÌ¹Ì ·Î±×ÀÎ µÇ¾îÀÖ´Âµ¥=>ÀÚ¸®º¯°æ ½ÅÃ»¾ÈÇÔ
+						JOptionPane.showMessageDialog(pulv, "ÀÚ¸®º¯°æÀ» ¸ÕÀú ½ÅÃ»ÇØ ÁÖ¼¼¿ä!");
 					}//end else
 				}//end else
 			}//end else
 			
 		}//end if
 		if(ae.getSource()==pulv.getJbtMembership()) {
-			JOptionPane.showMessageDialog(pulv, "È¸ï¿½ï¿½ï¿½ï¿½!");
+			JOptionPane.showMessageDialog(pulv, "È¸¿ø°¡ÀÔ!");
 		}//end if
 		if(ae.getSource()==pulv.getJbtFind()) {
-			JOptionPane.showMessageDialog(pulv, "ï¿½ï¿½ï¿½Ìµï¿½/ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½!");
+			JOptionPane.showMessageDialog(pulv, "¾ÆÀÌµð/ºñ¹Ð¹øÈ£ Ã£±â!");
 		}//end if
 	}//actionPerformed
 	
 	@Override
 	public void windowClosing(WindowEvent we) {
-		int flag=JOptionPane.showConfirmDialog(pulv, "ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½ï¿½ï¿½ ï¿½Õ´Ï´ï¿½.\nï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï½Ã°Ú½ï¿½Ï±ï¿½?");
+		int flag=JOptionPane.showConfirmDialog(pulv, "·Î±×ÀÎ ÇÏÁö ¾ÊÀ¸½Ã¸é »ç¿ëÀÌ ºÒ°¡´É ÇÕ´Ï´Ù.\n±×·¡µµ Á¾·áÇÏ½Ã°Ú½À´Ï±î?");
 		if(flag==0) {
 			pulv.dispose();
 		}//end if
 	}//windowClosing
 	
 	/**
-	 * È¸ï¿½ï¿½, ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-	 * @return falseï¿½ï¿½ ï¿½ï¿½È¸ï¿½ï¿½ trueï¿½ï¿½ È¸ï¿½ï¿½
+	 * È¸¿ø, ºñÈ¸¿ø ±¸ºÐ
+	 * @return false´Â ºñÈ¸¿ø true´Â È¸¿ø
 	 */
 	private boolean checkMember() {
 		boolean flagmember=true;
@@ -184,39 +183,39 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 				jtf1.setText("");
 				jtf1.requestFocus();
 				flagId=true;
-				System.out.println("ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½");
-				JOptionPane.showMessageDialog(pulv, "ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½.");
+				System.out.println("¾ÆÀÌµð¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä");
+				JOptionPane.showMessageDialog(pulv, "¾ÆÀÌµð¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä.");
 			}else if(pass.trim().equals("")) {
-				jpf.setText("");//ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½Ä£ ï¿½ï¿½ï¿½ JPasswordFieldï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+				jpf.setText("");//°ø¹éÀ» ÀÔ·ÂÇÏ°í ¿£ÅÍÄ£ °æ¿ì JPasswordFieldÀÇ °ªÀ» ÃÊ±âÈ­
 				jpf.requestFocus();
 				flagPass=true;
-				System.out.println("ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½");
-				JOptionPane.showMessageDialog(pulv, "ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½.");
+				System.out.println("ºñ¹Ð¹øÈ£¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä");
+				JOptionPane.showMessageDialog(pulv, "ºñ¹Ð¹øÈ£¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä.");
 			}//end if
 			if(!flagId&&!flagPass) {
-				flagmember=true;//È¸ï¿½ï¿½
+				flagmember=true;//È¸¿ø
 			}//end if
 		}else if(jtf1.getText().trim().equals("") && pass.trim().equals("")){
 			if(jtf2.getText().trim().equals("")) {
 				jtf2.setText("");
 				jtf2.requestFocus();
 				flagCard=true;
-				System.out.println("ï¿½ï¿½È¸ï¿½ï¿½ Ä«ï¿½ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½");
+				System.out.println("ºñÈ¸¿ø Ä«µå¹øÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä");
 			}//end if
 			if(!flagCard) {
-				flagmember=false;//ï¿½ï¿½È¸ï¿½ï¿½
+				flagmember=false;//ºñÈ¸¿ø
 			}//end if
 //		}else {
-//			System.out.println("ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½!");
+//			System.out.println("·Î±×ÀÎÇØ ÁÖ¼¼¿ä!");
 		}//end else
 		return flagmember;
 	}//checkNull
 	
 	/**
-	 * ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½, ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+	 * ¾ÆÀÌµð°¡ ·Î±×ÀÎ ÁßÀÎÁö È®ÀÎ, ÀÌµ¿°¡´ÉÇÑ »óÅÂÀÎÁö È®ÀÎ
 	 * @return 
 	 */
-	private String loginStatus() {//o,c,xï¿½ï¿½ ï¿½ï¿½ï¿½Í¾ï¿½ï¿½Ñ´ï¿½
+	private String loginStatus() {//cÀ¯¹«
 		String flag="";
 		char status;
 		JTextField jtfid=pulv.getJtfId();
@@ -224,14 +223,14 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 		
 		String id=jtfid.getText().trim();
 		String cardNum=jtfcard.getText().trim();
-		if(checkMember()) {//È¸ï¿½ï¿½ï¿½Ì¸ï¿½
+		if(checkMember()) {//È¸¿øÀÌ¸é
 			try {
 				status = pul_dao.selectMemberIdStatus(id);
 				flag=String.valueOf(status);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}//end catch
-		}else{//ï¿½ï¿½È¸ï¿½ï¿½ï¿½Ì¸ï¿½
+		}else{//ºñÈ¸¿øÀÌ¸é
 			try {
 				status = pul_dao.selectGuestIdStatus(Integer.parseInt(cardNum));
 				flag=String.valueOf(status);
@@ -243,7 +242,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	}//loginStatus
 	
 	/**
-	 * ï¿½ï¿½È¸ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½
+	 * ºñÈ¸¿ø ·Î±×ÀÎ
 	 * @param guestNum
 	 * @return
 	 */
@@ -258,17 +257,17 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 			pul_dao.updateGuestState(pugsvo);
 			flag=true;
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(pulv, "DBï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ß½ï¿½Ï´ï¿½.");
+			JOptionPane.showMessageDialog(pulv, "DB¿¡¼­ ¹®Á¦°¡ ¹ß»ýÇß½À´Ï´Ù.");
 			e.printStackTrace();
 		} catch (UnknownHostException uhe) {
-			JOptionPane.showMessageDialog(pulv, "ipï¿½È¸ ï¿½ï¿½ï¿½ï¿½");
+			JOptionPane.showMessageDialog(pulv, "ipÁ¶È¸ ½ÇÆÐ");
 			uhe.printStackTrace();
 		} //end catch
 		return flag;
 	}//login guest
 	
 	/**
-	 * È¸ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½
+	 * È¸¿ø ·Î±×ÀÎ
 	 * @param pucvo
 	 * @return
 	 */
@@ -279,7 +278,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 		try {
 			adminName=String.valueOf(pul_dao.selectMemberLogin(pucvo));
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(pulv, "DBï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ß½ï¿½Ï´ï¿½.");
+			JOptionPane.showMessageDialog(pulv, "DB¿¡¼­ ¹®Á¦°¡ ¹ß»ýÇß½À´Ï´Ù.");
 			e.printStackTrace();
 		}//end catch
 		
@@ -287,7 +286,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	}//login member
 	
 	/**
-	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½
+	 * °øÁö»çÇ× ºÒ·¯¿À±â
 	 * @return
 	 */
 	private void setNotice() {
