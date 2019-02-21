@@ -38,6 +38,102 @@ private static PULoginDAO pul_dao;
 		return con;
 	}//getConn
 	
+	/**
+	 * PC에서 id를 이미 사용중인지 판단
+	 * @param id
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean selectMember(String id) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String userStatus="";
+		boolean userFlag=false;
+		
+		try {
+			//1.
+			//2.
+			con=getConn();
+			//3.
+			StringBuilder status=new StringBuilder();
+			
+			status.append("select member_id ").append(" from pc ")
+			.append(" where member_id='").append(id).append("'");
+			
+			pstmt=con.prepareStatement(status.toString());
+			//4.
+			//5.
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				userStatus=rs.getString("member_id");
+			}//end if
+			if(!userStatus.equals("")) {
+				userFlag=true;
+			}//end if
+			
+		}finally {
+			//6.
+			if( rs != null ) { rs.close(); }//end if
+			if( pstmt != null ) { pstmt.close(); }//end if
+			if( con != null ) { con.close(); }//end if
+		}//end finally
+		
+		return userFlag;
+	}//selectMember
+	
+	/**
+	 * PC에서 카드번호를 이미 사용중인지 판단
+	 * @param cardNum
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean selectGuest(int cardNum) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String userStatus="";
+		boolean userFlag=false;
+		
+		try {
+			//1.
+			//2.
+			con=getConn();
+			//3.
+			StringBuilder status=new StringBuilder();
+			
+			status.append("select card_num ").append(" from pc ")
+			.append(" where card_num=").append(cardNum);
+			
+			pstmt=con.prepareStatement(status.toString());
+			//4.
+			//5.
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				userStatus=rs.getString("card_num");
+			}//end if
+			if(!userStatus.equals("")) {
+				userFlag=true;
+			}//end if
+			
+		}finally {
+			//6.
+			if( rs != null ) { rs.close(); }//end if
+			if( pstmt != null ) { pstmt.close(); }//end if
+			if( con != null ) { con.close(); }//end if
+		}//end finally
+		
+		return userFlag;
+	}//selectGuest
+	
+	/**
+	 * 회원의 아이디가 현재 PC에서 자리이동 등 의 상태가 가능한지 여부
+	 * @param id
+	 * @return
+	 * @throws SQLException
+	 */
 	public String selectMemberIdStatus(String id) throws SQLException {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -51,8 +147,8 @@ private static PULoginDAO pul_dao;
 		//3.
 			StringBuilder status=new StringBuilder();
 			
-			status.append("select pc_status ").append(" from pc ")
-			.append(" where admin_id='").append(id).append("'");
+			status.append("select pc_status ").append(" from pc_status ")
+			.append(" seat_num=(select seat_num from pc where member_id='").append(id).append("')");
 			
 			pstmt=con.prepareStatement(status.toString());
 		//4.
@@ -73,6 +169,12 @@ private static PULoginDAO pul_dao;
 		return userStatus;
 	}//memberIdStatus
 	
+	/**
+	 * 비회원의 카드가 현재 PC에서 자리이동 등의 상태가 가능한지 여부
+	 * @param cardNum
+	 * @return
+	 * @throws SQLException
+	 */
 	public String selectGuestIdStatus(int cardNum) throws SQLException {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -86,8 +188,8 @@ private static PULoginDAO pul_dao;
 			//3.
 			StringBuilder status=new StringBuilder();
 			
-			status.append("select pc_status ").append(" from pc ")
-			.append(" where card_num=").append(cardNum);
+			status.append("select pc_status ").append(" from pc_status ")
+			.append(" seat_num=(select seat_num from pc where card_num=").append(cardNum).append(")");
 			
 			pstmt=con.prepareStatement(status.toString());
 			//4.
@@ -108,6 +210,12 @@ private static PULoginDAO pul_dao;
 		return userStatus;
 	}//guestIdStatus
 	
+	/**
+	 * 회원의 아이디와 비밀번호가 맞다면 남은시간 정보를 가져오는 일
+	 * @param pucvo
+	 * @return
+	 * @throws SQLException
+	 */
 	public int selectMemberLogin(PUCertificationVO pucvo) throws SQLException {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -145,6 +253,12 @@ private static PULoginDAO pul_dao;
 		return restTime;
 	}//memberLogin
 	
+	/**
+	 * 비회원의 카드번호가 맞는지 판단
+	 * @param cardNum
+	 * @return
+	 * @throws SQLException
+	 */
 	public boolean selectGuestCheck(int cardNum) throws SQLException {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -182,52 +296,104 @@ private static PULoginDAO pul_dao;
 		return flag;
 	}//guestCheck
 	
-	public void updateMemberState(PUMemberStateVO pumsvo)throws SQLException {
+	/**
+	 * 회원이 로그인 했을 때 로그인한 PC의 상태변경
+	 * @param pumsvo
+	 * @throws SQLException
+	 */
+	public boolean updateMemberState(PUMemberStateVO pumsvo)throws SQLException {
 		Connection con=null;
-		PreparedStatement pstmt=null;
+		PreparedStatement pstmt1=null;
+		PreparedStatement pstmt2=null;
+		boolean flag=false;
 		
 		try {
 		//1.
 		//2.
 			con=getConn();
 		//3.
-			String updateOrder="update pc set pc_status='Y'&&member_id=? where pc_ip=?";
-			pstmt=con.prepareStatement(updateOrder);
+			String updatePc="update pc set member_id=? where pc_ip=?";
+			pstmt1=con.prepareStatement(updatePc);
 		//4.
-			pstmt.setString(1, pumsvo.getMemberId());
-			pstmt.setString(2, pumsvo.getPcIp());
+			pstmt1.setString(1, pumsvo.getMemberId());
+			pstmt1.setString(2, pumsvo.getPcIp());
 		//5.
-			pstmt.executeUpdate();
+			int cnt1 = pstmt1.executeUpdate();
+		//3.
+			String updateStatus
+			="update pc_status set pc_status='Y' where seat_num=(select seat_num from pc where pc_ip=?)";
+			pstmt2=con.prepareStatement(updateStatus);
+		//4.
+			pstmt2.setString(1, pumsvo.getMemberId());
+			pstmt2.setString(2, pumsvo.getPcIp());
+		//5.
+			int cnt2 = pstmt2.executeUpdate();
+			
+			if( cnt1==1 && cnt2 ==1 ) {
+				flag=true;
+			}//end if
 		}finally {
 		//6.
-			if( pstmt != null ) { pstmt.close(); }//end if
+			if( pstmt2 != null ) { pstmt2.close(); }//end if
+			if( pstmt1 != null ) { pstmt1.close(); }//end if
 			if( con != null ) { con.close(); }//end if
 		}//end finally
+		
+		return flag;
 	}//changeMemberState
 	
-	public void updateGuestState(PUGuestStateVO pugsvo)throws SQLException {
+	/**
+	 * 비회원이 로그인 했을 때 로그인한 PC의 상태변경
+	 * @param pugsvo
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean updateGuestState(PUGuestStateVO pugsvo)throws SQLException {
 		Connection con=null;
-		PreparedStatement pstmt=null;
+		PreparedStatement pstmt1=null;
+		PreparedStatement pstmt2=null;
+		boolean flag=false;
 		
 		try {
 			//1.
 			//2.
 			con=getConn();
 			//3.
-			String updateOrder="update pc set pc_status='Y'&&card_num=? where pc_ip=?";
-			pstmt=con.prepareStatement(updateOrder);
-			//4.
-			pstmt.setInt(1, pugsvo.getCardNum());
-			pstmt.setString(2, pugsvo.getPcIp());
-			//5.
-			pstmt.executeUpdate();
+			String updatePc="update pc set card_num=? where pc_ip=?";
+			pstmt1=con.prepareStatement(updatePc);
+		//4.
+			pstmt1.setInt(1, pugsvo.getCardNum());
+			pstmt1.setString(2, pugsvo.getPcIp());
+		//5.
+			int cnt1 = pstmt1.executeUpdate();
+		//3.
+			String updateStatus
+			="update pc_status set pc_status='Y' where seat_num=(select seat_num from pc where pc_ip=?)";
+			pstmt2=con.prepareStatement(updateStatus);
+		//4.
+			pstmt2.setInt(1, pugsvo.getCardNum());
+			pstmt2.setString(2, pugsvo.getPcIp());
+		//5.
+			int cnt2 = pstmt2.executeUpdate();
+			
+			if( cnt1==1 && cnt2 ==1 ) {
+				flag=true;
+			}//end if
 		}finally {
 			//6.
-			if( pstmt != null ) { pstmt.close(); }//end if
+			if( pstmt2 != null ) { pstmt2.close(); }//end if
+			if( pstmt1 != null ) { pstmt1.close(); }//end if
 			if( con != null ) { con.close(); }//end if
 		}//end finally
+		
+		return flag;
 	}//changeGuestState
 	
+	/**
+	 * 관리자의 공지사항
+	 * @return
+	 * @throws SQLException
+	 */
 	public String selectNotice() throws SQLException {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -260,4 +426,4 @@ private static PULoginDAO pul_dao;
 		return notice;
 	}//guestCheck
 	
-}
+}//class
