@@ -1,5 +1,6 @@
 package kr.co.sist.pcbang.client.login;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -34,37 +35,21 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==pulv.getJbtStart()) {//로그인
 			
+			try {
 			if(checkMember()) {//회원이면
 				JTextField jtf=pulv.getJtfId();
 				JPasswordField jpf=pulv.getJpfPass();
 				
 				String id=jtf.getText().trim();
 				String pass=new String (jpf.getPassword());
-				
-//				if(loginStatus().equals("o")) {//로그인 가능한 상태인지
-//					//로그인
-//					PUCertificationVO pucvo=new PUCertificationVO(id, pass);
-//					String memberName=login(pucvo);
-//					
-//					if(memberName.equals("")) {//수행한 결과가 ""라면 
-//						JOptionPane.showMessageDialog(pulv, "아이디나 비밀번호를 확인하세요.");
-//						jtf.setText("");
-//						jpf.setText("");
-//						jtf.requestFocus();
-//					}else {
-//						PUMainView.userId=id;//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
-//						PUMainView.cardNum="";
-//						new PUMainView();//new PUMainView(memberName);
-//						pulv.dispose();
-//					}//end else
-//				}else if(loginStatus().equals("c")) {
-				
-				if(pul_dao.selectPcId(id)) {//PC테이블에 조회되는 id가 없다면 로그인
+		
+				System.out.println(pul_dao.selectMember(id));
+				if(!pul_dao.selectMember(id)) {//PC테이블에 조회되는 id가 없다면 로그인
 					//로그인
 					PUCertificationVO pucvo=new PUCertificationVO(id, pass);
-					String memberName=login(pucvo);
+					//String memberName=login(pucvo);
 					
-					if(memberName.equals("")) {//수행한 결과가 ""라면 
+					if(!login(pucvo)) {
 						JOptionPane.showMessageDialog(pulv, "아이디나 비밀번호를 확인하세요.");
 						jtf.setText("");
 						jpf.setText("");
@@ -81,9 +66,9 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 						System.out.println("자리변경한 상태입니다->로그인");
 						
 						PUCertificationVO pucvo=new PUCertificationVO(id, pass);
-						String memberName=login(pucvo);
+						//String memberName=login(pucvo);
 						
-						if(memberName.equals("")) {//수행한 결과가 ""라면 
+						if(login(pucvo)) {//수행한 결과가 ""라면 
 							JOptionPane.showMessageDialog(pulv, "아이디나 비밀번호를 확인하세요.");
 							jtf.setText("");
 							jpf.setText("");
@@ -105,47 +90,44 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 				JTextField jtf2=pulv.getJtfCardNum();
 				int card=Integer.parseInt(jtf2.getText().trim());
 				
-//				if(loginStatus().equals("o")) {//로그인 가능한 상태인지
-//					//로그인
-//					if(login(card)) {
-//						PUMainView.userId="";//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
-//						PUMainView.cardNum=String.valueOf(card);
-//						new PUMainView();
-//						pulv.dispose();
-//					}else {
-//						JOptionPane.showMessageDialog(pulv, "카드번호를 확인해주세요");
-//					}
-//				}else if(loginStatus().equals("c")) {
-				if(pul_dao.selectPcCard(card)) {//PC테이블에 조회되는 id가 없다면 로그인
-					//로그인
-					if(login(card)) {
-						PUMainView.userId="";//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
-						PUMainView.cardNum=String.valueOf(card);
-						new PUMainView();
-						pulv.dispose();
-					}else {
-						JOptionPane.showMessageDialog(pulv, "카드번호를 확인해주세요");
-					}
-				}else {//있다면 로그인이 안돼는데,자리이동이면~
-					if(loginStatus().equals("c")) {
-						//이미 로그인 되어있는데=>자리변경 신청함
+					if(!pul_dao.selectGuest(card)) {//PC테이블에 조회되는 id가 없다면 로그인
+						//로그인
 						if(login(card)) {
-							new PUMainView();
 							PUMainView.userId="";//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
 							PUMainView.cardNum=String.valueOf(card);
+							new PUMainView();
 							pulv.dispose();
 						}else {
 							JOptionPane.showMessageDialog(pulv, "카드번호를 확인해주세요");
-						}//end else
+						}
+					}else {//있다면 로그인이 안돼는데,자리이동이면~
+						if(loginStatus().equals("c")) {
+							//이미 로그인 되어있는데=>자리변경 신청함
+							if(login(card)) {
+								new PUMainView();
+								PUMainView.userId="";//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
+								PUMainView.cardNum=String.valueOf(card);
+								pulv.dispose();
+							}else {
+								JOptionPane.showMessageDialog(pulv, "카드번호를 확인해주세요");
+							}//end else
 //					}else if(loginStatus().equals("x")) {
-					}else{
-						//이미 로그인 되어있는데=>자리변경 신청안함
-						JOptionPane.showMessageDialog(pulv, "자리변경을 먼저 신청해 주세요!");
-					}//end else
+						}else{
+							//이미 로그인 되어있는데=>자리변경 신청안함
+							JOptionPane.showMessageDialog(pulv, "자리변경을 먼저 신청해 주세요!");
+						}//end else
 				}//end else
 			}//end else
 			
+			} catch (HeadlessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}//end catch
 		}//end if
+		
 		if(ae.getSource()==pulv.getJbtMembership()) {
 			JOptionPane.showMessageDialog(pulv, "회원가입!");
 		}//end if
@@ -217,7 +199,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	 */
 	private String loginStatus() {//c유무
 		String flag="";
-		char status;
+		String status;
 		JTextField jtfid=pulv.getJtfId();
 		JTextField jtfcard=pulv.getJtfCardNum();
 		
@@ -271,18 +253,21 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	 * @param pucvo
 	 * @return
 	 */
-	private String login(PUCertificationVO pucvo) {
-		String adminName="";
+	private boolean login(PUCertificationVO pucvo) {
+		//String adminName="";
+		boolean flag=false;
 		
 		PULoginDAO pul_dao=PULoginDAO.getInstance();
 		try {
-			adminName=String.valueOf(pul_dao.selectMemberLogin(pucvo));
+			if(!String.valueOf(pul_dao.selectMemberLogin(pucvo)).equals("")) {
+				flag=true;
+			}//end if
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(pulv, "DB에서 문제가 발생했습니다.");
 			e.printStackTrace();
 		}//end catch
 		
-		return adminName;
+		return flag;
 	}//login member
 	
 	/**
