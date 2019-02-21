@@ -94,8 +94,8 @@ public class PUChargeDAO {
 			StringBuilder check=new StringBuilder();
 			
 			check.append("update pc_member ")
-			.append(" set (member_rest_time=member_rest_time+").append(time)
-			.append(")&&(").append("member_total_price=member_total_price+").append(price).append(")")
+			.append(" set member_rest_time=(member_rest_time+").append(time)
+			.append("),").append("member_total_price=(member_total_price+").append(price).append(")")
 			.append(" where member_id=?");
 			
 			pstmt=con.prepareStatement(check.toString());
@@ -122,8 +122,8 @@ public class PUChargeDAO {
 			StringBuilder check=new StringBuilder();
 			
 			check.append("update pc_guest ")
-			.append(" set (guest_total_time=guest_total_time+").append(time)
-			.append(")&&(").append("guest_total_price=guest_total_price+").append(price).append(")")
+			.append(" set guest_total_time=(guest_total_time+").append(time)
+			.append("),").append("guest_total_price=(guest_total_price+").append(price).append(")")
 			.append(" where card_num=?");
 			
 			pstmt=con.prepareStatement(check.toString());

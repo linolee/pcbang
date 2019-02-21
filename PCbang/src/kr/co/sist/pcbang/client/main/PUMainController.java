@@ -13,6 +13,7 @@ import java.text.DecimalFormat;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import kr.co.sist.pcbang.client.charge.PUChargeView;
 import kr.co.sist.pcbang.client.ordering.PUOrderingView;
 
 public class PUMainController extends WindowAdapter implements ActionListener,Runnable{
@@ -56,8 +57,9 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			new PUOrderingView();
 		}//end if
 		if(ae.getSource()==pumv.getJbtCharge()) {//시간충전
-			JOptionPane.showMessageDialog(pumv, "시간충전");
-			
+			//JOptionPane.showMessageDialog(pumv, "시간충전");
+			JLabel jlSeat=pumv.getJlSeatNum();
+			new PUChargeView(Integer.parseInt(jlSeat.getText()));
 		}//end if
 		if(ae.getSource()==pumv.getJbtChange()) {//좌석변경
 			int flag=JOptionPane.showConfirmDialog(pumv, "자리변경을 하시겠습니까?");
@@ -101,6 +103,8 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 					int flag=JOptionPane.showConfirmDialog(pumv, "충전된 시간이 없습니다.\n충전하시겠습니까?");
 					if(flag==0) {
 						JOptionPane.showMessageDialog(pumv, "충전창");
+						JLabel jlSeat=pumv.getJlSeatNum();
+						new PUChargeView(Integer.parseInt(jlSeat.getText()));
 					}else if(flag==1){
 						JOptionPane.showMessageDialog(pumv, "사용이 종료됩니다.");
 						pumv.dispose();
@@ -172,7 +176,9 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			jlRestTime.setText(hourTime(time));
 			if(Integer.parseInt(time)==0) {//만약 시간이 0이라면 충전창
 				//new PUChargeView();//만약 시간이 남았는데 충전하면 닫기가능 충전된 시간이 없으면 충전창
-				JOptionPane.showMessageDialog(pumv, "충전하세요");
+				//JOptionPane.showMessageDialog(pumv, "충전창");
+				//JLabel jlSeat=pumv.getJlSeatNum();
+				new PUChargeView(Integer.parseInt(jlSeat.getText()));
 			}//end if
 		}//end else
 	}//searchUseInfo

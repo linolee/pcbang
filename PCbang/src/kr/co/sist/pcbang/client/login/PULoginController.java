@@ -68,7 +68,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 						PUCertificationVO pucvo=new PUCertificationVO(id, pass);
 						//String memberName=login(pucvo);
 						
-						if(login(pucvo)) {//수행한 결과가 ""라면 
+						if(!login(pucvo)) {//수행한 결과가 ""라면 
 							JOptionPane.showMessageDialog(pulv, "아이디나 비밀번호를 확인하세요.");
 							jtf.setText("");
 							jpf.setText("");
@@ -92,7 +92,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 				
 					if(!pul_dao.selectGuest(card)) {//PC테이블에 조회되는 id가 없다면 로그인
 						//로그인
-						if(login(card)) {
+						if(!login(card)) {
 							PUMainView.userId="";//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
 							PUMainView.cardNum=String.valueOf(card);
 							new PUMainView();
@@ -103,7 +103,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 					}else {//있다면 로그인이 안돼는데,자리이동이면~
 						if(loginStatus().equals("c")) {
 							//이미 로그인 되어있는데=>자리변경 신청함
-							if(login(card)) {
+							if(!login(card)) {
 								new PUMainView();
 								PUMainView.userId="";//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
 								PUMainView.cardNum=String.valueOf(card);
