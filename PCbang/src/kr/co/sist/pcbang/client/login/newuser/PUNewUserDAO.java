@@ -60,7 +60,7 @@ public class PUNewUserDAO {
 		
 		if(rs.next()) {
 			punuvo = new PUNewUserVO(rs.getString("MEMBER_ID"));
-			System.out.println(punuvo.getId());//다시한번보죠. 아 네 ㅋㅋㅋ 
+			System.out.println(punuvo.getId()); 
 			flag = true;
 		}
 		
