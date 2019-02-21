@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class PUNewUserView extends JFrame {
 
-	private JTextField jtfUserName, jtfId, jtfPhone1, jtfPhone2, jtfPhone3, jtfAddr, jtfDetailAddr, jtfEmail;
+	private JTextField jtfUserName, jtfId, jtfPhone1, jtfPhone2, jtfPhone3, jtfZipcode, jtfAddr, jtfDetailAddr, jtfEmail;
 	private JPasswordField jpfPass, jpfPassCheck;
 	private JButton jbtIdChack, jbtAddrSearch, jbtOk, jbtCancel;
 	private JComboBox <Integer>jcYear, jcMonth, jcDay;
@@ -26,6 +26,7 @@ public class PUNewUserView extends JFrame {
 		jtfPhone1 = new JTextField();
 		jtfPhone2 = new JTextField();
 		jtfPhone3 = new JTextField();
+		jtfZipcode = new JTextField();
 		jtfAddr = new JTextField();
 		jtfDetailAddr = new JTextField();
 		jtfEmail = new JTextField();
@@ -55,6 +56,7 @@ public class PUNewUserView extends JFrame {
 		JLabel jlDay = new JLabel("老");
 		JLabel jlgender = new JLabel("*己喊");
 		JLabel jlPhone = new JLabel("*绒措迄");
+		JLabel jlZipcode = new JLabel(" 快祈锅龋");
 		JLabel jlAddr = new JLabel(" 林家");
 		JLabel jlDetailAddr = new JLabel(" 惑技林家");
 		JLabel jlEmail = new JLabel(" 捞皋老");
@@ -88,20 +90,22 @@ public class PUNewUserView extends JFrame {
 		jrbFemale.setBounds(210, 250, 60, 30);
 		jlPhone.setBounds(50, 290, 90, 30);
 		jtfPhone1.setBounds(150, 290, 40, 30);
-		jlhyphen1.setBounds(193, 290, 40, 30);
+		jlhyphen1.setBounds(192, 290, 40, 30);
 		jtfPhone2.setBounds(200, 290, 50, 30);
-		jlhyphen2.setBounds(253, 290, 50, 30);
+		jlhyphen2.setBounds(252, 290, 50, 30);
 		jtfPhone3.setBounds(260, 290, 50, 30);
-		jlAddr.setBounds(50, 330, 90, 30);
-		jtfAddr.setBounds(150, 330, 90, 30);
-		jlDetailAddr.setBounds(50, 370, 90, 30);
-		jtfDetailAddr.setBounds(150, 370, 160, 30);
-		jlEmail.setBounds(50, 410, 90, 30);
-		jtfEmail.setBounds(150, 410, 160, 30);
+		jlZipcode.setBounds(50, 330, 90, 30);
+		jtfZipcode.setBounds(150, 330, 90, 30);
+		jlAddr.setBounds(50, 370, 90, 30);
+		jtfAddr.setBounds(150, 370, 160, 30);
+		jlDetailAddr.setBounds(50, 410, 90, 30);
+		jtfDetailAddr.setBounds(150, 410, 160, 30);
+		jlEmail.setBounds(50, 450, 90, 30);
+		jtfEmail.setBounds(150, 450, 160, 30);
 		jbtIdChack.setBounds(285, 90, 88, 30);
 		jbtAddrSearch.setBounds(250, 330, 60, 30);
-		jbtOk.setBounds(85, 470, 90, 50);
-		jbtCancel.setBounds(235, 470, 90, 50);
+		jbtOk.setBounds(85, 520, 90, 50);
+		jbtCancel.setBounds(235, 520, 90, 50);
 
 		
 		
@@ -115,6 +119,8 @@ public class PUNewUserView extends JFrame {
 		add(jtfPhone1);
 		add(jtfPhone2);
 		add(jtfPhone3);
+		add(jlZipcode);
+		add(jtfZipcode);
 		add(jlAddr);
 		add(jtfAddr);
 		add(jlDetailAddr);
@@ -134,124 +140,93 @@ public class PUNewUserView extends JFrame {
 		jbtCancel.addActionListener(punuc);
 		jbtAddrSearch.addActionListener(punuc);
 		
-		setBounds(800, 200, 400, 600);
+		setBounds(800, 200, 400, 650);
 		setVisible(true);
 		setResizable(false);
 		
-		jlUserName.requestFocus();
+		jtfUserName.requestFocus();
 		
 	} // PUNewUserView
-	
+
 	public JTextField getJtfUserName() {
 		return jtfUserName;
 	}
-
-
 
 	public JTextField getJtfId() {
 		return jtfId;
 	}
 
-
-
 	public JTextField getJtfPhone1() {
 		return jtfPhone1;
 	}
-
-
 
 	public JTextField getJtfPhone2() {
 		return jtfPhone2;
 	}
 
-
-
 	public JTextField getJtfPhone3() {
 		return jtfPhone3;
 	}
 
-
+	public JTextField getJtfZipcode() {
+		return jtfZipcode;
+	}
 
 	public JTextField getJtfAddr() {
 		return jtfAddr;
 	}
 
-
-
 	public JTextField getJtfDetailAddr() {
 		return jtfDetailAddr;
 	}
-
-
 
 	public JTextField getJtfEmail() {
 		return jtfEmail;
 	}
 
-
-
 	public JPasswordField getJpfPass() {
 		return jpfPass;
 	}
-
-
 
 	public JPasswordField getJpfPassCheck() {
 		return jpfPassCheck;
 	}
 
-
-
 	public JButton getJbtIdChack() {
 		return jbtIdChack;
 	}
-
-
 
 	public JButton getJbtAddrSearch() {
 		return jbtAddrSearch;
 	}
 
-
-
 	public JButton getJbtOk() {
 		return jbtOk;
 	}
-
-
 
 	public JButton getJbtCancel() {
 		return jbtCancel;
 	}
 
-
-
 	public JComboBox<Integer> getJcYear() {
 		return jcYear;
 	}
-
-
 
 	public JComboBox<Integer> getJcMonth() {
 		return jcMonth;
 	}
 
-
-
 	public JComboBox<Integer> getJcDay() {
 		return jcDay;
 	}
-
-
 
 	public JRadioButton getJrbMale() {
 		return jrbMale;
 	}
 
-
-
 	public JRadioButton getJrbFemale() {
 		return jrbFemale;
 	}
-
+	
+	
 } // class
