@@ -3,33 +3,41 @@ package kr.co.sist.pcbang.manager.seat;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import kr.co.sist.pcbang.manager.seat.detail.PMSeatDetailView;
 import kr.co.sist.pcbang.manager.seat.message.PMClient;
+import kr.co.sist.pcbang.manager.seat.message.PMMsgView;
 import kr.co.sist.pcbang.manager.seat.set.PMSeatSetView;
 
 public class PMSeatController implements Runnable, ActionListener {
 	private PMSeatView pmsv;
-	private Socket serverSocket;
-	private List<PMClient> clientSocket;
+	private ServerSocket serverSocket;
+	private List<PMClient> clientSocketList;
 	private PMSeatDAO pms_dao;
 	private PMSeatVO[][] seat;
+	private Thread threadServer; // 접속자에 대한 처리를 하기 위한 thread
 
 	public PMSeatController(PMSeatView pmsv) {
 		// DAO연결
 		this.pmsv = pmsv;
 		pms_dao = PMSeatDAO.getInstance();
+		clientSocketList = new ArrayList<PMClient>();
 		setServer();
 		seatLoad();
 		setBtnSeat();
 	}// constructor
 
-	private void setServer() {
-
-	}
 
 	public void setBtnSeat() {
 		for (int i = 0; i < seat.length; i++) {
@@ -103,16 +111,30 @@ public class PMSeatController implements Runnable, ActionListener {
 	private void visibleMsg() {
 	}
 
+	private void setServer() {
+		threadServer = new Thread(this);
+		threadServer.start();// start() -> run()
+	}
+	
 	public void run() {
+		try {
+			// 서버소켓을 열고 접속자 소켓을 받는다.
+			recieveClient();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		// 접속자 소켓을 List에 등록한다.
 
 	}
 
-	private void recieveClient() {
-
-	}
-
-	private void dropClient() {
-
+	private void recieveClient() throws IOException {
+		serverSocket = new ServerSocket(55000);//서버 소켓을 열고
+		Socket clientSocket = serverSocket.accept();//클라이언트가 접속할 경우 소켓을 받아서
+		PMClient client = new PMClient(clientSocket, new DataInputStream(clientSocket.getInputStream()),
+				new DataOutputStream(clientSocket.getOutputStream()), clientSocketList);//클라이언트 객체를 만들고
+		clientSocketList.add(client);//리스트에 넣는다.
+//		client.run();//클라이언트의 Thread를 실행한다.
+		System.out.println(clientSocket.getInetAddress());
 	}
 
 	private void readSeatInfo() {
@@ -123,12 +145,12 @@ public class PMSeatController implements Runnable, ActionListener {
 		return pmsv;
 	}
 
-	public Socket getServerSocket() {
+	public ServerSocket getServerSocket() {
 		return serverSocket;
 	}
 
 	public List<PMClient> getClientSocket() {
-		return clientSocket;
+		return clientSocketList;
 	}
 
 	public PMSeatDAO getPms_dao() {

@@ -1,11 +1,11 @@
 package kr.co.sist.pcbang.client.login;
 
-
 public class PUGuestStateVO {
 
-	private int cardNum, pcIp;
+	private int cardNum;
+	private String pcIp;
 
-	public PUGuestStateVO(int cardNum, int pcIp) {
+	public PUGuestStateVO(int cardNum, String pcIp) {
 		this.cardNum = cardNum;
 		this.pcIp = pcIp;
 	}
@@ -14,7 +14,7 @@ public class PUGuestStateVO {
 		return cardNum;
 	}
 
-	public int getPcIp() {
+	public String getPcIp() {
 		return pcIp;
 	}
 	
