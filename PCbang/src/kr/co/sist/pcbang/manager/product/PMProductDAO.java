@@ -64,7 +64,7 @@ public class PMProductDAO {
 			StringBuilder selectAllPrd = new StringBuilder();
 			selectAllPrd.append(
 					"	select m.menu_code, m.menu_name, m.img, m.menu_price, o.quan, (m.menu_price)*(o.quan) total ")
-					.append("	from menu m, ordering o ").append("	where o.menu_code=m.menu_code ")
+					.append("	from menu m, ordering o").append("	where o.menu_code(+)=m.menu_code ")
 					.append("	order by m.menu_code desc ");
 
 			pstmt = con.prepareStatement(selectAllPrd.toString());
@@ -74,8 +74,23 @@ public class PMProductDAO {
 
 			PMProductVO pmp_vo = null;
 			while (rs.next()) {
-				pmp_vo = new PMProductVO(rs.getString("MENU_CODE"), rs.getString("MENU_NAME"), rs.getString("IMG"),
-						rs.getInt("menu_price"), rs.getInt("QUAN"), rs.getInt("total"));
+				
+				int quan=0;
+				int total=0;
+				
+				if(rs.getInt("QUAN")==0) {
+					quan=0;
+				}else {
+					quan=rs.getInt("quan");
+				}
+				if(rs.getInt("total")==0) {
+					total=0;
+				}
+					total=rs.getInt("total");
+					
+					pmp_vo = new PMProductVO(rs.getString("MENU_CODE"), rs.getString("MENU_NAME"), rs.getString("IMG"),
+							rs.getInt("menu_price"), quan, total);
+				
 				list.add(pmp_vo);
 			} // end while
 		} finally {
@@ -205,7 +220,7 @@ public class PMProductDAO {
 			StringBuilder insertPrd = new StringBuilder();
 			insertPrd.append("insert into menu")
 			.append("(menu_CODE, category, menu_NAME, menu_price, img, menu_input_date, admin_id)")
-			.append("values(1234, ?,?,?,?,sysdate,? )");
+			.append("values(1255, ?,?,?,?,sysdate,? )");
 			pstmt = con.prepareStatement(insertPrd.toString());
 
 			// 4. 바인드 변수에 값넣기
