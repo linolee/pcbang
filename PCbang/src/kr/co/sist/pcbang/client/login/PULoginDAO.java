@@ -230,7 +230,7 @@ private static PULoginDAO pul_dao;
 			StringBuilder login=new StringBuilder();
 			
 			login.append("select member_rest_time ").append(" from pc_member ")
-			.append(" where member_id=? && member_pass=?");
+			.append(" where member_id=? and member_pass=?");
 			
 			pstmt=con.prepareStatement(login.toString());
 			//4.
@@ -242,7 +242,7 @@ private static PULoginDAO pul_dao;
 			if(rs.next()) {
 				restTime=rs.getInt("member_rest_time");
 			}//end if
-			
+			System.out.println(restTime);
 		}finally {
 			//6.
 			if( rs != null ) { rs.close(); }//end if
