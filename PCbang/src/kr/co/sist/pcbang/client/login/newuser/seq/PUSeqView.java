@@ -64,7 +64,7 @@ public class PUSeqView extends JFrame{
 		jtZipcode.setBackground(Color.white);
 		jtZipcode.setOpaque(true);
 		
-		setBounds(400, 100, 650, 500);
+		setBounds(680, 200, 650, 500);
 		setVisible(true);
 		setResizable(false);
 		
