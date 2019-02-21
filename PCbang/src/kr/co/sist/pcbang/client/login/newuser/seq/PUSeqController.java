@@ -46,7 +46,7 @@ public class PUSeqController extends WindowAdapter implements ActionListener {
 			} // end for
 
 			if (listAddr.isEmpty()) {// 주소가 없을 때
-				JOptionPane.showMessageDialog(pusv, "동을 입력하세요.");
+				JOptionPane.showMessageDialog(pusv, "올바른 주소를 입력하세요.");
 			} // end if
 
 		} catch (SQLException e) {
