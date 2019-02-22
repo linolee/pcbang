@@ -24,7 +24,20 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 	public PMProductController(PMProductView pmpv) {
 		PrdImgList=new ArrayList<String>();
 		//서버에 존재하는 이미지 입력
-		String path = this.getClass().getResource("/").getPath()+"kr/co/sist/pcbang/manager/product/img/"; 
+		
+		String path = this.getClass().getResource("/").getPath()+"kr/co/sist/pcbang/manager/product/img/";
+		//System.out.println(path);
+		
+//		String path = System.getProperty("user.dir");
+//		System.out.println(path);
+//		int v = path.indexOf("\\");
+//		
+//		String path2 = path.replaceAll("\\","/");
+//		System.out.println(path2);
+//		
+//		path+="/src/kr/co/sist/pcbang/manager/product/img/";
+//		System.out.println(path);
+		
 		File file = new File(path);
 		for(String tempName:file.list()) {
 			PrdImgList.add(tempName);
@@ -52,8 +65,8 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 
 			// JTable에 조회한 정보를 출력
 			PMProductVO pmpvo = null;
-			String imgPath = "s_"; 
-			
+			/////////////////////////////////////////경로 나중에 바꾸기/////////////////////////////////
+			String imgPath = "C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img/s_"; 
 			Object[] rowData = null;
 			for (int i = 0; i < listproduct.size(); i++) {
 				pmpvo = listproduct.get(i);

@@ -37,7 +37,7 @@ public class PMProductView extends JPanel{
 	
 	jtMenu = new JTable(dtmPrd) {
 		@Override //이미지로 들어갈 수 있도록
-		public Class getColumnClass(int column) {//제네릭 쓰지 않고
+		public Class<?> getColumnClass(int column) {//제네릭 쓰지 않고
 			return getValueAt(0, column).getClass();
 		}
 	};//jtMenu
