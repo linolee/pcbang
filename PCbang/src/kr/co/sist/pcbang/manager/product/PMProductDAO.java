@@ -220,7 +220,7 @@ public class PMProductDAO {
 			StringBuilder insertPrd = new StringBuilder();
 			insertPrd.append("insert into menu")
 			.append("(menu_CODE, category, menu_NAME, menu_price, img, menu_input_date, admin_id)")
-			.append("values(1255, ?,?,?,?,sysdate,? )");
+			.append("values(menu_code, ?,?,?,?,sysdate,? )");
 			pstmt = con.prepareStatement(insertPrd.toString());
 
 			// 4. 바인드 변수에 값넣기
