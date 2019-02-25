@@ -39,7 +39,7 @@ private static PULoginDAO pul_dao;
 	}//getConn
 	
 	/**
-	 * PC¿¡¼­ id¸¦ ÀÌ¹Ì »ç¿ëÁßÀÎÁö ÆÇ´Ü
+	 * PCì—ì„œ idë¥¼ ì´ë¯¸ ì‚¬ìš©ì¤‘ì¸ì§€ íŒë‹¨
 	 * @param id
 	 * @return
 	 * @throws SQLException
@@ -84,7 +84,7 @@ private static PULoginDAO pul_dao;
 	}//selectMember
 	
 	/**
-	 * PC¿¡¼­ Ä«µå¹øÈ£¸¦ ÀÌ¹Ì »ç¿ëÁßÀÎÁö ÆÇ´Ü
+	 * PCì—ì„œ ì¹´ë“œë²ˆí˜¸ë¥¼ ì´ë¯¸ ì‚¬ìš©ì¤‘ì¸ì§€ íŒë‹¨
 	 * @param cardNum
 	 * @return
 	 * @throws SQLException
@@ -129,7 +129,7 @@ private static PULoginDAO pul_dao;
 	}//selectGuest
 	
 	/**
-	 * È¸¿øÀÇ ¾ÆÀÌµğ°¡ ÇöÀç PC¿¡¼­ ÀÚ¸®ÀÌµ¿ µî ÀÇ »óÅÂ°¡ °¡´ÉÇÑÁö ¿©ºÎ
+	 * íšŒì›ì˜ ì•„ì´ë””ê°€ í˜„ì¬ PCì—ì„œ ìë¦¬ì´ë™ ë“± ì˜ ìƒíƒœê°€ ê°€ëŠ¥í•œì§€ ì—¬ë¶€
 	 * @param id
 	 * @return
 	 * @throws SQLException
@@ -170,7 +170,7 @@ private static PULoginDAO pul_dao;
 	}//memberIdStatus
 	
 	/**
-	 * ºñÈ¸¿øÀÇ Ä«µå°¡ ÇöÀç PC¿¡¼­ ÀÚ¸®ÀÌµ¿ µîÀÇ »óÅÂ°¡ °¡´ÉÇÑÁö ¿©ºÎ
+	 * ë¹„íšŒì›ì˜ ì¹´ë“œê°€ í˜„ì¬ PCì—ì„œ ìë¦¬ì´ë™ ë“±ì˜ ìƒíƒœê°€ ê°€ëŠ¥í•œì§€ ì—¬ë¶€
 	 * @param cardNum
 	 * @return
 	 * @throws SQLException
@@ -211,7 +211,7 @@ private static PULoginDAO pul_dao;
 	}//guestIdStatus
 	
 	/**
-	 * È¸¿øÀÇ ¾ÆÀÌµğ¿Í ºñ¹Ğ¹øÈ£°¡ ¸Â´Ù¸é ³²Àº½Ã°£ Á¤º¸¸¦ °¡Á®¿À´Â ÀÏ
+	 * íšŒì›ì˜ ì•„ì´ë””ì™€ ë¹„ë°€ë²ˆí˜¸ê°€ ë§ë‹¤ë©´ ë‚¨ì€ì‹œê°„ ì •ë³´ë¥¼ ê°€ì ¸ì˜¤ëŠ” ì¼
 	 * @param pucvo
 	 * @return
 	 * @throws SQLException
@@ -254,7 +254,7 @@ private static PULoginDAO pul_dao;
 	}//memberLogin
 	
 	/**
-	 * ºñÈ¸¿øÀÇ Ä«µå¹øÈ£°¡ ¸Â´ÂÁö ÆÇ´Ü
+	 * ë¹„íšŒì›ì˜ ì¹´ë“œë²ˆí˜¸ê°€ ë§ëŠ”ì§€ íŒë‹¨
 	 * @param cardNum
 	 * @return
 	 * @throws SQLException
@@ -297,7 +297,7 @@ private static PULoginDAO pul_dao;
 	}//guestCheck
 	
 	/**
-	 * È¸¿øÀÌ ·Î±×ÀÎ ÇßÀ» ¶§ ·Î±×ÀÎÇÑ PCÀÇ »óÅÂº¯°æ
+	 * íšŒì›ì´ ë¡œê·¸ì¸ í–ˆì„ ë•Œ ë¡œê·¸ì¸í•œ PCì˜ ìƒíƒœë³€ê²½
 	 * @param pumsvo
 	 * @throws SQLException
 	 */
@@ -343,7 +343,7 @@ private static PULoginDAO pul_dao;
 	}//changeMemberState
 	
 	/**
-	 * ºñÈ¸¿øÀÌ ·Î±×ÀÎ ÇßÀ» ¶§ ·Î±×ÀÎÇÑ PCÀÇ »óÅÂº¯°æ
+	 * ë¹„íšŒì›ì´ ë¡œê·¸ì¸ í–ˆì„ ë•Œ ë¡œê·¸ì¸í•œ PCì˜ ìƒíƒœë³€ê²½
 	 * @param pugsvo
 	 * @return
 	 * @throws SQLException
@@ -390,7 +390,7 @@ private static PULoginDAO pul_dao;
 	}//changeGuestState
 	
 	/**
-	 * °ü¸®ÀÚÀÇ °øÁö»çÇ×
+	 * ê´€ë¦¬ìì˜ ê³µì§€ì‚¬í•­
 	 * @return
 	 * @throws SQLException
 	 */
@@ -407,7 +407,7 @@ private static PULoginDAO pul_dao;
 			//3.
 			StringBuilder note=new StringBuilder();
 			
-			note.append("select admin_notice ").append(" from PC_NOTICE ");
+			note.append("select admin_notice ").append(" from pc_notice ");
 			
 			pstmt=con.prepareStatement(note.toString());
 			//4.
