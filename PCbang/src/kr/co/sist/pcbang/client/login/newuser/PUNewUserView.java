@@ -138,6 +138,7 @@ public class PUNewUserView extends JFrame {
 		PUNewUserController punuc = new PUNewUserController(this);
 		addWindowListener(punuc);
 		jbtCancel.addActionListener(punuc);
+		jbtIdChack.addActionListener(punuc);
 		jbtAddrSearch.addActionListener(punuc);
 		
 		setBounds(800, 200, 400, 650);

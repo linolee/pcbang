@@ -3,6 +3,7 @@ package kr.co.sist.pcbang.manager.seat.message;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -30,8 +31,7 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 		System.out.println("메세지창생성");
 		mv = new PMMsgView(this);
 		mv.setBounds(100, 100, 600, 300);
-		mv.setVisible(false);//false로 바꿔주기
-		// actionListener 달아주기
+		mv.setVisible(false);//첫 생성에서는 false로 생성
 		mv.getJbtSendMsg().addActionListener(this);
 		mv.getJtfMsg().addActionListener(this);
 		this.client = client;
@@ -118,9 +118,11 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 	private void dropClient() {
 		clientSocketList.remove(this);
 		System.out.println("클라이언트 접속종료");
+		/////////////////////////////////////////////////////////////////////////////
 		for (PMClient pmClient : clientSocketList) {
 			System.out.println(pmClient);
 		}
+		//////////////////////////////////////////////////////////////////////////////
 		mv.dispose();
 	}
 
@@ -149,6 +151,12 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 		return dos;
 	}
 
+	@Override
+	public void windowClosing(WindowEvent e) {
+		mv.setVisible(false);//종료되는 대신 visible을 false로 바꿈
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "PMClient [mv=" + mv + ", client=" + client + ", dis=" + dis + ", dos=" + dos + ", clientSocketList="
