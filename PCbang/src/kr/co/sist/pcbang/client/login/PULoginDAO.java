@@ -407,7 +407,7 @@ private static PULoginDAO pul_dao;
 			//3.
 			StringBuilder note=new StringBuilder();
 			
-			note.append("select admin_notice ").append(" from pc_admin ");
+			note.append("select admin_notice ").append(" from PC_NOTICE ");
 			
 			pstmt=con.prepareStatement(note.toString());
 			//4.
@@ -415,7 +415,7 @@ private static PULoginDAO pul_dao;
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
-				notice=rs.getString("admin_notice");
+				notice=rs.getString("ADMIN_NOTICE");
 			}//end if
 		}finally {
 			//6.
