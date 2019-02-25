@@ -54,6 +54,11 @@ public class PUOrderingView extends JFrame {
 			}//isCellEditable
 		};
 		jtMenu=new JTable(dtmMenu) {
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			@Override
+			public Class getColumnClass(int column) {//이미지
+				return getValueAt(0, column).getClass();
+			}//getColumnClass
 		};
 		jtMenu.getTableHeader().setResizingAllowed(false);//컬럼의 크기 변경 막기
 		jtMenu.getTableHeader().setReorderingAllowed(false);//컬럼의 이동 막기
@@ -98,7 +103,8 @@ public class PUOrderingView extends JFrame {
 		//////주문리스트//////
 		JLabel jlOrderTitle =new JLabel("주문 목록");
 		jlOrderTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		dtmOrderlist=new DefaultTableModel(18, 4);
+		String[] columnsName= {"이름","수량","가격","취소"};
+		dtmOrderlist=new DefaultTableModel(columnsName,18);
 		jtOrderlist=new JTable(dtmOrderlist);
 		jtOrderlist.getTableHeader().setResizingAllowed(false);//컬럼의 크기 변경 막기
 		jtOrderlist.getTableHeader().setReorderingAllowed(false);//컬럼의 이동 막기

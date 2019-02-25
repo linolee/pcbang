@@ -36,10 +36,10 @@ public class PMProductView extends JPanel{
 	};//dtmPrd
 	
 	jtMenu = new JTable(dtmPrd) {
-//		@Override //이미지로 들어갈 수 있도록
-//		public Class getColumnClass(int column) {//제네릭 쓰지 않고
-//			return getValueAt(0, column).getClass();//row는 아무거나 숫자
-//		}
+		@Override //이미지로 들어갈 수 있도록
+		public Class<?> getColumnClass(int column) {//제네릭 쓰지 않고
+			return getValueAt(0, column).getClass();
+		}
 	};//jtMenu
 	
 	//테이블의 크기를 설정 : 전체 width 800, 도시락이미지 (W122X H110)  

@@ -33,6 +33,12 @@ public class PMSeatController implements Runnable, ActionListener {
 		this.pmsv = pmsv;
 		pms_dao = PMSeatDAO.getInstance();
 		clientSocketList = new ArrayList<PMClient>();
+		try {
+			serverSocket = new ServerSocket(55000);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//서버 소켓을 열고
 		setServer();
 		seatLoad();
 		setBtnSeat();
@@ -128,7 +134,7 @@ public class PMSeatController implements Runnable, ActionListener {
 	}
 
 	private void recieveClient() throws IOException {
-		serverSocket = new ServerSocket(55000);//서버 소켓을 열고
+		
 		Socket clientSocket = serverSocket.accept();//클라이언트가 접속할 경우 소켓을 받아서
 		PMClient client = new PMClient(clientSocket, new DataInputStream(clientSocket.getInputStream()),
 				new DataOutputStream(clientSocket.getOutputStream()), clientSocketList);//클라이언트 객체를 만들고

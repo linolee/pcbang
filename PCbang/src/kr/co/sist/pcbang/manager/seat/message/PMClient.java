@@ -3,10 +3,12 @@ package kr.co.sist.pcbang.manager.seat.message;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -20,10 +22,14 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 	private DataOutputStream dos;
 	private List<PMClient> clientSocketList;
 	private Thread thread;
-	
+
 	public PMClient(Socket client, DataInputStream dis, DataOutputStream dos, List<PMClient> clientSocketList) {
+		System.out.println("메세지창생성");
 		mv = new PMMsgView(this);
-		//actionListener 달아주기
+		mv.setBounds(100, 100, 600, 300);
+		mv.setVisible(false);//첫 생성에서는 false로 생성
+		mv.getJbtSendMsg().addActionListener(this);
+		mv.getJtfMsg().addActionListener(this);
 		this.client = client;
 		this.dis = dis;
 		this.dos = dos;
@@ -32,67 +38,90 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 		thread.start();
 	}
 
-//	@Override
-//	public void run() {
-//		try {
-//			readStream();
-//			dos.writeUTF("확인");
-//			dos.flush();
-//		} catch (IOException e) {
-//			System.out.println("클라이언트 종료");
-//			dropClient();
-//		}
-//	} // run
-
 	public void run() {
-		if (dis != null) {
-			try {
-				String revMsg = "";
-				while (true) { // 서버에서 보내오는 모든 메세지를 읽어서, 모든 접속자에 뿌린다.
-					revMsg = dis.readUTF();
-				} // end while
-			} catch (IOException ie) {
-				// 접속자가 퇴실하면 해당 접속자를 리스트에서 삭제한다.
-				clientSocketList.remove(this);
-				// 메세지를 읽어들이지 못하는 상태라면 접속자가 연결을 종료한 상태
-				ie.printStackTrace();
-			} // end catch
-		} // end if
+		try {
+			readStream();
+		} catch (SocketException ie) {
+			dropClient();
+		} catch (IOException ie) {
+			ie.printStackTrace();
+		} // end catch
 	}// run
 
-	private void readStream() throws IOException {
+	private void readStream() throws IOException, SocketException {
+		String temp;
+		String flag;
 		while (true) {
-			System.out.println(dis.readUTF());
+			temp = dis.readUTF();
+			flag = temp.substring(0, temp.indexOf("]") + 1);// [order]
+			switch (flag) {
+			case "[order]":// 주문을 넣었을 때
+				//좌석을 DB에서 읽어서 화면에 출력
+				break;
+			case "[message]":// 메세지 값이 도착했을 때
+				System.out.println("메시지 도착");
+				
+				mv.getJtaMsg().setText(mv.getJtaMsg().getText()+temp+"\n");
+				mv.setVisible(true);
+				break;
+			case "[close]":// 기존 좌석을 로그아웃 해야할 때
+
+				break;
+
+			default:
+				break;
+			}
 		}
 	}
 
-	private void sendMsg() throws IOException {
-		if (dos != null) {
-			JTextField jtf = mv.getJtfMsg();
-			String msg = jtf.getText().trim();
+	private void writeStream(String info) throws IOException {
+		dos.writeUTF(info);
+		dos.flush();
+	}
 
-			if (!msg.equals("")) {
-				dos.writeUTF(msg);
-				dos.flush();
-			}
-			jtf.setText("");
-		}
+	private void sendMsg(String msg) throws IOException {
+		msg = "[message]" + msg;
+		writeStream(msg);
+	}
+
+	private void closeOrder() throws IOException {//해당 pc에 종료명령을 내리는 메소드
+
 	}
 
 	private void dropClient() {
 		clientSocketList.remove(this);
+		System.out.println("클라이언트 접속종료");
+		/////////////////////////////////////////////////////////////////////////////
+		for (PMClient pmClient : clientSocketList) {
+			System.out.println(pmClient);
+		}
+		//////////////////////////////////////////////////////////////////////////////
+		mv.dispose();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if (ae.getSource() == mv.getJbtSendMsg()) {
+		if (ae.getSource() == mv.getJbtSendMsg() || ae.getSource() == mv.getJtfMsg()) {
 			try {
-				sendMsg();
+				sendMsg(mv.getJtfMsg().getText().trim());
+				System.out.println("메세지 전송");
 			} catch (IOException ie) {
 				JOptionPane.showMessageDialog(mv, "서버가 종료되어 메세지를 전송할 수 없습니다");
 				ie.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		mv.setVisible(false);//종료되는 대신 visible을 false로 바꿈
+	}
+	
+	
+	@Override
+	public String toString() {
+		return "PMClient [mv=" + mv + ", client=" + client + ", dis=" + dis + ", dos=" + dos + ", clientSocketList="
+				+ clientSocketList + ", thread=" + thread + "]";
 	}
 
 }

@@ -113,10 +113,10 @@ public class PMProductAddController extends WindowAdapter implements ActionListe
 		FileOutputStream fos = null;
 		try {
 			// PMProductDetailController에 modify큰이미지,
+			//////////////////////////////////uploadPath 바꿔줘야 함
 			byte[] readData = new byte[512];
-//			String imgPath = "C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang";
-//			String uploadPath = imgPath+"/manager/product/img/";
-			String uploadPath = "";
+			String imgPath = "C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang";
+			String uploadPath = imgPath+"/manager/product/img/";
 
 			int len = 0;
 			// 작은 이미지 업로드
