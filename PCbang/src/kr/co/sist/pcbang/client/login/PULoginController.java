@@ -43,7 +43,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 				String id=jtf.getText().trim();
 				String pass=new String (jpf.getPassword());
 		
-				System.out.println(pul_dao.selectMember(id));
+				//System.out.println(pul_dao.selectMember(id));
 				if(!pul_dao.selectMember(id)) {//PC테이블에 조회되는 id가 없다면 로그인
 					//로그인
 					PUCertificationVO pucvo=new PUCertificationVO(id, pass);
@@ -68,7 +68,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 						PUCertificationVO pucvo=new PUCertificationVO(id, pass);
 						//String memberName=login(pucvo);
 						
-						if(!login(pucvo)) {//수행한 결과가 ""라면 
+						if(!login(pucvo)) {
 							JOptionPane.showMessageDialog(pulv, "아이디나 비밀번호를 확인하세요.");
 							jtf.setText("");
 							jpf.setText("");
@@ -79,7 +79,6 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 							PUMainView.cardNum="";
 							pulv.dispose();
 						}//end else
-//					}else if(loginStatus().equals("x")) {
 					}else{
 						//이미 로그인 되어있는데=>자리변경 신청안함
 						JOptionPane.showMessageDialog(pulv, "자리변경을 먼저 신청해 주세요!");
@@ -111,7 +110,6 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 							}else {
 								JOptionPane.showMessageDialog(pulv, "카드번호를 확인해주세요");
 							}//end else
-//					}else if(loginStatus().equals("x")) {
 						}else{
 							//이미 로그인 되어있는데=>자리변경 신청안함
 							JOptionPane.showMessageDialog(pulv, "자리변경을 먼저 신청해 주세요!");
