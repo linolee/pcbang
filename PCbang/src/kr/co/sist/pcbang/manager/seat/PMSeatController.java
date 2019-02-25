@@ -6,18 +6,15 @@ import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JOptionPane;
 
 import kr.co.sist.pcbang.manager.seat.detail.PMSeatDetailView;
 import kr.co.sist.pcbang.manager.seat.message.PMClient;
-import kr.co.sist.pcbang.manager.seat.message.PMMsgView;
 import kr.co.sist.pcbang.manager.seat.set.PMSeatSetView;
 
 public class PMSeatController implements Runnable, ActionListener {
@@ -136,8 +133,7 @@ public class PMSeatController implements Runnable, ActionListener {
 	private void recieveClient() throws IOException {
 		
 		Socket clientSocket = serverSocket.accept();//클라이언트가 접속할 경우 소켓을 받아서
-		PMClient client = new PMClient(clientSocket, new DataInputStream(clientSocket.getInputStream()),
-				new DataOutputStream(clientSocket.getOutputStream()), clientSocketList);//클라이언트 객체를 만들고
+		PMClient client = new PMClient(clientSocket, this);//클라이언트 객체를 만들고
 		clientSocketList.add(client);//리스트에 넣는다.
 //		client.run();//클라이언트의 Thread를 실행한다.
 		System.out.println(clientSocket.getInetAddress());

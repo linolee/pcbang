@@ -11,17 +11,20 @@ import java.net.Socket;
 import javax.swing.JOptionPane;
 
 import kr.co.sist.pcbang.client.main.PUMainController;
+import kr.co.sist.pcbang.client.main.PUManager;
 
 public class PUMessageController extends WindowAdapter implements ActionListener, Runnable {
 	private PUMessageView pumv;
 	private PUMainController pumc;
-	private Socket client;
-	private DataInputStream readStream;
+	private PUManager pu_manager;
+//	private Socket client;
+//	private DataInputStream readStream;
 	private String id;
 	
-	public PUMessageController(PUMessageView pumv, PUMainController pumc) {
+	public PUMessageController(PUMessageView pumv, PUMainController pumc, PUManager pu_manager) {
 		this.pumv=pumv;
 		this.pumc=pumc;
+		this.pu_manager = pu_manager;
 	}
 	
 	@Override
@@ -33,11 +36,11 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 		//작성된 메세지를 가져와서
 		String sendMsg=pumv.getJtfChat().getText().trim();
 		//스트림에 기록하고
-		pumc.os.writeUTF(sendMsg);
+		pu_manager.getWriteStream().writeUTF(sendMsg);
 		//스트림의 내용을 목적지로 분출
-		pumc.os.writeStream.flush();
+		pu_manager.getWriteStream().flush();
 		//작성된 메세지를 채팅창에 출력한다.
-		pumv.getJtaChat().append("[ "+id+" ] : "+sendMsg+"\n");
+		pumv.getJtaChat().append("[message] : "+sendMsg+"\n");
 		//T.F의 내용을 삭제한다.
 		pumv.getJtfChat().setText("");
 		pumv.getJspChat().getVerticalScrollBar().setValue(pumv.getJspChat().getVerticalScrollBar().getMaximum());
@@ -45,7 +48,12 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		sendMsg();
+		try {
+			sendMsg();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}//actionPerformed
 
 //	public void connectToServer()throws IOException {
@@ -69,10 +77,10 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 	@Override
 	public void run() {
 		String revMsg="";
-		if(readStream != null) {
+		if(pu_manager.getReadStram() != null) {
 			try {
 				while( true ) {
-					revMsg=readStream.readUTF();
+					revMsg=pu_manager.getReadStram().readUTF();
 					pumv.getJtaChat().append("[ "+ id+" ] : "+revMsg+"\n");
 					pumv.getJspChat().getVerticalScrollBar().setValue(pumv.getJspChat().getVerticalScrollBar().getMaximum());
 				}//end while

@@ -22,12 +22,13 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 
 	private PUMainView pumv;
 	private PUMainDAO pum_dao;
-	private static OutputStream os;
+	private PUManager pu_manager;
 	
 	private Thread threadOrdering;
 	
 	public PUMainController(PUMainView pumv) {
 		this.pumv=pumv;
+		pu_manager = new PUManager(this);
 		pum_dao=PUMainDAO.getInstance();
 		try {
 			String id=pumv.id;
@@ -279,6 +280,10 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 				//pumv.dispose();
 			}
 		}//end if
+	}
+
+	public PUManager getPu_manager() {
+		return pu_manager;
 	}
 
 }//class

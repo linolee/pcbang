@@ -16,7 +16,7 @@ public class PUMessageView extends JFrame{
 	private JTextArea jtaChat;
 	private JTextField jtfChat;
 	private JScrollPane jspChat;	
-	private JButton jbtSend;
+//	private JButton jbtSend;
 	
 	public PUMessageView() {
 		super(":::::::::::채팅클라이언트:::::::::::");
@@ -39,11 +39,6 @@ public class PUMessageView extends JFrame{
 		setVisible(true);
 		jtfChat.requestFocus(); //커서를 jtf에 위치시킨다.
 		
-		PUMessageController pumc=new PUMessageController(this, pumc);
-		
-		jtfChat.addActionListener(pumc);
-		jbtSend.addActionListener(pumc);
-		
 	}//SimpleChatServer
 
 	public JTextArea getJtaChat() {
@@ -58,8 +53,8 @@ public class PUMessageView extends JFrame{
 		return jspChat;
 	}
 
-	public JButton getJbtSend() {
-		return jbtSend;
-	}
+//	public JButton getJbtSend() {
+//		return jbtSend;
+//	}
 	
 }//class

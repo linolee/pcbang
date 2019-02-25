@@ -9,10 +9,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+
+import kr.co.sist.pcbang.manager.seat.PMSeatController;
+import kr.co.sist.pcbang.manager.seat.PMSeatVO;
 
 public class PMClient extends WindowAdapter implements Runnable, ActionListener {
 
@@ -20,10 +23,11 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 	private Socket client;
 	private DataInputStream dis;
 	private DataOutputStream dos;
+	private PMSeatController pmsc;
 	private List<PMClient> clientSocketList;
 	private Thread thread;
 
-	public PMClient(Socket client, DataInputStream dis, DataOutputStream dos, List<PMClient> clientSocketList) {
+	public PMClient(Socket client, PMSeatController pmsc) {
 		System.out.println("메세지창생성");
 		mv = new PMMsgView(this);
 		mv.setBounds(100, 100, 600, 300);
@@ -31,9 +35,14 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 		mv.getJbtSendMsg().addActionListener(this);
 		mv.getJtfMsg().addActionListener(this);
 		this.client = client;
-		this.dis = dis;
-		this.dos = dos;
-		this.clientSocketList = clientSocketList;
+		try {
+			dis = new DataInputStream(client.getInputStream());
+			dos = new DataOutputStream(client.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.pmsc = pmsc;
+		clientSocketList = pmsc.getClientSocket();
 		thread = new Thread(this);
 		thread.start();
 	}
@@ -56,7 +65,8 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 			flag = temp.substring(0, temp.indexOf("]") + 1);// [order]
 			switch (flag) {
 			case "[order]":// 주문을 넣었을 때
-				//좌석을 DB에서 읽어서 화면에 출력
+				pmsc.seatLoad();
+				pmsc.setBtnSeat();
 				break;
 			case "[message]":// 메세지 값이 도착했을 때
 				System.out.println("메시지 도착");
@@ -65,7 +75,7 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 				mv.setVisible(true);
 				break;
 			case "[close]":// 기존 좌석을 로그아웃 해야할 때
-
+				closeOrder(Integer.parseInt(temp.substring(temp.indexOf("]") + 1)));
 				break;
 
 			default:
@@ -84,8 +94,25 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 		writeStream(msg);
 	}
 
-	private void closeOrder() throws IOException {//해당 pc에 종료명령을 내리는 메소드
-
+	private void closeOrder(int seatNum) throws IOException {//해당 pc에 종료명령을 내리는 메소드
+		String ipAddr = "";
+		
+		PMSeatVO[][] seat = pmsc.getSeat();//현재 좌석 중에서
+		for (int i = 0; i < seat.length; i++) {
+			for (int j = 0; j < seat[i].length; j++) {
+				if (seatNum == seat[i][j].getSeatNum()) {//받은 좌석번호와 동일한 좌석정보를 찾아서
+					ipAddr = seat[i][j].getPcIP();//ip를 저장하고
+				}
+			}
+		}
+		
+		for (Iterator<PMClient> iterator = clientSocketList.iterator(); iterator.hasNext();) {//clientSocketList에서
+			PMClient pmClient = (PMClient) iterator.next();
+			if (pmClient.getClient().getInetAddress().toString().equals(ipAddr)) {//해당 ip를 찾아서
+				pmClient.getDos().writeUTF("[logout]");//로그아웃 명령을 보낸다.
+				pmClient.getDos().flush();
+			}
+		}
 	}
 
 	private void dropClient() {
@@ -110,6 +137,18 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 				ie.printStackTrace();
 			}
 		}
+	}
+	
+	public Socket getClient() {
+		return client;
+	}
+
+	public DataInputStream getDis() {
+		return dis;
+	}
+
+	public DataOutputStream getDos() {
+		return dos;
 	}
 
 	@Override
