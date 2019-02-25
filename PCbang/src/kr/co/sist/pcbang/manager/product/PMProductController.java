@@ -8,18 +8,26 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import kr.co.sist.pcbang.manager.product.add.PMProductAddView;
+import kr.co.sist.pcbang.manager.product.detail.PMProductDetailVO;
+import kr.co.sist.pcbang.manager.product.detail.PMProductDetailView;
 
 public class PMProductController extends MouseAdapter implements ActionListener {
 
 	public static List<String> PrdImgList;
 	private PMProductView pmpv;
 	private PMProductDAO pmpdao;
+	private Thread threadPrd;
+	
+	public static final int DBL_CLICK = 2;
+	
 
 	public PMProductController(PMProductView pmpv) {
 		PrdImgList=new ArrayList<String>();
@@ -137,6 +145,7 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 
 	/////////////// 초기화 내용추가 필요
 	public void reset() {
+		setPrd();
 	}
 
 	@Override
@@ -157,17 +166,30 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 // mouseCliecked만 씀	
 	@Override
 	public void mouseClicked(MouseEvent me) {
-//		if (me.getSource() == lmv.getJtb()) {
-//			if (lmv.getJtb().getSelectedIndex() == 1) {// 두번째 탭(주문)에서 이벤트 발생
-//				// 주문현황을 계속 조회하여 실시간으로 실시간으로 DB를 조회하여 갱신
-//				if (threadOrdering == null) { // 이걸쓰지않으면 계속해서 객체가 만들어짐
-//					threadOrdering = new Thread(this);
-//					threadOrdering.start();
-//				} // end if
-//					// 현재까지의 주문사항을 조회 (쓰레드로 돌려야 함)
-//				searchOrder();
-//			} // end if
-//		} // end if
+		if (me.getSource() == pmpv.getJbtSchPrd()) {
+				// 상품현황을 계속 조회하여 실시간으로 실시간으로 DB를 조회하여 갱신
+				if (threadPrd == null) { // 이걸쓰지않으면 계속해서 객체가 만들어짐
+					threadPrd = new Thread();
+					threadPrd.start();
+				} // end if
+					// 현재까지의 주문사항을 조회 (쓰레드로 돌려야 함)
+				searchPrd();
+		} // end if
+		
+		switch (me.getClickCount()) {
+		case DBL_CLICK:
+			if (me.getSource() == pmpv.getJtMenu()) { //테이블에서 더블클릭
+				//DB테이블을 검색하여 상세정보를 전달한다.
+				JTable jt = pmpv.getJtMenu();
+				try {
+					PMProductDetailVO pmpdvo = pmpdao.selectDetailPrd((String) jt.getValueAt(jt.getSelectedRow(), 0));
+					new PMProductDetailView(pmpv, pmpdvo, this);
+				} catch (SQLException se) {
+					JOptionPane.showMessageDialog(pmpv, "DB에서 문제가 발생하였습니다.");
+					se.printStackTrace();
+				} // end catch
+				} // end if
+			} // end switch
 	}
 
 	@Override

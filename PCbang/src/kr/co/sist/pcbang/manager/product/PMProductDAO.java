@@ -127,15 +127,17 @@ public class PMProductDAO {
 			// 2.
 			con = getConn();
 			// 3.
-			String selectMenuCode = "select menu_name, img, price, category from menu where menu_code=?";
-			pstmt = con.prepareStatement(selectMenuCode);
+			String selectPrd = 
+					"SELECT category,IMG,menu_price,menu_name from menu WHERE menu_code=?";
+			pstmt=con.prepareStatement(selectPrd);
 			// 4.
 			pstmt.setString(1, code);
 			// 5.
 			rs = pstmt.executeQuery();
 			// 입력된 코드로 조회된 레코드가 존재할 때 VO를 생성하고 값을 추가한다.
 			if (rs.next()) {
-				pmpdvo = new PMProductDetailVO(rs.getString("menu_Name"), rs.getString("category"), rs.getString("img"), rs.getInt("price"));
+				pmpdvo = new PMProductDetailVO(code, rs.getString("category"), rs.getString("MENU_NAME"), rs.getString("IMG"),
+						rs.getInt("menu_price"));
 			} // end if
 		} finally {
 			// 6.
