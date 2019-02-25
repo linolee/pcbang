@@ -40,7 +40,7 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 		//스트림의 내용을 목적지로 분출
 		pu_manager.getWriteStream().flush();
 		//작성된 메세지를 채팅창에 출력한다.
-		pumv.getJtaChat().append("[ "+id+" ] : "+sendMsg+"\n");
+		pumv.getJtaChat().append("[message] : "+sendMsg+"\n");
 		//T.F의 내용을 삭제한다.
 		pumv.getJtfChat().setText("");
 		pumv.getJspChat().getVerticalScrollBar().setValue(pumv.getJspChat().getVerticalScrollBar().getMaximum());
