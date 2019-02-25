@@ -24,12 +24,17 @@ public class PMProductDetailView extends JDialog {
 	
 	public PMProductDetailView(PMProductView pmpv, PMProductDetailVO pmpdvo, PMProductController pmpc) {
 	
-		ImageIcon iiProduct = new ImageIcon("C:/dev/workspace/lunch_prj/src/kr/co/sist/lunch/admin/img/no_img.jpg");
+		ImageIcon iiProduct = new ImageIcon("C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img"+pmpdvo.getImg());
 		jlImg = new JLabel(iiProduct);
 		jtfMenuName = new JTextField();
 		jtfPrice = new JTextField();
 		
 		jcbPrdCategory = new JComboBox<String>();
+		
+		//DB에서 조회한 값 설정
+		jtfMenuName.setText(pmpdvo.getMenuName());
+		jtfPrice.setText(String.valueOf(pmpdvo.getPrice()));
+		jcbPrdCategory.setSelectedItem(pmpdvo.getcategory().toString());
 		
 		jbImg = new JButton("이미지 선택");
 		jbUpdate = new JButton("수정");
@@ -58,8 +63,8 @@ public class PMProductDetailView extends JDialog {
 		jcbPrdCategory.setBounds(340,95,185,25);
 		jtfPrice.setBounds(340,125,185,100);
 		
-		jbUpdate.setBounds(320,300,80,30);
-		jbDelete.setBounds(350,300,80,30);
+		jbUpdate.setBounds(240,300,80,30);
+		jbDelete.setBounds(325,300,80,30);
 		jbEnd.setBounds(410,300,80,30);
 		
 		add(jlDetailTitle);
@@ -123,6 +128,5 @@ public class PMProductDetailView extends JDialog {
 	public JButton getJbEnd() {
 		return jbEnd;
 	}
-	
 	
 }//class
