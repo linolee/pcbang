@@ -36,7 +36,7 @@ public class PUMessageView extends JFrame{
 		add("South",jtfChat);
 		
 		setBounds(100, 100, 300, 400);
-		setVisible(true);
+//		setVisible(true);
 		jtfChat.requestFocus(); //커서를 jtf에 위치시킨다.
 		
 	}//SimpleChatServer

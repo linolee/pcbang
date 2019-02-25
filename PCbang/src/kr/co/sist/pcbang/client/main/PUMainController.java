@@ -72,8 +72,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			}//end if
 		}//end if
 		if(ae.getSource()==pumv.getJbtMsg()) {//메세지
-			JOptionPane.showMessageDialog(pumv, "메세지");
-			
+			pu_manager.getPumsgv().setVisible(true);
 		}//end if
 		if(ae.getSource()==pumv.getJbtExit()) {//사용종료
 			//비회원일때에는 시간이 저장되지 않습니다...
