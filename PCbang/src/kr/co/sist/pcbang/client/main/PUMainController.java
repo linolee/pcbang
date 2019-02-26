@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
@@ -228,6 +229,18 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		//그다음 회원에 남은시간 변경
 		
 		//그다음 메세지 초기화
+		
+		//관리자에 로그아웃 했다고 메세지 보내기
+		try {
+			pu_manager.getWriteStream().writeUTF("[logout]");
+			pu_manager.getWriteStream().flush();
+			pu_manager.getWriteStream().close();
+			pu_manager.getReadStream().close();
+			pu_manager.getClient().close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		
 	}//logout
 	

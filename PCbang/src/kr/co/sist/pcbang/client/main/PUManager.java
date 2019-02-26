@@ -13,31 +13,33 @@ import javax.swing.JOptionPane;
 import kr.co.sist.pcbang.client.message.PUMessageController;
 import kr.co.sist.pcbang.client.message.PUMessageView;
 
-public class PUManager extends Thread{
+public class PUManager extends Thread {
 
-	private DataInputStream readStram;
+	private DataInputStream readStream;
 	private DataOutputStream writeStream;
 	private Socket client;
 	private PUMessageView pumsgv;
+	private Thread thread;
 
 	public PUManager(PUMainController pumc) {
 		try {
-			connectToServer();//매니저와 접속하고
+			connectToServer();// 매니저와 접속하고
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//메세지창을 만듦
-		pumsgv = new PUMessageView();//뷰 생성
-		PUMessageController pumsgc = new PUMessageController(pumsgv, pumc, this);//컨트롤러 생성
+		// 메세지창을 만듦
+		pumsgv = new PUMessageView();// 뷰 생성
+		PUMessageController pumsgc = new PUMessageController(pumsgv, pumc, this);// 컨트롤러 생성
 		pumsgv.setVisible(false);
-		
-		//뷰에 액션리스너 달기
+
+		// 뷰에 액션리스너 달기
 		pumsgv.getJtfChat().addActionListener(pumsgc);
-//		pumsgv.getJbtSend().addActionListener(pumsgc);
-		
-		this.start();
+		pumsgv.addWindowListener(pumsgc);
+
+		thread = new Thread(this);
+		thread.start();
 	}
 
 	public void connectToServer() throws UnknownHostException, IOException {
@@ -46,9 +48,9 @@ public class PUManager extends Thread{
 				String serverIp = "211.63.89.152"; // 고정 서버 IP
 				client = new Socket(serverIp, 55000); // 입력한 ip address의 컴퓨터에 연결.
 
-				readStram = new DataInputStream(client.getInputStream());
+				readStream = new DataInputStream(client.getInputStream());
 				writeStream = new DataOutputStream(client.getOutputStream());
-				writeStream.writeUTF("[message]:fffffffff");
+				writeStream.writeUTF("[login]");//처음 접속했을 때 정보를 전달
 				writeStream.flush();
 			} else {
 				JOptionPane.showMessageDialog(null, "error code #9980");
@@ -73,27 +75,27 @@ public class PUManager extends Thread{
 		String temp;
 		String flag;
 		while (true) {
-			temp = readStram.readUTF();
+			temp = readStream.readUTF();
 			flag = temp.substring(0, temp.indexOf("]") + 1);// [order]
 			switch (flag) {
 			case "[message]":// 메세지 값이 도착했을 때
-				System.out.println("메시지 도착");
-				
-				pumsgv.getJtaChat().setText(pumsgv.getJtaChat().getText()+temp+"\n");
+				pumsgv.getJtaChat().append("[관리자] : "+temp.substring(temp.indexOf("]") + 1)+"\n");
 				pumsgv.setVisible(true);
-				break;
-			case "[close]":// 기존 좌석을 로그아웃 해야할 때
-				//closeOrder(Integer.parseInt(temp.substring(temp.indexOf("]") + 1)));
+				pumsgv.requestFocus();
+				pumsgv.getJspChat().getVerticalScrollBar().setValue(pumsgv.getJspChat().getVerticalScrollBar().getMaximum());
 				break;
 
 			default:
+				System.out.println("알 수 없는 형식");
 				break;
 			}
 		}
 	}
 	
-	public DataInputStream getReadStram() {
-		return readStram;
+	
+
+	public DataInputStream getReadStream() {
+		return readStream;
 	}
 
 	public DataOutputStream getWriteStream() {
@@ -107,6 +109,5 @@ public class PUManager extends Thread{
 	public PUMessageView getPumsgv() {
 		return pumsgv;
 	}
-	
-	
+
 }

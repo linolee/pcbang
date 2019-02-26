@@ -65,20 +65,28 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 			flag = temp.substring(0, temp.indexOf("]") + 1);// [order]
 			switch (flag) {
 			case "[order]":// 주문을 넣었을 때
+			case "[login]":// 처음 접속했을 때
 				pmsc.seatLoad();
 				pmsc.setBtnSeat();
 				break;
 			case "[message]":// 메세지 값이 도착했을 때
 				System.out.println("메시지 도착");
 				
-				mv.getJtaMsg().setText(mv.getJtaMsg().getText()+temp+"\n");
+				mv.getJtaMsg().setText(mv.getJtaMsg().getText()+"[상대] : "+temp.substring(temp.indexOf("]") + 1)+"\n");
 				mv.setVisible(true);
+				mv.requestFocus();
+				mv.getJspTalkDisplay().getVerticalScrollBar().setValue(mv.getJspTalkDisplay().getVerticalScrollBar().getMaximum());
 				break;
 			case "[close]":// 기존 좌석을 로그아웃 해야할 때
 				closeOrder(Integer.parseInt(temp.substring(temp.indexOf("]") + 1)));
 				break;
+			case "[logout]":// 사용자가 종료할 때
+				dropClient();
+				System.out.println("사용자 제거 완료");
+				break;
 
 			default:
+				System.out.println("알 수 없는 형식");
 				break;
 			}
 		}
@@ -90,8 +98,11 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 	}
 
 	private void sendMsg(String msg) throws IOException {
+		mv.getJtaMsg().append("[관리자] : "+msg.substring(msg.indexOf("]") + 1)+"\n");
+		mv.getJtfMsg().setText("");
 		msg = "[message]" + msg;
 		writeStream(msg);
+		mv.getJspTalkDisplay().getVerticalScrollBar().setValue(mv.getJspTalkDisplay().getVerticalScrollBar().getMaximum());
 	}
 
 	private void closeOrder(int seatNum) throws IOException {//해당 pc에 종료명령을 내리는 메소드
@@ -116,14 +127,24 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 	}
 
 	private void dropClient() {
-		clientSocketList.remove(this);
 		System.out.println("클라이언트 접속종료");
-		/////////////////////////////////////////////////////////////////////////////
-		for (PMClient pmClient : clientSocketList) {
-			System.out.println(pmClient);
+		try {
+			dis.close();
+			dos.close();
+			client.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		//////////////////////////////////////////////////////////////////////////////
+		clientSocketList.remove(this);
+		for (int i = 0; i < clientSocketList.size(); i++) {
+			System.out.println(clientSocketList.get(i));
+		}
 		mv.dispose();
+		try {
+			this.finalize();
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

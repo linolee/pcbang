@@ -21,7 +21,7 @@ public class PUMessageView extends JFrame{
 	public PUMessageView() {
 		super(":::::::::::채팅클라이언트:::::::::::");
 		
-		jtaChat=new JTextArea();
+		jtaChat=new JTextArea("");
 		jtaChat.setBorder(new TitledBorder("대화내용"));
 		jtaChat.setEditable(false);
 		jtaChat.setLineWrap(true);
