@@ -189,7 +189,7 @@ private static PULoginDAO pul_dao;
 			StringBuilder status=new StringBuilder();
 			
 			status.append("select pc_status ").append(" from pc_status ")
-			.append(" seat_num=(select seat_num from pc where card_num=").append(cardNum).append(")");
+			.append(" where seat_num=(select seat_num from pc where card_num=").append(cardNum).append(")");
 			
 			pstmt=con.prepareStatement(status.toString());
 			//4.
