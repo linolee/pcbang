@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import kr.co.sist.pcbang.client.main.PUMainController;
 import kr.co.sist.pcbang.client.main.PUManager;
 
-public class PUMessageController extends WindowAdapter implements ActionListener, Runnable {
+public class PUMessageController extends WindowAdapter implements ActionListener{
 	private PUMessageView pumv;
 	private PUMainController pumc;
 	private PUManager pu_manager;
@@ -31,7 +31,6 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 	public void windowClosing(WindowEvent we) {
 		pumv.setVisible(false);
 	}
-	
 	public void sendMsg() throws IOException {
 		//작성된 메세지를 가져와서
 		String sendMsg=pumv.getJtfChat().getText().trim();
@@ -74,22 +73,22 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 //		
 //	}//connectToServer
 	
-	@Override
-	public void run() {
-		String revMsg="";
-		if(pu_manager.getReadStram() != null) {
-			try {
-				while( true ) {
-					revMsg=pu_manager.getReadStram().readUTF();
-					pumv.getJtaChat().append("[ "+ id+" ] : "+revMsg+"\n");
-					pumv.getJspChat().getVerticalScrollBar().setValue(pumv.getJspChat().getVerticalScrollBar().getMaximum());
-				}//end while
-			}catch(IOException ie) {
-				JOptionPane.showMessageDialog(pumv, id
-															+"님께서 사용종료");
-				ie.printStackTrace();
-			}//end catch
-		}//end if		
-	}//run
+//	@Override
+//	public void run() {
+////		String revMsg="";
+////		if(pu_manager.getReadStream() != null) {
+////			try {
+////				while( true ) {
+////					revMsg=pu_manager.getReadStream().readUTF();
+////					pumv.getJtaChat().append("[ "+ id+" ] : "+revMsg+"\n");
+////					pumv.getJspChat().getVerticalScrollBar().setValue(pumv.getJspChat().getVerticalScrollBar().getMaximum());
+////				}//end while
+////			}catch(IOException ie) {
+////				JOptionPane.showMessageDialog(pumv, id
+////															+"님께서 사용종료");
+////				ie.printStackTrace();
+////			}//end catch
+////		}//end if		
+//	}//run
 
 }//class

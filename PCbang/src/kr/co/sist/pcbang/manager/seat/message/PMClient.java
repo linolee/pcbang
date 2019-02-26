@@ -71,14 +71,19 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 			case "[message]":// 메세지 값이 도착했을 때
 				System.out.println("메시지 도착");
 				
-				mv.getJtaMsg().setText(mv.getJtaMsg().getText()+temp+"\n");
+				mv.getJtaMsg().setText(mv.getJtaMsg().getText()+"[상대] : "+temp.substring(temp.indexOf("]") + 1)+"\n");
 				mv.setVisible(true);
+				mv.requestFocus();
 				break;
 			case "[close]":// 기존 좌석을 로그아웃 해야할 때
 				closeOrder(Integer.parseInt(temp.substring(temp.indexOf("]") + 1)));
 				break;
+			case "[logout]":// 사용자가 종료할 때
+				dropClient();
+				break;
 
 			default:
+				System.out.println("알 수 없는 형식");
 				break;
 			}
 		}
@@ -90,6 +95,8 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 	}
 
 	private void sendMsg(String msg) throws IOException {
+		mv.getJtaMsg().setText(mv.getJtaMsg().getText()+"[나] : "+msg.substring(msg.indexOf("]") + 1)+"\n");
+		mv.getJtfMsg().setText("");
 		msg = "[message]" + msg;
 		writeStream(msg);
 	}
