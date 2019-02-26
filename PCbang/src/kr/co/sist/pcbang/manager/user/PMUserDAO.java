@@ -12,8 +12,6 @@ import javax.swing.JOptionPane;
 
 import kr.co.sist.pcbang.manager.user.detail.PMUpdateVO;
 
-
-
 public class PMUserDAO {
 	
 	private static PMUserDAO u_dao;
@@ -120,13 +118,7 @@ public class PMUserDAO {
 //				JOptionPane.showMessageDialog(uv, "아이디 혹은 이름을 입력해주세요");
 			} // end if
 				
-//			try {
 				rs = pstmt.executeQuery();
-//			} 
-//			catch(NullPointerException ne) {
-//				JOptionPane.showMessageDialog(uv, "조회된 값이 없습니다");
-				
-//			}
 				
 			} catch(SQLException se) {
 				se.printStackTrace();
@@ -175,7 +167,6 @@ public class PMUserDAO {
 			.append(" member_birth = ?, ")
 			.append(" member_rest_time = ? ")
 			.append(" where member_id = ? ");
-			
 			
 			pstmt=con.prepareStatement(updateMember.toString());
 			

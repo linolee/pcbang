@@ -20,6 +20,7 @@ public class PMUserView extends JPanel {
 	 private DefaultTableModel dtmMember;
 	
 	public PMUserView() {
+		
 		jlId = new JLabel("아이디");
 		jlName = new JLabel("이름");
 		
@@ -93,40 +94,27 @@ public class PMUserView extends JPanel {
 		return jtfId;
 	}
 
-
-
 	public JTextField getJtfName() {
 		return jtfName;
 	}
-
-
 
 	public JButton getJbtnSearch() {
 		return jbtnSearch;
 	}
 
-
-
 	public JButton getJbtnReset() {
 		return jbtnReset;
 	}
-
-
 
 	public JTable getJtMember() {
 		return jtMember;
 	}
 
-
-
 	public DefaultTableModel getDtmMember() {
 		return dtmMember;
 	}
-
-
 
 	public static void main(String[] args) {
 		new PMUserView();
 	}
 }
-
