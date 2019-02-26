@@ -130,6 +130,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 		if(ae.getSource()==pulv.getJbtMembership()) {
 			JOptionPane.showMessageDialog(pulv, "회원가입!");
 			new PUPolicyView();
+			pulv.dispose();
 		}//end if
 		if(ae.getSource()==pulv.getJbtFind()) {
 			JOptionPane.showMessageDialog(pulv, "아이디/비밀번호 찾기!");
