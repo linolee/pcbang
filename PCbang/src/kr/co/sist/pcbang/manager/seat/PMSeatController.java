@@ -122,7 +122,9 @@ public class PMSeatController implements Runnable, ActionListener {
 	public void run() {
 		try {
 			// 서버소켓을 열고 접속자 소켓을 받는다.
-			recieveClient();
+			while (true) {
+				recieveClient();
+			} // end while
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
