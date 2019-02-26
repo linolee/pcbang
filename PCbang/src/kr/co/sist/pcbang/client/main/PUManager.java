@@ -19,6 +19,7 @@ public class PUManager extends Thread {
 	private DataOutputStream writeStream;
 	private Socket client;
 	private PUMessageView pumsgv;
+	private Thread thread;
 
 	public PUManager(PUMainController pumc) {
 		try {
@@ -36,9 +37,9 @@ public class PUManager extends Thread {
 		// 뷰에 액션리스너 달기
 		pumsgv.getJtfChat().addActionListener(pumsgc);
 		pumsgv.addWindowListener(pumsgc);
-//		pumsgv.getJbtSend().addActionListener(pumsgc);
 
-		this.start();
+		thread = new Thread(this);
+		thread.start();
 	}
 
 	public void connectToServer() throws UnknownHostException, IOException {
@@ -49,8 +50,8 @@ public class PUManager extends Thread {
 
 				readStream = new DataInputStream(client.getInputStream());
 				writeStream = new DataOutputStream(client.getOutputStream());
-//				writeStream.writeUTF("[message]:fffffffff");
-//				writeStream.flush();
+				writeStream.writeUTF("[login]");//처음 접속했을 때 정보를 전달
+				writeStream.flush();
 			} else {
 				JOptionPane.showMessageDialog(null, "error code #9980");
 			}
@@ -78,14 +79,10 @@ public class PUManager extends Thread {
 			flag = temp.substring(0, temp.indexOf("]") + 1);// [order]
 			switch (flag) {
 			case "[message]":// 메세지 값이 도착했을 때
-				System.out.println("메시지 도착");
-				temp = pumsgv.getJtfChat().getText()+"[관리자] : "+temp.substring(temp.indexOf("]") + 1)+"\n";
-				pumsgv.getJtaChat().setText(temp);
+				pumsgv.getJtaChat().append("[관리자] : "+temp.substring(temp.indexOf("]") + 1)+"\n");
 				pumsgv.setVisible(true);
 				pumsgv.requestFocus();
-				break;
-			case "[close]":// 기존 좌석을 로그아웃 해야할 때
-				// closeOrder(Integer.parseInt(temp.substring(temp.indexOf("]") + 1)));
+				pumsgv.getJspChat().getVerticalScrollBar().setValue(pumsgv.getJspChat().getVerticalScrollBar().getMaximum());
 				break;
 
 			default:
