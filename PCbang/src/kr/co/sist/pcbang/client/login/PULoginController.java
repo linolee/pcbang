@@ -1,6 +1,5 @@
 package kr.co.sist.pcbang.client.login;
 
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -118,19 +117,15 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 				}//end else
 			}//end else
 			
-			} catch (HeadlessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}//end catch
 		}//end if
 		
 		if(ae.getSource()==pulv.getJbtMembership()) {
-			JOptionPane.showMessageDialog(pulv, "회원가입!");
+			//JOptionPane.showMessageDialog(pulv, "회원가입!");
 			new PUPolicyView();
-			pulv.dispose();
+			//pulv.dispose();
 		}//end if
 		if(ae.getSource()==pulv.getJbtFind()) {
 			JOptionPane.showMessageDialog(pulv, "아이디/비밀번호 찾기!");
@@ -142,7 +137,9 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 		int flag=JOptionPane.showConfirmDialog(pulv, "로그인 하지 않으시면 사용이 불가능 합니다.\n그래도 종료하시겠습니까?");
 		if(flag==0) {
 			pulv.dispose();
-		}//end if
+		}else {
+			//아니요를 누르면 다시 로그인 창으로ㅠㅠㅠ
+		}//end else
 	}//windowClosing
 	
 	/**
@@ -159,20 +156,17 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 		JPasswordField jpf=pulv.getJpfPass();
 		String pass=new String(jpf.getPassword());
 		JTextField jtf2=pulv.getJtfCardNum();
-		//System.out.println(jtf1.getText().trim()+"/"+pass.trim()+"/"+jtf2.getText().trim());
 		
 		if(jtf2.getText().trim().equals("")) {
 			if(jtf1.getText().trim().equals("")) {
 				jtf1.setText("");
 				jtf1.requestFocus();
 				flagId=true;
-				System.out.println("아이디를 입력해 주세요");
 				JOptionPane.showMessageDialog(pulv, "아이디를 입력해 주세요.");
 			}else if(pass.trim().equals("")) {
 				jpf.setText("");//공백을 입력하고 엔터친 경우 JPasswordField의 값을 초기화
 				jpf.requestFocus();
 				flagPass=true;
-				System.out.println("비밀번호를 입력해 주세요");
 				JOptionPane.showMessageDialog(pulv, "비밀번호를 입력해 주세요.");
 			}//end if
 			if(!flagId&&!flagPass) {
@@ -183,7 +177,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 				jtf2.setText("");
 				jtf2.requestFocus();
 				flagCard=true;
-				System.out.println("비회원 카드번호를 입력해주세요");
+				JOptionPane.showMessageDialog(pulv, "비회원 카드번호를 입력해주세요");
 			}//end if
 			if(!flagCard) {
 				flagmember=false;//비회원
@@ -232,13 +226,15 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	private boolean login(int guestNum) {
 		boolean flag=false;
 		try {
+			PULoginDAO pul_dao=PULoginDAO.getInstance();
 			InetAddress ip =InetAddress.getLocalHost();
 			String pcIp=String.valueOf(ip).substring(InetAddress.getLocalHost().toString().indexOf("/")+1);
-			PULoginDAO pul_dao=PULoginDAO.getInstance();
-			PUGuestStateVO pugsvo=new PUGuestStateVO(guestNum, pcIp);
-			
-			pul_dao.updateGuestState(pugsvo);
-			flag=true;
+
+			if(pul_dao.selectGuestCheck(guestNum)) {
+				PUGuestStateVO pugsvo=new PUGuestStateVO(guestNum, pcIp);
+				pul_dao.updateGuestState(pugsvo);
+				flag=true;
+			}//end if
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(pulv, "DB에서 문제가 발생했습니다.");
 			e.printStackTrace();
@@ -258,11 +254,12 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 		//String adminName="";
 		boolean flag=false;
 		try {
+			PULoginDAO pul_dao=PULoginDAO.getInstance();
+
 			InetAddress ip =InetAddress.getLocalHost();
 			String pcIp=String.valueOf(ip).substring(InetAddress.getLocalHost().toString().indexOf("/")+1);
-			System.out.println(pcIp);
+			//System.out.println(pcIp);
 			
-			PULoginDAO pul_dao=PULoginDAO.getInstance();
 			if(!String.valueOf(pul_dao.selectMemberLogin(pucvo)).equals("")) {
 				flag=true;
 				PUMemberStateVO pumsvo=new PUMemberStateVO(pucvo.getMemberId(),pcIp );

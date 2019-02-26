@@ -135,15 +135,53 @@ public class PUMainDAO {
 	}//updateSeat
 	
 	/**
-	 * 로그아웃할 때 pc테이블 업데이트
+	 * 회원이 로그아웃할 때 pc테이블 업데이트
 	 * @param pumlogvo
 	 */
-	public void updatePC(String id, String cardNum) {
-		if(!id.equals("")) {//아이디를 가진다면 회원
-			
-		}else if(!cardNum.equals("")) {//카드번호를 가진다면 비회원
-			
-		}//end else
+	public void updatePC(String id) throws SQLException{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		
+		try {
+			con=getConn();
+		//3.
+			StringBuilder updatePcId=new StringBuilder();
+			updatePcId.append("UPDATE PC SET member_id='' WHERE member_id=?");
+			pstmt=con.prepareStatement(updatePcId.toString());
+		//4.바인드변수 값넣기
+			pstmt.setString(1, id);
+		//5.
+			pstmt.executeUpdate();
+		}finally {
+			//6.
+			if(pstmt!=null) {pstmt.close();}//end if
+			if(con!=null) {con.close();}//end if
+		}//end finally
+	}//updatePC
+	/**
+	 * 비회원이 로그아웃할 때 pc테이블 업데이트
+	 * @param pumlogvo
+	 */
+	public void updatePC(int card) throws SQLException{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		
+		try {
+			con=getConn();
+		//3.
+			StringBuilder updatePcCard=new StringBuilder();
+			updatePcCard.append("UPDATE PC SET card_num='' WHERE card_num=?");
+			pstmt=con.prepareStatement(updatePcCard.toString());
+		//4.바인드변수 값넣기
+			pstmt.setString(1, String.valueOf(card));
+		//5.
+			pstmt.executeUpdate();
+		}finally {
+			//6.
+			if(pstmt!=null) {pstmt.close();}//end if
+			if(con!=null) {con.close();}//end if
+		}//end finally	
+		
 	}//updatePC
 	
 	/**
