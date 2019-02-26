@@ -93,7 +93,7 @@ public class PMProductAddController extends WindowAdapter implements ActionListe
 			
 			pmpav.getjlImg().setIcon(new ImageIcon("C:/dev/workspace/lunch_prj/src/kr/co/sist/lunch/admin/img/no_img.jpg"));
 			
-			JOptionPane.showMessageDialog(pmpav, "도시락이 추가되었습니다.");
+			JOptionPane.showMessageDialog(pmpav, "메뉴가 추가되었습니다.");
 		} catch (IOException ie) {
 			JOptionPane.showMessageDialog(pmpav, "파일 업로드 실패");
 			ie.printStackTrace();
