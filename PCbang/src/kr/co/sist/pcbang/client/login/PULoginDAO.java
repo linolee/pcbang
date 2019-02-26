@@ -39,7 +39,7 @@ private static PULoginDAO pul_dao;
 	}//getConn
 	
 	/**
-	 * PC에서 id를 이미 사용중인지 판단
+	 * PC�뿉�꽌 id瑜� �씠誘� �궗�슜以묒씤吏� �뙋�떒
 	 * @param id
 	 * @return
 	 * @throws SQLException
@@ -84,7 +84,7 @@ private static PULoginDAO pul_dao;
 	}//selectMember
 	
 	/**
-	 * PC에서 카드번호를 이미 사용중인지 판단
+	 * PC�뿉�꽌 移대뱶踰덊샇瑜� �씠誘� �궗�슜以묒씤吏� �뙋�떒
 	 * @param cardNum
 	 * @return
 	 * @throws SQLException
@@ -129,7 +129,7 @@ private static PULoginDAO pul_dao;
 	}//selectGuest
 	
 	/**
-	 * 회원의 아이디가 현재 PC에서 자리이동 등 의 상태가 가능한지 여부
+	 * �쉶�썝�쓽 �븘�씠�뵒媛� �쁽�옱 PC�뿉�꽌 �옄由ъ씠�룞 �벑 �쓽 �긽�깭媛� 媛��뒫�븳吏� �뿬遺�
 	 * @param id
 	 * @return
 	 * @throws SQLException
@@ -170,7 +170,7 @@ private static PULoginDAO pul_dao;
 	}//memberIdStatus
 	
 	/**
-	 * 비회원의 카드가 현재 PC에서 자리이동 등의 상태가 가능한지 여부
+	 * 鍮꾪쉶�썝�쓽 移대뱶媛� �쁽�옱 PC�뿉�꽌 �옄由ъ씠�룞 �벑�쓽 �긽�깭媛� 媛��뒫�븳吏� �뿬遺�
 	 * @param cardNum
 	 * @return
 	 * @throws SQLException
@@ -211,7 +211,7 @@ private static PULoginDAO pul_dao;
 	}//guestIdStatus
 	
 	/**
-	 * 회원의 아이디와 비밀번호가 맞다면 남은시간 정보를 가져오는 일
+	 * �쉶�썝�쓽 �븘�씠�뵒�� 鍮꾨�踰덊샇媛� 留욌떎硫� �궓���떆媛� �젙蹂대�� 媛��졇�삤�뒗 �씪
 	 * @param pucvo
 	 * @return
 	 * @throws SQLException
@@ -254,7 +254,7 @@ private static PULoginDAO pul_dao;
 	}//memberLogin
 	
 	/**
-	 * 비회원의 카드번호가 맞는지 판단
+	 * 鍮꾪쉶�썝�쓽 移대뱶踰덊샇媛� 留욌뒗吏� �뙋�떒
 	 * @param cardNum
 	 * @return
 	 * @throws SQLException
@@ -297,7 +297,7 @@ private static PULoginDAO pul_dao;
 	}//guestCheck
 	
 	/**
-	 * 회원이 로그인 했을 때 로그인한 PC의 상태변경
+	 * �쉶�썝�씠 濡쒓렇�씤 �뻽�쓣 �븣 濡쒓렇�씤�븳 PC�쓽 �긽�깭蹂�寃�
 	 * @param pumsvo
 	 * @throws SQLException
 	 */
@@ -343,7 +343,7 @@ private static PULoginDAO pul_dao;
 	}//changeMemberState
 	
 	/**
-	 * 비회원이 로그인 했을 때 로그인한 PC의 상태변경
+	 * 鍮꾪쉶�썝�씠 濡쒓렇�씤 �뻽�쓣 �븣 濡쒓렇�씤�븳 PC�쓽 �긽�깭蹂�寃�
 	 * @param pugsvo
 	 * @return
 	 * @throws SQLException
@@ -390,7 +390,7 @@ private static PULoginDAO pul_dao;
 	}//changeGuestState
 	
 	/**
-	 * 관리자의 공지사항
+	 * 愿�由ъ옄�쓽 怨듭��궗�빆
 	 * @return
 	 * @throws SQLException
 	 */
@@ -407,7 +407,9 @@ private static PULoginDAO pul_dao;
 			//3.
 			StringBuilder note=new StringBuilder();
 			
-			note.append("select admin_notice ").append(" from pc_notice ");
+			note.append("select admin_notice ")
+			.append(" from (SELECT ADMIN_NOTICE FROM PC_NOTICE ORDER BY NOTICE_INPUT_DATE DESC) ")
+			.append(" WHERE ROWNUM=1 ");
 			
 			pstmt=con.prepareStatement(note.toString());
 			//4.

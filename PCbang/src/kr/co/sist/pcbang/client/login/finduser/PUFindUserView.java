@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-
 @SuppressWarnings("serial")
 public class PUFindUserView extends JFrame {
 
@@ -16,6 +15,7 @@ public class PUFindUserView extends JFrame {
 	private JButton jbtIdSearch, jbtPassSearch;
 	
 	public PUFindUserView() {
+		super("아이디/비밀번호 찾기");
 		jtfUserIdName = new JTextField();
 		jtfIdPhone1 = new JTextField();
 		jtfIdPhone2 = new JTextField();
@@ -103,12 +103,16 @@ public class PUFindUserView extends JFrame {
 		jbtPassSearch.addActionListener(pufuc);
 		jtfUserIdName.addActionListener(pufuc);
 		jtfIdPhone1.addActionListener(pufuc);
+		jtfIdPhone1.addKeyListener(pufuc);
 		jtfIdPhone2.addActionListener(pufuc);
+		jtfIdPhone2.addKeyListener(pufuc);
 		jtfIdPhone3.addActionListener(pufuc);
 		jtfUserPassId.addActionListener(pufuc);
 		jtfUserPassName.addActionListener(pufuc);
 		jtfPassPhone1.addActionListener(pufuc);
+		jtfPassPhone1.addKeyListener(pufuc);
 		jtfPassPhone2.addActionListener(pufuc);
+		jtfPassPhone2.addKeyListener(pufuc);
 		jtfPassPhone3.addActionListener(pufuc);
 		addWindowListener(pufuc);
 		
@@ -166,5 +170,4 @@ public class PUFindUserView extends JFrame {
 	public static void main(String[] args) {
 		new PUFindUserView();
 	}
-}
-
+}//class
