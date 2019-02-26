@@ -85,36 +85,37 @@ public class PMSeatController implements Runnable, ActionListener {
 		if (e.getSource() == pmsv.getBtnSet()) {// 좌석 수정버튼이 눌렸을 때
 			openSeatSet();
 		}
-
+		
 		for (int i = 0; i < seat.length; i++) {
 			for (int j = 0; j < seat[i].length; j++) {
 				if (e.getSource() == pmsv.getBtnSeat()[i][j]) {// 각 좌석 버튼이 클릭 됐을 때
-					if (seat[i][j].getSeatNum() != 0) {// 좌석번호가 0이 아니고
-						if (seat[i][j].getUser().equals("")) {// 사용자가 없다면
-							openSeatDetail(i, j);// 좌석 상세정보를 열고
-						} else {// 사용자가 있다면
-							for (PMClient pmClient : clientSocketList) {
-								if (pmClient.getClient().getInetAddress().toString().equals("/"+seat[i][j].getPcIP())) {//클라이언트 리스트에서 해당하는 좌석의 IP로 연결된 Client를 검색해서
-									//System.out.println(pmClient.getClient().getInetAddress().toString());
-									pmClient.getMv().setVisible(true);
-								}
-							}
-						}
-					}
-				} // end if
+					btnSeatClicked(i, j);
+				}// end if
 			} // end inner for
 		} // end outer for
 	}
-
+	
+	private void btnSeatClicked(int i, int j) {
+		if (seat[i][j].getSeatNum() != 0) {// 좌석번호가 0이 아니고
+			if (seat[i][j].getUser().equals("")) {// 사용자가 없다면
+				openSeatDetail(i, j);// 좌석 상세정보를 열고
+			} else {// 사용자가 있다면
+				for (PMClient pmClient : clientSocketList) {
+					if (pmClient.getClient().getInetAddress().toString().equals("/"+seat[i][j].getPcIP())) {//클라이언트 리스트에서 해당하는 좌석의 IP로 연결된 Client를 검색해서
+						//System.out.println(pmClient.getClient().getInetAddress().toString());
+						pmClient.getMv().setVisible(true);
+					}//end if
+				}//end for
+			}//end if
+		}//end if
+	}
+	
 	private void openSeatSet() {
 		new PMSeatSetView(this);
 	}
 
 	private void openSeatDetail(int i, int j) {
 		new PMSeatDetailView(this, i, j);
-	}
-
-	private void visibleMsg() {
 	}
 
 	private void setServer() {
@@ -142,10 +143,6 @@ public class PMSeatController implements Runnable, ActionListener {
 		clientSocketList.add(client);//리스트에 넣는다.
 //		client.run();//클라이언트의 Thread를 실행한다.
 		System.out.println(clientSocket.getInetAddress());
-	}
-
-	private void readSeatInfo() {
-
 	}
 
 	public PMSeatView getPmsv() {

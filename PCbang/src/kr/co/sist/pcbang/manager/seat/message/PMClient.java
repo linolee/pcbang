@@ -45,6 +45,11 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 		clientSocketList = pmsc.getClientSocket();
 		thread = new Thread(this);
 		thread.start();
+		
+		setTitle();
+	}
+
+	private void setTitle() {
 		int seatNum = 0;
 		for (int i = 0; i < pmsc.getSeat().length; i++) {
 			for (int j = 0; j < pmsc.getSeat()[i].length; j++) {
@@ -55,7 +60,7 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 		}
 		mv.setTitle(Integer.toString(seatNum)+"¹ø ÁÂ¼®"+client.getInetAddress().toString());
 	}
-
+	
 	public void run() {
 		try {
 			readStream();
