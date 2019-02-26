@@ -10,7 +10,6 @@ import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 
-import javax.print.attribute.standard.JobHoldUntil;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -97,23 +96,13 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 				JLabel jlRestTime=pumv.getJlRestTime();
 				String timeString=jlRestTime.getText();//05:05
 				int restTime=minutesTime(timeString);//520
+				//남은시간이 없으면 사용종료
+				callcharge(restTime);
 				if(0<i) {
 					jlRestTime.setText(hourTime(String.valueOf(restTime-1)));
 				}//end if
-				//남은시간이 없으면 사용종료
-				if(timeString.equals("00:00")) {
-					int flag=JOptionPane.showConfirmDialog(pumv, "충전된 시간이 없습니다.\n충전하시겠습니까?");
-					if(flag==0) {
-						JOptionPane.showMessageDialog(pumv, "충전창");
-						JLabel jlSeat=pumv.getJlSeatNum();
-						new PUChargeView(Integer.parseInt(jlSeat.getText()));
-					}else if(flag==1){
-						JOptionPane.showMessageDialog(pumv, "사용이 종료됩니다.");
-						pumv.dispose();
-					}
-				}//end if
 				
-				Thread.sleep(1000*60);//60초
+				Thread.sleep(1000*1);//60초
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}//end catch
@@ -266,9 +255,9 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	 * 시간이 0이면 충전창 부르고 만약 충전하지 않으면 종료
 	 * @param time
 	 */
-	private void callcharge(int time) {
+	private void callcharge(int restTime) {
 		pumv.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		if(time==0) {
+		if(restTime==0) {
 			int flag=JOptionPane.showConfirmDialog(pumv, "충전된 시간이 없습니다.\n충전하시겠습니까?");
 			if(flag==JOptionPane.OK_OPTION) {
 				JLabel jlSeat=pumv.getJlSeatNum();
@@ -277,8 +266,8 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 				return;
 				//JOptionPane.showMessageDialog(pumv, "사용이 종료됩니다.");
 				//pumv.dispose();
-			}
+			}//end else
 		}//end if
-	}
+	}//callcharge
 
 }//class
