@@ -231,11 +231,11 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	 */
 	private boolean login(int guestNum) {
 		boolean flag=false;
-		InetAddress ip;
 		try {
-			ip = InetAddress.getLocalHost();
+			InetAddress ip =InetAddress.getLocalHost();
+			String pcIp=String.valueOf(ip).substring(InetAddress.getLocalHost().toString().indexOf("/")+1);
 			PULoginDAO pul_dao=PULoginDAO.getInstance();
-			PUGuestStateVO pugsvo=new PUGuestStateVO(guestNum, String.valueOf(ip));
+			PUGuestStateVO pugsvo=new PUGuestStateVO(guestNum, pcIp);
 			
 			pul_dao.updateGuestState(pugsvo);
 			flag=true;
@@ -257,17 +257,24 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	private boolean login(PUCertificationVO pucvo) {
 		//String adminName="";
 		boolean flag=false;
-		
-		PULoginDAO pul_dao=PULoginDAO.getInstance();
 		try {
+			InetAddress ip =InetAddress.getLocalHost();
+			String pcIp=String.valueOf(ip).substring(InetAddress.getLocalHost().toString().indexOf("/")+1);
+			System.out.println(pcIp);
+			
+			PULoginDAO pul_dao=PULoginDAO.getInstance();
 			if(!String.valueOf(pul_dao.selectMemberLogin(pucvo)).equals("")) {
 				flag=true;
+				PUMemberStateVO pumsvo=new PUMemberStateVO(pucvo.getMemberId(),pcIp );
+				pul_dao.updateMemberState(pumsvo);
 			}//end if
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(pulv, "DB에서 문제가 발생했습니다.");
 			e.printStackTrace();
-		}//end catch
-		
+		} catch (UnknownHostException uhe) {
+			JOptionPane.showMessageDialog(pulv, "ip조회 실패");
+			uhe.printStackTrace();
+		} //end catch
 		return flag;
 	}//login member
 	
