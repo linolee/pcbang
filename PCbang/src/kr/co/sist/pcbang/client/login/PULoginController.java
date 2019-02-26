@@ -14,6 +14,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import kr.co.sist.pcbang.client.login.newuser.PUPolicyView;
 import kr.co.sist.pcbang.client.main.PUMainView;
 
 /**
@@ -128,6 +129,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 		
 		if(ae.getSource()==pulv.getJbtMembership()) {
 			JOptionPane.showMessageDialog(pulv, "회원가입!");
+			new PUPolicyView();
 		}//end if
 		if(ae.getSource()==pulv.getJbtFind()) {
 			JOptionPane.showMessageDialog(pulv, "아이디/비밀번호 찾기!");
