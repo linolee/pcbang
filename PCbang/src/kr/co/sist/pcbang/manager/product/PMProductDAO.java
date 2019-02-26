@@ -64,7 +64,7 @@ public class PMProductDAO {
 			StringBuilder selectAllPrd = new StringBuilder();
 			selectAllPrd.append(
 					"	select m.menu_code, m.menu_name, m.img, m.menu_price, o.quan, (m.menu_price)*(o.quan) total ")
-					.append("	from menu m, ordering o ").append("	where o.menu_code=m.menu_code ")
+					.append("	from menu m, ordering o").append("	where o.menu_code(+)=m.menu_code ")
 					.append("	order by m.menu_code desc ");
 
 			pstmt = con.prepareStatement(selectAllPrd.toString());
@@ -74,8 +74,23 @@ public class PMProductDAO {
 
 			PMProductVO pmp_vo = null;
 			while (rs.next()) {
-				pmp_vo = new PMProductVO(rs.getString("MENU_CODE"), rs.getString("MENU_NAME"), rs.getString("IMG"),
-						rs.getInt("menu_price"), rs.getInt("QUAN"), rs.getInt("total"));
+				
+				int quan=0;
+				int total=0;
+				
+				if(rs.getInt("QUAN")==0) {
+					quan=0;
+				}else {
+					quan=rs.getInt("quan");
+				}
+				if(rs.getInt("total")==0) {
+					total=0;
+				}
+					total=rs.getInt("total");
+					
+					pmp_vo = new PMProductVO(rs.getString("MENU_CODE"), rs.getString("MENU_NAME"), rs.getString("IMG"),
+							rs.getInt("menu_price"), quan, total);
+				
 				list.add(pmp_vo);
 			} // end while
 		} finally {
@@ -112,15 +127,17 @@ public class PMProductDAO {
 			// 2.
 			con = getConn();
 			// 3.
-			String selectMenuCode = "select menu_name, img, price, category from menu where menu_code=?";
-			pstmt = con.prepareStatement(selectMenuCode);
+			String selectPrd = 
+					"SELECT category,IMG,menu_price,menu_name from menu WHERE menu_code=?";
+			pstmt=con.prepareStatement(selectPrd);
 			// 4.
 			pstmt.setString(1, code);
 			// 5.
 			rs = pstmt.executeQuery();
 			// 입력된 코드로 조회된 레코드가 존재할 때 VO를 생성하고 값을 추가한다.
 			if (rs.next()) {
-				pmpdvo = new PMProductDetailVO(rs.getString("menu_Name"), rs.getString("category"), rs.getString("img"), rs.getInt("price"));
+				pmpdvo = new PMProductDetailVO(code, rs.getString("category"), rs.getString("MENU_NAME"), rs.getString("IMG"),
+						rs.getInt("menu_price"));
 			} // end if
 		} finally {
 			// 6.
@@ -197,7 +214,6 @@ public class PMProductDAO {
 	public void insertPrd(PMProductAddVO pmpav) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
 		try {
 			// 1.
 			// 2.
@@ -206,7 +222,7 @@ public class PMProductDAO {
 			StringBuilder insertPrd = new StringBuilder();
 			insertPrd.append("insert into menu")
 			.append("(menu_CODE, category, menu_NAME, menu_price, img, menu_input_date, admin_id)")
-			.append("values(lunch_code, ?,?,?,?,?,? )");
+			.append("values(menu_code, ?,?,?,?,sysdate,? )");
 			pstmt = con.prepareStatement(insertPrd.toString());
 
 			// 4. 바인드 변수에 값넣기
@@ -214,8 +230,7 @@ public class PMProductDAO {
 			pstmt.setString(2, pmpav.getMenuName());
 			pstmt.setInt(3, pmpav.getPrice());
 			pstmt.setString(4, pmpav.getImg());
-			pstmt.setString(5, "2019-02-18");
-			pstmt.setString(6, PMProductView.adminId);
+			pstmt.setString(5, PMProductView.adminId);
 			// 5.
 			pstmt.executeUpdate(); // insert되거나 예외이거나 둘 중 하나
 		} finally {
@@ -227,7 +242,6 @@ public class PMProductDAO {
 				con.close();
 			} // end if
 		} // end finally
-
 	}// insertLunch
 
 	/**
@@ -236,7 +250,7 @@ public class PMProductDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean deletePrd(String code) throws SQLException {
+	public boolean deletePrd(String name) throws SQLException {
 		boolean flag = false;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -246,10 +260,10 @@ public class PMProductDAO {
 			// 2.
 			con = getConn();
 			// 3.
-			String deleteMenu = "DELETE FROM menu WHERE LUNCH_CODE = ? ";
+			String deleteMenu = "DELETE FROM menu WHERE menu_name = ? ";
 			pstmt = con.prepareStatement(deleteMenu);
 			// 4.
-			pstmt.setString(1, code);
+			pstmt.setString(1, name);
 			// 5.
 			int cnt = pstmt.executeUpdate();
 			if (cnt == 1) {
@@ -266,7 +280,7 @@ public class PMProductDAO {
 			}
 		} // end finally
 		return flag;
-	}// deleteLunch
+	}// deletePrd
 
 	
 	/**

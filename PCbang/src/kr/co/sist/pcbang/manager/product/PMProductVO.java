@@ -4,12 +4,12 @@ public class PMProductVO {
 	private String menuCode, menuName, img;
 	private int quan, price, total;
 	
-	public PMProductVO(String menuCode, String menuName, String img, int quan, int price, int total) {
+	public PMProductVO(String menuCode, String menuName, String img, int price, int quan,  int total) {
 		this.menuCode = menuCode;
 		this.menuName = menuName;
 		this.img = img;
-		this.quan = quan;
 		this.price = price;
+		this.quan = quan;
 		this.total=total;
 	}
 	

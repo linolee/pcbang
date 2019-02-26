@@ -63,22 +63,32 @@ public class PMMainController extends WindowAdapter implements ActionListener, M
 	} // setNotice
 	
 	@Override
-	public void actionPerformed(ActionEvent we) {
-		if(we.getSource()==pmmv.getJbtAccount()) {
+	public void actionPerformed(ActionEvent ae) {
+		if(ae.getSource()==pmmv.getJbtAccount()) {
 			new PMManagerAccountView();
 		} // end if
 				
-		if(we.getSource()==pmmv.getJbtLogOut()) {
-			new PMLoginView();
-			pmmv.setVisible(false);
+		if(ae.getSource()==pmmv.getJbtLogOut()) {
+			switch (JOptionPane.showConfirmDialog(pmmv, "로그아웃 하시겠습니까?")) {
+			case JOptionPane.OK_OPTION:
+				new PMLoginView();
+				pmmv.setVisible(false);				
+				break;
+			} // end switch
 		} // end if
 		
-		if(we.getSource()==pmmv.getJbtNoticeSave()) {
-			try {
-				addNotice();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} // end catch
+		if(ae.getSource()==pmmv.getJbtNoticeSave()) {
+			switch (JOptionPane.showConfirmDialog(pmmv, "공지사항을 변경하시겠습니까?")) {
+			case JOptionPane.OK_OPTION:
+				try {
+					addNotice();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} // end catch
+				
+				break;
+
+			} // end switch
 		} //end if
 	} // actionPerformed
 	
