@@ -3,6 +3,8 @@ package kr.co.sist.pcbang.client.login.finduser;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -11,7 +13,7 @@ import javax.swing.JOptionPane;
 
 import kr.co.sist.pcbang.client.login.finduser.updatepass.PUUpdatePassView;
 
-public class PUFindUserController extends WindowAdapter implements ActionListener {
+public class PUFindUserController extends WindowAdapter implements ActionListener, KeyListener {
 
 	private PUFindUserView pufuv;
 	private PUFindUserDAO pufu_dao;
@@ -180,4 +182,36 @@ public class PUFindUserController extends WindowAdapter implements ActionListene
 		pufuv.dispose();
 	}//windowClosing
 
-}
+	@Override
+	public void keyTyped(KeyEvent ke) {
+	}
+
+	@Override
+	public void keyPressed(KeyEvent ke) {
+	}
+
+	@Override
+	public void keyReleased(KeyEvent ke) {
+		if(ke.getSource()==pufuv.getJtfIdPhone1()) {
+			if(pufuv.getJtfIdPhone1().getText().length()==3) {
+				pufuv.getJtfIdPhone2().requestFocus();
+			}//end if
+		}//end if
+		if(ke.getSource()==pufuv.getJtfIdPhone2()) {
+			if(pufuv.getJtfIdPhone2().getText().length()==4) {
+				pufuv.getJtfIdPhone3().requestFocus();
+			}//end if
+		}//end if
+		if(ke.getSource()==pufuv.getJtfPassPhone1()) {
+			if(pufuv.getJtfPassPhone1().getText().length()==3) {
+				pufuv.getJtfPassPhone2().requestFocus();
+			}//end if
+		}//end if
+		if(ke.getSource()==pufuv.getJtfPassPhone2()) {
+			if(pufuv.getJtfPassPhone2().getText().length()==4) {
+				pufuv.getJtfPassPhone3().requestFocus();
+			}//end if
+		}//end if
+	}//keyReleased
+
+}//class
