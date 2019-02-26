@@ -24,7 +24,7 @@ public class PMProductView extends JPanel{
 	public static String adminId;
 	
 	public PMProductView() {
-	
+
 	//테이블
 	String[] menuColumns = {"상품코드", "상품명", "이미지", "가격", "판매량", "총판매액"};
 	dtmPrd = new DefaultTableModel(menuColumns, 4) {
