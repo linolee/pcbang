@@ -45,6 +45,15 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 		clientSocketList = pmsc.getClientSocket();
 		thread = new Thread(this);
 		thread.start();
+		int seatNum = 0;
+		for (int i = 0; i < pmsc.getSeat().length; i++) {
+			for (int j = 0; j < pmsc.getSeat()[i].length; j++) {
+				if (client.getInetAddress().toString().equals("/"+pmsc.getSeat()[i][j].getPcIP())) {
+					seatNum = pmsc.getSeat()[i][j].getSeatNum();
+				}
+			}
+		}
+		mv.setTitle(Integer.toString(seatNum)+"¹ø ÁÂ¼®"+client.getInetAddress().toString());
 	}
 
 	public void run() {
@@ -170,6 +179,22 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 
 	public DataOutputStream getDos() {
 		return dos;
+	}
+
+	public PMMsgView getMv() {
+		return mv;
+	}
+
+	public PMSeatController getPmsc() {
+		return pmsc;
+	}
+
+	public List<PMClient> getClientSocketList() {
+		return clientSocketList;
+	}
+
+	public Thread getThread() {
+		return thread;
 	}
 
 	@Override

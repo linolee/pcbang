@@ -92,10 +92,13 @@ public class PMSeatController implements Runnable, ActionListener {
 					if (seat[i][j].getSeatNum() != 0) {// 좌석번호가 0이 아니고
 						if (seat[i][j].getUser().equals("")) {// 사용자가 없다면
 							openSeatDetail(i, j);// 좌석 상세정보를 열고
-							System.out.println("좌석상세정보");
 						} else {// 사용자가 있다면
-							visibleMsg();// 해당 사용자와의 채팅창을 연다.
-							System.out.println(i + "," + j + "사용자와의 메세지창 보이기");
+							for (PMClient pmClient : clientSocketList) {
+								if (pmClient.getClient().getInetAddress().toString().equals("/"+seat[i][j].getPcIP())) {//클라이언트 리스트에서 해당하는 좌석의 IP로 연결된 Client를 검색해서
+									//System.out.println(pmClient.getClient().getInetAddress().toString());
+									pmClient.getMv().setVisible(true);
+								}
+							}
 						}
 					}
 				} // end if
