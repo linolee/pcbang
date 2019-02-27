@@ -18,13 +18,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -33,6 +30,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+
 
 import kr.co.sist.pcbang.client.main.PUMainController;
 
@@ -47,45 +45,44 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		this.puov=puov;
 		puo_dao=PUOrderingDAO.getInstance();
 
-//		º¸³»ÁÖ´Â ºÎºĞ°ú ÀúÀåµÇ´Â À§Ä¡°¡ Á¤È®ÇÏÁö ¾Ê¾Æ ÀÌºÎºĞ¿¡¼­ Error
+//		ë³´ë‚´ì£¼ëŠ” ë¶€ë¶„ê³¼ ì €ì¥ë˜ëŠ” ìœ„ì¹˜ê°€ ì •í™•í•˜ì§€ ì•Šì•„ ì´ë¶€ë¶„ì—ì„œ Error
 //		try {
-//			String[] fileNames=orderImageList();//Å¬¶óÀÌ¾ğÆ®°¡ °¡Áø ÀÌ¹ÌÁö¸¦ Ã¼Å©ÇÏ¿©
-//			orderImageSend(fileNames);//¼­¹ö·Î º¸³» ¾ø´Â ÀÌ¹ÌÁö¸¦ ¹ŞÀº ÈÄ  
+//			String[] fileNames=orderImageList();//í´ë¼ì´ì–¸íŠ¸ê°€ ê°€ì§„ ì´ë¯¸ì§€ë¥¼ ì²´í¬í•˜ì—¬
+//			orderImageSend(fileNames);//ì„œë²„ë¡œ ë³´ë‚´ ì—†ëŠ” ì´ë¯¸ì§€ë¥¼ ë°›ì€ í›„  
 //		}catch (IOException e) {
 //			e.printStackTrace();
 //		}//end catch
 
-		setProduct();//JTableÀ» Á¶È¸ °»½Å
+		setProduct();//JTableì„ ì¡°íšŒ ê°±ì‹ 
 	}//PUOrderingController
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==puov.getJbtOk()) {
-			JOptionPane.showMessageDialog(puov, "ÀÌ ¸ñ·ÏÀ¸·Î ÁÖ¹®ÇÕ´Ï´Ù");
+			JOptionPane.showMessageDialog(puov, "ì´ ëª©ë¡ìœ¼ë¡œ ì£¼ë¬¸í•©ë‹ˆë‹¤");
 			printOrder();
 		}//end if
 		if(ae.getSource()==puov.getJbtExit()) {
-			//JOptionPane.showMessageDialog(puov, "´İ±â");
+			//JOptionPane.showMessageDialog(puov, "ë‹«ê¸°");
 			puov.dispose();
 		}//end if
 	}//actionPerformed
 	
 	@Override
 	public void mouseClicked(MouseEvent me) {	
-		//JOptionPane.showMessageDialog(puov, "¸¶¿ì½º ÀÌº¥Æ®°¡ ´­·È½À´Ï´Ù.");
-		if(me.getSource()==puov.getJtMenu()) {//¸Ş´º
+		//JOptionPane.showMessageDialog(puov, "ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ê°€ ëˆŒë ¸ìŠµë‹ˆë‹¤.");
+		if(me.getSource()==puov.getJtMenu()) {//ë©”ë‰´
 			JTable jt=puov.getJtMenu();
 //			String columninfo=(String)jt.getValueAt(jt.getSelectedRow(), jt.getSelectedColumn());
 			Object columninfo=jt.getValueAt(jt.getSelectedRow(), jt.getSelectedColumn());
 			//String product_code=columninfo.substring(columninfo.indexOf("|"), columninfo.lastIndexOf("|")+1);
 			
 			JOptionPane.showMessageDialog(puov, columninfo);
-			addOrderList(columninfo);
 		}//end if
 	}//mouseClicked
 	
 	/**
-	 * »óÇ° ºÒ·¯¿Í Å×ÀÌºí¿¡ ¾ÉÈ÷±â
+	 * ìƒí’ˆ ë¶ˆëŸ¬ì™€ í…Œì´ë¸”ì— ì•‰íˆê¸°
 	 */
 	private void setProduct() {
 		try {
@@ -101,7 +98,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			if(cnt!=0) {
 				cntArr=new ArrayList<Integer>();
 				for(int i=0; i<cnt; i++) {
-					cntArr.add(i);//list¿¡ ´ã´Â´Ù
+					cntArr.add(i);//listì— ë‹´ëŠ”ë‹¤
 				}//end for
 			}//end if
 	
@@ -110,20 +107,19 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 				int i=0;
 				int max=5;
 				if(x==0) {
-					rowData=new Object[5];//5Ä«¤¤À¸·Î ³ª´©¾î 
+					rowData=new Object[5];//5ì¹´ã„´ìœ¼ë¡œ ë‚˜ëˆ„ì–´ 
 					for(i=0; i<5; i++){
 						//System.out.print(cntArr.get(i));
 						puovo=listProduct.get(i);
 						Object img=new ImageIcon(puovo.getImg());
 						Object name=puovo.getProductName();
 						Object price=puovo.getProductPrice();
-						Object productCode=puovo.getProductCode();
-						rowData[i]=img+"\n"+name+"\n"+price+"\n"+productCode;//ÇÑÄ­¿¡ ÀÌ¹ÌÁö+°¡°İ+ÀÌ¸§
+						rowData[i]=img+"\n"+name+"\n"+price;//í•œì¹¸ì— ì´ë¯¸ì§€+ê°€ê²©+ì´ë¦„
 					}//end for
-					dtmProduct.addRow(rowData);//dtm¿¡ ³Ö¾îÁÙ²¨¾ß
+					dtmProduct.addRow(rowData);//dtmì— ë„£ì–´ì¤„êº¼ì•¼
 				}else if(x>0) {
 					max+=(5*x);
-					rowData=new Object[5];//5Ä«¤¤À¸·Î ³ª´©¾î 
+					rowData=new Object[5];//5ì¹´ã„´ìœ¼ë¡œ ë‚˜ëˆ„ì–´ 
 					if(max>cnt) {
 						max=cnt;
 					}//end if
@@ -135,28 +131,27 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 						Object img=new ImageIcon(puovo.getImg());
 						Object name=puovo.getProductName();
 						Object price=puovo.getProductPrice();
-						Object productCode=puovo.getProductCode();
 						row=i-(5*x);
-						rowData[row]=img+"\n"+name+"\n"+price+"\n"+productCode;//ÇÑÄ­¿¡ ÀÌ¹ÌÁö+°¡°İ+ÀÌ¸§
+						rowData[row]=img+"\n"+name+"\n"+price;//í•œì¹¸ì— ì´ë¯¸ì§€+ê°€ê²©+ì´ë¦„
 					}//end for
-					dtmProduct.addRow(rowData);//dtm¿¡ ³Ö¾îÁÙ²¨¾ß
+					dtmProduct.addRow(rowData);//dtmì— ë„£ì–´ì¤„êº¼ì•¼
 				}//end else
 			}//end for
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(puov, "»óÇ° ¸ñ·ÏÀ» Á¶È¸ÇÏ´Â Áß ¹®Á¦ ¹ß»ı");
+			JOptionPane.showMessageDialog(puov, "ìƒí’ˆ ëª©ë¡ì„ ì¡°íšŒí•˜ëŠ” ì¤‘ ë¬¸ì œ ë°œìƒ");
 			e.printStackTrace();
 		}//end catch
 	}//setProduct
 	
 	/**
-	 * º£½ºÆ® »óÇ° ºÒ·¯¿Í Å×ÀÌºí¿¡ ¾ÉÈ÷±â
+	 * ë² ìŠ¤íŠ¸ ìƒí’ˆ ë¶ˆëŸ¬ì™€ í…Œì´ë¸”ì— ì•‰íˆê¸°
 	 */
 	private void setBestProduct() {
 		
 	}//setBestProduct
 	
 	/**
-	 * ÁÖ¹® Å×ÀÌºí¿¡ Ãß°¡
+	 * ì£¼ë¬¸ í…Œì´ë¸”ì— ì¶”ê°€
 	 * @param list
 	 * @return
 	 */
@@ -168,19 +163,19 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	}//userOrdering
 	
 	/**
-	 * ÁÖ¹® ¸ñ·Ï¿¡ Ãß°¡
+	 * ì£¼ë¬¸ ëª©ë¡ì— ì¶”ê°€
 	 */
 	private void addOrderList(Object columninfo) {
-		//¼±¾ğ
+		//ì„ ì–¸
 		DefaultTableModel dtmOrder=puov.getDtmOrderlist();
 		DefaultComboBoxModel<String> dcmCombo=new DefaultComboBoxModel<String>();
 		JTable jtOrder=puov.getJtOrderlist();
 		
-		//ÁÖ¹® ¸ñ·ÏÀ» ÀúÀåÇÒ list
+		//ì£¼ë¬¸ ëª©ë¡ì„ ì €ì¥í•  list
 		//PUOrderAddVO puoadd=new
 		//List orderList=new ArrayList<>()
 		
-		//ÄŞº¸¹Ú½º »ı¼º
+		//ì½¤ë³´ë°•ìŠ¤ ìƒì„±
 		String[] quan = {"1","2","3","4","5","6","7","8","9","10"};
 		JComboBox<String> combo=new JComboBox<String>(dcmCombo);
 		combo.setMaximumRowCount(10);
@@ -191,7 +186,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		TableColumn column=jtOrder.getColumnModel().getColumn(1);
 		column.setCellEditor(new DefaultCellEditor(combo));
 		
-		//¹Ş¾Æ¿Â µ¥ÀÌÅÍ¸¦ Àß¶ó ¾Ë¸ÂÀº Ä­¿¡ Ãâ·Â
+		//ë°›ì•„ì˜¨ ë°ì´í„°ë¥¼ ì˜ë¼ ì•Œë§ì€ ì¹¸ì— ì¶œë ¥
 		String dataArr=String.valueOf(columninfo);
 		String[] data=dataArr.split("\n");
 
@@ -200,7 +195,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		rowData[0]=data[1];
 		//rowData[1]="";
 		//rowData[1]=column.setCellEditor(combo);
-				/*new DefaultCellEditor(combo).getCellEditorValue();//1°³³ª¿È*/
+				/*new DefaultCellEditor(combo).getCellEditorValue();//1ê°œë‚˜ì˜´*/
 		rowData[2]=data[2];
 		//rowData[3]=data[3];
 		dtmOrder.addRow(rowData);
@@ -211,10 +206,11 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 //		if(combo.getSelectedIndex()!=-1) {
 //			System.out.println(combo.getSelectedIndex());
 //		}
+
 	}//addOrderList
 	
 	/**
-	 * ÁÖ¹® ¸ñ·Ï¿¡¼­ »èÁ¦
+	 * ì£¼ë¬¸ ëª©ë¡ì—ì„œ ì‚­ì œ
 	 */
 	private void removeOrderList() {
 		
@@ -222,14 +218,14 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	
 	
 	/**
-	 * »óÇ° ÀÌ¹ÌÁö ¸®½ºÆ®
+	 * ìƒí’ˆ ì´ë¯¸ì§€ ë¦¬ìŠ¤íŠ¸
 	 */
 	private String[] orderImageList() {
 		String[] fileList=null;
 		String path="F:/dev/workspace/javase_teamprj2/src/img/";
 		
 		File dir=new File(path);
-		//s_°¡ ºÙÀº ÆÄÀÏ¸í¸¸ ¹è¿­¿¡
+		//s_ê°€ ë¶™ì€ íŒŒì¼ëª…ë§Œ ë°°ì—´ì—
 		List<String> list=new ArrayList<String>();
 		
 		for(String f_name: dir.list()) {
@@ -247,7 +243,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	}//orderImageList
 	
 	/**
-	 * ¼­¹ö·Î ÀÌ¹ÌÁö¸¦ º¸³»°í ¾ø´Â ÀÌ¹ÌÁö¸¦ ¹Ş´Â ÀÏ.
+	 * ì„œë²„ë¡œ ì´ë¯¸ì§€ë¥¼ ë³´ë‚´ê³  ì—†ëŠ” ì´ë¯¸ì§€ë¥¼ ë°›ëŠ” ì¼.
 	 * @param fileName
 	 */
 	private void orderImageSend(String[] fileNames) throws IOException{
@@ -261,14 +257,14 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			dos.writeInt(fileNames.length);
 			
 			for(int i=0; i<fileNames.length; i++ ) {
-				dos.writeUTF(fileNames[i]);//¼­¹ö·Î Àü¼Û
+				dos.writeUTF(fileNames[i]);//ì„œë²„ë¡œ ì „ì†¡
 			}//end for
 			dos.flush();
 			
 			dis=new DataInputStream(socket.getInputStream());
-			//¼­¹ö°¡ º¸³»¿À´Â ÆÄÀÏÀÇ °¹¼ö ÀúÀå
+			//ì„œë²„ê°€ ë³´ë‚´ì˜¤ëŠ” íŒŒì¼ì˜ ê°¯ìˆ˜ ì €ì¥
 			int fileCnt=dis.readInt();
-			System.out.println("Å¬¶óÀÌ¾ğÆ®"+fileCnt+"°³ ¹ŞÀ½");
+			System.out.println("í´ë¼ì´ì–¸íŠ¸"+fileCnt+"ê°œ ë°›ìŒ");
 			String fileName="";
 			int fileSize=0;
 			int fileLen=0;
@@ -277,18 +273,18 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			
 			for(int i=0;i<fileCnt; i++) {
 				
-				//Àü´Ş¹ŞÀ» ÆÄÀÏ Á¶°¢ÀÇ °¹¼ö
+				//ì „ë‹¬ë°›ì„ íŒŒì¼ ì¡°ê°ì˜ ê°¯ìˆ˜
 				fileSize=dis.readInt();
 
-				//ÆÄÀÏ ¸í ¹Ş±â
+				//íŒŒì¼ ëª… ë°›ê¸°
 				fileName=dis.readUTF();
 				fos=new FileOutputStream("F:/dev/workspace/javase_teamprj2/src/img/"+fileName);
 				
 				byte[] readData=new byte[512];
 				
 				while(fileSize>0) {
-					fileLen=dis.read(readData);//¼­¹ö¿¡¼­ Àü¼ÛÇÑ ÆÄÀÏÁ¶°¢À» ÀĞ¾îµé¿©
-					fos.write(readData, 0, fileLen);//»ı¼ºÇÑ ÆÄÀÏ·Î ±â·Ï
+					fileLen=dis.read(readData);//ì„œë²„ì—ì„œ ì „ì†¡í•œ íŒŒì¼ì¡°ê°ì„ ì½ì–´ë“¤ì—¬
+					fos.write(readData, 0, fileLen);//ìƒì„±í•œ íŒŒì¼ë¡œ ê¸°ë¡
 					fos.flush();
 					fileSize--;
 				}//end while
@@ -300,7 +296,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	}//orderImageSend
 	
 	   /**
-		 * ÁÖ¹®»çÇ×À» º¸¿©ÁÖ°í(¿µ¼öÁõ) ÁÖ¹®À» ÇÒ °ÍÀÎÁö Ã³¸®.
+		 * ì£¼ë¬¸ì‚¬í•­ì„ ë³´ì—¬ì£¼ê³ (ì˜ìˆ˜ì¦) ì£¼ë¬¸ì„ í•  ê²ƒì¸ì§€ ì²˜ë¦¬.
 		 */
 		private void printOrder() {
 			JTextArea jtaReceipt=new JTextArea(26,22);
@@ -312,26 +308,26 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			try {
 				data
 				.append("------------------------------------------------\n")
-				.append("ÁÖ¹® ¸ñ·Ï\n")
-				.append("\tÇö±İ(¼Òµæ°øÁ¦)\n")
-				.append("¿ª»ïÁ¡(º»Á¡)\n")
-				.append("´ëÇ¥: 1Á¶ 2011-11-11212\n")
+				.append("ì£¼ë¬¸ ëª©ë¡\n")
+				.append("\tí˜„ê¸ˆ(ì†Œë“ê³µì œ)\n")
+				.append("ì—­ì‚¼ì (ë³¸ì )\n")
+				.append("ëŒ€í‘œ: 1ì¡° 2011-11-11212\n")
 				.append("------------------------------------------------\n")
-				.append("ÁÖ¹® »óÇ°¸í ").append("»óÇ°¸í").append("(")
-				.append("»óÇ°ÄÚµå").append(")\n")
+				.append("ì£¼ë¬¸ ìƒí’ˆëª… ").append("ìƒí’ˆëª…").append("(")
+				.append("ìƒí’ˆì½”ë“œ").append(")\n")
 				.append("------------------------------------------------\n")
-				.append("¼ö·® : ").append("°³¼ö")
-				.append("°³\n")
+				.append("ìˆ˜ëŸ‰ : ").append("ê°œìˆ˜")
+				.append("ê°œ\n")
 				.append("------------------------------------------------\n")
-				.append("°áÁ¦ ±İ¾× : ").append("°¡°İ").append("¿ø\n")
+				.append("ê²°ì œ ê¸ˆì•¡ : ").append("ê°€ê²©").append("ì›\n")
 				.append("------------------------------------------------\n")
-				.append("ÁÖ¹®ÀÚ ¸í : ").append("ÀÌ¸§").append("\n")
+				.append("ì£¼ë¬¸ì ëª… : ").append("ì´ë¦„").append("\n")
 				.append("------------------------------------------------\n")
 				.append("ip address : ").append(InetAddress.getLocalHost().getHostAddress()).append("\n")
 				.append("------------------------------------------------\n")
-				.append("¿äÃ»»çÇ× : ").append("ÀÌ·¸°Ô Àú·¸°Ô ÇØÁÖ¼¼¿ä").append("\n")
+				.append("ìš”ì²­ì‚¬í•­ : ").append("ì´ë ‡ê²Œ ì €ë ‡ê²Œ í•´ì£¼ì„¸ìš”").append("\n")
 				.append("------------------------------------------------\n")
-				.append("À§ÀÇ Á¤º¸·Î ÁÖ¹®ÇÏ½Ã°Ú½À´Ï±î?")
+				.append("ìœ„ì˜ ì •ë³´ë¡œ ì£¼ë¬¸í•˜ì‹œê² ìŠµë‹ˆê¹Œ?")
 				.append("\n")
 				.append("\n")
 				.append("\n")
@@ -352,9 +348,9 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 							InetAddress.getLocalHost().getHostAddress(), lunchCode, 
 							puov.getJbQuan().getSelectedIndex()+1,puov.getjtaRequest().getText());*/
 					
-					//PUOrderingDAO.getInstance().insertOrder(puoadd);//DB¿¡ ÀúÀå
-					JOptionPane.showMessageDialog(puov, "ÁÖ¹®ÀÌ ¿Ï·á µÇ¾ú½À´Ï´Ù.\nÇ×»ó ÃÖ¼±À» ´ÙÇÏ´Â 1Á¶PC¹æÀÌ µÇ°Ú½À´Ï´Ù.\n°¨»çÇÕ´Ï´Ù.");
-					//ÁÖ¹®ÀÌ ¿Ï·áµÇ¾úÀ¸¹Ç·Î ÁÖ¹®Ã¢À» ´İ´Â´Ù
+					//PUOrderingDAO.getInstance().insertOrder(puoadd);//DBì— ì €ì¥
+					JOptionPane.showMessageDialog(puov, "ì£¼ë¬¸ì´ ì™„ë£Œ ë˜ì—ˆìŠµë‹ˆë‹¤.\ní•­ìƒ ìµœì„ ì„ ë‹¤í•˜ëŠ” 1ì¡°PCë°©ì´ ë˜ê² ìŠµë‹ˆë‹¤.\nê°ì‚¬í•©ë‹ˆë‹¤.");
+					//ì£¼ë¬¸ì´ ì™„ë£Œë˜ì—ˆìœ¼ë¯€ë¡œ ì£¼ë¬¸ì°½ì„ ë‹«ëŠ”ë‹¤
 					puov.dispose();
 				/*} catch (UnknownHostException e) {
 					e.printStackTrace();
@@ -370,7 +366,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	@Override public void mouseEntered(MouseEvent e) {	}
 	@Override public void mouseExited(MouseEvent e) { }
 	/**
-	 * ¹öÆ° class
+	 * ë²„íŠ¼ class
 	 * @author owner
 	 */
 	@SuppressWarnings("serial")

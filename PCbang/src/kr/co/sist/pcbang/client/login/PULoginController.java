@@ -249,10 +249,9 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 			InetAddress ip =InetAddress.getLocalHost();
 			String pcIp=String.valueOf(ip).substring(InetAddress.getLocalHost().toString().indexOf("/")+1);
 
-			if(pul_dao.selectGuestCheck(guestNum)) {//카드번호가 존재할때
+			if(pul_dao.selectGuestCheck(guestNum)) {
 				PUGuestStateVO pugsvo=new PUGuestStateVO(guestNum, pcIp);
-				pul_dao.updateGuestState(pugsvo);//상태 업로드
-				//서버에 접속할수 없습니다??
+				pul_dao.updateGuestState(pugsvo);
 				flag=true;
 			}//end if
 		} catch (SQLException e) {

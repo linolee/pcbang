@@ -100,16 +100,16 @@ public class PUOrderingView extends JFrame {
 		jtDrink.getTableHeader().setReorderingAllowed(false);//컬럼의 이동 막기
 		jtMenu.setRowHeight(100);
 		
-		//////주문목록테이블//////
+		//////주문리스트//////
 		JLabel jlOrderTitle =new JLabel("주문 목록");
 		jlOrderTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		String[] columnsName= {"이름","수량","가격","취소"};
-		dtmOrderlist=new DefaultTableModel(columnsName,0){};
+		dtmOrderlist=new DefaultTableModel(columnsName,18);
 		jtOrderlist=new JTable(dtmOrderlist);
 		jtOrderlist.getTableHeader().setResizingAllowed(false);//컬럼의 크기 변경 막기
 		jtOrderlist.getTableHeader().setReorderingAllowed(false);//컬럼의 이동 막기
-		jtOrderlist.getColumnModel().getColumn(0).setPreferredWidth(80);
-		jtOrderlist.getColumnModel().getColumn(1).setPreferredWidth(45);
+		jtOrderlist.getColumnModel().getColumn(0).setPreferredWidth(95);
+		jtOrderlist.getColumnModel().getColumn(1).setPreferredWidth(30);
 		jtOrderlist.getColumnModel().getColumn(2).setPreferredWidth(75);
 		jtOrderlist.getColumnModel().getColumn(3).setPreferredWidth(50);
 		jtOrderlist.setRowHeight(20);

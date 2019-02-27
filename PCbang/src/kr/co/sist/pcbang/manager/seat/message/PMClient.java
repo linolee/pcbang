@@ -79,20 +79,18 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 			flag = temp.substring(0, temp.indexOf("]") + 1);// [order]
 			switch (flag) {
 			case "[order]":// 주문을 넣었을 때
-				pmsc.getPmov().getPmoc().setOrder();
-				pmsc.getPmov().getPmoc().setOrderComplete();
 			case "[login]":// 처음 접속했을 때
 				pmsc.seatLoad();
 				pmsc.setBtnSeat();
 				break;
 			case "[message]":// 메세지 값이 도착했을 때
+				System.out.println("메시지 도착");
+				
 				mv.getJtaMsg().setText(mv.getJtaMsg().getText()+"[상대] : "+temp.substring(temp.indexOf("]") + 1)+"\n");
 				mv.setVisible(true);
 				mv.requestFocus();
 				mv.getJspTalkDisplay().getVerticalScrollBar().setValue(mv.getJspTalkDisplay().getVerticalScrollBar().getMaximum());
-				pmsc.seatLoad();
-				pmsc.setBtnSeat();
-				break;//
+				break;
 			case "[close]":// 기존 좌석을 로그아웃 해야할 때
 				closeOrder(Integer.parseInt(temp.substring(temp.indexOf("]") + 1)));
 				break;
