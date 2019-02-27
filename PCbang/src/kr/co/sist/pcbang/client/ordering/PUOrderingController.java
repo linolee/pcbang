@@ -15,10 +15,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 import kr.co.sist.pcbang.client.main.PUMainController;
 
@@ -64,6 +71,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			//String product_code=columninfo.substring(columninfo.indexOf("|"), columninfo.lastIndexOf("|")+1);
 			
 			JOptionPane.showMessageDialog(puov, columninfo);
+			addOrderList(columninfo);
 		}//end if
 	}//mouseClicked
 	
@@ -100,7 +108,8 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 						Object img=new ImageIcon(puovo.getImg());
 						Object name=puovo.getProductName();
 						Object price=puovo.getProductPrice();
-						rowData[i]=img+"\n"+name+"\n"+price;//한칸에 이미지+가격+이름
+						Object productCode=puovo.getProductCode();
+						rowData[i]=img+"\n"+name+"\n"+price+"\n"+productCode;//한칸에 이미지+가격+이름
 					}//end for
 					dtmProduct.addRow(rowData);//dtm에 넣어줄꺼야
 				}else if(x>0) {
@@ -117,8 +126,9 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 						Object img=new ImageIcon(puovo.getImg());
 						Object name=puovo.getProductName();
 						Object price=puovo.getProductPrice();
+						Object productCode=puovo.getProductCode();
 						row=i-(5*x);
-						rowData[row]=img+"\n"+name+"\n"+price;//한칸에 이미지+가격+이름
+						rowData[row]=img+"\n"+name+"\n"+price+"\n"+productCode;//한칸에 이미지+가격+이름
 					}//end for
 					dtmProduct.addRow(rowData);//dtm에 넣어줄꺼야
 				}//end else
@@ -151,7 +161,49 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	/**
 	 * 주문 목록에 추가
 	 */
-	private void addOrderList() {
+	private void addOrderList(Object columninfo) {
+		//선언
+		DefaultTableModel dtmOrder=puov.getDtmOrderlist();
+		DefaultComboBoxModel<String> dcmCombo=new DefaultComboBoxModel<String>();
+		JTable jtOrder=puov.getJtOrderlist();
+		
+		//콤보박스 생성
+		String[] quan = {"1","2","3","4","5","6","7","8","9","10"};
+		JComboBox<String> combo=new JComboBox<String>(dcmCombo);
+		combo.setMaximumRowCount(10);
+		for(int i=0; i<quan.length; i++) {
+			dcmCombo.addElement(quan[i]);
+		}//end for
+
+		TableColumn column=jtOrder.getColumnModel().getColumn(1);
+		column.setCellEditor(new DefaultCellEditor(combo));
+		
+		//버튼 생성
+		//JButton jbremove=new JButton("취소");
+		//TableCellRenderer cellEditor=(TableCellRenderer) jbremove;
+//		column=jtOrder.getColumnModel().getColumn(3).setCellEditor(new TableCellRenderer() {
+//			@Override
+//			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+//					int row, int column) {
+//				return null;
+//			}
+//		});
+		
+		//받아온 데이터를 잘라 알맞은 칸에 출력
+		String dataArr=String.valueOf(columninfo);
+		String[] data=dataArr.split("\n");
+
+		Object[] rowData=null;
+		rowData=new Object[4];
+		rowData[0]=data[1];
+		//rowData[1]="";
+		//rowData[1]=column.setCellEditor(combo);
+				/*new DefaultCellEditor(combo).getCellEditorValue();//1개나옴*/
+		rowData[2]=data[2];
+		rowData[3]=data[3];
+		dtmOrder.addRow(rowData);
+		
+		jtOrder.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(combo));
 		
 	}//addOrderList
 	
