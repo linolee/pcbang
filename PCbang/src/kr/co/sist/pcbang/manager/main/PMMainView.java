@@ -70,8 +70,8 @@ public class PMMainView extends JFrame{
 		jlTodayMoneyNum.setBounds(10, 590, 120, 30);
 		jtb.setBounds(150, 30, 1000, 600);
 		
-	    seat = new PMSeatView();
 	    pmov = new PMOrderView(); // 19-02-27 이재찬 추가
+	    seat = new PMSeatView(pmov);
 	    order = pmov; // 19-02-27 이재찬 추가
 	    statistics = new JPanel();
 	    member = new PMUserView();

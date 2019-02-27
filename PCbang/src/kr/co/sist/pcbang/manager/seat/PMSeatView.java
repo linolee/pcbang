@@ -5,11 +5,13 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import kr.co.sist.pcbang.manager.order.PMOrderView;
+
 public class PMSeatView extends JPanel {
 	private JButton[][] btnSeat;
 	private JButton btnSet;
 
-	public PMSeatView() {
+	public PMSeatView(PMOrderView pmov) {
 		btnSet = new JButton("ÁÂ¼®¼³Á¤");
 
 		btnSeat = new JButton[10][10];
@@ -35,7 +37,7 @@ public class PMSeatView extends JPanel {
 		btnSet.setBounds(900, 0, 100, 20);
 		pnlMain.setBounds(0, 20, 1000, 550);
 
-		PMSeatController pmsc = new PMSeatController(this);
+		PMSeatController pmsc = new PMSeatController(this, pmov);
 		btnSet.addActionListener(pmsc);
 		for (int i = 0; i < btnSeat.length; i++) {
 			for (int j = 0; j < btnSeat[i].length; j++) {
