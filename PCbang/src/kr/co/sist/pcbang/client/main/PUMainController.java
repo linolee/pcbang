@@ -169,9 +169,9 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			jlName.setText("guest"+seatnum);
 			String time="0";
 			jlRestTime.setText(hourTime(time));
-			if(Integer.parseInt(time)==0) {//만약 시간이 0이라면 충전창
-				new PUChargeView(Integer.parseInt(jlSeat.getText()));
-			}//end if
+//			if(Integer.parseInt(time)==0) {//만약 시간이 0이라면 충전창
+//				new PUChargeView(Integer.parseInt(jlSeat.getText()));
+//			}//end if
 		}//end else
 	}//searchUseInfo
 	
@@ -218,6 +218,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		
 			
 		}else if(!card.equals("")) {//카드번호를 가진다면 비회원
+			//System.out.println(card);
 			pum_dao.updatePC(Integer.parseInt(card));
 			
 		}//end else
@@ -282,11 +283,26 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 				JLabel jlSeat=pumv.getJlSeatNum();
 				new PUChargeView(Integer.parseInt(jlSeat.getText()));
 			}else if(flag==JOptionPane.NO_OPTION){
-				return;
+				//return;
 				//JOptionPane.showMessageDialog(pumv, "사용이 종료됩니다.");
 				//pumv.dispose();
 			}//end else
 		}//end if
+		
+		/*
+		int flag=JOptionPane.showConfirmDialog(this, "점심 맛있게 드셨어요?");
+//		System.out.println(flag);//0,1,2순으로 나온다.
+		switch (flag) {
+//		case 0 ,1 ,2 로도 줄수 있지만 무엇인지 명확하지 않기때문에 상수표현을 쓴다.
+		case JOptionPane.OK_OPTION : 
+			JOptionPane.showMessageDialog(this, "행복한 오후 되세요!"); 
+			break;
+		case JOptionPane.NO_OPTION: String menu = JOptionPane.showInputDialog("어떤 점심 메뉴였어요?"); 
+			JOptionPane.showMessageDialog(this,menu+"가 다 그렇죠 뭐!");
+			break;
+		case JOptionPane.CANCEL_OPTION:	JOptionPane.showMessageDialog(this, "하기 싫으냐??");
+		}//end switch
+		*/
 	}//callcharge
 
 	public int getRestTime() {
