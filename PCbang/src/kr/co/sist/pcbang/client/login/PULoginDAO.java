@@ -148,7 +148,7 @@ private static PULoginDAO pul_dao;
 			StringBuilder status=new StringBuilder();
 			
 			status.append("select pc_status ").append(" from pc_status ")
-			.append(" seat_num=(select seat_num from pc where member_id='").append(id).append("')");
+			.append(" where seat_num=(select seat_num from pc where member_id='").append(id).append("')");
 			
 			pstmt=con.prepareStatement(status.toString());
 		//4.
