@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
 import kr.co.sist.pcbang.manager.fare.PMFareView;
+import kr.co.sist.pcbang.manager.order.PMOrderView;
 import kr.co.sist.pcbang.manager.product.PMProductView;
 import kr.co.sist.pcbang.manager.seat.PMSeatView;
 import kr.co.sist.pcbang.manager.user.PMUserView;
@@ -31,6 +32,7 @@ public class PMMainView extends JFrame{
 	private JTextArea jtaNotice;
 	private JLabel jlBoard, jlOrderNum, jlMsgNum, jlTodayMoneyNum, jlOrder, jlMsg, jlTodayMoney;
 	private JPanel seat, order, statistics, member, menu, price;
+	private PMOrderView pmov; // 19-02-27 이재찬 추가
 	
 	public static String adminId;	
 	
@@ -69,7 +71,8 @@ public class PMMainView extends JFrame{
 		jtb.setBounds(150, 30, 1000, 600);
 		
 	    seat = new PMSeatView();
-	    order = new JPanel();
+	    pmov = new PMOrderView(); // 19-02-27 이재찬 추가
+	    order = pmov; // 19-02-27 이재찬 추가
 	    statistics = new JPanel();
 	    member = new PMUserView();
 	    menu = new PMProductView();
@@ -125,6 +128,7 @@ public class PMMainView extends JFrame{
 		
 		PMMainController pmmc = new PMMainController(this);
 		addWindowListener(pmmc);
+		jtb.addMouseListener(pmmc); // 19-02-27 이재찬 추가
 		jbtAccount.addActionListener(pmmc);
 		jbtLogOut.addActionListener(pmmc);
 		jbtNoticeSave.addActionListener(pmmc);
@@ -187,5 +191,11 @@ public class PMMainView extends JFrame{
 	public static String getAdminId() {
 		return adminId;
 	}
+
+	public PMOrderView getPmov() { // 19-02-27 이재찬 추가
+		return pmov;
+	}
+	
+	
 	
 }//class
