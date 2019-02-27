@@ -7,9 +7,11 @@ import javax.swing.JPanel;
 
 import kr.co.sist.pcbang.manager.order.PMOrderView;
 
+@SuppressWarnings("serial")
 public class PMSeatView extends JPanel {
 	private JButton[][] btnSeat;
 	private JButton btnSet;
+	private PMSeatController pmsc;
 
 	public PMSeatView(PMOrderView pmov) {
 		btnSet = new JButton("ÁÂ¼®¼³Á¤");
@@ -55,4 +57,9 @@ public class PMSeatView extends JPanel {
 		return btnSet;
 	}
 
+	protected PMSeatController getPmsc() {
+		return pmsc;
+	}
+
+	
 }
