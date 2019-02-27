@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-
+ 
 @SuppressWarnings("serial")
 public class PMFareView extends JPanel {
 
@@ -17,7 +17,7 @@ public class PMFareView extends JPanel {
 	 private JButton jbtnUpdate, jbtnReset;
 	 private PMFareDAO f_dao;
 	
-	public PMFareView() {
+	public PMFareView() { 
 
 		f_dao = PMFareDAO.getInstance();
 	
@@ -37,7 +37,7 @@ public class PMFareView extends JPanel {
 		
 		mjtfs=new JTextField[10];
 		gjtfs=new JTextField[10];
-		
+		 
 		Integer[] memberFare=null;
 		Integer[] guestFare=null;
 		
@@ -60,12 +60,12 @@ public class PMFareView extends JPanel {
 			gjtfs[i].setBorder(new TitledBorder(i+1+"시간"));
 			jpFareGuest.add(gjtfs[i]);
 		}
-		
-		
+		 
+		 
 		
 		jbtnUpdate = new JButton("수정");
 		jbtnReset = new JButton("초기화");
-		 
+
 		
 		mainPanel.setLayout(new GridLayout(1,2));
 		
@@ -76,7 +76,7 @@ public class PMFareView extends JPanel {
 		southPnl.add(jbtnUpdate);
 		southPnl.add(jbtnReset);
 		
-		add("Center", mainPanel);
+		add("Center", mainPanel); 
 		add("South", southPnl);
 		
 		

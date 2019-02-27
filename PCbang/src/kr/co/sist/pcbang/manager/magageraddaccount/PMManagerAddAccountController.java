@@ -82,7 +82,6 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 			case JOptionPane.OK_OPTION:
 			try {
 				addAccount();
-				pmmaav.dispose();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} // end catch
