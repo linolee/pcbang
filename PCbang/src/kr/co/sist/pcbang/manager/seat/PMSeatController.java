@@ -52,9 +52,7 @@ public class PMSeatController implements Runnable, ActionListener {
 					pmsv.getBtnSeat()[i][j].setBackground(Color.BLACK);
 				} else if (!seat[i][j].getUser().equals("")) {// 유저가 컴퓨터에 있다면 초록색
 					pmsv.getBtnSeat()[i][j].setBackground(Color.GREEN);
-					if (seat[i][j].getMessageStatus().equals("Y") && seat[i][j].getOrderStatus().equals("Y")) {// 메세지와
-																												// 주문이 둘
-																												// 다 있다면
+					if (seat[i][j].getMessageStatus().equals("Y") && seat[i][j].getOrderStatus().equals("Y")) {// 메세지와 주문이 둘 다 있다면
 						pmsv.getBtnSeat()[i][j].setBackground(Color.ORANGE);
 					} else if (seat[i][j].getOrderStatus().equals("Y")) {// 주문만 있다면
 						pmsv.getBtnSeat()[i][j].setBackground(Color.YELLOW);
