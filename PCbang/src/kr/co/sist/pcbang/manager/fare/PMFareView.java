@@ -9,7 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-
+ 
 @SuppressWarnings("serial")
 public class PMFareView extends JPanel {
 
@@ -65,7 +65,7 @@ public class PMFareView extends JPanel {
 		
 		jbtnUpdate = new JButton("수정");
 		jbtnReset = new JButton("초기화");
-		
+
 		
 		mainPanel.setLayout(new GridLayout(1,2));
 		
