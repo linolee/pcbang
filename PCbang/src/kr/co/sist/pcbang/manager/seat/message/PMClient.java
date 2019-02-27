@@ -92,7 +92,7 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 				mv.getJspTalkDisplay().getVerticalScrollBar().setValue(mv.getJspTalkDisplay().getVerticalScrollBar().getMaximum());
 				pmsc.seatLoad();
 				pmsc.setBtnSeat();
-				break;
+				break;//
 			case "[close]":// 기존 좌석을 로그아웃 해야할 때
 				closeOrder(Integer.parseInt(temp.substring(temp.indexOf("]") + 1)));
 				break;
