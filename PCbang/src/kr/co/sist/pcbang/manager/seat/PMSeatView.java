@@ -5,11 +5,14 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import kr.co.sist.pcbang.manager.order.PMOrderView;
+
+@SuppressWarnings("serial")
 public class PMSeatView extends JPanel {
 	private JButton[][] btnSeat;
 	private JButton btnSet;
 
-	public PMSeatView() {
+	public PMSeatView(PMOrderView pmov) {
 		btnSet = new JButton("ÁÂ¼®¼³Á¤");
 
 		btnSeat = new JButton[10][10];
