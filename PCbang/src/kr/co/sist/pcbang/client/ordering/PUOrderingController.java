@@ -1,5 +1,6 @@
 package kr.co.sist.pcbang.client.ordering;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -10,20 +11,26 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
@@ -34,6 +41,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	private PUOrderingView puov;
 	private PUOrderingDAO puo_dao;
 	private PUMainController pumc;
+	private JButton jb;
 	
 	public PUOrderingController(PUOrderingView puov) {
 		this.puov=puov;
@@ -54,6 +62,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==puov.getJbtOk()) {
 			JOptionPane.showMessageDialog(puov, "이 목록으로 주문합니다");
+			printOrder();
 		}//end if
 		if(ae.getSource()==puov.getJbtExit()) {
 			//JOptionPane.showMessageDialog(puov, "닫기");
@@ -167,6 +176,10 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		DefaultComboBoxModel<String> dcmCombo=new DefaultComboBoxModel<String>();
 		JTable jtOrder=puov.getJtOrderlist();
 		
+		//주문 목록을 저장할 list
+		//PUOrderAddVO puoadd=new
+		//List orderList=new ArrayList<>()
+		
 		//콤보박스 생성
 		String[] quan = {"1","2","3","4","5","6","7","8","9","10"};
 		JComboBox<String> combo=new JComboBox<String>(dcmCombo);
@@ -177,17 +190,6 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 
 		TableColumn column=jtOrder.getColumnModel().getColumn(1);
 		column.setCellEditor(new DefaultCellEditor(combo));
-		
-		//버튼 생성
-		//JButton jbremove=new JButton("취소");
-		//TableCellRenderer cellEditor=(TableCellRenderer) jbremove;
-//		column=jtOrder.getColumnModel().getColumn(3).setCellEditor(new TableCellRenderer() {
-//			@Override
-//			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-//					int row, int column) {
-//				return null;
-//			}
-//		});
 		
 		//받아온 데이터를 잘라 알맞은 칸에 출력
 		String dataArr=String.valueOf(columninfo);
@@ -200,11 +202,15 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		//rowData[1]=column.setCellEditor(combo);
 				/*new DefaultCellEditor(combo).getCellEditorValue();//1개나옴*/
 		rowData[2]=data[2];
-		rowData[3]=data[3];
+		//rowData[3]=data[3];
 		dtmOrder.addRow(rowData);
 		
 		jtOrder.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(combo));
-		
+		jtOrder.getColumnModel().getColumn(3).setCellRenderer(new tableCell());
+		jtOrder.getColumnModel().getColumn(3).setCellEditor(new tableCell());
+//		if(combo.getSelectedIndex()!=-1) {
+//			System.out.println(combo.getSelectedIndex());
+//		}
 	}//addOrderList
 	
 	/**
@@ -293,8 +299,104 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		}//end finally
 	}//orderImageSend
 	
+	   /**
+		 * 주문사항을 보여주고(영수증) 주문을 할 것인지 처리.
+		 */
+		private void printOrder() {
+			JTextArea jtaReceipt=new JTextArea(26,22);
+			jtaReceipt.setEditable(false);
+			JScrollPane jspReceipt=new JScrollPane(jtaReceipt);
+			
+			StringBuilder data=new StringBuilder();
+			
+			try {
+				data
+				.append("------------------------------------------------\n")
+				.append("주문 목록\n")
+				.append("\t현금(소득공제)\n")
+				.append("역삼점(본점)\n")
+				.append("대표: 1조 2011-11-11212\n")
+				.append("------------------------------------------------\n")
+				.append("주문 상품명 ").append("상품명").append("(")
+				.append("상품코드").append(")\n")
+				.append("------------------------------------------------\n")
+				.append("수량 : ").append("개수")
+				.append("개\n")
+				.append("------------------------------------------------\n")
+				.append("결제 금액 : ").append("가격").append("원\n")
+				.append("------------------------------------------------\n")
+				.append("주문자 명 : ").append("이름").append("\n")
+				.append("------------------------------------------------\n")
+				.append("ip address : ").append(InetAddress.getLocalHost().getHostAddress()).append("\n")
+				.append("------------------------------------------------\n")
+				.append("요청사항 : ").append("이렇게 저렇게 해주세요").append("\n")
+				.append("------------------------------------------------\n")
+				.append("위의 정보로 주문하시겠습니까?")
+				.append("\n")
+				.append("\n")
+				.append("\n")
+				.append("\n")
+				.append("\n")
+				.append("\n")
+				.append("------------------------------------------------\n");
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			}//end catch
+			
+			jtaReceipt.setText(data.toString());
+			switch(JOptionPane.showConfirmDialog(puov, jspReceipt)) {
+			case JOptionPane.OK_OPTION :
+				//try {
+					//PUOrderAddVO puoadd=new PUOrderAddVO(
+							/*puov.getJtfOrderName().getText(), puov.getJtfPhone().getText(), 
+							InetAddress.getLocalHost().getHostAddress(), lunchCode, 
+							puov.getJbQuan().getSelectedIndex()+1,puov.getjtaRequest().getText());*/
+					
+					//PUOrderingDAO.getInstance().insertOrder(puoadd);//DB에 저장
+					JOptionPane.showMessageDialog(puov, "주문이 완료 되었습니다.\n항상 최선을 다하는 1조PC방이 되겠습니다.\n감사합니다.");
+					//주문이 완료되었으므로 주문창을 닫는다
+					puov.dispose();
+				/*} catch (UnknownHostException e) {
+					e.printStackTrace();
+				} catch (SQLException e) {*/
+					//e.printStackTrace();
+				//}//end catch
+			}//end switch
+			
+		}//printOrder
+	
 	@Override public void mousePressed(MouseEvent e) {	}
 	@Override public void mouseReleased(MouseEvent e) {	}
 	@Override public void mouseEntered(MouseEvent e) {	}
 	@Override public void mouseExited(MouseEvent e) { }
+	/**
+	 * 버튼 class
+	 * @author owner
+	 */
+	@SuppressWarnings("serial")
+	public class tableCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
+		
+		public tableCell() {
+			jb.addActionListener(e -> {
+				//JTableRemoveRow();
+			});
+		}//tableCell
+		
+		@Override
+		public Object getCellEditorValue() {
+			return null;
+		}//getCellEditorValue
+		
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			return jb;
+		}//getCellEditorValue
+		
+		@Override
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+				int column) {
+			return jb;
+		}//getCellEditorValue
+	}//class
 }//class
