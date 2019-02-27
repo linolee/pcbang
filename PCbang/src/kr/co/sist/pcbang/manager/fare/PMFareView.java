@@ -37,7 +37,7 @@ public class PMFareView extends JPanel {
 		
 		mjtfs=new JTextField[10];
 		gjtfs=new JTextField[10];
-		
+		 
 		Integer[] memberFare=null;
 		Integer[] guestFare=null;
 		
