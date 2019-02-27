@@ -60,8 +60,8 @@ public class PMFareView extends JPanel {
 			gjtfs[i].setBorder(new TitledBorder(i+1+"시간"));
 			jpFareGuest.add(gjtfs[i]);
 		}
-		
-		
+		 
+		 
 		
 		jbtnUpdate = new JButton("수정");
 		jbtnReset = new JButton("초기화");
