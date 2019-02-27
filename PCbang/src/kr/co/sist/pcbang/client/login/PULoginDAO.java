@@ -324,8 +324,7 @@ private static PULoginDAO pul_dao;
 			="update pc_status set pc_status='Y' where seat_num=(select seat_num from pc where pc_ip=?)";
 			pstmt2=con.prepareStatement(updateStatus);
 		//4.
-			pstmt2.setString(1, pumsvo.getMemberId());
-			pstmt2.setString(2, pumsvo.getPcIp());
+			pstmt2.setString(1, pumsvo.getPcIp());
 		//5.
 			int cnt2 = pstmt2.executeUpdate();
 			
@@ -371,8 +370,7 @@ private static PULoginDAO pul_dao;
 			="update pc_status set pc_status='Y' where seat_num=(select seat_num from pc where pc_ip=?)";
 			pstmt2=con.prepareStatement(updateStatus);
 		//4.
-			pstmt2.setInt(1, pugsvo.getCardNum());
-			pstmt2.setString(2, pugsvo.getPcIp());
+			pstmt2.setString(1, pugsvo.getPcIp());
 		//5.
 			int cnt2 = pstmt2.executeUpdate();
 			
