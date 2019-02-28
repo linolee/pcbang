@@ -45,6 +45,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	
 	public PUOrderingController(PUOrderingView puov) {
 		this.puov=puov;
+		jb=new JButton("취소");
 		puo_dao=PUOrderingDAO.getInstance();
 
 //		보내주는 부분과 저장되는 위치가 정확하지 않아 이부분에서 Error
@@ -56,6 +57,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 //		}//end catch
 
 		setProduct();//JTable을 조회 갱신
+		setBestProduct();//bestMenu
 	}//PUOrderingController
 	
 	@Override
@@ -82,6 +84,24 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			JOptionPane.showMessageDialog(puov, columninfo);
 			addOrderList(columninfo);
 		}//end if
+		if(me.getSource()==puov.getJtOrderlist()) {//주문
+			JTable jtO=puov.getJtOrderlist();
+			Object column=jtO.getValueAt(jtO.getSelectedRow(), jtO.getSelectedColumn());
+			JOptionPane.showMessageDialog(puov, column);
+		}//end if
+		
+		if(me.getSource()==puov.getjtbMenu()) {//탭
+			if(puov.getjtbMenu().getSelectedIndex()==1) {
+				setProductCategory("라면");
+			}
+			if(puov.getjtbMenu().getSelectedIndex()==2) {
+				setProductCategory("스낵");
+			}
+			if(puov.getjtbMenu().getSelectedIndex()==3) {
+				setProductCategory("음료");
+			}
+		}//end if
+		
 	}//mouseClicked
 	
 	/**
@@ -92,6 +112,74 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			List<PUOrderVO> listProduct=puo_dao.selectProduct();
 			
 			DefaultTableModel dtmProduct=puov.getDtmMenu();
+			dtmProduct.setRowCount(0);
+					
+			Object[] rowData=null;
+			PUOrderVO puovo=null;
+			int cnt=listProduct.size();
+			List<Integer> cntArr=null;
+			if(cnt!=0) {
+				cntArr=new ArrayList<Integer>();
+				for(int i=0; i<cnt; i++) {
+					cntArr.add(i);//list에 담는다
+				}//end for
+			}//end if
+	
+			int rowNum=(int)cnt/5+1;
+			for(int x=0; x<rowNum; x++) {
+				int i=0;
+				int max=5;
+				if(x==0) {
+					rowData=new Object[5];//5카ㄴ으로 나누어 
+					for(i=0; i<5; i++){
+						//System.out.print(cntArr.get(i));
+						puovo=listProduct.get(i);
+						Object img=new ImageIcon(puovo.getImg());
+						Object name=puovo.getProductName();
+						Object price=puovo.getProductPrice();
+						Object productCode=puovo.getProductCode();
+						rowData[i]=img+"\n"+name+"\n"+price+"\n"+productCode;//한칸에 이미지+가격+이름
+					}//end for
+					dtmProduct.addRow(rowData);//dtm에 넣어줄꺼야
+				}else if(x>0) {
+					max+=(5*x);
+					rowData=new Object[5];//5카ㄴ으로 나누어 
+					if(max>cnt) {
+						max=cnt;
+					}//end if
+					int row=0;
+					for(i+=(5*x); i<max; i++) {
+						puovo=listProduct.get(i);
+						Object img=new ImageIcon(puovo.getImg());
+						Object name=puovo.getProductName();
+						Object price=puovo.getProductPrice();
+						Object productCode=puovo.getProductCode();
+						row=i-(5*x);
+						rowData[row]=img+"\n"+name+"\n"+price+"\n"+productCode;//한칸에 이미지+가격+이름
+					}//end for
+					dtmProduct.addRow(rowData);//dtm에 넣어줄꺼야
+				}//end else
+			}//end for
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(puov, "상품 목록을 조회하는 중 문제 발생");
+			e.printStackTrace();
+		}//end catch
+	}//setProduct
+	
+	/**
+	 * 카테고리별 상품 불러와 앉히기
+	 */
+	private void setProductCategory(String category) {
+		try {
+			List<PUOrderVO> listProduct=puo_dao.selectProductCategory(category);
+			DefaultTableModel dtmProduct=null;
+			if(category.equals("라면")){
+				dtmProduct=puov.getDtmRamen();
+			}else if(category.equals("음료")) {
+				dtmProduct=puov.getDtmDrink();
+			}else if(category.equals("스낵")) {
+				dtmProduct=puov.getDtmSnack();
+			}//end else
 			dtmProduct.setRowCount(0);
 					
 			Object[] rowData=null;
@@ -152,7 +240,44 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	 * 베스트 상품 불러와 테이블에 앉히기
 	 */
 	private void setBestProduct() {
-		
+		try {
+			List<PUOrderVO> listProduct=puo_dao.selectProductBest();
+			
+			DefaultTableModel dtmProduct=puov.getDtmBestProduct();
+			dtmProduct.setRowCount(0);
+					
+			Object[] rowData=null;
+			PUOrderVO puovo=null;
+			int cnt=listProduct.size();
+			List<Integer> cntArr=null;
+			if(cnt!=0) {
+				cntArr=new ArrayList<Integer>();
+				for(int i=0; i<7; i++) {
+					cntArr.add(i);//list에 담는다
+				}//end for
+			}//end if
+	
+			int rowNum=(int)cnt/5+1;
+			for(int x=0; x<rowNum; x++) {
+				int i=0;
+				if(x==0) {
+					rowData=new Object[7];//5카ㄴ으로 나누어 
+					for(i=0; i<7; i++){
+						//System.out.print(cntArr.get(i));
+						puovo=listProduct.get(i);
+						Object img=new ImageIcon(puovo.getImg());
+						Object name=puovo.getProductName();
+						Object price=puovo.getProductPrice();
+						Object productCode=puovo.getProductCode();
+						rowData[i]=img+"\n"+name+"\n"+price+"\n"+productCode;//한칸에 이미지+가격+이름
+					}//end for
+					dtmProduct.addRow(rowData);//dtm에 넣어줄꺼야
+				}//end else
+			}//end for
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(puov, "상품 목록을 조회하는 중 문제 발생");
+			e.printStackTrace();
+		}//end catch
 	}//setBestProduct
 	
 	/**
@@ -208,6 +333,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		jtOrder.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(combo));
 		jtOrder.getColumnModel().getColumn(3).setCellRenderer(new tableCell());
 		jtOrder.getColumnModel().getColumn(3).setCellEditor(new tableCell());
+	
 //		if(combo.getSelectedIndex()!=-1) {
 //			System.out.println(combo.getSelectedIndex());
 //		}

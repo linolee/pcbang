@@ -54,7 +54,7 @@ public class PUOrderingDAO {
 		//2.
 			con=getConn();
 		//3.
-			String selectLunch="SELECT MENU_CODE, MENU_NAME, IMG, MENU_PRICE FROM MENU ORDER BY MENU_CODE DESC";
+			String selectLunch="SELECT MENU_CODE, MENU_NAME, IMG, MENU_PRICE FROM MENU ORDER BY  CATEGORY,MENU_CODE";
 			pstmt=con.prepareStatement(selectLunch);
 		//4.
 		//5.
@@ -75,4 +75,79 @@ public class PUOrderingDAO {
 		return list;
 	}//selectProduct
 	
+	/**
+	 * 라면 카테고리 조회
+	 * @return	 
+	 * @throws SQLException
+	 */
+	public List<PUOrderVO> selectProductCategory(String category) throws SQLException{
+		List<PUOrderVO> list=new ArrayList<PUOrderVO>();
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+//		if(category.equals("라면")){
+//		}else if(category.equals("음료")) {
+//		}else if(category.equals("스낵")) {
+//		}
+		
+		try {
+			con=getConn();
+			String selectLunch="SELECT MENU_CODE, MENU_NAME, IMG, MENU_PRICE FROM (select MENU_CODE, MENU_NAME, IMG, MENU_PRICE " + 
+								"from MENU where CATEGORY=?) ORDER BY MENU_CODE";
+			pstmt=con.prepareStatement(selectLunch);
+			pstmt.setString(1, category);
+			rs=pstmt.executeQuery();
+			PUOrderVO puovo=null;
+			
+			while(rs.next()){
+				puovo=new PUOrderVO(rs.getString("IMG"), rs.getString("MENU_CODE"), rs.getString("MENU_NAME"), rs.getString("MENU_PRICE"));
+				list.add(puovo);
+			}//end while
+		}finally {
+			//6.
+			if(rs!=null) {rs.close();}//end if
+			if(pstmt!=null) {pstmt.close();}//end if
+			if(con!=null) {con.close();}//end if
+		}//end finally
+		return list;
+	}//selectProductRamen
+	
+	
+	/**
+	 * 베스트메뉴 앉히기
+	 * @return	 
+	 * @throws SQLException
+	 */
+	public List<PUOrderVO> selectProductBest() throws SQLException{
+		List<PUOrderVO> list=new ArrayList<PUOrderVO>();
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+			con=getConn();
+			String selectLunch="select MENU_CODE, MENU_NAME, MENU_PRICE, IMG ,\r\n" + 
+					"nvl((select  sum(o.quan)\r\n" + 
+					"from ORDERING o, menu m1\r\n" + 
+					"where (m1.menu_code=o.menu_code) and m1.menu_code = m2.menu_code\r\n" + 
+					"group by  m1.MENU_CODE)* MENU_PRICE ,0) as total\r\n" + 
+					"from menu m2\r\n" + 
+					"order by total desc";
+			pstmt=con.prepareStatement(selectLunch);
+			rs=pstmt.executeQuery();
+			PUOrderVO puovo=null;
+			
+			while(rs.next()){
+				puovo=new PUOrderVO(rs.getString("IMG"), rs.getString("MENU_CODE"), rs.getString("MENU_NAME"), rs.getString("MENU_PRICE"));
+				list.add(puovo);
+			}//end while
+		}finally {
+			//6.
+			if(rs!=null) {rs.close();}//end if
+			if(pstmt!=null) {pstmt.close();}//end if
+			if(con!=null) {con.close();}//end if
+		}//end finally
+		return list;
+	}//selectProductRamen
 }//class

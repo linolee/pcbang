@@ -30,7 +30,7 @@ public class PUOrderingView extends JFrame {
 		//1.컴포넌트 생성
 		/////베스트 테이블///////
 		String[] columnsRank= {"1","2","3","4","5","6","7"};
-		dtmBestProduct=new DefaultTableModel(columnsRank, 3) {
+		dtmBestProduct=new DefaultTableModel(columnsRank, 1) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -45,7 +45,7 @@ public class PUOrderingView extends JFrame {
 		};
 		jtBestProduct.getTableHeader().setResizingAllowed(false);//컬럼의 크기 변경 막기
 		jtBestProduct.getTableHeader().setReorderingAllowed(false);//컬럼의 이동 막기
-		
+		jtBestProduct.setRowHeight(95);
 		/////메뉴 테이블///////
 		dtmMenu=new DefaultTableModel(10,5) {
 			@Override
@@ -74,7 +74,7 @@ public class PUOrderingView extends JFrame {
 		};
 		jtRamen.getTableHeader().setResizingAllowed(false);//컬럼의 크기 변경 막기
 		jtRamen.getTableHeader().setReorderingAllowed(false);//컬럼의 이동 막기
-		jtMenu.setRowHeight(100);
+		jtRamen.setRowHeight(100);
 
 		dtmSnack=new DefaultTableModel(10, 5) {
 			@Override
@@ -86,7 +86,7 @@ public class PUOrderingView extends JFrame {
 		};
 		jtSnack.getTableHeader().setResizingAllowed(false);//컬럼의 크기 변경 막기
 		jtSnack.getTableHeader().setReorderingAllowed(false);//컬럼의 이동 막기
-		jtMenu.setRowHeight(100);
+		jtSnack.setRowHeight(100);
 		
 		dtmDrink=new DefaultTableModel(10, 5) {
 			@Override
@@ -98,21 +98,26 @@ public class PUOrderingView extends JFrame {
 		};
 		jtDrink.getTableHeader().setResizingAllowed(false);//컬럼의 크기 변경 막기
 		jtDrink.getTableHeader().setReorderingAllowed(false);//컬럼의 이동 막기
-		jtMenu.setRowHeight(100);
+		jtDrink.setRowHeight(100);
 		
 		//////주문목록테이블//////
 		JLabel jlOrderTitle =new JLabel("주문 목록");
 		jlOrderTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		String[] columnsName= {"이름","수량","가격","취소"};
 		dtmOrderlist=new DefaultTableModel(columnsName,0){};
-		jtOrderlist=new JTable(dtmOrderlist);
+		jtOrderlist=new JTable(dtmOrderlist) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return super.isCellEditable(row, 2);
+			}//isCellEditable
+		};
 		jtOrderlist.getTableHeader().setResizingAllowed(false);//컬럼의 크기 변경 막기
 		jtOrderlist.getTableHeader().setReorderingAllowed(false);//컬럼의 이동 막기
 		jtOrderlist.getColumnModel().getColumn(0).setPreferredWidth(80);
-		jtOrderlist.getColumnModel().getColumn(1).setPreferredWidth(45);
-		jtOrderlist.getColumnModel().getColumn(2).setPreferredWidth(75);
-		jtOrderlist.getColumnModel().getColumn(3).setPreferredWidth(50);
-		jtOrderlist.setRowHeight(20);
+		jtOrderlist.getColumnModel().getColumn(1).setPreferredWidth(40);
+		jtOrderlist.getColumnModel().getColumn(2).setPreferredWidth(50);
+		jtOrderlist.getColumnModel().getColumn(3).setPreferredWidth(80);
+		jtOrderlist.setRowHeight(23);
 		
 		JLabel jlPrice =new JLabel("총 가격 : ");
 		jlProductPrice =new JLabel("0원");
@@ -146,7 +151,7 @@ public class PUOrderingView extends JFrame {
 		JPanel jpanelSnack=new JPanel();
 		jpanelSnack.setLayout(new BorderLayout());
 		jpanelSnack.add("Center",jspSnack);
-		jtbMenu.add("과자", jpanelSnack);
+		jtbMenu.add("스낵", jpanelSnack);
 		//4
 		JPanel jpanelDrink=new JPanel();
 		jpanelDrink.setLayout(new BorderLayout());
@@ -259,8 +264,8 @@ public class PUOrderingView extends JFrame {
 		return jlProductPrice;
 	}
 	
-//	public static void main(String[] args) {
-//		new PUOrderingView();
-//	}//main
+	public static void main(String[] args) {
+		new PUOrderingView();
+	}//main
 	
 }//class
