@@ -30,25 +30,25 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 	}
 
 	public void sendMsg() throws IOException {
-		// ì‘ì„±ëœ ë©”ì„¸ì§€ë¥¼ ê°€ì ¸ì™€ì„œ
+		// ÀÛ¼ºµÈ ¸Ş¼¼Áö¸¦ °¡Á®¿Í¼­
 		String sendMsg = pumv.getJtfChat().getText().trim();
 
-		if (!sendMsg.equals("")) {//ê³µë°±ì´ ì…ë ¥ë˜ì§€ ì•Šì•˜ì„ ë•Œ
-			// ìŠ¤íŠ¸ë¦¼ì— ê¸°ë¡í•˜ê³ 
+		if (!sendMsg.equals("")) {//°ø¹éÀÌ ÀÔ·ÂµÇÁö ¾Ê¾ÒÀ» ¶§
+			// ½ºÆ®¸²¿¡ ±â·ÏÇÏ°í
 			pu_manager.getWriteStream().writeUTF("[message]" + sendMsg);
-			// ìŠ¤íŠ¸ë¦¼ì˜ ë‚´ìš©ì„ ëª©ì ì§€ë¡œ ë¶„ì¶œ
+			// ½ºÆ®¸²ÀÇ ³»¿ëÀ» ¸ñÀûÁö·Î ºĞÃâ
 			pu_manager.getWriteStream().flush();
-			// ì‘ì„±ëœ ë©”ì„¸ì§€ë¥¼ ì±„íŒ…ì°½ì— ì¶œë ¥í•œë‹¤.
-			pumv.getJtaChat().append("[ë‚˜] : " + sendMsg + "\n");
-			// T.Fì˜ ë‚´ìš©ì„ ì‚­ì œí•œë‹¤.
+			// ÀÛ¼ºµÈ ¸Ş¼¼Áö¸¦ Ã¤ÆÃÃ¢¿¡ Ãâ·ÂÇÑ´Ù.
+			pumv.getJtaChat().append("[³ª] : " + sendMsg + "\n");
+			// T.FÀÇ ³»¿ëÀ» »èÁ¦ÇÑ´Ù.
 			pumv.getJtfChat().setText("");
 			pumv.getJspChat().getVerticalScrollBar().setValue(pumv.getJspChat().getVerticalScrollBar().getMaximum());
-		}else {//ê³µë°±ì´ ì…ë ¥ëì„ ë•Œ
-			pumv.getJtfChat().setText("");// T.Fì˜ ë‚´ìš©ì„ ì‚­ì œí•œë‹¤.
+		}else {//°ø¹éÀÌ ÀÔ·ÂµÆÀ» ¶§
+			pumv.getJtfChat().setText("");// T.FÀÇ ³»¿ëÀ» »èÁ¦ÇÑ´Ù.
 		}
     ///////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////
-		//DAO ì‚¬ìš©í•´ì„œ PC_Statusì˜ Message_Statusë¥¼ ë³€ê²½í•´ì•¼í•¨
+		//DAO »ç¿ëÇØ¼­ PC_StatusÀÇ Message_Status¸¦ º¯°æÇØ¾ßÇÔ
 		///////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////
 	}// sendMsg
@@ -64,19 +64,19 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 	}// actionPerformed
 
 //	public void connectToServer()throws IOException {
-//		clientNick=JOptionPane.showInputDialog("ëŒ€í™”ëª… ì…ë ¥");
+//		clientNick=JOptionPane.showInputDialog("´ëÈ­¸í ÀÔ·Â");
 //		//2.
 ////		client=new Socket("211.63.89.134", 65535);
 //		client=new Socket("211.63.89.132", 35000);
 //		
-//		//4. ìŠ¤íŠ¸ë¦¼ ì—°ê²°
+//		//4. ½ºÆ®¸² ¿¬°á
 //		readStream=new DataInputStream(client.getInputStream());
 //		writeStream=new DataOutputStream(client.getOutputStream());
 //		
-//		//ì„œë²„ë¡œ ëŒ€í™”ëª… ì „ë‹¬
+//		//¼­¹ö·Î ´ëÈ­¸í Àü´Ş
 //		writeStream.writeUTF( clientNick );
-//		jta.setText("ëŒ€í™”ë°©ì— \""+clientNick+"\"ìœ¼ë¡œ ì…ì¥í•˜ì…¨ìŠµë‹ˆë‹¤.\n");
-//		//ì„œë²„ì˜ ëŒ€í™”ëª…ì„ ì €ì¥
+//		jta.setText("´ëÈ­¹æ¿¡ \""+clientNick+"\"À¸·Î ÀÔÀåÇÏ¼Ì½À´Ï´Ù.\n");
+//		//¼­¹öÀÇ ´ëÈ­¸íÀ» ÀúÀå
 //		serverNick=readStream.readUTF();
 //		
 //	}//connectToServer
@@ -93,7 +93,7 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 ////				}//end while
 ////			}catch(IOException ie) {
 ////				JOptionPane.showMessageDialog(pumv, id
-////															+"ë‹˜ê»˜ì„œ ì‚¬ìš©ì¢…ë£Œ");
+////															+"´Ô²²¼­ »ç¿ëÁ¾·á");
 ////				ie.printStackTrace();
 ////			}//end catch
 ////		}//end if		
