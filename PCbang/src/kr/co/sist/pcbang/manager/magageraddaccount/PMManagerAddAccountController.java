@@ -12,7 +12,6 @@ import javax.swing.JTextField;
 
 import kr.co.sist.pcbang.manager.magageraccount.PMManagerAccountController;
 
-
 public class PMManagerAddAccountController extends WindowAdapter implements ActionListener {
 
 	private PMManagerAddAccountView pmmaav;
@@ -51,8 +50,12 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 			return;
 		} // end if
 
-		//입력한 값으로 객체 생성
-		PMManagerAddAccountVO pmmaaVO = new PMManagerAddAccountVO(jtfId.getText().trim(), jpfPass.getText().trim(), jtfName.getText().trim());
+	      String pass = "";
+	      pass = new String(jpfPass.getPassword());
+	      
+	      //입력한 값으로 객체 생성
+	      PMManagerAddAccountVO pmmaaVO = new PMManagerAddAccountVO(jtfId.getText().trim(),pass.trim(), jtfName.getText().trim());		
+		
 		
 		//계정 추가 dao호출
 		PMManagerAddAccountDAO.getInstance().insertAccount(pmmaaVO);

@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import kr.co.sist.pcbang.manager.login.PMLoginView;
@@ -98,8 +99,13 @@ public class PMMainController extends WindowAdapter implements ActionListener, M
 	} // run
 	
 	@Override
-	public void mouseClicked(MouseEvent we) {
-		
+	public void mouseClicked(MouseEvent me) {
+		if(me.getSource() == pmmv.getJtb()) {// 19-02-27 이재찬 추가 //탭이 눌렸을 때 
+			if(pmmv.getJtb().getSelectedIndex() == 1) {//주문탭이 눌렸을 때 갱신
+				pmmv.getPmov().getPmoc().setOrder();//주문목록 갱신
+				pmmv.getPmov().getPmoc().setOrderComplete();//주문완료목록 갱신
+			}
+		}
 	} // mouseClicked
 	
 	@Override

@@ -250,7 +250,7 @@ public class PMProductDAO {
 	 * @return
 	 * @throws SQLException
 	 */
-	public boolean deletePrd(String name) throws SQLException {
+	public boolean deletePrd(String code) throws SQLException {
 		boolean flag = false;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -260,10 +260,10 @@ public class PMProductDAO {
 			// 2.
 			con = getConn();
 			// 3.
-			String deleteMenu = "DELETE FROM menu WHERE menu_name = ? ";
+			String deleteMenu = "DELETE FROM menu WHERE menu_code = ? ";
 			pstmt = con.prepareStatement(deleteMenu);
 			// 4.
-			pstmt.setString(1, name);
+			pstmt.setString(1, code);
 			// 5.
 			int cnt = pstmt.executeUpdate();
 			if (cnt == 1) {
@@ -301,7 +301,9 @@ public class PMProductDAO {
 			con = getConn();
 			// 3.
 			StringBuilder updatePrd = new StringBuilder();
-			updatePrd.append(" update menu ").append(" set menu_name=?, ").append(" 	price=?, category=? ");
+			updatePrd.append(" update menu ")
+			.append(" set menu_name=?, ")
+			.append(" menu_price=?, category=? ");
 
 			if (!pmpuvo.getImg().equals("")) {
 				updatePrd.append(", img=? ");

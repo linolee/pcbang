@@ -9,7 +9,6 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 import kr.co.sist.pcbang.manager.product.PMProductController;
 import kr.co.sist.pcbang.manager.product.PMProductView;
 
@@ -21,20 +20,23 @@ public class PMProductDetailView extends JDialog {
 	private JComboBox<String> jcbPrdCategory;
 	private DefaultComboBoxModel<String> dcCategory;
 	private JButton jbImg, jbUpdate, jbDelete, jbEnd;
+	private String prdCode;
 	
 	public PMProductDetailView(PMProductView pmpv, PMProductDetailVO pmpdvo, PMProductController pmpc) {
-	
-		ImageIcon iiProduct = new ImageIcon("C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img"+pmpdvo.getImg());
+		prdCode = pmpdvo.getcode();
+		
+		ImageIcon iiProduct = new ImageIcon("C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img/"+pmpdvo.getImg());
 		jlImg = new JLabel(iiProduct);
 		jtfMenuName = new JTextField();
 		jtfPrice = new JTextField();
+		dcCategory = new DefaultComboBoxModel<String>();
+		jcbPrdCategory = new JComboBox<String>(dcCategory);
 		
-		jcbPrdCategory = new JComboBox<String>();
-		
+		setCategory();		
 		//DB에서 조회한 값 설정
 		jtfMenuName.setText(pmpdvo.getMenuName());
 		jtfPrice.setText(String.valueOf(pmpdvo.getPrice()));
-		jcbPrdCategory.setSelectedItem(pmpdvo.getcategory().toString());
+		jcbPrdCategory.setSelectedItem(pmpdvo.getcategory());
 		
 		jbImg = new JButton("이미지 선택");
 		jbUpdate = new JButton("수정");
@@ -61,7 +63,7 @@ public class PMProductDetailView extends JDialog {
 		
 		jtfMenuName.setBounds(340,65,185,25);
 		jcbPrdCategory.setBounds(340,95,185,25);
-		jtfPrice.setBounds(340,125,185,100);
+		jtfPrice.setBounds(340,125,185,25);
 		
 		jbUpdate.setBounds(240,300,80,30);
 		jbDelete.setBounds(325,300,80,30);
@@ -93,6 +95,13 @@ public class PMProductDetailView extends JDialog {
 		setResizable(false);
 	}
 
+	private void setCategory() {
+		String[] category = {"음료", "스낵", "라면"};
+		for(int i=0; i<category.length; i++) {
+		dcCategory.addElement(category[i]);
+		}//end for
+	}//setCategory
+	
 	public JLabel getJlImg() {
 		return jlImg;
 	}
@@ -128,5 +137,11 @@ public class PMProductDetailView extends JDialog {
 	public JButton getJbEnd() {
 		return jbEnd;
 	}
+
+	public String getPrdCode() {
+		return prdCode;
+	}
+	
+	
 	
 }//class
