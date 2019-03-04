@@ -51,8 +51,14 @@ public class PMOrderController implements ActionListener, MouseListener{
 				dtmOrder.addRow(rowData);
 			}//end for
 
-			if(listOrder.isEmpty()) {//입력된 도시락이 없을 때
-				JOptionPane.showMessageDialog(pmov, "입력된 제품이 없습니다.");
+			if(listOrder.isEmpty()) {//입력된 주문이 없을 때
+				//JOptionPane.showMessageDialog(pmov, "입력된 제품이 없습니다.");
+				Object[] nullData = new Object[8];
+				nullData[0] = "요청된";
+				nullData[1] = "주문이";
+				nullData[2] = "없";
+				nullData[3] = "습니다.";
+				dtmOrder.addRow(nullData);
 			}
 			
 		} catch (SQLException e) {
@@ -86,8 +92,13 @@ public class PMOrderController implements ActionListener, MouseListener{
 				dtmOrderComplete.addRow(rowData);
 			}//end for
 			
-			if(listOrderComplete.isEmpty()) {//입력된 도시락이 없을 때
-				JOptionPane.showMessageDialog(pmov, "입력된 제품이 없습니다.");
+			if(listOrderComplete.isEmpty()) {//완료된 주문이 없을 때
+				//JOptionPane.showMessageDialog(pmov, "입력된 제품이 없습니다.");
+				Object[] nullData = new Object[8];
+				nullData[0] = "완료된";
+				nullData[1] = "주문이";
+				nullData[2] = "없습니다.";
+				dtmOrderComplete.addRow(nullData);
 			}
 			
 		} catch (SQLException e) {
