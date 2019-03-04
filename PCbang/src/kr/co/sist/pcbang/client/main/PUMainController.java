@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import kr.co.sist.pcbang.client.charge.PUChargeView;
+import kr.co.sist.pcbang.client.mileage.PUMileageStore;
 import kr.co.sist.pcbang.client.ordering.PUOrderingView;
 
 public class PUMainController extends WindowAdapter implements ActionListener,Runnable{
@@ -28,12 +29,18 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	private int RestTime;
 	private Thread threadOrdering;
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	private String id;
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
 	public PUMainController(PUMainView pumv) {
 		this.pumv=pumv;
 		pu_manager = new PUManager(this);
 		pum_dao=PUMainDAO.getInstance();
 		try {
-			String id=pumv.id;
+			id=pumv.id;
 			String card=pumv.card;
 			if(id==null) {
 				id="";
@@ -41,8 +48,10 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			if(card==null) {
 				card="";
 			}//end if
+
 			searchUseInfo(id,card);//사용자 정보 조회
 			//System.out.println("로그인 되었습니다.");
+
 		} catch (UnknownHostException e) {
 			System.out.println("아이피주소를 출력할수 없음");
 			e.printStackTrace();
@@ -55,6 +64,10 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			threadOrdering.start();
 		}//end if
 	}//PUMainController
+
+	public String getId() {
+		return id;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -77,8 +90,26 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		if(ae.getSource()==pumv.getJbtMsg()) {//메세지
 			pu_manager.getPumsgv().setVisible(true);
 		}//end if
+
+
+		
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		if(ae.getSource()==pumv.getJbtMileage()) {
+			if(!id.equals("")) {
+			new PUMileageStore();
+			} else {
+				JOptionPane.showMessageDialog(pumv, "ȸ�� �̿밡���� ��ư�Դϴ�");
+			}
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		
+	
 		if(ae.getSource()==pumv.getJbtExit()) {//사용종료
 			//비회원일때에는 시간이 저장되지 않습니다...
+
 			if(!pumv.card.equals("")) {
 				int flag=JOptionPane.showConfirmDialog(pumv, "비회원은 남은시간이 저장되지 않습니다.\n로그아웃 하시겠습니까?");
 				if(flag==0) {
