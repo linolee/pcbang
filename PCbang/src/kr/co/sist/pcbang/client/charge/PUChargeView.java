@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import kr.co.sist.pcbang.client.main.PUMainController;
+
 
 @SuppressWarnings("serial")
 public class PUChargeView extends JFrame{
@@ -16,10 +18,12 @@ public class PUChargeView extends JFrame{
 	private boolean member;
 	private PUChargeDAO puc_dao;
 	private int seatNum;
+	private PUMainController pumc;
 	
-	public PUChargeView(int seatNum) {
+	public PUChargeView(int seatNum, PUMainController pumc) {
 		super("¿ä±ÝÇ¥");
 		this.seatNum=seatNum;
+		this.pumc=pumc;
 		puc_dao=PUChargeDAO.getInstance();
 		
 		String[] arr=null;
@@ -42,7 +46,7 @@ public class PUChargeView extends JFrame{
 			se.printStackTrace();
 		}//end catch
 		
-		PUChargeController pucc=new PUChargeController(this);
+		PUChargeController pucc=new PUChargeController(this, pumc);
 		
 			jbtPrice=new JButton[(arr.length/2)];
 			if(member) {
@@ -93,8 +97,5 @@ public class PUChargeView extends JFrame{
 		return seatNum;
 	}
 
-	public static void main(String[] args) {
-		new PUChargeView(100);
-	}//main
 }//class
 
