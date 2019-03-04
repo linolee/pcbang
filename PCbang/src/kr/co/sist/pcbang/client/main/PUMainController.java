@@ -41,16 +41,16 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			if(card==null) {
 				card="";
 			}//end if
-			searchUseInfo(id,card);//»ç¿ëÀÚ Á¤º¸ Á¶È¸
-			//System.out.println("·Î±×ÀÎ µÇ¾ú½À´Ï´Ù.");
+			searchUseInfo(id,card);//ì‚¬ìš©ì ì •ë³´ ì¡°íšŒ
+			//System.out.println("ë¡œê·¸ì¸ ë˜ì—ˆìŠµë‹ˆë‹¤.");
 		} catch (UnknownHostException e) {
-			System.out.println("¾ÆÀÌÇÇÁÖ¼Ò¸¦ Ãâ·ÂÇÒ¼ö ¾øÀ½");
+			System.out.println("ì•„ì´í”¼ì£¼ì†Œë¥¼ ì¶œë ¥í• ìˆ˜ ì—†ìŒ");
 			e.printStackTrace();
 		} catch (SQLException e) {
-			System.out.println("sql¹®Á¦");
+			System.out.println("sqlë¬¸ì œ");
 			e.printStackTrace();
 		}
-		if(threadOrdering==null) {//ÀÌ°Å ¾øÀ¸¸é °è¼Ó ¸¸µé¾îÁø´Ù.
+		if(threadOrdering==null) {//ì´ê±° ì—†ìœ¼ë©´ ê³„ì† ë§Œë“¤ì–´ì§„ë‹¤.
 			threadOrdering =new Thread(this);
 			threadOrdering.start();
 		}//end if
@@ -58,40 +58,40 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if(ae.getSource()==pumv.getJbtOrder()) {//»óÇ°ÁÖ¹®
+		if(ae.getSource()==pumv.getJbtOrder()) {//ìƒí’ˆì£¼ë¬¸
 			new PUOrderingView();
 		}//end if
-		if(ae.getSource()==pumv.getJbtCharge()) {//½Ã°£ÃæÀü
-			//JOptionPane.showMessageDialog(pumv, "½Ã°£ÃæÀü");
+		if(ae.getSource()==pumv.getJbtCharge()) {//ì‹œê°„ì¶©ì „
+			//JOptionPane.showMessageDialog(pumv, "ì‹œê°„ì¶©ì „");
 			JLabel jlSeat=pumv.getJlSeatNum();
 			new PUChargeView(Integer.parseInt(jlSeat.getText()), this);
-			//RestTime¹Ş¾Æ¼­...
+			//RestTimeë°›ì•„ì„œ...
 		}//end if
-		if(ae.getSource()==pumv.getJbtChange()) {//ÁÂ¼®º¯°æ
-			int flag=JOptionPane.showConfirmDialog(pumv, "ÀÚ¸®º¯°æÀ» ÇÏ½Ã°Ú½À´Ï±î?");
+		if(ae.getSource()==pumv.getJbtChange()) {//ì¢Œì„ë³€ê²½
+			int flag=JOptionPane.showConfirmDialog(pumv, "ìë¦¬ë³€ê²½ì„ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
 			if(flag==0) {
 				JLabel jlSeat=pumv.getJlSeatNum();
 				changeSeat(Integer.parseInt(jlSeat.getText()));
 			}//end if
 		}//end if
-		if(ae.getSource()==pumv.getJbtMsg()) {//¸Ş¼¼Áö
+		if(ae.getSource()==pumv.getJbtMsg()) {//ë©”ì„¸ì§€
 			pu_manager.getPumsgv().setVisible(true);
 		}//end if
-		if(ae.getSource()==pumv.getJbtExit()) {//»ç¿ëÁ¾·á
-			//ºñÈ¸¿øÀÏ¶§¿¡´Â ½Ã°£ÀÌ ÀúÀåµÇÁö ¾Ê½À´Ï´Ù...
+		if(ae.getSource()==pumv.getJbtExit()) {//ì‚¬ìš©ì¢…ë£Œ
+			//ë¹„íšŒì›ì¼ë•Œì—ëŠ” ì‹œê°„ì´ ì €ì¥ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤...
 			if(!pumv.card.equals("")) {
-				int flag=JOptionPane.showConfirmDialog(pumv, "ºñÈ¸¿øÀº ³²Àº½Ã°£ÀÌ ÀúÀåµÇÁö ¾Ê½À´Ï´Ù.\n·Î±×¾Æ¿ô ÇÏ½Ã°Ú½À´Ï±î?");
+				int flag=JOptionPane.showConfirmDialog(pumv, "ë¹„íšŒì›ì€ ë‚¨ì€ì‹œê°„ì´ ì €ì¥ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.\në¡œê·¸ì•„ì›ƒ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
 				if(flag==0) {
 					logout();
 					pumv.dispose();
-					System.exit(0);//¸ğµç °´Ã¼ Á¾·á
+					System.exit(0);//ëª¨ë“  ê°ì²´ ì¢…ë£Œ
 				}//end if
 			}else {			
-				int flag=JOptionPane.showConfirmDialog(pumv, "·Î±×¾Æ¿ô ÇÏ½Ã°Ú½À´Ï±î?");
+				int flag=JOptionPane.showConfirmDialog(pumv, "ë¡œê·¸ì•„ì›ƒ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
 				if(flag==0) {
 					logout();
 					pumv.dispose();
-					System.exit(0);//¸ğµç °´Ã¼ Á¾·á
+					System.exit(0);//ëª¨ë“  ê°ì²´ ì¢…ë£Œ
 				}//end if
 			}//end else
 		}//end if
@@ -101,19 +101,19 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	public void run() {
 		for(int i=0; ; i++) {
 			try {
-				//»ç¿ë½Ã°£À» °¡Á®¿Í¼­ +1
+				//ì‚¬ìš©ì‹œê°„ì„ ê°€ì ¸ì™€ì„œ +1
 				JLabel jlUseTime=pumv.getJlUseTime();//00:00
 				jlUseTime.setText(hourTime(String.valueOf(i)));
 				
-				//³²Àº ½Ã°£À» °¡Á®¿Í¼­ -1
+				//ë‚¨ì€ ì‹œê°„ì„ ê°€ì ¸ì™€ì„œ -1
 				JLabel jlRestTime=pumv.getJlRestTime();
 				String timeString=jlRestTime.getText();//05:05
 				///int restTime=minutesTime(timeString);//520
 				RestTime=minutesTime(timeString);
-				//³²Àº½Ã°£ÀÌ ¾øÀ¸¸é »ç¿ëÁ¾·á
+				//ë‚¨ì€ì‹œê°„ì´ ì—†ìœ¼ë©´ ì‚¬ìš©ì¢…ë£Œ
 				callcharge(RestTime);
 				
-				Thread.sleep(1000*1);//60ÃÊ
+				Thread.sleep(1000*1);//60ì´ˆ
 				jlRestTime.setText(hourTime(String.valueOf(RestTime-1)));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -123,26 +123,26 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 
 	@Override
 	public void windowClosing(WindowEvent we) {
-		//ºñÈ¸¿øÀÏ¶§¿¡´Â ½Ã°£ÀÌ ÀúÀåµÇÁö ¾Ê½À´Ï´Ù...
+		//ë¹„íšŒì›ì¼ë•Œì—ëŠ” ì‹œê°„ì´ ì €ì¥ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤...
 		if(!pumv.card.equals("")) {
-			int flag=JOptionPane.showConfirmDialog(pumv, "ºñÈ¸¿øÀº ³²Àº½Ã°£ÀÌ ÀúÀåµÇÁö ¾Ê½À´Ï´Ù.\n·Î±×¾Æ¿ô ÇÏ½Ã°Ú½À´Ï±î?");
+			int flag=JOptionPane.showConfirmDialog(pumv, "ë¹„íšŒì›ì€ ë‚¨ì€ì‹œê°„ì´ ì €ì¥ë˜ì§€ ì•ŠìŠµë‹ˆë‹¤.\në¡œê·¸ì•„ì›ƒ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
 			if(flag==0) {
 				logout();
 				pumv.dispose();
-				System.exit(0);//¸ğµç °´Ã¼ Á¾·á
+				System.exit(0);//ëª¨ë“  ê°ì²´ ì¢…ë£Œ
 			}//end if
 		}else {			
-			int flag=JOptionPane.showConfirmDialog(pumv, "·Î±×¾Æ¿ô ÇÏ½Ã°Ú½À´Ï±î?");
+			int flag=JOptionPane.showConfirmDialog(pumv, "ë¡œê·¸ì•„ì›ƒ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
 			if(flag==0) {
 				logout();
 				pumv.dispose();
-				System.exit(0);//¸ğµç °´Ã¼ Á¾·á
+				System.exit(0);//ëª¨ë“  ê°ì²´ ì¢…ë£Œ
 			}//end if
 		}//end else
 	}//windowClosing
 
 	/**
-	 * »ç¿ëÀÚ Á¤º¸ Á¶È¸->³²Àº½Ã°£ÀÌ ¾øÀ¸¸é ½Ã°£ÃæÀüÃ¢
+	 * ì‚¬ìš©ì ì •ë³´ ì¡°íšŒ->ë‚¨ì€ì‹œê°„ì´ ì—†ìœ¼ë©´ ì‹œê°„ì¶©ì „ì°½
 	 * @param id
 	 * @param cardNum
 	 * @throws SQLException 
@@ -154,29 +154,30 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		JLabel jlName=pumv.getJlName();
 		
 		int seatnum=pum_dao.selectSeatNum();
-		jlSeat.setText(String.valueOf(seatnum));//ÀÚ¸® Ãâ·Â
-		if(!id.equals("")) {//¾ÆÀÌµğ¸¦ °¡Áø´Ù¸é È¸¿ø
+		jlSeat.setText(String.valueOf(seatnum));//ìë¦¬ ì¶œë ¥
+		if(!id.equals("")) {//ì•„ì´ë””ë¥¼ ê°€ì§„ë‹¤ë©´ íšŒì›
 			PUMainInfoVO puminfovo=pum_dao.selectInfo(id,cardNum);
 			String name=puminfovo.getName();
 			jlName.setText(name);
 			String restTime=puminfovo.getRestTime();
 			jlRestTime.setText(hourTime(restTime));
-			if(Integer.parseInt(restTime)==0) {//¸¸¾à ½Ã°£ÀÌ 0ÀÌ¶ó¸é ÃæÀüÃ¢
-				//new PUChargeView();//¸¸¾à ½Ã°£ÀÌ ³²¾Ò´Âµ¥ ÃæÀüÇÏ¸é ´İ±â°¡´É ÃæÀüµÈ ½Ã°£ÀÌ ¾øÀ¸¸é ÃæÀüÃ¢
-				JOptionPane.showMessageDialog(pumv, "ÃæÀüÇÏ¼¼¿ä");
+			if(Integer.parseInt(restTime)==0) {//ë§Œì•½ ì‹œê°„ì´ 0ì´ë¼ë©´ ì¶©ì „ì°½
+				//new PUChargeView();//ë§Œì•½ ì‹œê°„ì´ ë‚¨ì•˜ëŠ”ë° ì¶©ì „í•˜ë©´ ë‹«ê¸°ê°€ëŠ¥ ì¶©ì „ëœ ì‹œê°„ì´ ì—†ìœ¼ë©´ ì¶©ì „ì°½
+				JOptionPane.showMessageDialog(pumv, "ì¶©ì „í•˜ì„¸ìš”");
 			}//end if
-		}else if(!cardNum.equals("")) {//Ä«µå¹øÈ£¸¦ °¡Áø´Ù¸é ºñÈ¸¿ø
+		}else if(!cardNum.equals("")) {//ì¹´ë“œë²ˆí˜¸ë¥¼ ê°€ì§„ë‹¤ë©´ ë¹„íšŒì›
 			jlName.setText("guest"+seatnum);
 			String time="0";
 			jlRestTime.setText(hourTime(time));
-			if(Integer.parseInt(time)==0) {//¸¸¾à ½Ã°£ÀÌ 0ÀÌ¶ó¸é ÃæÀüÃ¢
+
+			if(Integer.parseInt(time)==0) {//ë§Œì•½ ì‹œê°„ì´ 0ì´ë¼ë©´ ì¶©ì „ì°½
 				new PUChargeView(Integer.parseInt(jlSeat.getText()), this);
 			}//end if
 		}//end else
 	}//searchUseInfo
 	
 	/**
-	 * ÁÂ¼®¹øÈ£¸¦ ¹Ş¾Æ º¯°æ¿äÃ»->Àç·Î±×ÀÎ °¡´ÉÇÑ »óÅÂ·Î º¯°æ
+	 * ì¢Œì„ë²ˆí˜¸ë¥¼ ë°›ì•„ ë³€ê²½ìš”ì²­->ì¬ë¡œê·¸ì¸ ê°€ëŠ¥í•œ ìƒíƒœë¡œ ë³€ê²½
 	 * @param seatNum
 	 */
 	private void changeSeat(int seatNum) {
@@ -188,14 +189,14 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	}//changeSeat
 	
 	/**
-	 * ·Î±×¾Æ¿ô->PC»óÅÂ º¯°æ(PC-status),³²Àº½Ã°£ ÀúÀå(È¸¿ø),¸Ş¼¼Áö ÃÊ±âÈ­(¸Ş¼¼Áö),·Î±× ÀúÀå(·Î±×)
+	 * ë¡œê·¸ì•„ì›ƒ->PCìƒíƒœ ë³€ê²½(PC-status),ë‚¨ì€ì‹œê°„ ì €ì¥(íšŒì›),ë©”ì„¸ì§€ ì´ˆê¸°í™”(ë©”ì„¸ì§€),ë¡œê·¸ ì €ì¥(ë¡œê·¸)
 	 * @param id
 	 * @param cardNum
 	 * @param seatNum
 	 */
 	private void logout() {
 		try {
-		//¸ÕÀú ·Î±×ÀúÀå(String memberId,useDate/int useTime,chargePrice)
+		//ë¨¼ì € ë¡œê·¸ì €ì¥(String memberId,useDate/int useTime,chargePrice)
 		String id=pumv.id;
 		String card=pumv.card;
 		String useDate = String.valueOf(Calendar.getInstance());
@@ -211,26 +212,27 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		//String restTimestr=jlRestTime.getText();
 		//int restTime=minutesTime(restTimestr);
 		
-		if(!id.equals("")) {//¾ÆÀÌµğ¸¦ °¡Áø´Ù¸é È¸¿ø
+		if(!id.equals("")) {//ì•„ì´ë””ë¥¼ ê°€ì§„ë‹¤ë©´ íšŒì›
 			PUMainUserLogVO pumLogvo=new PUMainUserLogVO(id, useDate, uTime, chargePrice);
 			pum_dao.updatePC(id);
 			pum_dao.updateLog(pumLogvo);
 		
 			
-		}else if(!card.equals("")) {//Ä«µå¹øÈ£¸¦ °¡Áø´Ù¸é ºñÈ¸¿ø
+		}else if(!card.equals("")) {//ì¹´ë“œë²ˆí˜¸ë¥¼ ê°€ì§„ë‹¤ë©´ ë¹„íšŒì›
+			//System.out.println(card);
 			pum_dao.updatePC(Integer.parseInt(card));
 			
 		}//end else
 //		pum_dao.updateMsg(Integer.parseInt(seatNum));
 //		
 		
-		//±×´ÙÀ½ pc»óÅÂ º¯°æ
+		//ê·¸ë‹¤ìŒ pcìƒíƒœ ë³€ê²½
 		
-		//±×´ÙÀ½ È¸¿ø¿¡ ³²Àº½Ã°£ º¯°æ
+		//ê·¸ë‹¤ìŒ íšŒì›ì— ë‚¨ì€ì‹œê°„ ë³€ê²½
 		
-		//±×´ÙÀ½ ¸Ş¼¼Áö ÃÊ±âÈ­
+		//ê·¸ë‹¤ìŒ ë©”ì„¸ì§€ ì´ˆê¸°í™”
 		
-		//°ü¸®ÀÚ¿¡ ·Î±×¾Æ¿ô Çß´Ù°í ¸Ş¼¼Áö º¸³»±â
+		//ê´€ë¦¬ìì— ë¡œê·¸ì•„ì›ƒ í–ˆë‹¤ê³  ë©”ì„¸ì§€ ë³´ë‚´ê¸°
 			pu_manager.getWriteStream().writeUTF("[logout]");
 			pu_manager.getWriteStream().flush();
 			pu_manager.getWriteStream().close();
@@ -244,7 +246,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	}//logout
 	
 	/**
-	 * ºĞÀ¸·Î ÀúÀåµÇ¾îÀÖ´Â ½Ã°£À» ½Ã°£À¸·Î ¹Ù²Ù¾î ÁØ´Ù.
+	 * ë¶„ìœ¼ë¡œ ì €ì¥ë˜ì–´ìˆëŠ” ì‹œê°„ì„ ì‹œê°„ìœ¼ë¡œ ë°”ê¾¸ì–´ ì¤€ë‹¤.
 	 * @param time
 	 * @return
 	 */
@@ -253,13 +255,13 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		int minute=0;
 		DecimalFormat df=new DecimalFormat("00");
 		
-		hour=(int) Math.floor(Integer.parseInt(time)/60);//¸òÀº ½Ã°£¿¡
-		minute=Integer.parseInt(time)-(hour*60);//³ª¸ÓÁö´Â ºĞ¿¡ ÇÒ´çÇÏ¿©
-		return df.format(hour)+":"+df.format(minute);//¹®ÀÚ¿­·Î ¹İÈ¯
+		hour=(int) Math.floor(Integer.parseInt(time)/60);//ëª«ì€ ì‹œê°„ì—
+		minute=Integer.parseInt(time)-(hour*60);//ë‚˜ë¨¸ì§€ëŠ” ë¶„ì— í• ë‹¹í•˜ì—¬
+		return df.format(hour)+":"+df.format(minute);//ë¬¸ìì—´ë¡œ ë°˜í™˜
 	}//hourTime
 	
 	/**
-	 * ½Ã°£À¸·Î ÀúÀåµÇ¾îÀÖ´Â ½Ã°£À» ºĞ½Ã°£À¸·Î
+	 * ì‹œê°„ìœ¼ë¡œ ì €ì¥ë˜ì–´ìˆëŠ” ì‹œê°„ì„ ë¶„ì‹œê°„ìœ¼ë¡œ
 	 * @param time
 	 * @return
 	 */
@@ -271,22 +273,37 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	}//minutesTime
 	
 	/**
-	 * ½Ã°£ÀÌ 0ÀÌ¸é ÃæÀüÃ¢ ºÎ¸£°í ¸¸¾à ÃæÀüÇÏÁö ¾ÊÀ¸¸é Á¾·á
+	 * ì‹œê°„ì´ 0ì´ë©´ ì¶©ì „ì°½ ë¶€ë¥´ê³  ë§Œì•½ ì¶©ì „í•˜ì§€ ì•Šìœ¼ë©´ ì¢…ë£Œ
 	 * @param time
 	 */
 	private void callcharge(int restTime) {
 		pumv.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		if(restTime==0) {
-			int flag=JOptionPane.showConfirmDialog(pumv, "ÃæÀüµÈ ½Ã°£ÀÌ ¾ø½À´Ï´Ù.\nÃæÀüÇÏ½Ã°Ú½À´Ï±î?");
+			int flag=JOptionPane.showConfirmDialog(pumv, "ì¶©ì „ëœ ì‹œê°„ì´ ì—†ìŠµë‹ˆë‹¤.\nì¶©ì „í•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
 			if(flag==JOptionPane.OK_OPTION) {
 				JLabel jlSeat=pumv.getJlSeatNum();
 				new PUChargeView(Integer.parseInt(jlSeat.getText()), this);
 			}else if(flag==JOptionPane.NO_OPTION){
-				return;
-				//JOptionPane.showMessageDialog(pumv, "»ç¿ëÀÌ Á¾·áµË´Ï´Ù.");
+				//return;
+				//JOptionPane.showMessageDialog(pumv, "ì‚¬ìš©ì´ ì¢…ë£Œë©ë‹ˆë‹¤.");
 				//pumv.dispose();
 			}//end else
 		}//end if
+		
+		/*
+		int flag=JOptionPane.showConfirmDialog(this, "ì ì‹¬ ë§›ìˆê²Œ ë“œì…¨ì–´ìš”?");
+//		System.out.println(flag);//0,1,2ìˆœìœ¼ë¡œ ë‚˜ì˜¨ë‹¤.
+		switch (flag) {
+//		case 0 ,1 ,2 ë¡œë„ ì¤„ìˆ˜ ìˆì§€ë§Œ ë¬´ì—‡ì¸ì§€ ëª…í™•í•˜ì§€ ì•Šê¸°ë•Œë¬¸ì— ìƒìˆ˜í‘œí˜„ì„ ì“´ë‹¤.
+		case JOptionPane.OK_OPTION : 
+			JOptionPane.showMessageDialog(this, "í–‰ë³µí•œ ì˜¤í›„ ë˜ì„¸ìš”!"); 
+			break;
+		case JOptionPane.NO_OPTION: String menu = JOptionPane.showInputDialog("ì–´ë–¤ ì ì‹¬ ë©”ë‰´ì˜€ì–´ìš”?"); 
+			JOptionPane.showMessageDialog(this,menu+"ê°€ ë‹¤ ê·¸ë ‡ì£  ë­!");
+			break;
+		case JOptionPane.CANCEL_OPTION:	JOptionPane.showMessageDialog(this, "í•˜ê¸° ì‹«ìœ¼ëƒ??");
+		}//end switch
+		*/
 	}//callcharge
 
 	public int getRestTime() {

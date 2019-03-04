@@ -34,7 +34,6 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==pulv.getJbtStart()) {//로그인
-			
 			try {
 			if(checkMember()) {//회원이면
 				JTextField jtf=pulv.getJtfId();
@@ -42,28 +41,34 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 				
 				String id=jtf.getText().trim();
 				String pass=new String (jpf.getPassword());
+				System.out.println(id+"/"+pass);
 		
 				//System.out.println(pul_dao.selectMember(id));
 				if(!pul_dao.selectMember(id)) {//PC테이블에 조회되는 id가 없다면 로그인
+					//System.out.println("로그인!!!");
 					//로그인
 					PUCertificationVO pucvo=new PUCertificationVO(id, pass);
 					//String memberName=login(pucvo);
+					//System.out.println("!!!");
 					
 					if(!login(pucvo)) {
+						//System.out.println("아이디가 없어?");
 						JOptionPane.showMessageDialog(pulv, "아이디나 비밀번호를 확인하세요.");
 						jtf.setText("");
 						jpf.setText("");
 						jtf.requestFocus();
 					}else {
+						//System.out.println("로그인되었습니다.");
 						PUMainView.userId=id;//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
 						PUMainView.cardNum="";
 						new PUMainView();//new PUMainView(memberName);
 						pulv.dispose();
 					}//end else
 				}else {//있다면 로그인이 안돼는데,자리이동이면~
+					System.out.println("자리이동 유무");
 					if(loginStatus().equals("c")) {
 						//이미 로그인 되어있는데=>자리변경 신청함
-						System.out.println("자리변경한 상태입니다->로그인");
+						//System.out.println("자리변경한 상태입니다->로그인");
 						
 						PUCertificationVO pucvo=new PUCertificationVO(id, pass);
 						//String memberName=login(pucvo);
@@ -87,18 +92,21 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 				
 			}else{//비회원이면
 				JTextField jtf2=pulv.getJtfCardNum();
+				try {
 				int card=Integer.parseInt(jtf2.getText().trim());
-				
+				//System.out.println(pul_dao.selectGuest(card));
 					if(!pul_dao.selectGuest(card)) {//PC테이블에 조회되는 id가 없다면 로그인
 						//로그인
-						if(!login(card)) {
+						if(login(card)) {
 							PUMainView.userId="";//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
 							PUMainView.cardNum=String.valueOf(card);
 							new PUMainView();
 							pulv.dispose();
 						}else {
+							jtf2.setText("");
+							jtf2.requestFocus();
 							JOptionPane.showMessageDialog(pulv, "카드번호를 확인해주세요");
-						}
+						}//end else
 					}else {//있다면 로그인이 안돼는데,자리이동이면~
 						if(loginStatus().equals("c")) {
 							//이미 로그인 되어있는데=>자리변경 신청함
@@ -108,13 +116,24 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 								PUMainView.cardNum=String.valueOf(card);
 								pulv.dispose();
 							}else {
+								jtf2.setText("");
+								jtf2.requestFocus();
 								JOptionPane.showMessageDialog(pulv, "카드번호를 확인해주세요");
 							}//end else
 						}else{
 							//이미 로그인 되어있는데=>자리변경 신청안함
+							jtf2.setText("");
+							jtf2.requestFocus();
 							JOptionPane.showMessageDialog(pulv, "자리변경을 먼저 신청해 주세요!");
 						}//end else
 				}//end else
+					
+				} catch (NumberFormatException nbfe) {
+					jtf2.setText("");
+					jtf2.requestFocus();
+					JOptionPane.showMessageDialog(pulv, "카드번호는 숫자입니다.");
+					//nbfe.printStackTrace();
+				}//end catch
 			}//end else
 			
 			} catch (SQLException e) {
@@ -230,10 +249,9 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 			InetAddress ip =InetAddress.getLocalHost();
 			String pcIp=String.valueOf(ip).substring(InetAddress.getLocalHost().toString().indexOf("/")+1);
 
-			if(pul_dao.selectGuestCheck(guestNum)) {//카드번호가 존재할때
+			if(pul_dao.selectGuestCheck(guestNum)) {
 				PUGuestStateVO pugsvo=new PUGuestStateVO(guestNum, pcIp);
-				pul_dao.updateGuestState(pugsvo);//상태 업로드
-				//서버에 접속할수 없습니다??
+				pul_dao.updateGuestState(pugsvo);
 				flag=true;
 			}//end if
 		} catch (SQLException e) {
@@ -260,12 +278,18 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 			InetAddress ip =InetAddress.getLocalHost();
 			String pcIp=String.valueOf(ip).substring(InetAddress.getLocalHost().toString().indexOf("/")+1);
 			//System.out.println(pcIp);
-			
-			if(!String.valueOf(pul_dao.selectMemberLogin(pucvo)).equals("")) {
+			//System.out.println(String.valueOf(pul_dao.selectMemberLogin(pucvo)).equals(""));
+			if(pul_dao.selectMemberLogin(pucvo)!=-1) {
+				
 				flag=true;
 				PUMemberStateVO pumsvo=new PUMemberStateVO(pucvo.getMemberId(),pcIp );
+				//System.out.println("여기까지?");
 				pul_dao.updateMemberState(pumsvo);
-			}//end if
+				//System.out.println("여기까지?2222");
+//			}else {
+//				JOptionPane.showMessageDialog(pulv, "비밀번호가 틀렸습니다.");
+//				return false;
+			}
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(pulv, "DB에서 문제가 발생했습니다.");
 			e.printStackTrace();

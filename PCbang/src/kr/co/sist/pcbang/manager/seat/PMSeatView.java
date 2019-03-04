@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import kr.co.sist.pcbang.manager.order.PMOrderView;
 
+@SuppressWarnings("serial")
 public class PMSeatView extends JPanel {
 	private JButton[][] btnSeat;
 	private JButton btnSet;
@@ -37,7 +38,7 @@ public class PMSeatView extends JPanel {
 		btnSet.setBounds(900, 0, 100, 20);
 		pnlMain.setBounds(0, 20, 1000, 550);
 
-		PMSeatController pmsc = new PMSeatController(this, pmov);
+		PMSeatController pmsc = new PMSeatController(this);
 		btnSet.addActionListener(pmsc);
 		for (int i = 0; i < btnSeat.length; i++) {
 			for (int j = 0; j < btnSeat[i].length; j++) {
