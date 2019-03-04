@@ -46,30 +46,32 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 	private Toolkit tk = Toolkit.getDefaultToolkit();
 
 	private Image[] Player_img, Player_img2, Player_img3, Player_img4;
-	private Image BackGround_img; // 배경화면 이미지
+	private Image BackGround_img;
 
 	private Image buffImage;
 	private Graphics buffg;
 	
 	private PUMileageDAO a_dao;
 	private PUMainView pumvo;
+	private PUMainController pumc;
 	
 	private int mile;
 	
-//	private PUMainView pumv;
-//	private PUMainController pumc;
+	
+	private String id;
+	
 	
 	public PUMileageStore() {
 		
 		a_dao=PUMileageDAO.getInstance();
 		pumvo=PUMainView.getInstance();
 		
+		id = pumvo.id;
 		userName();
 		
-		String id = pumvo.id;
-//		System.out.println(id);
 		
 //		System.out.println(id);
+		
 		init();
 		start();
 
@@ -82,11 +84,6 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 		int f_xpos = (int) (screen.getWidth() / 2 - f_width / 2);
 		int f_ypos = (int) (screen.getHeight() / 2 - f_height / 2);
 
-		
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
-		
 		setLocation(f_xpos, f_ypos);
 		setResizable(false);
 		setVisible(true);
@@ -94,7 +91,7 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 	
 	public void userName() {
 		try {
-			mile = a_dao.getMileage("houuking");
+			mile = a_dao.getMileage(id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -309,13 +306,24 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 			for(int i=70;i<150;i++) {
 				if(x==0 && y==i) {
 					
-					if(a_dao.getMileage("houuking")>=500) {
-						System.out.println(1);
+					if(a_dao.getMileage(id)>=500) {
+//						System.out.println(1);
 						System.out.println(addTime);
-						a_dao.updateMileage(addTime, 500, "houuking");
-						System.out.println(2);
+						a_dao.updateMileage(addTime, 500, id);
+						
+						
+						
+						
+						////////////////////////////////////////////////////////////////////////////////////////
+//						pumc.setRestTime(pumc.getRestTime()+addTime);
+						////////////////////////////////////////////////////////////////////////////////////////
+						
+						
+						
+						
+//						System.out.println(2);
 					JOptionPane.showMessageDialog(this, addTime+"분 당첨 !!! ㅊㅋㅊㅋ");
-					System.out.println(3);
+//					System.out.println(3);
 					userName();
 					falseKey();
 					} else{
@@ -328,9 +336,18 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 				}
 				if(x==625 && y==i) {
 					
-					if(a_dao.getMileage("houuking")>=1000) {
+					if(a_dao.getMileage(id)>=1000) {
 					
-					a_dao.updateMileage(60, 1000, "houuking");
+					a_dao.updateMileage(60, 1000, id);
+
+					
+					/////////////////////////////////////////////////////////////////////////////
+					/// pumc에 접속하면 에러발생
+					System.out.println("Sdfsdfsdfsdf"+pumc.getRestTime());
+//					pumc.setRestTime(pumc.getRestTime()+60);
+					///////////////////////////////////////////////////////////////////////
+					
+					
 					JOptionPane.showMessageDialog(this, "1시간 추가 !");
 					userName();
 					falseKey();
