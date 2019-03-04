@@ -74,7 +74,8 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 			// JTable에 조회한 정보를 출력
 			PMProductVO pmpvo = null;
 			/////////////////////////////////////////경로 나중에 바꾸기/////////////////////////////////
-			String imgPath = "C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img/s_"; 
+//			String imgPath = "C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img/s_"; 
+			String imgPath = this.getClass().getResource("/").getPath()+"kr/co/sist/pcbang/manager/product/img/"; 
 			Object[] rowData = null;
 			for (int i = 0; i < listproduct.size(); i++) {
 				pmpvo = listproduct.get(i);
@@ -91,6 +92,7 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 				// DTM에 추가
 				dtmPrd.addRow(rowData);
 			} // end for
+			
 
 			if (listproduct.isEmpty()) {// 입력된 상품이 없을 때
 

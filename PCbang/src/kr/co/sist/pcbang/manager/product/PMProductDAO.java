@@ -63,9 +63,9 @@ public class PMProductDAO {
 			// 3.
 			StringBuilder selectAllPrd = new StringBuilder();
 			selectAllPrd.append(
-					"	select m.menu_code, m.menu_name, m.img, m.menu_price, o.quan, (m.menu_price)*(o.quan) total ")
-					.append("	from menu m, ordering o").append("	where o.menu_code(+)=m.menu_code ")
-					.append("	order by m.menu_code desc ");
+					"	select menu_code, menu_name, img, menu_price,quan, menu_price* quan as total ")
+					.append("	from (select m.menu_code, m.menu_name, m.img, m.menu_price, nvl((select sum(o1.quan) from ordering o1 where (m.menu_code=o1.menu_code) group by m.menu_code),0) as quan  ")
+					.append("	from menu m) ");
 
 			pstmt = con.prepareStatement(selectAllPrd.toString());
 			// 4.
@@ -91,8 +91,10 @@ public class PMProductDAO {
 					pmp_vo = new PMProductVO(rs.getString("MENU_CODE"), rs.getString("MENU_NAME"), rs.getString("IMG"),
 							rs.getInt("menu_price"), quan, total);
 				
-				list.add(pmp_vo);
+					
+					list.add(pmp_vo);
 			} // end while
+			
 		} finally {
 			if (rs != null) {
 				rs.close();
