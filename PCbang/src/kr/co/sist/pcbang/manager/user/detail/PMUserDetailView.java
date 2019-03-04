@@ -1,6 +1,8 @@
 package kr.co.sist.pcbang.manager.user.detail;
 
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,7 +18,12 @@ public class PMUserDetailView extends JFrame {
 	 private JTextField jtfName, jtfId, jtfGender, jtfInputDate, jtfEmail, jtfTel, jtfBirth, jtfLeftTime;
 	 private JButton jbtnUpdate, jbtnCancel;
 	 
+	 private int f_width, f_height;
+	 private Toolkit tk = Toolkit.getDefaultToolkit();
+	 
 	 public PMUserDetailView(PMUserDetailVO udvo) {
+		 
+		 
 		 setLayout(null);
 		 jlMemberUpdate = new JLabel("회원정보 수정");
 		 jlName = new JLabel("이름");
@@ -108,8 +115,19 @@ public class PMUserDetailView extends JFrame {
 		jbtnCancel.addActionListener(udc);
 		
 		setVisible(true);
-	
-		setBounds(100, 100, 500, 400);
+		
+		Dimension screen = tk.getScreenSize();
+		
+		int f_width=500;
+		int f_height=400;
+		
+		int f_xpos = (int) (screen.getWidth() / 2 - f_width / 2);
+		int f_ypos = (int) (screen.getHeight() / 2 - f_height / 2);
+		
+		
+		setLocation(f_xpos, f_ypos);
+//		setBounds(100, 100, 500, 400);
+		setSize(f_width, f_height);
 	 }
 
 	public JLabel getJlMemberUpdate() {
