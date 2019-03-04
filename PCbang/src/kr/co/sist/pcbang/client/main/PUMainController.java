@@ -64,7 +64,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		if(ae.getSource()==pumv.getJbtCharge()) {//시간충전
 			//JOptionPane.showMessageDialog(pumv, "시간충전");
 			JLabel jlSeat=pumv.getJlSeatNum();
-			new PUChargeView(Integer.parseInt(jlSeat.getText()));
+			new PUChargeView(Integer.parseInt(jlSeat.getText()), this);
 			//RestTime받아서...
 		}//end if
 		if(ae.getSource()==pumv.getJbtChange()) {//좌석변경
@@ -170,7 +170,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			String time="0";
 			jlRestTime.setText(hourTime(time));
 			if(Integer.parseInt(time)==0) {//만약 시간이 0이라면 충전창
-				new PUChargeView(Integer.parseInt(jlSeat.getText()));
+				new PUChargeView(Integer.parseInt(jlSeat.getText()), this);
 			}//end if
 		}//end else
 	}//searchUseInfo
@@ -280,7 +280,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			int flag=JOptionPane.showConfirmDialog(pumv, "충전된 시간이 없습니다.\n충전하시겠습니까?");
 			if(flag==JOptionPane.OK_OPTION) {
 				JLabel jlSeat=pumv.getJlSeatNum();
-				new PUChargeView(Integer.parseInt(jlSeat.getText()));
+				new PUChargeView(Integer.parseInt(jlSeat.getText()), this);
 			}else if(flag==JOptionPane.NO_OPTION){
 				return;
 				//JOptionPane.showMessageDialog(pumv, "사용이 종료됩니다.");
