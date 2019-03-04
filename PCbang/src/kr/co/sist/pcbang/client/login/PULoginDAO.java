@@ -424,6 +424,6 @@ private static PULoginDAO pul_dao;
 			if( con != null ) { con.close(); }//end if
 		}//end finally
 		return notice;
-	}//guestCheck
+	}//guestCheck/////////
 	
 }//class
