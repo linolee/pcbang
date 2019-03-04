@@ -270,7 +270,7 @@ public class PUChargeDAO {
 			//2.
 			con=getConn();
 			//3.
-			String updateMileage="update pc_member set member_mileage=member_mileage+?*0.1 where member_id=?";
+			String updateMileage="update pc_member set member_mileage=nvl(member_mileage,0)+?*0.1 where member_id=?";
 			pstmt=con.prepareStatement(updateMileage);
 		//4.
 			pstmt.setInt(1, mmvo.getMemebrMileage());
