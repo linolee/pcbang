@@ -39,7 +39,7 @@ private static PULoginDAO pul_dao;
 	}//getConn
 	
 	/**
-	 * PC�뿉�꽌 id瑜� �씠誘� �궗�슜以묒씤吏� �뙋�떒
+	 * PC占쎈퓠占쎄퐣 id�몴占� 占쎌뵠沃섓옙 占쎄텢占쎌뒠餓λ쵐�뵥筌욑옙 占쎈솇占쎈뼊
 	 * @param id
 	 * @return
 	 * @throws SQLException
@@ -84,7 +84,7 @@ private static PULoginDAO pul_dao;
 	}//selectMember
 	
 	/**
-	 * PC�뿉�꽌 移대뱶踰덊샇瑜� �씠誘� �궗�슜以묒씤吏� �뙋�떒
+	 * PC占쎈퓠占쎄퐣 燁삳�諭띈린�뜇�깈�몴占� 占쎌뵠沃섓옙 占쎄텢占쎌뒠餓λ쵐�뵥筌욑옙 占쎈솇占쎈뼊
 	 * @param cardNum
 	 * @return
 	 * @throws SQLException
@@ -129,7 +129,7 @@ private static PULoginDAO pul_dao;
 	}//selectGuest
 	
 	/**
-	 * �쉶�썝�쓽 �븘�씠�뵒媛� �쁽�옱 PC�뿉�꽌 �옄由ъ씠�룞 �벑 �쓽 �긽�깭媛� 媛��뒫�븳吏� �뿬遺�
+	 * 占쎌돳占쎌뜚占쎌벥 占쎈툡占쎌뵠占쎈탵揶쏉옙 占쎌겱占쎌삺 PC占쎈퓠占쎄퐣 占쎌쁽�뵳�딆뵠占쎈짗 占쎈쾻 占쎌벥 占쎄맒占쎄묶揶쏉옙 揶쏉옙占쎈뮟占쎈립筌욑옙 占쎈연�겫占�
 	 * @param id
 	 * @return
 	 * @throws SQLException
@@ -170,7 +170,7 @@ private static PULoginDAO pul_dao;
 	}//memberIdStatus
 	
 	/**
-	 * 鍮꾪쉶�썝�쓽 移대뱶媛� �쁽�옱 PC�뿉�꽌 �옄由ъ씠�룞 �벑�쓽 �긽�깭媛� 媛��뒫�븳吏� �뿬遺�
+	 * �뜮袁れ돳占쎌뜚占쎌벥 燁삳�諭뜹첎占� 占쎌겱占쎌삺 PC占쎈퓠占쎄퐣 占쎌쁽�뵳�딆뵠占쎈짗 占쎈쾻占쎌벥 占쎄맒占쎄묶揶쏉옙 揶쏉옙占쎈뮟占쎈립筌욑옙 占쎈연�겫占�
 	 * @param cardNum
 	 * @return
 	 * @throws SQLException
@@ -211,7 +211,7 @@ private static PULoginDAO pul_dao;
 	}//guestIdStatus
 	
 	/**
-	 * �쉶�썝�쓽 �븘�씠�뵒�� 鍮꾨�踰덊샇媛� 留욌떎硫� �궓���떆媛� �젙蹂대�� 媛��졇�삤�뒗 �씪
+	 * 占쎌돳占쎌뜚占쎌벥 占쎈툡占쎌뵠占쎈탵占쏙옙 �뜮袁⑨옙甕곕뜇�깈揶쏉옙 筌띿쉶�뼄筌롳옙 占쎄텚占쏙옙占쎈뻻揶쏉옙 占쎌젟癰귣�占쏙옙 揶쏉옙占쎌죬占쎌궎占쎈뮉 占쎌뵬
 	 * @param pucvo
 	 * @return
 	 * @throws SQLException
@@ -254,7 +254,7 @@ private static PULoginDAO pul_dao;
 	}//memberLogin
 	
 	/**
-	 * 鍮꾪쉶�썝�쓽 移대뱶踰덊샇媛� 留욌뒗吏� �뙋�떒
+	 * �뜮袁れ돳占쎌뜚占쎌벥 燁삳�諭띈린�뜇�깈揶쏉옙 筌띿쉶�뮉筌욑옙 占쎈솇占쎈뼊
 	 * @param cardNum
 	 * @return
 	 * @throws SQLException
@@ -297,7 +297,7 @@ private static PULoginDAO pul_dao;
 	}//guestCheck
 	
 	/**
-	 * �쉶�썝�씠 濡쒓렇�씤 �뻽�쓣 �븣 濡쒓렇�씤�븳 PC�쓽 �긽�깭蹂�寃�
+	 * 占쎌돳占쎌뜚占쎌뵠 嚥≪뮄�젃占쎌뵥 占쎈뻥占쎌뱽 占쎈르 嚥≪뮄�젃占쎌뵥占쎈립 PC占쎌벥 占쎄맒占쎄묶癰귨옙野껓옙
 	 * @param pumsvo
 	 * @throws SQLException
 	 */
@@ -342,7 +342,7 @@ private static PULoginDAO pul_dao;
 	}//changeMemberState
 	
 	/**
-	 * 鍮꾪쉶�썝�씠 濡쒓렇�씤 �뻽�쓣 �븣 濡쒓렇�씤�븳 PC�쓽 �긽�깭蹂�寃�
+	 * �뜮袁れ돳占쎌뜚占쎌뵠 嚥≪뮄�젃占쎌뵥 占쎈뻥占쎌뱽 占쎈르 嚥≪뮄�젃占쎌뵥占쎈립 PC占쎌벥 占쎄맒占쎄묶癰귨옙野껓옙
 	 * @param pugsvo
 	 * @return
 	 * @throws SQLException
@@ -388,7 +388,7 @@ private static PULoginDAO pul_dao;
 	}//changeGuestState
 	
 	/**
-	 * 愿�由ъ옄�쓽 怨듭��궗�빆
+	 * �꽴占썹뵳�딆쁽占쎌벥 �⑤벊占쏙옙沅쀯옙鍮�
 	 * @return
 	 * @throws SQLException
 	 */
