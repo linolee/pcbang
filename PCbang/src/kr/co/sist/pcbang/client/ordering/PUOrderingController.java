@@ -134,6 +134,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	//			System.out.println(lunch_code);
 				try {
 					PUOrderVO puovo=puo_dao.selectCode(p_code.toString());
+					
 					if(puovo==null) {//코드로 조회된 결과기 없을 때
 						JOptionPane.showMessageDialog(puov, p_code+"로 조회된 도시락이 없습니다.");
 					}else {//코드로 조회된 결과가 있을 때

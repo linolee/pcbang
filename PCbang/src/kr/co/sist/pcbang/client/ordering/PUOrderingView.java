@@ -282,6 +282,6 @@ public class PUOrderingView extends JFrame {
 	
 	public static void main(String[] args) {
 		new PUOrderingView();
-	}//main
+	}//main	
 	
 }//class
