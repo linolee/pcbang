@@ -51,7 +51,7 @@ public class PMOrderController implements ActionListener, MouseListener{
 				dtmOrder.addRow(rowData);
 			}//end for
 
-			if(listOrder.isEmpty()) {//입력된 주문이 없을 때
+			if(listOrder.isEmpty()) {//입력된 주문이 없을 때 
 				//JOptionPane.showMessageDialog(pmov, "입력된 제품이 없습니다.");
 				Object[] nullData = new Object[8];
 				nullData[0] = "요청된";
