@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.net.URL;
+import java.nio.file.attribute.UserPrincipalLookupService;
 import java.sql.SQLException;
 import java.util.Random;
 
@@ -20,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import kr.co.sist.pcbang.client.main.PUMainController;
 import kr.co.sist.pcbang.client.main.PUMainView;
 
 @SuppressWarnings("serial")
@@ -50,18 +52,24 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 	private Graphics buffg;
 	
 	private PUMileageDAO a_dao;
+	private PUMainView pumvo;
 	
 	private int mile;
 	
-	private PUMainView pumv;
+//	private PUMainView pumv;
+//	private PUMainController pumc;
 	
 	public PUMileageStore() {
 		
 		a_dao=PUMileageDAO.getInstance();
+		pumvo=PUMainView.getInstance();
+		
 		userName();
 		
-//		String name = pumv.getJlName();
+		String id = pumvo.id;
+		System.out.println(id);
 		
+		System.out.println(id);
 		init();
 		start();
 

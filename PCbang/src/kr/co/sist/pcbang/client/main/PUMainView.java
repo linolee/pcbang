@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import kr.co.sist.pcbang.client.mileage.PUMileageDAO;
+
 @SuppressWarnings("serial")
 public class PUMainView extends JFrame{
 	
@@ -22,6 +24,7 @@ public class PUMainView extends JFrame{
 	public String id=userId;
 	public String card=cardNum;
 	//public static String seatNum;
+	private static PUMainView pumvo;
 	
 	public PUMainView() {
 		super("PC방 사용자-메인");
@@ -38,7 +41,7 @@ public class PUMainView extends JFrame{
 		jbtChange=new JButton("좌석 변경");
 		jbtMsg=new JButton("메세지");
 		jbtExit=new JButton("사용 종료");
-		jbtMileage=new JButton("마일리지");
+		jbtMileage=new JButton("마일리지 상점");
 		
 		JLabel jlSeat=new JLabel("No.");
 		JLabel jlUseTimeTitle=new JLabel("사용시간          ");
@@ -105,6 +108,16 @@ public class PUMainView extends JFrame{
 		setBounds(20, 20, 400, 290);
 		setVisible(true);
 	}//PUMainView
+	
+	public static PUMainView getInstance() {
+		if(pumvo==null) {
+			pumvo=new PUMainView();
+		}
+		return pumvo;
+	}
+	
+	
+	
 
 	public JLabel getJlSeatNum() {
 		return jlSeatNum;

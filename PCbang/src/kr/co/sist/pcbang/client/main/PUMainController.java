@@ -29,12 +29,18 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	private int RestTime;
 	private Thread threadOrdering;
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	private String id;
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
 	public PUMainController(PUMainView pumv) {
 		this.pumv=pumv;
 		pu_manager = new PUManager(this);
 		pum_dao=PUMainDAO.getInstance();
 		try {
-			String id=pumv.id;
+			id=pumv.id;
 			String card=pumv.card;
 			if(id==null) {
 				id="";
@@ -44,6 +50,9 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			}//end if
 			searchUseInfo(id,card);//사용자 정보 조회
 			//System.out.println("로그인 되었습니다.");
+			
+			
+			
 		} catch (UnknownHostException e) {
 			System.out.println("아이피주소를 출력할수 없음");
 			e.printStackTrace();
@@ -56,6 +65,10 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			threadOrdering.start();
 		}//end if
 	}//PUMainController
+
+	public String getId() {
+		return id;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -78,10 +91,18 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		if(ae.getSource()==pumv.getJbtMsg()) {//메세지
 			pu_manager.getPumsgv().setVisible(true);
 		}//end if
+
 		
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		if(ae.getSource()==pumv.getJbtMileage()) {
+			if(!id.equals("")) {
 			new PUMileageStore();
+			} else {
+				JOptionPane.showMessageDialog(pumv, "회원만 이용가능한 버튼입니다");
+			}
 		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		
 		
