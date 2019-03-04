@@ -20,6 +20,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import kr.co.sist.pcbang.client.main.PUMainView;
+
 @SuppressWarnings("serial")
 public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 
@@ -32,11 +34,9 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 	private boolean KeyDown = false;
 	private boolean KeyLeft = false;
 	private boolean KeyRight = false;
-//	private boolean KeySpace = false;
 
 	private int cnt;
 
-//	private int player_Speed; // 유저의 캐릭터가 움직이는 속도를 조절
 	private int player_Status = 0;
 
 	private Thread th;
@@ -53,21 +53,19 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 	
 	private int mile;
 	
-	
-	
+	private PUMainView pumv;
 	
 	public PUMileageStore() {
-		super("Mileage Store");
-		
 		
 		a_dao=PUMileageDAO.getInstance();
 		userName();
 		
+//		String name = pumv.getJlName();
 		
 		init();
 		start();
 
-//		setTitle("마일리지");
+		setTitle("마일리지");
 		// 화면 크기
 		setSize(f_width, f_height);
 
@@ -91,17 +89,17 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 	
 	
 	public void init() {
-		x = 395;  // 캐릭터의 위치
-		y = 370;
-		f_width = 840;
-		f_height = 840;
+		x = 320;  // 캐릭터의 위치
+		y = 120;
+		f_width =671;
+		f_height = 506;
 
 		String path = this.getClass().getResource("/").getPath()+"kr/co/sist/pcbang/client/mileage/";
 //		URL path = (getClass().getClassLoader().getResource("e/"));
 //		String path=ClassLoader.getSystemClassLoader().getResource(".").getPath();
 //		URL path=getClass().getResource("background.png");
 //		URL path=getClass().getResource("game");
-		System.out.println(path);
+		
 		Player_img = new Image[4];
 		for (int i = 0; i < Player_img.length; ++i) {
 			Player_img[i] = new ImageIcon(path+"img/char_f"+i+".png").getImage();
@@ -123,19 +121,20 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 //		BackGround_img = new ImageIcon(path+"images/background.png").getImage();
 		BackGround_img = new ImageIcon(path+"img/background.png").getImage();
 
+//		player_Speed = 5; // 유저 캐릭터 움직이는 속도 설정
 		
 		//////// BGM
-//		  try
-//	        {
-//	            AudioInputStream ais = AudioSystem.getAudioInputStream(new File(path+"bgm/baram.wav"));
-//	            Clip clip = AudioSystem.getClip();
-//	            clip.stop();
-//	            clip.open(ais);
-//	            clip.start();
-//	        }
-//	        catch (Exception ex)
-//	        {
-//	        }
+		  try
+	        {
+	            AudioInputStream ais = AudioSystem.getAudioInputStream(new File(path+"bgm/baram.wav"));
+	            Clip clip = AudioSystem.getClip();
+	            clip.stop();
+	            clip.open(ais);
+	            clip.start();
+	        }
+	        catch (Exception ex)
+	        {
+	        }
 		
 
 	}
@@ -288,18 +287,23 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 	// 특정 영역에 이동시 값을 반환
 	public void getItem() {
 			
+//		System.out.println("x좌표 : "+x+" y좌표 : "+y );
+		
 			Random r=new Random();
 			int addTime=r.nextInt(100);
 			
 			try {
 				
-			for(int i=290;i<390;i++) {
+			for(int i=70;i<150;i++) {
 				if(x==0 && y==i) {
 					
 					if(a_dao.getMileage("houuking")>=500) {
-						
+						System.out.println(1);
+						System.out.println(addTime);
 						a_dao.updateMileage(addTime, 500, "houuking");
+						System.out.println(2);
 					JOptionPane.showMessageDialog(this, addTime+"분 당첨 !!! ㅊㅋㅊㅋ");
+					System.out.println(3);
 					userName();
 					falseKey();
 					} else{
@@ -310,7 +314,7 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 					
 					
 				}
-				if(x==790 && y==i) {
+				if(x==625 && y==i) {
 					
 					if(a_dao.getMileage("houuking")>=1000) {
 					
@@ -327,13 +331,13 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 				e.printStackTrace();
 			}
 			 
-			for(int i=350;i<440;i++) {
+			for(int i=270;i<360;i++) {
 				
-				if(x==i && y==20) {
-					JOptionPane.showMessageDialog(this, "PKDmsfmofvmld,ADLPKDmsfmvmld,ADLPKDmsfmofvmld,ADLPKDmsfmofvmld,ADLPKDmsfmofvmld,ADL");
-					falseKey();
-				}
-				if(x==i && y==750) {
+//				if(x==i && y==20) {
+//					JOptionPane.showMessageDialog(this, "PKDmsfmofvmld,ADLPKDmsfmvmld,ADLPKDmsfmofvmld,ADLPKDmsfmofvmld,ADLPKDmsfmofvmld,ADL");
+//					falseKey();
+//				}
+				if(x==i && y==420) {
 					JOptionPane.showMessageDialog(this, "ㅂㅂ");
 					System.exit(0);
 				}
@@ -347,20 +351,20 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 		buffg.setFont(new Font("Defualt", Font.BOLD, 15));
 //폰트 설정을 합니다.  기본폰트, 굵게, 사이즈 20
 
-		buffg.drawString("보유 마일리지 : "+mile+"원", 600, 70);
+		buffg.drawString("보유 마일리지 : "+mile+"원", 500, 50);
 //		try {
 //			buffg.drawString("보유 마일리지 : "+a_dao.getMileage("houuking")+"원", 600, 70);
 //		} catch (SQLException e) {
 //			e.printStackTrace();
 //		}
 
-		buffg.drawString("500마일리지 뽑기 ", 50, 400);
+		buffg.drawString("500마일리지 뽑기 ", 40, 200);
 
-		buffg.drawString("1000마일리지 -> 1시간", 600, 400);
+		buffg.drawString("1000마일리지 -> 1시간", 500, 200);
 		
-		buffg.drawString("도움말", 390, 80);
+//		buffg.drawString("도움말", 390, 80);
 		
-		buffg.drawString("출구", 400, 770);
+		buffg.drawString("출구", 250, 500);
 
 		
 //	String path2 = this.getClass().getResource("/").getPath()+"game/";
