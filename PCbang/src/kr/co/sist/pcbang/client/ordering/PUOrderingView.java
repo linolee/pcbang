@@ -37,17 +37,18 @@ public class PUOrderingView extends JFrame {
 			}//isCellEditable
 		};
 		jtBestProduct=new JTable(dtmBestProduct) {
-//			@SuppressWarnings({ "unchecked", "rawtypes" })
-//			@Override
-//			public Class getColumnClass(int column) {//이미지
-//				return getValueAt(0, column).getClass();
-//			}//getColumnClass
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			@Override
+			public Class getColumnClass(int column) {//이미지
+				return getValueAt(0, column).getClass();
+			}//getColumnClass
 		};
 		jtBestProduct.getTableHeader().setResizingAllowed(false);//컬럼의 크기 변경 막기
 		jtBestProduct.getTableHeader().setReorderingAllowed(false);//컬럼의 이동 막기
 		jtBestProduct.setRowHeight(95);
 		/////메뉴 테이블///////
-		dtmMenu=new DefaultTableModel(10,5) {
+		String[] columns= {"이미지","이름","가격","상품코드"};
+		dtmMenu=new DefaultTableModel(columns,4) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -64,37 +65,52 @@ public class PUOrderingView extends JFrame {
 		jtMenu.getTableHeader().setReorderingAllowed(false);//컬럼의 이동 막기
 		jtMenu.setRowHeight(100);
 		
-		dtmRamen=new DefaultTableModel(10, 5) {
+		dtmRamen=new DefaultTableModel(columns,4) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}//isCellEditable
 		};
 		jtRamen=new JTable(dtmRamen) {
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			@Override
+			public Class getColumnClass(int column) {//이미지
+				return getValueAt(0, column).getClass();
+		}//getColumnClass
 		};
 		jtRamen.getTableHeader().setResizingAllowed(false);//컬럼의 크기 변경 막기
 		jtRamen.getTableHeader().setReorderingAllowed(false);//컬럼의 이동 막기
 		jtRamen.setRowHeight(100);
 
-		dtmSnack=new DefaultTableModel(10, 5) {
+		dtmSnack=new DefaultTableModel(columns,4) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}//isCellEditable
 		};
 		jtSnack=new JTable(dtmSnack) {
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			@Override
+			public Class getColumnClass(int column) {//이미지
+				return getValueAt(0, column).getClass();
+			}//getColumnClass
 		};
 		jtSnack.getTableHeader().setResizingAllowed(false);//컬럼의 크기 변경 막기
 		jtSnack.getTableHeader().setReorderingAllowed(false);//컬럼의 이동 막기
 		jtSnack.setRowHeight(100);
 		
-		dtmDrink=new DefaultTableModel(10, 5) {
+		dtmDrink=new DefaultTableModel(columns,4) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}//isCellEditable
 		};
 		jtDrink=new JTable(dtmDrink) {
+			@SuppressWarnings({ "unchecked", "rawtypes" })
+			@Override
+			public Class getColumnClass(int column) {//이미지
+				return getValueAt(0, column).getClass();
+			}//getColumnClass
 		};
 		jtDrink.getTableHeader().setResizingAllowed(false);//컬럼의 크기 변경 막기
 		jtDrink.getTableHeader().setReorderingAllowed(false);//컬럼의 이동 막기

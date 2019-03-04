@@ -150,4 +150,36 @@ public class PUOrderingDAO {
 		}//end finally
 		return list;
 	}//selectProductRamen
+
+	public PUOrderVO selectCode(String p_code) throws SQLException{
+		PUOrderVO pouvo=null;
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+		//1.
+		//2.
+			con=getConn();
+		//3.
+			String selectPro="SELECT MENU_NAME,MENU_PRICE,IMG FROM MENU WHERE MENU_CODE=?";
+			pstmt=con.prepareStatement(selectPro);
+		//4.
+			pstmt.setString(1, p_code);
+		//5.
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				pouvo=new PUOrderVO(rs.getString("IMG"),p_code,  rs.getString("MENU_NAME"),
+										rs.getString("MENU_PRICE"));
+			}//end if
+		}finally {
+			//6.
+			if(rs!=null) {rs.close();}//end if
+			if(pstmt!=null) {pstmt.close();}//end if
+			if(con!=null) {con.close();}//end if
+		}//end finally
+		
+		return pouvo;
+	}//selectCode
 }//class
