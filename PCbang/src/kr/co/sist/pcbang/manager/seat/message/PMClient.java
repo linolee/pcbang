@@ -79,26 +79,25 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 			flag = temp.substring(0, temp.indexOf("]") + 1);// [order]
 			switch (flag) {
 			case "[order]":// 주문을 넣었을 때
-				pmsc.getPmov().getPmoc().setOrder();
-				pmsc.getPmov().getPmoc().setOrderComplete();
 			case "[login]":// 처음 접속했을 때
 				pmsc.seatLoad();
 				pmsc.setBtnSeat();
 				break;
 			case "[message]":// 메세지 값이 도착했을 때
+				System.out.println("메시지 도착");
+				
 				mv.getJtaMsg().setText(mv.getJtaMsg().getText()+"[상대] : "+temp.substring(temp.indexOf("]") + 1)+"\n");
 				mv.setVisible(true);
 				mv.requestFocus();
 				mv.getJspTalkDisplay().getVerticalScrollBar().setValue(mv.getJspTalkDisplay().getVerticalScrollBar().getMaximum());
-				pmsc.seatLoad();
-				pmsc.setBtnSeat();
-				break;//
+				break;
 			case "[close]":// 기존 좌석을 로그아웃 해야할 때
 				closeOrder(Integer.parseInt(temp.substring(temp.indexOf("]") + 1)));
 				break;
 			case "[logout]":// 사용자가 종료할 때
 				dropClient();
-				System.out.println("사용자 제거 완료");
+				pmsc.seatLoad();
+				pmsc.setBtnSeat();
 				break;
 
 			default:
@@ -114,11 +113,15 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 	}
 
 	private void sendMsg(String msg) throws IOException {
-		mv.getJtaMsg().append("[관리자] : "+msg.substring(msg.indexOf("]") + 1)+"\n");
-		mv.getJtfMsg().setText("");
-		msg = "[message]" + msg;
-		writeStream(msg);
-		mv.getJspTalkDisplay().getVerticalScrollBar().setValue(mv.getJspTalkDisplay().getVerticalScrollBar().getMaximum());
+		if (!msg.equals("")) {//공백이 아닐 경우
+			mv.getJtaMsg().append("[관리자] : "+msg.substring(msg.indexOf("]") + 1)+"\n");
+			mv.getJtfMsg().setText("");
+			msg = "[message]" + msg;
+			writeStream(msg);
+			mv.getJspTalkDisplay().getVerticalScrollBar().setValue(mv.getJspTalkDisplay().getVerticalScrollBar().getMaximum());
+		}else {//공백이 입력될 경우
+			mv.getJtfMsg().setText("");
+		}
 	}
 
 	private void closeOrder(int seatNum) throws IOException {//해당 pc에 종료명령을 내리는 메소드
@@ -168,7 +171,6 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 		if (ae.getSource() == mv.getJbtSendMsg() || ae.getSource() == mv.getJtfMsg()) {
 			try {
 				sendMsg(mv.getJtfMsg().getText().trim());
-				System.out.println("메세지 전송");
 			} catch (IOException ie) {
 				JOptionPane.showMessageDialog(mv, "서버가 종료되어 메세지를 전송할 수 없습니다");
 				ie.printStackTrace();
