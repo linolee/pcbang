@@ -2,7 +2,7 @@ package kr.co.sist.pcbang.client.ordering;
 
 public class PUOrderAddVO {
 	private String productCode,productName,productPrice;
-	private int productQuan;
+	private Integer productQuan;
 	
 	public PUOrderAddVO(String productCode, String productName, String productPrice, int productQuan) {
 		this.productCode = productCode;
@@ -22,6 +22,12 @@ public class PUOrderAddVO {
 	}
 	public int getProductQuan() {
 		return productQuan;
+	}
+	
+	
+	
+	public void setProductQuan(Integer productQuan) {
+		this.productQuan = productQuan;
 	}
 
 	@Override

@@ -46,12 +46,23 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	private PUMainController pumc;
 	public static final int DBL_CLICK=2;
 	private JButton jb;
+	private List<PUOrderAddVO> items;
     
 	
 	public PUOrderingController(PUOrderingView puov) {
 		this.puov=puov;
 		jb=new JButton("취소");
 		puo_dao=PUOrderingDAO.getInstance();
+		items = new ArrayList<>();
+		try {
+			List<PUOrderVO> templist = puo_dao.selectProduct();
+			for (int i = 0; i < templist.size(); i++) {
+				items.add(new PUOrderAddVO(templist.get(i).getProductCode(), templist.get(i).getProductName(), templist.get(i).getProductPrice(), 0));
+				System.out.println(items.get(i));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 //		보내주는 부분과 저장되는 위치가 정확하지 않아 이부분에서 Error
 //		try {
@@ -529,4 +540,17 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		}//end else
 
     } // end public void JTableRemoveRow()
+	
+	private void setOrderTable() {
+		for (PUOrderAddVO item : items) {
+			
+		}
+	}
+
+	private void addOrderTable(String productCode) {
+		for (PUOrderAddVO item : items) {
+			if (item.getProductCode().equals(productCode)) {//
+			}
+		}
+	}
 }//class
