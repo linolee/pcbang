@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import kr.co.sist.pcbang.client.charge.PUChargeView;
+import kr.co.sist.pcbang.client.mileage.PUMileageStore;
 import kr.co.sist.pcbang.client.ordering.PUOrderingView;
 
 public class PUMainController extends WindowAdapter implements ActionListener,Runnable{
@@ -77,6 +78,13 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		if(ae.getSource()==pumv.getJbtMsg()) {//메세지
 			pu_manager.getPumsgv().setVisible(true);
 		}//end if
+		
+		if(ae.getSource()==pumv.getJbtMileage()) {
+			new PUMileageStore();
+		}
+		
+		
+		
 		if(ae.getSource()==pumv.getJbtExit()) {//사용종료
 			//비회원일때에는 시간이 저장되지 않습니다...
 			if(!pumv.card.equals("")) {

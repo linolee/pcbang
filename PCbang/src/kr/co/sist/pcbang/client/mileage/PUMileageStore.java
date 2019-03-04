@@ -279,16 +279,15 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 		KeyDown=false;
 		KeyLeft=false;
 		KeyRight=false;
-		x=395;
-		y=370;
+		x=320;
+		y=120;
+		
 		player_Status=0;
 	}
 	
 	// 특정 영역에 이동시 값을 반환
 	public void getItem() {
 			
-//		System.out.println("x좌표 : "+x+" y좌표 : "+y );
-		
 			Random r=new Random();
 			int addTime=r.nextInt(100);
 			
@@ -333,10 +332,6 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 			 
 			for(int i=270;i<360;i++) {
 				
-//				if(x==i && y==20) {
-//					JOptionPane.showMessageDialog(this, "PKDmsfmofvmld,ADLPKDmsfmvmld,ADLPKDmsfmofvmld,ADLPKDmsfmofvmld,ADLPKDmsfmofvmld,ADL");
-//					falseKey();
-//				}
 				if(x==i && y==420) {
 					JOptionPane.showMessageDialog(this, "ㅂㅂ");
 					System.exit(0);
@@ -463,10 +458,6 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 		case KeyEvent.VK_RIGHT:
 			KeyRight = false;
 			break;
-
-//		case KeyEvent.VK_SPACE:
-//			KeySpace = false;
-//			break;
 
 		}
 	}
