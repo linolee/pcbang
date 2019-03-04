@@ -284,10 +284,4 @@ public class PUOrderingView extends JFrame {
 		new PUOrderingView();
 	}//main
 	
-	
-	
-	
-	
-	
-	
 }//class
