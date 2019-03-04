@@ -32,16 +32,21 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 	public void sendMsg() throws IOException {
 		// 작성된 메세지를 가져와서
 		String sendMsg = pumv.getJtfChat().getText().trim();
-		// 스트림에 기록하고
-		pu_manager.getWriteStream().writeUTF("[message]" + sendMsg);
-		// 스트림의 내용을 목적지로 분출
-		pu_manager.getWriteStream().flush();
-		// 작성된 메세지를 채팅창에 출력한다.
-		pumv.getJtaChat().append("[나] : " + sendMsg + "\n");
-		// T.F의 내용을 삭제한다.
-		pumv.getJtfChat().setText("");
-		pumv.getJspChat().getVerticalScrollBar().setValue(pumv.getJspChat().getVerticalScrollBar().getMaximum());
-		///////////////////////////////////////////////////////////////////////////////////
+
+		if (!sendMsg.equals("")) {//공백이 입력되지 않았을 때
+			// 스트림에 기록하고
+			pu_manager.getWriteStream().writeUTF("[message]" + sendMsg);
+			// 스트림의 내용을 목적지로 분출
+			pu_manager.getWriteStream().flush();
+			// 작성된 메세지를 채팅창에 출력한다.
+			pumv.getJtaChat().append("[나] : " + sendMsg + "\n");
+			// T.F의 내용을 삭제한다.
+			pumv.getJtfChat().setText("");
+			pumv.getJspChat().getVerticalScrollBar().setValue(pumv.getJspChat().getVerticalScrollBar().getMaximum());
+		}else {//공백이 입력됐을 때
+			pumv.getJtfChat().setText("");// T.F의 내용을 삭제한다.
+		}
+    ///////////////////////////////////////////////////////////////////////////////////
 		///////////////////////////////////////////////////////////////////////////////////
 		//DAO 사용해서 PC_Status의 Message_Status를 변경해야함
 		///////////////////////////////////////////////////////////////////////////////////
