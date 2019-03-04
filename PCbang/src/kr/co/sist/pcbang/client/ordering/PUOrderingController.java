@@ -126,7 +126,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		
 		if(me.getSource()==puov.getJtBestProduct()) {//베스트 메뉴
 			switch(me.getClickCount()) {
-			case DBL_CLICK :
+			case DBL_CLICK ://
 				JTable jt=puov.getJtBestProduct();
 				Object p_code=jt.getValueAt(0, jt.getSelectedColumn());
 				System.out.println(jt.getValueAt(0, jt.getSelectedColumn()));
