@@ -130,7 +130,7 @@ public class PMProductDAO {
 			con = getConn();
 			// 3.
 			String selectPrd = 
-					"SELECT category,IMG,menu_price,menu_name from menu WHERE menu_code=?";
+					"SELECT category, IMG, menu_price, menu_name from menu WHERE menu_code=?";
 			pstmt=con.prepareStatement(selectPrd);
 			// 4.
 			pstmt.setString(1, code);
@@ -178,17 +178,28 @@ public class PMProductDAO {
 		//3.
 			StringBuilder searchPrd = new StringBuilder();
 			searchPrd
-			.append("	select m.menu_code, m.menu_name, m.img, m.menu_price, o.quan, (m.menu_price)*(o.quan) total ")
-			.append("	from menu m, ordering o				")
-			.append("	where o.menu_code=m.menu_code		")
-			.append("	and m.category=	?")
-			.append("	and m.menu_name= ?	")
-			.append("	order by m.menu_code	");
-		
-			pstmt=con.prepareStatement(searchPrd.toString());
-			//4.
+			.append("	select menu_code, menu_name, img, menu_price,quan, menu_price* quan as total ")
+			.append("	from (select m.category, m.menu_code, m.menu_name, m.img, m.menu_price, nvl((select sum(o1.quan) from ordering o1 where (m.menu_code=o1.menu_code) group by m.menu_code),0) as quan				")
+			.append("	from menu m)		");
+			
+				
+			// Ä«Å×°í¸®¿Í ÀÌ¸§ÀÌ µÑ´Ù ºóÄ­ÀÌ ¾Æ´Ï¶ó¸é Äõ¸® Ãß°¡
+			if(!menuName.equals("")) {
+				searchPrd.append("where category= ? and menu_name like '%'||?||'%'");
+				System.out.println("Ä«Å×°í¸®¿Í ÀÌ¸§ µÑ ´Ù ºóÄ­ ¾Æ´Ô");
+				pstmt=con.prepareStatement(searchPrd.toString());
+				//4.
+					pstmt.setString(1, category);
+					pstmt.setString(2, menuName);
+			}else {
+				searchPrd.append("where category= ? ");
+				System.out.println("Ä«Å×°í¸®°¡ ºóÄ­ ¾Æ´Ô");
+				pstmt=con.prepareStatement(searchPrd.toString());
+				//4.
 				pstmt.setString(1, category);
-				pstmt.setString(2, menuName);
+				
+			}
+			
 			//5.
 				rs=pstmt.executeQuery();
 				PMSchProductVO pmspvo=null;

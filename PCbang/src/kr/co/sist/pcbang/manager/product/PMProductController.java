@@ -8,7 +8,6 @@ import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -75,7 +74,7 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 			PMProductVO pmpvo = null;
 			/////////////////////////////////////////경로 나중에 바꾸기/////////////////////////////////
 //			String imgPath = "C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img/s_"; 
-			String imgPath = this.getClass().getResource("/").getPath()+"kr/co/sist/pcbang/manager/product/img/"; 
+			String imgPath = this.getClass().getResource("/").getPath()+"kr/co/sist/pcbang/manager/product/img/s_"; 
 			Object[] rowData = null;
 			for (int i = 0; i < listproduct.size(); i++) {
 				pmpvo = listproduct.get(i);
