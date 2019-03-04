@@ -125,8 +125,7 @@ public class PMUserDetailView extends JFrame {
 		int f_ypos = (int) (screen.getHeight() / 2 - f_height / 2);
 		
 		
-		setLocation(f_xpos, f_ypos);
-//		setBounds(100, 100, 500, 400);
+		setLocation(f_xpos, f_ypos); 
 		setSize(f_width, f_height);
 	 }
 
