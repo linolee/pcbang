@@ -67,9 +67,9 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 		userName();
 		
 		String id = pumvo.id;
-		System.out.println(id);
+//		System.out.println(id);
 		
-		System.out.println(id);
+//		System.out.println(id);
 		init();
 		start();
 
@@ -82,6 +82,11 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 		int f_xpos = (int) (screen.getWidth() / 2 - f_width / 2);
 		int f_ypos = (int) (screen.getHeight() / 2 - f_height / 2);
 
+		
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		
 		setLocation(f_xpos, f_ypos);
 		setResizable(false);
 		setVisible(true);
@@ -338,12 +343,18 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 				e.printStackTrace();
 			}
 			 
+			
 			for(int i=270;i<360;i++) {
 				
 				if(x==i && y==420) {
 					JOptionPane.showMessageDialog(this, "¤²¤²");
-					System.exit(0);
+					x=100;
+					y=100;
+					this.dispose();
+//					return;
+//					System.exit(0);
 				}
+				
 			}
 			
 		}
