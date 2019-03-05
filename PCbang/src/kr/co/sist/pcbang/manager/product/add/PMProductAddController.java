@@ -78,12 +78,6 @@ public class PMProductAddController extends WindowAdapter implements ActionListe
 			//파일리스트에 새로운 파일명을 추가한다.
 			PMProductController.PrdImgList.add(file.getName());
 			
-			//PMProductController에  modify 큰이미지, 작은이미지에 관한 내용을 넣으면서 다시 강사님 코드로 고침
-			uploadImg(file);
-			
-			//에러가 나면 catch로 빠져서 DB에 추가가 안됨
-			PMProductDAO.getInstance().insertPrd(pmpavo);//에러가 나지 않는 경우 DB에 추가
-			
 			//리스트 갱신
 			pmpc.setPrd();
 			
@@ -112,12 +106,14 @@ public class PMProductAddController extends WindowAdapter implements ActionListe
 		FileInputStream fis = null;
 		FileOutputStream fos = null;
 		try {
-			// PMProductDetailController에 modify큰이미지,
-			//////////////////////////////////uploadPath 바꿔줘야 함
+			// modify큰이미지,
+			String path = System.getProperty("user.dir");
+			String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\"; 
+			String imgPath = path+filepath;
+			
 			byte[] readData = new byte[512];
-			String imgPath = "C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang";
-			String uploadPath = imgPath+"/manager/product/img/";
-
+			String uploadPath = imgPath;
+			
 			int len = 0;
 			// 작은 이미지 업로드
 			fis = new FileInputStream(file.getParent() + "/s_" + file.getName());// getParent를 쓰면 폴더까지가 나옴

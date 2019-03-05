@@ -69,7 +69,6 @@ public class FileServer extends Thread{
 					
 					dos = new DataOutputStream(client.getOutputStream());
 					dos.writeInt(tempFileList.size());//전송할 파일의 갯수를 보낸다.
-//					System.out.println("없는 파일 : "+tempFileList);
 					
 					for(String fName:tempFileList) {
 						fileSend(fName, dos);
@@ -82,7 +81,7 @@ public class FileServer extends Thread{
 					}//end for
 					
 				}//end while
-
+				
 			}finally {
 				if(server!=null) {server.close();}//end if
 			}//end finally
@@ -99,7 +98,11 @@ public class FileServer extends Thread{
 		try {
 			int fileData = 0;
 			
-			fis=new FileInputStream("C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img/"+fname);
+			String path = System.getProperty("user.dir");
+			String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\"; 
+			String abspath = path+filepath;
+			
+			fis=new FileInputStream(abspath+fname);
 			byte[] readData = new byte[512];
 			
 			int fileLen = 0;
@@ -113,10 +116,9 @@ public class FileServer extends Thread{
 			
 			dos.writeUTF(fname);//writeUTF
 			
-			fis=new FileInputStream("C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img/"+fname);
+			fis=new FileInputStream(abspath+fname);
 			while((fileLen=fis.read(readData))!=-1 ) {//서버에서 전송한 파일조각을 읽어들여
 				dos.write(readData,0,fileLen);//생성한 파일로 기록
-//				fileData--;
 			}//end while
 			dos.flush();
 			
@@ -126,7 +128,4 @@ public class FileServer extends Thread{
 		
 	}//fileSend
 	
-//	public static void main(String[] args) {
-//		new FileServer().start(); //인스턴스 +실행
-//	}//main
 }//class

@@ -64,8 +64,9 @@ public class PMProductDAO {
 			StringBuilder selectAllPrd = new StringBuilder();
 			selectAllPrd.append(
 					"	select menu_code, menu_name, img, menu_price,quan, menu_price* quan as total ")
-					.append("	from (select m.menu_code, m.menu_name, m.img, m.menu_price, nvl((select sum(o1.quan) from ordering o1 where (m.menu_code=o1.menu_code) group by m.menu_code),0) as quan  ")
-					.append("	from menu m) ");
+					.append("	from (select m.menu_code, m.menu_name, m.img, m.menu_price, nvl((select sum(o1.quan) from ordering2 o1 where (m.menu_code=o1.menu_code) group by m.menu_code),0) as quan  ")
+					.append("	from menu m) ")
+					.append("	order by menu_code desc		");
 
 			pstmt = con.prepareStatement(selectAllPrd.toString());
 			// 4.
@@ -158,7 +159,6 @@ public class PMProductDAO {
 	}// selectDetailPrd
 
 	
-	/////////////////PMProductVO가 필요가 없나?////
 	/**
 	 * 상품을 카테고리와 코드로 검색하는 일
 	 * @return
@@ -179,24 +179,26 @@ public class PMProductDAO {
 			StringBuilder searchPrd = new StringBuilder();
 			searchPrd
 			.append("	select menu_code, menu_name, img, menu_price,quan, menu_price* quan as total ")
-			.append("	from (select m.category, m.menu_code, m.menu_name, m.img, m.menu_price, nvl((select sum(o1.quan) from ordering o1 where (m.menu_code=o1.menu_code) group by m.menu_code),0) as quan				")
+			.append("	from (select m.category, m.menu_code, m.menu_name, m.img, m.menu_price, nvl((select sum(o.quan) from ordering2 o where (m.menu_code=o.menu_code) group by m.menu_code),0) as quan				")
 			.append("	from menu m)		");
+
 			
 				
 			// 카테고리와 이름이 둘다 빈칸이 아니라면 쿼리 추가
 			if(!menuName.equals("")) {
 				searchPrd.append("where category= ? and menu_name like '%'||?||'%'");
-				System.out.println("카테고리와 이름 둘 다 빈칸 아님");
+				//.append("	order by menu_code desc		");
 				pstmt=con.prepareStatement(searchPrd.toString());
 				//4.
 					pstmt.setString(1, category);
 					pstmt.setString(2, menuName);
 			}else {
 				searchPrd.append("where category= ? ");
-				System.out.println("카테고리가 빈칸 아님");
+				//.append("	order by menu_code desc		");
 				pstmt=con.prepareStatement(searchPrd.toString());
 				//4.
 				pstmt.setString(1, category);
+				
 				
 			}
 			
