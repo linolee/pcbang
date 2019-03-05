@@ -72,8 +72,8 @@ public class PUNewUserController extends WindowAdapter implements ActionListener
 		JPasswordField jtfPass = punuv.getJpfPass();
 		JTextField jtfName = punuv.getJtfUserName();
 		JComboBox<Integer> jcbBirth1 = punuv.getJcYear();
-		JComboBox<Integer> jcbBirth2 = punuv.getJcMonth();
-		JComboBox<Integer> jcbBirth3 = punuv.getJcDay();
+		JComboBox<String> jcbBirth2 = punuv.getJcMonth();
+		JComboBox<String> jcbBirth3 = punuv.getJcDay();
 		ButtonGroup bgGender = punuv.getBg();
 		JTextField jtftel1 = punuv.getJtfPhone1();
 		JTextField jtftel2 = punuv.getJtfPhone2();

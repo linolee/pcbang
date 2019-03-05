@@ -1,6 +1,7 @@
 package kr.co.sist.pcbang.client.login.newuser;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import javax.swing.ButtonGroup;
@@ -20,8 +21,10 @@ public class PUNewUserView extends JFrame {
 			jtfEmail;
 	private JPasswordField jpfPass, jpfPassCheck;
 	private JButton jbtIdCheck, jbtAddrSearch, jbtOk, jbtCancel;
-	private JComboBox<Integer> jcYear, jcMonth, jcDay;
-	private DefaultComboBoxModel<Integer> cbmYear, cbmMonth, cbmDay;
+	private JComboBox<Integer> jcYear;
+	private JComboBox<String> jcMonth, jcDay;
+	private DefaultComboBoxModel<Integer> cbmYear;
+	private DefaultComboBoxModel<String> cbmMonth, cbmDay;
 	private JRadioButton jrbMale, jrbFemale;
 	private ButtonGroup bg;
 
@@ -52,10 +55,10 @@ public class PUNewUserView extends JFrame {
 
 		cbmYear = new DefaultComboBoxModel<Integer>();
 		jcYear = new JComboBox<Integer>(cbmYear);
-		cbmMonth = new DefaultComboBoxModel<Integer>();
-		jcMonth = new JComboBox<Integer>(cbmMonth);
-		cbmDay = new DefaultComboBoxModel<Integer>();
-		jcDay = new JComboBox<Integer>(cbmDay);
+		cbmMonth = new DefaultComboBoxModel<String>();
+		jcMonth = new JComboBox<String>(cbmMonth);
+		cbmDay = new DefaultComboBoxModel<String>();
+		jcDay = new JComboBox<String>(cbmDay);
 
 		jrbMale = new JRadioButton("남자");
 		jrbFemale = new JRadioButton("여자");
@@ -198,20 +201,34 @@ public class PUNewUserView extends JFrame {
 	}// setYear
 
 	private void setMonth() {// 월 1~12월
+		
 		int now_month = cal.get(Calendar.MONTH) + 1;
 		
+		DecimalFormat df = new DecimalFormat("00");
+
 		for (int month = 1; month < 13; month++) {
-			cbmMonth.addElement(month);
+			if(month < 10) {
+				String str = df.format(month);
+				cbmMonth.addElement(str);			
+			} else {				
+				cbmMonth.addElement(Integer.toString(month));
+			}// end else
 		} // end for
-		
 		jcMonth.setSelectedItem(new Integer(now_month));
 	}// setMonth
 
 	private void setDay() {// 그월의 마지막날
 		int lastDay = cal.getActualMaximum(Calendar.DATE); // 31
 		int  nowDay=cal.get(Calendar.DAY_OF_MONTH);
+		DecimalFormat df = new DecimalFormat("00");
+
 		for (int day = 1; day < lastDay + 1; day++) {
-			cbmDay.addElement(day);
+			if(day < 10) {
+				String str = df.format(day);
+				cbmDay.addElement(str);				
+			}else {
+				cbmDay.addElement(Integer.toString(day));
+			} // end else
 		} // end for
 		jcDay.setSelectedItem(new Integer(nowDay));
 
@@ -281,11 +298,11 @@ public class PUNewUserView extends JFrame {
 		return jcYear;
 	}
 
-	public JComboBox<Integer> getJcMonth() {
+	public JComboBox<String> getJcMonth() {
 		return jcMonth;
 	}
 
-	public JComboBox<Integer> getJcDay() {
+	public JComboBox<String> getJcDay() {
 		return jcDay;
 	}
 
@@ -293,11 +310,11 @@ public class PUNewUserView extends JFrame {
 		return cbmYear;
 	}
 
-	public DefaultComboBoxModel<Integer> getCbmMonth() {
+	public DefaultComboBoxModel<String> getCbmMonth() {
 		return cbmMonth;
 	}
 
-	public DefaultComboBoxModel<Integer> getCbmDay() {
+	public DefaultComboBoxModel<String> getCbmDay() {
 		return cbmDay;
 	}
 
