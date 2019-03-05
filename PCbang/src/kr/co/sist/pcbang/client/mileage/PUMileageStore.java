@@ -64,7 +64,7 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 		init();
 		start();
 
-		setTitle("마일리지");
+		setTitle("★★★ "+id+" ★★★");
 		setSize(f_width, f_height);
 
 		Dimension screen = tk.getScreenSize();

@@ -41,7 +41,7 @@ public class PUMainView extends JFrame{
 		jbtChange=new JButton("좌석 변경");
 		jbtMsg=new JButton("메세지");
 		jbtExit=new JButton("사용 종료");
-		jbtMileage=new JButton("마일리지상점");
+		jbtMileage=new JButton("마일리지");
 		
 		JLabel jlSeat=new JLabel("No.");
 		JLabel jlUseTimeTitle=new JLabel("사용시간          ");
