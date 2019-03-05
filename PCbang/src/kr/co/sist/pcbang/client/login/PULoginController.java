@@ -67,7 +67,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 					}//end else
 				}else {//있다면 로그인이 안돼는데,자리이동이면~
 					System.out.println("자리이동 유무");
-					if(loginStatus().equals("c")) {
+					if(loginStatus().equals("C")) {
 						//이미 로그인 되어있는데=>자리변경 신청함
 						//System.out.println("자리변경한 상태입니다->로그인");
 						
@@ -111,7 +111,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 							JOptionPane.showMessageDialog(pulv, "카드번호를 확인해주세요");
 						}//end else
 					}else {//있다면 로그인이 안돼는데,자리이동이면~
-						if(loginStatus().equals("c")) {
+						if(loginStatus().equals("C")) {
 							//이미 로그인 되어있는데=>자리변경 신청함
 							if(!login(card)) {
 								new PUMainView();

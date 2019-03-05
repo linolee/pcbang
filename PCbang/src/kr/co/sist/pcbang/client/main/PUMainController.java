@@ -158,7 +158,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 				//남은시간이 없으면 사용종료
 				callcharge(RestTime);
 				
-				Thread.sleep(1000*1);//
+				Thread.sleep(60000*1);//
 				jlRestTime.setText(hourTime(String.valueOf(RestTime-1)));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -246,14 +246,15 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		String card=pumv.card;
 		String useDate = String.valueOf(Calendar.getInstance());
 		
-		JLabel jlUseTime=pumv.getJlRestTime();
+		JLabel jlUseTime=pumv.getJlUseTime();
 		String useTimestr=jlUseTime.getText();//00:00
-		int uTime=minutesTime(useTimestr);//520
+		int uTime=minutesTime(useTimestr);//사용한시간
 		
-		JLabel jlSeatNum=pumv.getJlSeatNum();
-		String seatNum=jlSeatNum.getText();
+		PUMainRestTimeVO pumrtvo=new PUMainRestTimeVO(uTime, id); //남은시간과 아이디
 		
-		JLabel jlRestTime=pumv.getJlRestTime();//->RestTime
+		pum_dao.updateRestTime(pumrtvo);//남은시간 갱신
+		
+		
 		//String restTimestr=jlRestTime.getText();
 		//int restTime=minutesTime(restTimestr);
 
