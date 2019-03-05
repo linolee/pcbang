@@ -8,13 +8,9 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
 import java.sql.SQLException;
 import java.util.Random;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -120,24 +116,7 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 		}
 		
 
-//		BackGround_img = new ImageIcon(path+"images/background.png").getImage();
 		BackGround_img = new ImageIcon(path+"img/background.png").getImage();
-
-//		player_Speed = 5; // 유저 캐릭터 움직이는 속도 설정
-		
-		//////// BGM
-		  try
-	        {
-	            AudioInputStream ais = AudioSystem.getAudioInputStream(new File(path+"bgm/baram.wav"));
-	            Clip clip = AudioSystem.getClip();
-	            clip.stop();
-	            clip.open(ais);
-	            clip.start();
-	        }
-	        catch (Exception ex)
-	        {
-	        }
-		
 
 	}
 
@@ -302,8 +281,8 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 						System.out.println(addTime);
 						a_dao.updateMileage(addTime, 500, id);
 						
-					System.out.println("시간"+pumc.getRestTime());
-					System.out.println("시간"+pumc.getRestTime()+addTime);
+//					System.out.println("시간"+pumc.getRestTime());
+//					System.out.println("시간"+pumc.getRestTime()+addTime);
 					pumc.setRestTime(pumc.getRestTime()+addTime);
 					JOptionPane.showMessageDialog(this, addTime+"분 당첨 !!! ㅊㅋㅊㅋ");
 					userName();
@@ -346,8 +325,6 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 					x=100;
 					y=100;
 					this.dispose();
-//					return;
-//					System.exit(0);
 				}
 				
 			}
@@ -355,25 +332,17 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 		}
 	
 
-	public void Draw_StatusText() { // 상태 체크용 텍스트를 그립니다.
+	public void Draw_StatusText() { 
 
 		buffg.setFont(new Font("Defualt", Font.BOLD, 15));
-//폰트 설정을 합니다.  기본폰트, 굵게, 사이즈 20
 
 		buffg.drawString("보유 마일리지 : "+mile+"원", 500, 50);
-//		try {
-//			buffg.drawString("보유 마일리지 : "+a_dao.getMileage("houuking")+"원", 600, 70);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
 
 		buffg.drawString("500마일리지 뽑기 ", 40, 200);
 
 		buffg.drawString("1000마일리지 -> 1시간", 500, 200);
 		
-//		buffg.drawString("도움말", 390, 80);
-		
-		buffg.drawString("출구", 250, 500);
+		buffg.drawString("닫기", 250, 500);
 
 		
 //	String path2 = this.getClass().getResource("/").getPath()+"game/";
@@ -393,44 +362,35 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 		if (KeyUp == true) {
 			if (y > 20)
 				y -= 5;
-//캐릭터가 보여지는 화면 위로 못 넘어가게 합니다.
 
 			player_Status = 0;
-//이동키가 눌려지면 플레이어 상태를 0으로 돌립니다.
 		}
 
 		if (KeyDown == true) {
 			
 			
-			/////////////////////////////////////// 이동값을 절대값으로 변경해야함 //////////////////////////////////////////////////////////////////////////////
+			/////////////////////////////////////// 이동값을 절대값으로 변경해야함? //////////////////////////////////////////////////////////////////////////////
 			if (y +90 < f_height)
 //				if (y + Player_img[0].getHeight(null) < f_height)
 				y += 5;
-//캐릭터가 보여지는 화면 아래로 못 넘어가게 합니다.
 
 			player_Status = 0;
-//이동키가 눌려지면 플레이어 상태를 0으로 돌립니다.
 		}
 
 		if (KeyLeft == true) {
 			if (x > 0)
 				x -= 5;
-//캐릭터가 보여지는 화면 왼쪽으로 못 넘어가게 합니다.
 
 			player_Status = 0;
-//이동키가 눌려지면 플레이어 상태를 0으로 돌립니다.
 		}
 
 		if (KeyRight == true) {
 //			if (x + Player_img[0].getWidth(null) < f_width)
-			/////////////////////////////////////// 이동값을 절대값으로 변경해야함 //////////////////////////////////////////////////////////////////////////////
+			/////////////////////////////////////// 이동값을 절대값으로 변경해야함? //////////////////////////////////////////////////////////////////////////////
 				if (x+50 < f_width)
 				x += 5;
-//캐릭터가 보여지는 화면 오른쪽으로 못 넘어가게 합니다.
 
 			player_Status = 0;
-//이동키가 눌려지면 플레이어 상태를 0으로 돌립니다.
-//			System.out.println(x);
 			
 		}
 	}
@@ -451,9 +411,6 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 			KeyRight = true;
 			break;
 
-//		case KeyEvent.VK_SPACE:
-//			KeySpace = true;
-//			break;
 		}
 	}
 

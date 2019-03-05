@@ -83,9 +83,9 @@ public class PMUserController implements ActionListener, MouseListener {
 			String id = uv.getJtfId().getText().trim();
 			String name = uv.getJtfName().getText().trim();
 			// 아이디, 이름이 빈칸이면
-			if(id.equals("")&&name.equals("")) {
+			if("".equals(id)&&"".equals(name)) {
 				// 내용입력 메세지창 출력
-				JOptionPane.showMessageDialog(uv, "내용입력");
+				JOptionPane.showMessageDialog(uv, "아이디 혹은 이름을 입력해주세요");
 			} else {
 			// 유저 조회
 			selectUser();
