@@ -25,10 +25,10 @@ public class PUOrderingView extends JFrame {
 	private JLabel jlProductPrice;
 
 	public PUOrderingView() {
-		super("ìƒí’ˆì£¼ë¬¸ì°½");
+		super("»óÇ°ÁÖ¹®Ã¢");
 		
-		//1.ì»´í¬ë„ŒíŠ¸ ìƒì„±
-		/////ë² ìŠ¤íŠ¸ í…Œì´ë¸”///////
+		//1.ÄÄÆ÷³ÍÆ® »ı¼º
+		/////º£½ºÆ® Å×ÀÌºí///////
 		String[] columnsRank= {"1","2","3","4","5","6","7"};
 		dtmBestProduct=new DefaultTableModel(columnsRank, 1) {
 			@Override
@@ -39,15 +39,15 @@ public class PUOrderingView extends JFrame {
 		jtBestProduct=new JTable(dtmBestProduct) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
-			public Class getColumnClass(int column) {//ì´ë¯¸ì§€
+			public Class getColumnClass(int column) {//ÀÌ¹ÌÁö
 				return getValueAt(0, column).getClass();
 			}//getColumnClass
 		};
-		jtBestProduct.getTableHeader().setResizingAllowed(false);//ì»¬ëŸ¼ì˜ í¬ê¸° ë³€ê²½ ë§‰ê¸°
-		jtBestProduct.getTableHeader().setReorderingAllowed(false);//ì»¬ëŸ¼ì˜ ì´ë™ ë§‰ê¸°
+		jtBestProduct.getTableHeader().setResizingAllowed(false);//ÄÃ·³ÀÇ Å©±â º¯°æ ¸·±â
+		jtBestProduct.getTableHeader().setReorderingAllowed(false);//ÄÃ·³ÀÇ ÀÌµ¿ ¸·±â
 		jtBestProduct.setRowHeight(95);
-		/////ë©”ë‰´ í…Œì´ë¸”///////
-		String[] columns= {"ì´ë¯¸ì§€","ì´ë¦„","ê°€ê²©","ìƒí’ˆì½”ë“œ"};
+		/////¸Ş´º Å×ÀÌºí///////
+		String[] columns= {"ÀÌ¹ÌÁö","ÀÌ¸§","°¡°İ","»óÇ°ÄÚµå"};
 		dtmMenu=new DefaultTableModel(columns,4) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -57,12 +57,12 @@ public class PUOrderingView extends JFrame {
 		jtMenu=new JTable(dtmMenu) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
-			public Class getColumnClass(int column) {//ì´ë¯¸ì§€
+			public Class getColumnClass(int column) {//ÀÌ¹ÌÁö
 				return getValueAt(0, column).getClass();
 			}//getColumnClass
 		};
-		jtMenu.getTableHeader().setResizingAllowed(false);//ì»¬ëŸ¼ì˜ í¬ê¸° ë³€ê²½ ë§‰ê¸°
-		jtMenu.getTableHeader().setReorderingAllowed(false);//ì»¬ëŸ¼ì˜ ì´ë™ ë§‰ê¸°
+		jtMenu.getTableHeader().setResizingAllowed(false);//ÄÃ·³ÀÇ Å©±â º¯°æ ¸·±â
+		jtMenu.getTableHeader().setReorderingAllowed(false);//ÄÃ·³ÀÇ ÀÌµ¿ ¸·±â
 		jtMenu.setRowHeight(100);
 		
 		dtmRamen=new DefaultTableModel(columns,4) {
@@ -74,12 +74,12 @@ public class PUOrderingView extends JFrame {
 		jtRamen=new JTable(dtmRamen) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
-			public Class getColumnClass(int column) {//ì´ë¯¸ì§€
+			public Class getColumnClass(int column) {//ÀÌ¹ÌÁö
 				return getValueAt(0, column).getClass();
 		}//getColumnClass
 		};
-		jtRamen.getTableHeader().setResizingAllowed(false);//ì»¬ëŸ¼ì˜ í¬ê¸° ë³€ê²½ ë§‰ê¸°
-		jtRamen.getTableHeader().setReorderingAllowed(false);//ì»¬ëŸ¼ì˜ ì´ë™ ë§‰ê¸°
+		jtRamen.getTableHeader().setResizingAllowed(false);//ÄÃ·³ÀÇ Å©±â º¯°æ ¸·±â
+		jtRamen.getTableHeader().setReorderingAllowed(false);//ÄÃ·³ÀÇ ÀÌµ¿ ¸·±â
 		jtRamen.setRowHeight(100);
 
 		dtmSnack=new DefaultTableModel(columns,4) {
@@ -91,12 +91,12 @@ public class PUOrderingView extends JFrame {
 		jtSnack=new JTable(dtmSnack) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
-			public Class getColumnClass(int column) {//ì´ë¯¸ì§€
+			public Class getColumnClass(int column) {//ÀÌ¹ÌÁö
 				return getValueAt(0, column).getClass();
 			}//getColumnClass
 		};
-		jtSnack.getTableHeader().setResizingAllowed(false);//ì»¬ëŸ¼ì˜ í¬ê¸° ë³€ê²½ ë§‰ê¸°
-		jtSnack.getTableHeader().setReorderingAllowed(false);//ì»¬ëŸ¼ì˜ ì´ë™ ë§‰ê¸°
+		jtSnack.getTableHeader().setResizingAllowed(false);//ÄÃ·³ÀÇ Å©±â º¯°æ ¸·±â
+		jtSnack.getTableHeader().setReorderingAllowed(false);//ÄÃ·³ÀÇ ÀÌµ¿ ¸·±â
 		jtSnack.setRowHeight(100);
 		
 		dtmDrink=new DefaultTableModel(columns,4) {
@@ -108,18 +108,18 @@ public class PUOrderingView extends JFrame {
 		jtDrink=new JTable(dtmDrink) {
 			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
-			public Class getColumnClass(int column) {//ì´ë¯¸ì§€
+			public Class getColumnClass(int column) {//ÀÌ¹ÌÁö
 				return getValueAt(0, column).getClass();
 			}//getColumnClass
 		};
-		jtDrink.getTableHeader().setResizingAllowed(false);//ì»¬ëŸ¼ì˜ í¬ê¸° ë³€ê²½ ë§‰ê¸°
-		jtDrink.getTableHeader().setReorderingAllowed(false);//ì»¬ëŸ¼ì˜ ì´ë™ ë§‰ê¸°
+		jtDrink.getTableHeader().setResizingAllowed(false);//ÄÃ·³ÀÇ Å©±â º¯°æ ¸·±â
+		jtDrink.getTableHeader().setReorderingAllowed(false);//ÄÃ·³ÀÇ ÀÌµ¿ ¸·±â
 		jtDrink.setRowHeight(100);
 		
-		//////ì£¼ë¬¸ëª©ë¡í…Œì´ë¸”//////
-		JLabel jlOrderTitle =new JLabel("ì£¼ë¬¸ ëª©ë¡");
+		//////ÁÖ¹®¸ñ·ÏÅ×ÀÌºí//////
+		JLabel jlOrderTitle =new JLabel("ÁÖ¹® ¸ñ·Ï");
 		jlOrderTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		String[] columnsName= {"ì´ë¦„","ìˆ˜ëŸ‰","ê°€ê²©","ì·¨ì†Œ"};
+		String[] columnsName= {"ÀÌ¸§","¼ö·®","°¡°İ","Ãë¼Ò"};
 		dtmOrderlist=new DefaultTableModel(columnsName,0){};
 		jtOrderlist=new JTable(dtmOrderlist) {
 			@Override
@@ -127,55 +127,55 @@ public class PUOrderingView extends JFrame {
 				return super.isCellEditable(row, 2);
 			}//isCellEditable
 		};
-		jtOrderlist.getTableHeader().setResizingAllowed(false);//ì»¬ëŸ¼ì˜ í¬ê¸° ë³€ê²½ ë§‰ê¸°
-		jtOrderlist.getTableHeader().setReorderingAllowed(false);//ì»¬ëŸ¼ì˜ ì´ë™ ë§‰ê¸°
+		jtOrderlist.getTableHeader().setResizingAllowed(false);//ÄÃ·³ÀÇ Å©±â º¯°æ ¸·±â
+		jtOrderlist.getTableHeader().setReorderingAllowed(false);//ÄÃ·³ÀÇ ÀÌµ¿ ¸·±â
 		jtOrderlist.getColumnModel().getColumn(0).setPreferredWidth(80);
 		jtOrderlist.getColumnModel().getColumn(1).setPreferredWidth(40);
 		jtOrderlist.getColumnModel().getColumn(2).setPreferredWidth(50);
 		jtOrderlist.getColumnModel().getColumn(3).setPreferredWidth(80);
 		jtOrderlist.setRowHeight(23);
 		
-		JLabel jlPrice =new JLabel("ì´ ê°€ê²© : ");
-		jlProductPrice =new JLabel("0ì›");
-		jbtOk=new JButton("ìƒí’ˆ ì£¼ë¬¸");
-		jbtExit=new JButton("ë‹«ê¸°");
+		JLabel jlPrice =new JLabel("ÃÑ °¡°İ : ");
+		jlProductPrice =new JLabel("0¿ø");
+		jbtOk=new JButton("»óÇ° ÁÖ¹®");
+		jbtExit=new JButton("´İ±â");
 		
-		//4.ë°°ì¹˜
+		//4.¹èÄ¡
 		JLabel jlBest=new JLabel("Best 7");
-		jlBest.setHorizontalAlignment(SwingConstants.CENTER);//ê°€ìš´ë° ì •ë ¬
+		jlBest.setHorizontalAlignment(SwingConstants.CENTER);//°¡¿îµ¥ Á¤·Ä
 		JScrollPane jspBest=new JScrollPane(jtBestProduct);
-		setLocationRelativeTo(null);//JTable í¬ê¸° ì •í•´ì£¼ê¸°
-		jspBest.setPreferredSize(new Dimension(850, 120));//JTable í¬ê¸° ì •í•´ì£¼ê¸°
-		///////ìŠ¤í¬ë¡¤ ë°” í• ë‹¹//////////
+		setLocationRelativeTo(null);//JTable Å©±â Á¤ÇØÁÖ±â
+		jspBest.setPreferredSize(new Dimension(850, 120));//JTable Å©±â Á¤ÇØÁÖ±â
+		///////½ºÅ©·Ñ ¹Ù ÇÒ´ç//////////
 		JScrollPane jspMenu=new JScrollPane(jtMenu);
 		JScrollPane jspRamen=new JScrollPane(jtRamen);
 		JScrollPane jspSnack=new JScrollPane(jtSnack);
 		JScrollPane jspDrink=new JScrollPane(jtDrink);
-		//////ë©”ë‰´ íƒ­ ë°°ì¹˜///////
+		//////¸Ş´º ÅÇ ¹èÄ¡///////
 		JPanel jpanelTotal=new JPanel();
 		jpanelTotal.setLayout(new BorderLayout());
 		jpanelTotal.add("Center",jspMenu);
 		
 		jtbMenu= new JTabbedPane();
-		jtbMenu.add("ì „ì²´ ë©”ë‰´", jpanelTotal);
+		jtbMenu.add("ÀüÃ¼ ¸Ş´º", jpanelTotal);
 		//2
 		JPanel jpanelRamen=new JPanel();
 		jpanelRamen.setLayout(new BorderLayout());
 		jpanelRamen.add("Center",jspRamen);
-		jtbMenu.add("ë¼ë©´", jpanelRamen);
+		jtbMenu.add("¶ó¸é", jpanelRamen);
 		//3
 		JPanel jpanelSnack=new JPanel();
 		jpanelSnack.setLayout(new BorderLayout());
 		jpanelSnack.add("Center",jspSnack);
-		jtbMenu.add("ìŠ¤ë‚µ", jpanelSnack);
+		jtbMenu.add("½º³¼", jpanelSnack);
 		//4
 		JPanel jpanelDrink=new JPanel();
 		jpanelDrink.setLayout(new BorderLayout());
 		jpanelDrink.add("Center",jspDrink);
-		jtbMenu.add("ìŒë£Œ", jpanelDrink);
-		///////ì£¼ë¬¸ ë°°ì¹˜//////
+		jtbMenu.add("À½·á", jpanelDrink);
+		///////ÁÖ¹® ¹èÄ¡//////
 		JScrollPane jspOrder=new JScrollPane(jtOrderlist);
-		jspOrder.setPreferredSize(new Dimension(200, 395));//JTable í¬ê¸° ì •í•´ì£¼ê¸°
+		jspOrder.setPreferredSize(new Dimension(200, 395));//JTable Å©±â Á¤ÇØÁÖ±â
 		JPanel jpOrderL=new JPanel();
 		jpOrderL.add(jspOrder);
 		
@@ -205,7 +205,7 @@ public class PUOrderingView extends JFrame {
 		jporderCenter.add("East",jpOrderWrap);
 		jporderCenter.add("Center",jtbMenu);
 		
-		//4-2.ë°°ì¹˜
+		//4-2.¹èÄ¡
 		JPanel jPanel=new JPanel();
 		jPanel.setLayout(new BorderLayout());
 		jPanel.add("North", jlBest);
@@ -213,7 +213,7 @@ public class PUOrderingView extends JFrame {
 		add("North",jPanel);
 		add("Center",jporderCenter);
 		
-		//5.ì´ë²¤íŠ¸ ë“±ë¡
+		//5.ÀÌº¥Æ® µî·Ï
 		PUOrderingController puoc=new PUOrderingController(this);
 		addWindowListener(puoc);
 		jtbMenu.addMouseListener(puoc);
