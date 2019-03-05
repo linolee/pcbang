@@ -61,6 +61,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 						//System.out.println("로그인되었습니다.");
 						PUMainView.userId=id;//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
 						PUMainView.cardNum="";
+						PUMainView.seatNum=0;
 						new PUMainView();//new PUMainView(memberName);
 						pulv.dispose();
 					}//end else
@@ -82,6 +83,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 							new PUMainView();
 							PUMainView.userId=id;
 							PUMainView.cardNum="";
+							PUMainView.seatNum=pul_dao.selectMemberSeatNum(id);
 							pulv.dispose();
 						}//end else
 					}else{
@@ -100,6 +102,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 						if(login(card)) {
 							PUMainView.userId="";//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
 							PUMainView.cardNum=String.valueOf(card);
+							PUMainView.seatNum=0;
 							new PUMainView();
 							pulv.dispose();
 						}else {
@@ -114,6 +117,7 @@ public class PULoginController extends WindowAdapter implements ActionListener{
 								new PUMainView();
 								PUMainView.userId="";//로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
 								PUMainView.cardNum=String.valueOf(card);
+								PUMainView.seatNum=pul_dao.selectGuestSeatNum(card);
 								pulv.dispose();
 							}else {
 								jtf2.setText("");

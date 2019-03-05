@@ -7,6 +7,7 @@ import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
@@ -20,8 +21,11 @@ public class PUManager extends Thread {
 	private Socket client;
 	private PUMessageView pumsgv;
 	private Thread thread;
+	private PUMainController pumc;
+	private PUMainDAO pum_dao;
 
 	public PUManager(PUMainController pumc) {
+		this.pumc=pumc;
 		try {
 			connectToServer();// 매니저와 접속하고
 		} catch (UnknownHostException e) {
@@ -71,9 +75,16 @@ public class PUManager extends Thread {
 		} // end catch
 	}// run
 
+	public void updateTimeMsg() throws IOException {
+			// 스트림에 기록하고
+			writeStream.writeUTF("[update time]");
+			// 스트림의 내용을 목적지로 분출
+			writeStream.flush();
+	}	
 	private void readStream() throws IOException, SocketException {
 		String temp;
 		String flag;
+		
 		while (true) {
 			temp = readStream.readUTF();
 			flag = temp.substring(0, temp.indexOf("]") + 1);// [order]
@@ -84,7 +95,22 @@ public class PUManager extends Thread {
 				pumsgv.requestFocus();
 				pumsgv.getJspChat().getVerticalScrollBar().setValue(pumsgv.getJspChat().getVerticalScrollBar().getMaximum());
 				break;
-
+			case "[logout]":
+				updateTimeMsg();
+				pumc.logout();
+				break;
+			case "[update time]":
+				String cardNum=pumc.getCard();
+				String id=pumc.getId();
+				try {
+					pum_dao.selectInfo(id, cardNum);
+					PUMainInfoVO puminfovo=pum_dao.selectInfo(id,cardNum);
+					int restTime=Integer.parseInt(puminfovo.getRestTime());
+					pumc.setRestTime(restTime);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
 			default:
 				System.out.println("알 수 없는 형식");
 				break;
@@ -92,8 +118,6 @@ public class PUManager extends Thread {
 		}
 	}
 	
-	
-
 	public DataInputStream getReadStream() {
 		return readStream;
 	}
