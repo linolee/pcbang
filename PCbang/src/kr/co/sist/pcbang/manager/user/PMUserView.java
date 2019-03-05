@@ -73,7 +73,7 @@ public class PMUserView extends JPanel {
 		jpMember.add("Center",jspMember);
 		jpMember.add("North",jpMemberNorth);
 		
-		jpMember.setBounds(0, 0, 1000, 600);
+		jpMember.setBounds(0, 0, 1000, 570);
 		add(jpMember);
 		
 		PMUserController uc = new PMUserController(this);
