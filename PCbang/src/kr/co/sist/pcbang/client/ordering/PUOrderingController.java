@@ -527,6 +527,6 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		}else {
 			model.removeRow(table.getSelectedRow());
 		}//end else
-	//
+
     } // end public void JTableRemoveRow()
 }//class
