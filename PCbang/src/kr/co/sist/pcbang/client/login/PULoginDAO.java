@@ -324,7 +324,8 @@ private static PULoginDAO pul_dao;
 			="update pc_status set pc_status='Y' where seat_num=(select seat_num from pc where pc_ip=?)";
 			pstmt2=con.prepareStatement(updateStatus);
 		//4.
-			pstmt2.setString(1, pumsvo.getPcIp());
+			pstmt2.setString(1, pumsvo.getMemberId());
+			pstmt2.setString(2, pumsvo.getPcIp());
 		//5.
 			int cnt2 = pstmt2.executeUpdate();
 			
@@ -370,7 +371,8 @@ private static PULoginDAO pul_dao;
 			="update pc_status set pc_status='Y' where seat_num=(select seat_num from pc where pc_ip=?)";
 			pstmt2=con.prepareStatement(updateStatus);
 		//4.
-			pstmt2.setString(1, pugsvo.getPcIp());
+			pstmt2.setInt(1, pugsvo.getCardNum());
+			pstmt2.setString(2, pugsvo.getPcIp());
 		//5.
 			int cnt2 = pstmt2.executeUpdate();
 			
@@ -424,6 +426,77 @@ private static PULoginDAO pul_dao;
 			if( con != null ) { con.close(); }//end if
 		}//end finally
 		return notice;
+	}//guestCheck
+	
+	public int selectMemberSeatNum(String id) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int seatNum=0;
+		
+		try {
+			//1.
+			//2.
+			con=getConn();
+			//3.
+			StringBuilder number=new StringBuilder();
+			
+			number.append("select seat_num ")
+			.append(" from pc ")
+			.append(" WHERE member_id= '")
+			.append(id)
+			.append("'");
+			
+			pstmt=con.prepareStatement(number.toString());
+			//4.
+			//5.
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				seatNum=rs.getInt("seat_num");
+			}//end if
+		}finally {
+			//6.
+			if( rs != null ) { rs.close(); }//end if
+			if( pstmt != null ) { pstmt.close(); }//end if
+			if( con != null ) { con.close(); }//end if
+		}//end finally
+		return seatNum;
+	}//guestCheck
+	
+	public int selectGuestSeatNum(int cardNum) throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int seatNum=0;
+		
+		try {
+			//1.
+			//2.
+			con=getConn();
+			//3.
+			StringBuilder number=new StringBuilder();
+			
+			number.append("select seat_num ")
+			.append(" from pc ")
+			.append(" WHERE card_num= ")
+			.append(cardNum);
+			
+			pstmt=con.prepareStatement(number.toString());
+			//4.
+			//5.
+			rs=pstmt.executeQuery();
+			
+			if(rs.next()) {
+				seatNum=rs.getInt("seat_num");
+			}//end if
+		}finally {
+			//6.
+			if( rs != null ) { rs.close(); }//end if
+			if( pstmt != null ) { pstmt.close(); }//end if
+			if( con != null ) { con.close(); }//end if
+		}//end finally
+		return seatNum;
 	}//guestCheck
 	
 }//class

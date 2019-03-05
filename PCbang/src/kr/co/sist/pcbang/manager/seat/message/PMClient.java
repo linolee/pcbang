@@ -99,6 +99,9 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 				pmsc.seatLoad();
 				pmsc.setBtnSeat();
 				break;
+			case "[update time]":
+				String msg="[update time]";
+				writeStream(msg);
 
 			default:
 				System.out.println("알 수 없는 형식");
@@ -148,9 +151,15 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 	private void dropClient() {
 		System.out.println("클라이언트 접속종료");
 		try {
-			dis.close();
-			dos.close();
-			client.close();
+			if (dis != null) {
+				dis.close();
+			}
+			if (dos != null) {
+				dos.close();
+			}
+			if (client != null) {
+				client.close();
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
