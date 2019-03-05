@@ -40,7 +40,6 @@ public class PUZipcodeDAO {
 		return con;
 	} // getConn
 
-	//이 메소드를 주소검색 팝업창에서 검색버튼을 눌렀을 때 실행되도록 바꿔야돼
 	public List<PUZipcodeVO> selectAddr(String dong) throws SQLException, NullPointerException {
 		List<PUZipcodeVO> list = new ArrayList<PUZipcodeVO>();
 
@@ -53,7 +52,6 @@ public class PUZipcodeDAO {
 			
 			StringBuilder selectAddr = new StringBuilder();
 			selectAddr.append("select * ").append("from ZIPCODE where dong like '%").append(dong+"%'");
-			// select * from zipcode where dong like '%계산%';
 
 			pstmt = con.prepareStatement(selectAddr.toString());
 
