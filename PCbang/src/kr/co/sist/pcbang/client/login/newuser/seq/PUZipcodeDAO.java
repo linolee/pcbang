@@ -77,8 +77,6 @@ public class PUZipcodeDAO {
 				con.close();
 			}
 		} // end finally
-
-		System.out.println(list);
 		return list;
 	} // selectAddr
 
