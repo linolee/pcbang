@@ -102,7 +102,7 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 			case "[update time]":
 				String msg="[update time]";
 				writeStream(msg);
-
+				break;
 			default:
 				System.out.println("알 수 없는 형식");
 				break;
