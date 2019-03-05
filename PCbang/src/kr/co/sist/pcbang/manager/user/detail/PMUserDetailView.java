@@ -23,6 +23,7 @@ public class PMUserDetailView extends JFrame {
 	 
 	 public PMUserDetailView(PMUserDetailVO udvo) {
 		 
+		 setTitle("회원정보");
 		 
 		 setLayout(null);
 		 jlMemberUpdate = new JLabel("회원정보 수정");
@@ -118,8 +119,8 @@ public class PMUserDetailView extends JFrame {
 		
 		Dimension screen = tk.getScreenSize();
 		
-		int f_width=500;
-		int f_height=400;
+		f_width=500;
+		f_height=400;
 		
 		int f_xpos = (int) (screen.getWidth() / 2 - f_width / 2);
 		int f_ypos = (int) (screen.getHeight() / 2 - f_height / 2);

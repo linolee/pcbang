@@ -185,7 +185,7 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 	public void Draw_Player() {
 
 		switch (player_Status) {
-
+		
 		case 0: // 평상시
 			if ((cnt / 5 % 4) == 0) {
 				buffg.drawImage(Player_img[0], x, y, this);
@@ -280,9 +280,6 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 					if(a_dao.getMileage(id)>=500) {
 						System.out.println(addTime);
 						a_dao.updateMileage(addTime, 500, id);
-						
-//					System.out.println("시간"+pumc.getRestTime());
-//					System.out.println("시간"+pumc.getRestTime()+addTime);
 					pumc.setRestTime(pumc.getRestTime()+addTime);
 					JOptionPane.showMessageDialog(this, addTime+"분 당첨 !!! ㅊㅋㅊㅋ");
 					userName();
@@ -321,7 +318,7 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 			for(int i=270;i<360;i++) {
 				
 				if(x==i && y==420) {
-					JOptionPane.showMessageDialog(this, "ㅂㅂ");
+//					JOptionPane.showMessageDialog(this, "ㅂㅂ");
 					x=100;
 					y=100;
 					this.dispose();

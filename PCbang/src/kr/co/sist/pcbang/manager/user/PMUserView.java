@@ -49,8 +49,8 @@ public class PMUserView extends JPanel {
 		jtMember.getColumnModel().getColumn(3).setPreferredWidth(35);
 		jtMember.getColumnModel().getColumn(4).setPreferredWidth(10);
 		jtMember.getColumnModel().getColumn(6).setPreferredWidth(110);
-		jtMember.getColumnModel().getColumn(7).setPreferredWidth(175);
-		jtMember.getColumnModel().getColumn(8).setPreferredWidth(20);
+		jtMember.getColumnModel().getColumn(7).setPreferredWidth(160);
+		jtMember.getColumnModel().getColumn(8).setPreferredWidth(35);
 		jtMember.getColumnModel().getColumn(9).setPreferredWidth(40);
 		jtMember.getColumnModel().getColumn(10).setPreferredWidth(100);
 		jtMember.setRowHeight(55);
