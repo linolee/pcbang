@@ -105,14 +105,16 @@ private static PULoginDAO pul_dao;
 			
 			status.append("select card_num ").append(" from pc ")
 			.append(" where card_num=").append(cardNum);
-			
+			System.out.println(status.toString());
 			pstmt=con.prepareStatement(status.toString());
 			//4.
 			//5.
 			rs=pstmt.executeQuery();
 			
 			if(rs.next()) {
+				System.out.println(rs.getInt("card_num"));
 				userStatus=rs.getString("card_num");
+				userFlag=true;
 			}//end if
 			if(!userStatus.equals("")) {
 				userFlag=true;
@@ -151,6 +153,7 @@ private static PULoginDAO pul_dao;
 			.append(" where seat_num=(select seat_num from pc where member_id='").append(id).append("')");
 			
 			pstmt=con.prepareStatement(status.toString());
+			System.out.println(status.toString());
 		//4.
 		//5.
 			rs=pstmt.executeQuery();
@@ -280,9 +283,10 @@ private static PULoginDAO pul_dao;
 			//4.
 			//5.
 			rs=pstmt.executeQuery();
-			
+			System.out.println(check.toString());
 			if(rs.next()) {
 				num=rs.getInt("card_num");
+				flag=true;
 			}//end if
 			if(num!=-1) {
 				flag=true;
@@ -325,7 +329,6 @@ private static PULoginDAO pul_dao;
 			pstmt2=con.prepareStatement(updateStatus);
 		//4.
 			pstmt2.setString(1, pumsvo.getMemberId());
-			pstmt2.setString(2, pumsvo.getPcIp());
 		//5.
 			int cnt2 = pstmt2.executeUpdate();
 			
@@ -371,8 +374,7 @@ private static PULoginDAO pul_dao;
 			="update pc_status set pc_status='Y' where seat_num=(select seat_num from pc where pc_ip=?)";
 			pstmt2=con.prepareStatement(updateStatus);
 		//4.
-			pstmt2.setInt(1, pugsvo.getCardNum());
-			pstmt2.setString(2, pugsvo.getPcIp());
+			pstmt2.setString(1, pugsvo.getPcIp());
 		//5.
 			int cnt2 = pstmt2.executeUpdate();
 			
