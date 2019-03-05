@@ -32,20 +32,12 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 		PrdImgList=new ArrayList<String>();
 		//서버에 존재하는 이미지 입력
 		
-		String path = this.getClass().getResource("/").getPath()+"kr/co/sist/pcbang/manager/product/img/";
-		//System.out.println(path);
-		
-//		String path = System.getProperty("user.dir");
-//		System.out.println(path);
-//		int v = path.indexOf("\\");
-//		
-//		String path2 = path.replaceAll("\\","/");
-//		System.out.println(path2);
-//		
-//		path+="/src/kr/co/sist/pcbang/manager/product/img/";
-//		System.out.println(path);
-		
-		File file = new File(path);
+//		//String path = this.getClass().getResource("/").getPath()+"kr/co/sist/pcbang/manager/product/img/";
+		String path = System.getProperty("user.dir");
+		String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\"; 
+		String abspath = path+filepath;
+
+		File file = new File(abspath);
 		for(String tempName:file.list()) {
 			PrdImgList.add(tempName);
 		}//end for
@@ -72,9 +64,11 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 
 			// JTable에 조회한 정보를 출력
 			PMProductVO pmpvo = null;
-			/////////////////////////////////////////경로 나중에 바꾸기/////////////////////////////////
-//			String imgPath = "C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img/s_"; 
-			String imgPath = this.getClass().getResource("/").getPath()+"kr/co/sist/pcbang/manager/product/img/s_"; 
+
+			String path = System.getProperty("user.dir");
+			String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\";
+			String imgPath = path+filepath+"s_";
+			
 			Object[] rowData = null;
 			for (int i = 0; i < listproduct.size(); i++) {
 				pmpvo = listproduct.get(i);
@@ -124,14 +118,19 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 		String menuName = pmpv.getJtfPrdName().getText();
 		try {
 			List<PMSchProductVO> list_pmspvo = pmpdao.searchPrd(category.toString(), menuName);
-			Object[] rowData = null;
 			PMSchProductVO pmspvo = null;
+			
+			String path = System.getProperty("user.dir");
+			String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\"; 
+			String imgPath = path+filepath+"s_";
+			
+			Object[] rowData = null;
 			for (int i = 0; i < list_pmspvo.size(); i++) {
 				pmspvo = list_pmspvo.get(i);
 				rowData = new Object[6];
 				rowData[0] = (pmspvo.getMenuCode());
 				rowData[1] = (pmspvo.getMenuName());
-				rowData[2] = (pmspvo.getImg());
+				rowData[2] = new ImageIcon(imgPath + pmspvo.getImg());
 				rowData[3] = (pmspvo.getPrice());
 				rowData[4] = (pmspvo.getQuan());
 				rowData[5] = (pmspvo.getPrice() * pmspvo.getQuan());
@@ -144,7 +143,6 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 		} // end catch
 	}// searchPrd
 
-	/////////////// 초기화 내용추가 필요
 	public void reset() {
 		setPrd();
 	}
@@ -155,8 +153,9 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 			new PMProductAddView(pmpv, this);
 		} // end if
 
-		if (ae.getSource() == pmpv.getJbtSchPrd()) {// 조회 버튼
+		if (ae.getSource() == pmpv.getJbtSchPrd()||ae.getSource()==pmpv.getJtfPrdName()) {// 조회 버튼
 			searchPrd();
+			pmpv.getJtfPrdName().requestFocus();//커서 위치
 		}
 		if (ae.getSource() == pmpv.getJbtRstPrd()) {// 초기화 버튼
 			reset();
@@ -173,7 +172,7 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 					threadPrd = new Thread();
 					threadPrd.start();
 				} // end if
-					// 현재까지의 주문사항을 조회 (쓰레드로 돌려야 함)
+					// 상품 조회 (쓰레드로 돌려야 함)
 				searchPrd();
 		} // end if
 		

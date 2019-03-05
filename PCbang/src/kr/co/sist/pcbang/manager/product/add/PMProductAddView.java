@@ -77,6 +77,7 @@ public class PMProductAddView extends JDialog {
 		
 		//이벤트 등록
 		PMProductAddController pmpac = new PMProductAddController(this, pmpc);
+		addWindowListener(pmpac);
 		jbImg.addActionListener(pmpac);
 		jbAdd.addActionListener(pmpac);
 		jbEnd.addActionListener(pmpac);
