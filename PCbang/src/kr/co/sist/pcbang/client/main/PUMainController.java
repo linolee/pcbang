@@ -378,7 +378,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		return id;
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////
-
+ 
 	public String getCard() {
 		return card;
 	}

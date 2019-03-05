@@ -1,6 +1,5 @@
 package kr.co.sist.pcbang.client.main;
 
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
