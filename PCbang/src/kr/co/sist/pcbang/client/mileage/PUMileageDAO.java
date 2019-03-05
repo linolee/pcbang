@@ -40,6 +40,7 @@ public class PUMileageDAO {
 		
 	}
 	
+	
 	// 사용자 클라이언트에서 아이디를 받아 마일리지값을 받아온다
 	public int getMileage(String userID) throws SQLException{
 		int mileage=0;

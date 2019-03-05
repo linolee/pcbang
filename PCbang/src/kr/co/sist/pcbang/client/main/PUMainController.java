@@ -21,7 +21,7 @@ import kr.co.sist.pcbang.client.ordering.PUOrderingView;
 
 public class PUMainController extends WindowAdapter implements ActionListener,Runnable{
 
-	private PUMainView pumv;
+	private static PUMainView pumv;
 	private PUMainDAO pum_dao;
 	private PUManager pu_manager;
 	
@@ -31,6 +31,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	private String id;
+	private static PUMainController pumco;
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
@@ -65,9 +66,6 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		}//end if
 	}//PUMainController
 
-	public String getId() {
-		return id;
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -97,7 +95,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		if(ae.getSource()==pumv.getJbtMileage()) {
 			if(!id.equals("")) {
-			new PUMileageStore();
+			new PUMileageStore(this);
 			} else {
 				JOptionPane.showMessageDialog(pumv, "회원만 이용가능한 버튼입니다");
 			}
@@ -351,4 +349,11 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		return pu_manager;
 	}
 
+	///////////////////////////////////////////////////////////////////////////////////////////////////////
+	public String getId() {
+		return id;
+	}
+	///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	
 }//class 
