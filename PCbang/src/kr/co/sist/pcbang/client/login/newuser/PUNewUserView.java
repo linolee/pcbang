@@ -197,13 +197,10 @@ public class PUNewUserView extends JFrame {
 			cbmYear.addElement(year - temp);
 		} // end for
 		jcYear.setSelectedItem(new Integer(year));
-
 	}// setYear
 
 	private void setMonth() {// ¿ù 1~12¿ù
-		
 		int now_month = cal.get(Calendar.MONTH) + 1;
-		
 		DecimalFormat df = new DecimalFormat("00");
 
 		for (int month = 1; month < 13; month++) {
@@ -231,7 +228,6 @@ public class PUNewUserView extends JFrame {
 			} // end else
 		} // end for
 		jcDay.setSelectedItem(new Integer(nowDay));
-
 	}// setYear
 
 	public JTextField getJtfUserName() {
