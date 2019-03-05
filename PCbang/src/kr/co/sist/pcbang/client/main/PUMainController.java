@@ -128,15 +128,11 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 				int flag=JOptionPane.showConfirmDialog(pumv, "비회원은 남은시간이 저장되지 않습니다.\\n로그아웃 하시겠습니까?");
 				if(flag==0) {
 					logout();
-					pumv.dispose();
-					System.exit(0);//모든 객체 종료
 				}//end if
 			}else {			
 				int flag=JOptionPane.showConfirmDialog(pumv, "로그아웃 하시겠습니까??");
 				if(flag==0) {
 					logout();
-					pumv.dispose();
-					System.exit(0);//모든 객체 종료
 				}//end if
 			}//end else
 		}//end if
@@ -250,9 +246,6 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		String useTimestr=jlUseTime.getText();//00:00
 		int uTime=minutesTime(useTimestr);//사용한시간
 		
-		PUMainRestTimeVO pumrtvo=new PUMainRestTimeVO(uTime, id); //남은시간과 아이디
-		
-		pum_dao.updateRestTime(pumrtvo);//남은시간 갱신
 		
 		
 		//String restTimestr=jlRestTime.getText();
@@ -260,6 +253,9 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 
 		if(!id.equals("")) {//아이디를 가진다면 회원
 			PUMainUserLogVO pumLogvo=new PUMainUserLogVO(id, useDate, uTime, chargePrice);
+			PUMainRestTimeVO pumrtvo=new PUMainRestTimeVO(uTime, id); //남은시간과 아이디
+			
+			pum_dao.updateRestTime(pumrtvo);//남은시간 갱신
 			pum_dao.updatePC(id);
 			pum_dao.updateLog(pumLogvo);
 		
@@ -284,6 +280,8 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			pu_manager.getWriteStream().close();
 			pu_manager.getReadStream().close();
 			pu_manager.getClient().close();
+			pumv.dispose();
+			System.exit(0);//모든 객체 종료
 		} catch (IOException e) {
 			e.printStackTrace();	
 		} catch (SQLException e) {
