@@ -237,7 +237,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	 * @param cardNum
 	 * @param seatNum
 	 */
-	private void logout() {
+	public void logout() {
 		try {
 		//    먼저 로그저장 (String memberId,useDate/int useTime,chargePrice)
 		String id=pumv.id;
