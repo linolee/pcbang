@@ -101,7 +101,7 @@ public class PUNewUserController extends WindowAdapter implements ActionListener
 
 		String birth = String.valueOf(jcbBirth1.getSelectedItem()) + String.valueOf(jcbBirth2.getSelectedItem())
 				+ String.valueOf(jcbBirth3.getSelectedItem());
-		String phone = String.valueOf(jtftel1.getText() + jtftel2.getText() + jtftel3.getText());
+		String phone = String.valueOf(jtftel1.getText()+"-"+ jtftel2.getText()+"-"+jtftel3.getText());
 
 		// 입력한 값으로 객체 생성
 		PUNewUserVO punuvo = new PUNewUserVO(jtfId.getText().trim(), pass.trim(), jtfName.getText().trim(),
