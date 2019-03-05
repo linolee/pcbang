@@ -1,6 +1,10 @@
 package kr.co.sist.pcbang.client.login.newuser;
 
+import java.awt.Color;
+import java.util.Calendar;
+
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -12,15 +16,22 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class PUNewUserView extends JFrame {
 
-	private JTextField jtfUserName, jtfId, jtfPhone1, jtfPhone2, jtfPhone3, jtfZipcode, jtfAddr, jtfDetailAddr, jtfEmail;
+	private JTextField jtfUserName, jtfId, jtfPhone1, jtfPhone2, jtfPhone3, jtfZipcode, jtfAddr, jtfDetailAddr,
+			jtfEmail;
 	private JPasswordField jpfPass, jpfPassCheck;
-	private JButton jbtIdChack, jbtAddrSearch, jbtOk, jbtCancel;
-	private JComboBox <Integer>jcYear, jcMonth, jcDay;
+	private JButton jbtIdCheck, jbtAddrSearch, jbtOk, jbtCancel;
+	private JComboBox<Integer> jcYear, jcMonth, jcDay;
+	private DefaultComboBoxModel<Integer> cbmYear, cbmMonth, cbmDay;
 	private JRadioButton jrbMale, jrbFemale;
-	
+	private ButtonGroup bg;
+
+	private Calendar cal;
+
 	public PUNewUserView() {
 		super("회원가입");
-		
+
+		cal = Calendar.getInstance();
+
 		jtfUserName = new JTextField();
 		jtfId = new JTextField();
 		jtfPhone1 = new JTextField();
@@ -30,19 +41,22 @@ public class PUNewUserView extends JFrame {
 		jtfAddr = new JTextField();
 		jtfDetailAddr = new JTextField();
 		jtfEmail = new JTextField();
-		
+
 		jpfPass = new JPasswordField();
 		jpfPassCheck = new JPasswordField();
-		
-		jbtIdChack = new JButton("중복확인");
+
+		jbtIdCheck = new JButton("중복확인");
 		jbtAddrSearch = new JButton("검색");
 		jbtOk = new JButton("확인");
 		jbtCancel = new JButton("취소");
-		
-		jcYear = new JComboBox<Integer>();
-		jcMonth = new JComboBox<Integer>();
-		jcDay = new JComboBox<Integer>();
-		
+
+		cbmYear = new DefaultComboBoxModel<Integer>();
+		jcYear = new JComboBox<Integer>(cbmYear);
+		cbmMonth = new DefaultComboBoxModel<Integer>();
+		jcMonth = new JComboBox<Integer>(cbmMonth);
+		cbmDay = new DefaultComboBoxModel<Integer>();
+		jcDay = new JComboBox<Integer>(cbmDay);
+
 		jrbMale = new JRadioButton("남자");
 		jrbFemale = new JRadioButton("여자");
 
@@ -60,14 +74,15 @@ public class PUNewUserView extends JFrame {
 		JLabel jlAddr = new JLabel(" 주소");
 		JLabel jlDetailAddr = new JLabel(" 상세주소");
 		JLabel jlEmail = new JLabel(" 이메일");
+		JLabel jlEssential = new JLabel("*는 필수입력 사항입니다.");
 
 		JLabel jlhyphen1 = new JLabel("-");
 		JLabel jlhyphen2 = new JLabel("-");
-		
-		ButtonGroup bg = new ButtonGroup();
-		bg.add(jrbMale); 
+
+		bg = new ButtonGroup();
+		bg.add(jrbMale);
 		bg.add(jrbFemale);
-		
+
 		setLayout(null);
 
 		jlUserName.setBounds(50, 50, 90, 30);
@@ -102,20 +117,35 @@ public class PUNewUserView extends JFrame {
 		jtfDetailAddr.setBounds(150, 410, 160, 30);
 		jlEmail.setBounds(50, 450, 90, 30);
 		jtfEmail.setBounds(150, 450, 160, 30);
-		jbtIdChack.setBounds(285, 90, 88, 30);
+		jbtIdCheck.setBounds(285, 90, 88, 30);
 		jbtAddrSearch.setBounds(250, 330, 60, 30);
 		jbtOk.setBounds(85, 520, 90, 50);
 		jbtCancel.setBounds(235, 520, 90, 50);
+		jlEssential.setBounds(130, 485, 150, 30);
 
-		
-		
-		add(jlUserName);		add(jtfUserName);
-		add(jlId);				add(jtfId);
-		add(jlPass);			add(jpfPass);
-		add(jlPassCheck);		add(jpfPassCheck);
-		add(jlbrith);			add(jcYear);	add(jcMonth);	add(jcDay);
-		add(jlgender);			add(jrbMale);	add(jrbFemale);
-		add(jlPhone);			add(jlhyphen1); add(jlhyphen2);
+		jtfZipcode.setEditable(false);
+		jtfAddr.setEditable(false);
+		jtfZipcode.setBackground(Color.white);
+		jtfAddr.setBackground(Color.white);
+
+		add(jlUserName);
+		add(jtfUserName);
+		add(jlId);
+		add(jtfId);
+		add(jlPass);
+		add(jpfPass);
+		add(jlPassCheck);
+		add(jpfPassCheck);
+		add(jlbrith);
+		add(jcYear);
+		add(jcMonth);
+		add(jcDay);
+		add(jlgender);
+		add(jrbMale);
+		add(jrbFemale);
+		add(jlPhone);
+		add(jlhyphen1);
+		add(jlhyphen2);
 		add(jtfPhone1);
 		add(jtfPhone2);
 		add(jtfPhone3);
@@ -130,24 +160,62 @@ public class PUNewUserView extends JFrame {
 		add(jlYear);
 		add(jlMonth);
 		add(jlDay);
-		add(jbtIdChack);
+		add(jbtIdCheck);
 		add(jbtAddrSearch);
 		add(jbtOk);
 		add(jbtCancel);
-		
+		add(jlEssential);
+
+		setYear(); // JCB Year설정
+		setMonth(); // JCB Month설정
+		setDay();// JCB Day설정
+
 		PUNewUserController punuc = new PUNewUserController(this);
 		addWindowListener(punuc);
 		jbtCancel.addActionListener(punuc);
-		jbtIdChack.addActionListener(punuc);
 		jbtAddrSearch.addActionListener(punuc);
-		
+		jbtIdCheck.addActionListener(punuc);
+		jbtOk.addActionListener(punuc);
+		jtfId.addKeyListener(punuc);
+
+		jcMonth.addActionListener(punuc);
+
 		setBounds(800, 200, 400, 650);
 		setVisible(true);
 		setResizable(false);
-		
+
 		jtfUserName.requestFocus();
-		
+
 	} // PUNewUserView
+
+	private void setYear() {// 현재년도 50년전까지
+		int year = cal.get(Calendar.YEAR);
+		for (int temp = 0; temp < 50; temp++) {
+			cbmYear.addElement(year - temp);
+		} // end for
+		jcYear.setSelectedItem(new Integer(year));
+
+	}// setYear
+
+	private void setMonth() {// 월 1~12월
+		int now_month = cal.get(Calendar.MONTH) + 1;
+		
+		for (int month = 1; month < 13; month++) {
+			cbmMonth.addElement(month);
+		} // end for
+		
+		jcMonth.setSelectedItem(new Integer(now_month));
+	}// setMonth
+
+	private void setDay() {// 그월의 마지막날
+		int lastDay = cal.getActualMaximum(Calendar.DATE); // 31
+		int  nowDay=cal.get(Calendar.DAY_OF_MONTH);
+		for (int day = 1; day < lastDay + 1; day++) {
+			cbmDay.addElement(day);
+		} // end for
+		jcDay.setSelectedItem(new Integer(nowDay));
+
+	}// setYear
 
 	public JTextField getJtfUserName() {
 		return jtfUserName;
@@ -193,8 +261,8 @@ public class PUNewUserView extends JFrame {
 		return jpfPassCheck;
 	}
 
-	public JButton getJbtIdChack() {
-		return jbtIdChack;
+	public JButton getJbtIdCheck() {
+		return jbtIdCheck;
 	}
 
 	public JButton getJbtAddrSearch() {
@@ -221,6 +289,18 @@ public class PUNewUserView extends JFrame {
 		return jcDay;
 	}
 
+	public DefaultComboBoxModel<Integer> getCbmYear() {
+		return cbmYear;
+	}
+
+	public DefaultComboBoxModel<Integer> getCbmMonth() {
+		return cbmMonth;
+	}
+
+	public DefaultComboBoxModel<Integer> getCbmDay() {
+		return cbmDay;
+	}
+
 	public JRadioButton getJrbMale() {
 		return jrbMale;
 	}
@@ -228,6 +308,13 @@ public class PUNewUserView extends JFrame {
 	public JRadioButton getJrbFemale() {
 		return jrbFemale;
 	}
-	
-	
+
+	public ButtonGroup getBg() {
+		return bg;
+	}
+
+	public Calendar getCal() {
+		return cal;
+	}
+
 } // class
