@@ -129,7 +129,7 @@ public class PUOrderingDAO {
 			con=getConn();
 			String selectLunch="select MENU_CODE, MENU_NAME, MENU_PRICE, IMG ,\r\n" + 
 					"nvl((select  sum(o.quan)\r\n" + 
-					"from ORDERING o, menu m1\r\n" + 
+					"from ORDERING2 o, menu m1\r\n" + 
 					"where (m1.menu_code=o.menu_code) and m1.menu_code = m2.menu_code\r\n" + 
 					"group by  m1.MENU_CODE)* MENU_PRICE ,0) as total\r\n" + 
 					"from menu m2\r\n" + 
@@ -151,7 +151,13 @@ public class PUOrderingDAO {
 		return list;
 	}//selectProductRamen
 
-	public PUOrderVO selectCode(String p_code) throws SQLException{
+	/**
+	 * 이미지로 찾기(베스트->주문 목록)
+	 * @param p_code
+	 * @return
+	 * @throws SQLException
+	 */
+	public PUOrderVO selectCode(String img) throws SQLException{
 		PUOrderVO pouvo=null;
 		
 		Connection con=null;
@@ -163,14 +169,14 @@ public class PUOrderingDAO {
 		//2.
 			con=getConn();
 		//3.
-			String selectPro="SELECT MENU_NAME,MENU_PRICE,IMG FROM MENU WHERE MENU_CODE=?";
+			String selectPro="SELECT MENU_NAME,MENU_PRICE,IMG,MENU_CODE FROM MENU WHERE IMG=? AND Rownum<=1";
 			pstmt=con.prepareStatement(selectPro);
 		//4.
-			pstmt.setString(1, p_code);
+			pstmt.setString(1, img);
 		//5.
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				pouvo=new PUOrderVO(rs.getString("IMG"),p_code,  rs.getString("MENU_NAME"),
+				pouvo=new PUOrderVO(img,rs.getString("MENU_CODE"),rs.getString("MENU_NAME"),
 										rs.getString("MENU_PRICE"));
 			}//end if
 		}finally {
@@ -182,4 +188,42 @@ public class PUOrderingDAO {
 		
 		return pouvo;
 	}//selectCode
+	
+	//insert into ORDERING2(ORDER_NUM, QUAN, ORDER_DATE, STATUS, MENU_CODE, SEAT_NUM) 
+	//values(ORDER_CODE(),5,sysdate,'N','M_000022',100);
+	public void InsertOrder(List<PUOrderAddVO> list, int seatNum) throws SQLException{
+		//List<PUOrderAddVO> list=new ArrayList<PUOrderAddVO>();
+		PUOrderAddVO puoadd=null;
+		
+		Connection con =null;
+		PreparedStatement pstmt=null;
+		try {
+		//1.
+		//2.
+			con=getConn();
+		//3.
+			for(int i=0; i<list.size(); i++) {
+				StringBuilder insertOrder=new StringBuilder();
+				insertOrder.append("insert into ORDERING2(ORDER_NUM, QUAN, ORDER_DATE, STATUS, MENU_CODE, SEAT_NUM)")
+				.append("values(ORDER_CODE(),?,sysdate,'N',?,?)");
+				pstmt=con.prepareStatement(insertOrder.toString());
+			//4.바인드변수 값넣기
+				puoadd=list.get(i);
+				System.out.println(puoadd.getProductCode()+"/"+puoadd.getProductQuan()+"/"+seatNum);
+				pstmt.setInt(1, puoadd.getProductQuan());
+				pstmt.setString(2, puoadd.getProductCode());
+				pstmt.setInt(3, seatNum);
+			//5.
+				pstmt.executeUpdate();
+			}//end for
+				
+		}finally {
+			//6.
+			if(pstmt!=null) {pstmt.close();}//end if
+			if(con!=null) {con.close();}//end if
+		}//end finally
+	
+	}//InsertOrder
+	
+	
 }//class

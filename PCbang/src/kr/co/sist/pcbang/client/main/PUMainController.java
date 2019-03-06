@@ -85,7 +85,8 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==pumv.getJbtOrder()) {//상품주문
-			new PUOrderingView();
+			JLabel jlSeat=pumv.getJlSeatNum();
+			new PUOrderingView(Integer.parseInt(jlSeat.getText()));
 		}//end if
 		if(ae.getSource()==pumv.getJbtCharge()) {//시간충전
 			//JOptionPane.showMessageDialog(pumv, "시간충전");
