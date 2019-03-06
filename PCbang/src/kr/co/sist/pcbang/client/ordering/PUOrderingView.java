@@ -20,11 +20,11 @@ public class PUOrderingView extends JFrame {
 	private JTabbedPane jtbMenu;
 	private DefaultTableModel dtmBestProduct,dtmOrderlist,
 						dtmMenu,dtmRamen,dtmSnack,dtmDrink;
-	private JButton jbtOk,jbtExit;
+	private JButton jbtOk,jbtExit,jbtDel;
 	private JTable jtBestProduct,jtMenu,jtRamen,jtSnack,jtDrink,jtOrderlist;
 	private JLabel jlProductPrice;
 
-	public PUOrderingView() {
+	public PUOrderingView(int seatNum) {
 		super("상품주문창");
 		
 		//1.컴포넌트 생성
@@ -119,7 +119,7 @@ public class PUOrderingView extends JFrame {
 		//////주문목록테이블//////
 		JLabel jlOrderTitle =new JLabel("주문 목록");
 		jlOrderTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		String[] columnsName= {"이름","수량","가격","취소"};
+		String[] columnsName= {"이름","수량","가격"};
 		dtmOrderlist=new DefaultTableModel(columnsName,0){};
 		jtOrderlist=new JTable(dtmOrderlist) {
 			@Override
@@ -129,16 +129,17 @@ public class PUOrderingView extends JFrame {
 		};
 		jtOrderlist.getTableHeader().setResizingAllowed(false);//컬럼의 크기 변경 막기
 		jtOrderlist.getTableHeader().setReorderingAllowed(false);//컬럼의 이동 막기
-		jtOrderlist.getColumnModel().getColumn(0).setPreferredWidth(80);
+		jtOrderlist.getColumnModel().getColumn(0).setPreferredWidth(120);
 		jtOrderlist.getColumnModel().getColumn(1).setPreferredWidth(40);
-		jtOrderlist.getColumnModel().getColumn(2).setPreferredWidth(50);
-		jtOrderlist.getColumnModel().getColumn(3).setPreferredWidth(80);
+		jtOrderlist.getColumnModel().getColumn(2).setPreferredWidth(90);
+		//jtOrderlist.getColumnModel().getColumn(3).setPreferredWidth(80);
 		jtOrderlist.setRowHeight(23);
 		
 		JLabel jlPrice =new JLabel("총 가격 : ");
 		jlProductPrice =new JLabel("0원");
 		jbtOk=new JButton("상품 주문");
 		jbtExit=new JButton("닫기");
+		jbtDel=new JButton("선택 상품 삭제");
 		
 		//4.배치
 		JLabel jlBest=new JLabel("Best 7");
@@ -175,7 +176,7 @@ public class PUOrderingView extends JFrame {
 		jtbMenu.add("음료", jpanelDrink);
 		///////주문 배치//////
 		JScrollPane jspOrder=new JScrollPane(jtOrderlist);
-		jspOrder.setPreferredSize(new Dimension(200, 395));//JTable 크기 정해주기
+		jspOrder.setPreferredSize(new Dimension(200, 365));//JTable 크기 정해주기
 		JPanel jpOrderL=new JPanel();
 		jpOrderL.add(jspOrder);
 		
@@ -190,9 +191,10 @@ public class PUOrderingView extends JFrame {
 		jpOrderB.add("East",jbtExit);
 		
 		JPanel jpOrderSouth=new JPanel();
-		jpOrderSouth.setLayout(new GridLayout(2,1));
-		jpOrderSouth.add("North",jpOrderP);
-		jpOrderSouth.add("Center",jpOrderB);
+		jpOrderSouth.setLayout(new GridLayout(3,1));
+		jpOrderSouth.add("North",jbtDel);
+		jpOrderSouth.add("Center",jpOrderP);
+		jpOrderSouth.add("South",jpOrderB);
 		
 		JPanel jpOrderWrap=new JPanel();
 		jpOrderWrap.setLayout(new BorderLayout());
@@ -214,7 +216,7 @@ public class PUOrderingView extends JFrame {
 		add("Center",jporderCenter);
 		
 		//5.이벤트 등록
-		PUOrderingController puoc=new PUOrderingController(this);
+		PUOrderingController puoc=new PUOrderingController(this,seatNum);
 		addWindowListener(puoc);
 		jtbMenu.addMouseListener(puoc);
 		jtBestProduct.addMouseListener(puoc);
@@ -224,6 +226,7 @@ public class PUOrderingView extends JFrame {
 		jtDrink.addMouseListener(puoc);
 		jtOrderlist.addMouseListener(puoc);
 		
+		jbtDel.addActionListener(puoc);
 		jbtOk.addActionListener(puoc);
 		jbtExit.addActionListener(puoc);
 		
@@ -279,9 +282,15 @@ public class PUOrderingView extends JFrame {
 	public JLabel getJlProductPrice() {
 		return jlProductPrice;
 	}
+	public JButton getJbtDel() {
+		return jbtDel;
+	}
+	public void setJbtDel(JButton jbtDel) {
+		this.jbtDel = jbtDel;
+	}
 	
 	public static void main(String[] args) {
-		new PUOrderingView();
+		new PUOrderingView(100);
 	}//main///	
 	
 }//class
