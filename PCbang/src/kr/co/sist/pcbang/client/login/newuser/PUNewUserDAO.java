@@ -92,8 +92,10 @@ public class PUNewUserDAO {
 			// 3.
 			StringBuilder insertMember = new StringBuilder();
 			
-			insertMember.append("insert into PC_MEMBER").append("(MEMBER_ID, MEMBER_PASS, MEMBER_NAME, MEMBER_BIRTH, MEMBER_GENDER, MEMBER_TEL, MEMBER_EMAIL, MEMBER_DETAILADD, MEMBER_INPUT_DATE)")
-					.append("values(?,?,?,?,?,?,?,?,sysdate )");
+			insertMember
+			.append("insert into PC_MEMBER")
+			.append("(MEMBER_ID, MEMBER_PASS, MEMBER_NAME, MEMBER_BIRTH, MEMBER_GENDER, MEMBER_TEL, MEMBER_EMAIL, MEMBER_DETAILADD, MEMBER_INPUT_DATE, MEMBER_REST_TIME, MEMBER_TOTAL_PRICE, MEMBER_MILEAGE)")
+			.append("values(?,?,?,?,?,?,?,?,sysdate,0,0,0)");
 
 			pstmt = con.prepareStatement(insertMember.toString());
 			// 4.바인드 변수 값넣기
