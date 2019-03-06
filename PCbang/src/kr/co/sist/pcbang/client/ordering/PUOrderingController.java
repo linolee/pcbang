@@ -617,7 +617,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 				} catch (SQLException e) {
 					JOptionPane.showMessageDialog(puov, "SQL문제 발생!!");
 					e.printStackTrace();
-				}//end catch
+				}//end catch////
 			}//end switch
 			
 		}//printOrder
