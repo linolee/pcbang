@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+
 public class PUChargeDAO {
 
 	private static PUChargeDAO puc_dao;
@@ -257,6 +259,36 @@ public class PUChargeDAO {
 	
 		return list;
 	}//selectInform
+	
+	public boolean updateMemberMileage(MemberMileageVO mmvo)throws SQLException {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		boolean flag=false;
+		
+		try {
+			//1.
+			//2.
+			con=getConn();
+			//3.
+			String updateMileage="update pc_member set member_mileage=nvl(member_mileage,0)+?*0.1 where member_id=?";
+			pstmt=con.prepareStatement(updateMileage);
+		//4.
+			pstmt.setInt(1, mmvo.getMemebrMileage());
+			pstmt.setString(2, mmvo.getMemberId());
+		//5.
+			int cnt1 = pstmt.executeUpdate();
+			
+			if( cnt1==1 ) {
+				flag=true;
+			}//end if
+		}finally {
+			//6.
+			if( pstmt != null ) { pstmt.close(); }//end if
+			if( con != null ) { con.close(); }//end if
+		}//end finally
+		
+		return flag;
+	}//changeGuestState
 	
 }
 

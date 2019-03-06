@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.co.sist.pcbang.manager.order.PMOrderView;
+
 import kr.co.sist.pcbang.manager.seat.detail.PMSeatDetailView;
 import kr.co.sist.pcbang.manager.seat.message.PMClient;
 import kr.co.sist.pcbang.manager.seat.set.PMSeatSetView;
@@ -24,12 +24,10 @@ public class PMSeatController implements Runnable, ActionListener {
 	private PMSeatDAO pms_dao;
 	private PMSeatVO[][] seat;
 	private Thread threadServer; // 접속자에 대한 처리를 하기 위한 thread
-	private PMOrderView pmov;
 
-	public PMSeatController(PMSeatView pmsv, PMOrderView pmov) {
+	public PMSeatController(PMSeatView pmsv) {
 		// DAO연결
 		this.pmsv = pmsv;
-		this.pmov = pmov;
 		pms_dao = PMSeatDAO.getInstance();
 		clientSocketList = new ArrayList<PMClient>();
 		try {
@@ -52,7 +50,9 @@ public class PMSeatController implements Runnable, ActionListener {
 					pmsv.getBtnSeat()[i][j].setBackground(Color.BLACK);
 				} else if (!seat[i][j].getUser().equals("")) {// 유저가 컴퓨터에 있다면 초록색
 					pmsv.getBtnSeat()[i][j].setBackground(Color.GREEN);
-					if (seat[i][j].getMessageStatus().equals("Y") && seat[i][j].getOrderStatus().equals("Y")) {// 메세지와 주문이 둘 다 있다면
+					if (seat[i][j].getMessageStatus().equals("Y") && seat[i][j].getOrderStatus().equals("Y")) {// 메세지와
+																												// 주문이 둘
+																												// 다 있다면
 						pmsv.getBtnSeat()[i][j].setBackground(Color.ORANGE);
 					} else if (seat[i][j].getOrderStatus().equals("Y")) {// 주문만 있다면
 						pmsv.getBtnSeat()[i][j].setBackground(Color.YELLOW);
@@ -104,18 +104,10 @@ public class PMSeatController implements Runnable, ActionListener {
 					if (pmClient.getClient().getInetAddress().toString().equals("/"+seat[i][j].getPcIP())) {//클라이언트 리스트에서 해당하는 좌석의 IP로 연결된 Client를 검색해서
 						//System.out.println(pmClient.getClient().getInetAddress().toString());
 						pmClient.getMv().setVisible(true);
-						///////////////////////////////////////////////////////////////////////////////////
-						///////////////////////////////////////////////////////////////////////////////////
-						//DAO 사용해서 PC_Status의 Message_Status를 변경해야함
-						///////////////////////////////////////////////////////////////////////////////////
-						///////////////////////////////////////////////////////////////////////////////////
-						
 					}//end if
 				}//end for
 			}//end if
 		}//end if
-		seatLoad();
-		setBtnSeat();
 	}
 	
 	private void openSeatSet() {
@@ -150,7 +142,6 @@ public class PMSeatController implements Runnable, ActionListener {
 		PMClient client = new PMClient(clientSocket, this);//클라이언트 객체를 만들고
 		clientSocketList.add(client);//리스트에 넣는다.
 //		client.run();//클라이언트의 Thread를 실행한다.
-		System.out.println(clientSocket.getInetAddress());
 	}
 
 	public PMSeatView getPmsv() {
@@ -173,20 +164,4 @@ public class PMSeatController implements Runnable, ActionListener {
 		return seat;
 	}
 
-
-	public List<PMClient> getClientSocketList() {
-		return clientSocketList;
-	}
-
-
-	public Thread getThreadServer() {
-		return threadServer;
-	}
-
-
-	public PMOrderView getPmov() {
-		return pmov;
-	}
-
-	
 }

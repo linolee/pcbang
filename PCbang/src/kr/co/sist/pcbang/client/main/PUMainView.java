@@ -1,6 +1,5 @@
 package kr.co.sist.pcbang.client.main;
 
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -15,7 +14,7 @@ import javax.swing.border.LineBorder;
 public class PUMainView extends JFrame{
 	
 	private JLabel jlSeatNum,jlUseTime,jlRestTime,jlName;
-	private JButton jbtOrder,jbtCharge,jbtChange,jbtMsg,jbtExit;
+	private JButton jbtOrder,jbtCharge,jbtChange,jbtMsg,jbtExit,jbtMileage;
 	
 	public static String userId;
 	public static String cardNum;
@@ -23,6 +22,10 @@ public class PUMainView extends JFrame{
 	public String card=cardNum;
 	//public static String seatNum;
 	
+	public static int seatNum; 
+	public int seat=seatNum;
+	
+
 	public PUMainView() {
 		super("PC방 사용자-메인");
 		
@@ -38,6 +41,7 @@ public class PUMainView extends JFrame{
 		jbtChange=new JButton("좌석 변경");
 		jbtMsg=new JButton("메세지");
 		jbtExit=new JButton("사용 종료");
+		jbtMileage=new JButton("마일리지");
 		
 		JLabel jlSeat=new JLabel("No.");
 		JLabel jlUseTimeTitle=new JLabel("사용시간          ");
@@ -80,8 +84,9 @@ public class PUMainView extends JFrame{
 		jbtOrder.setBounds(40, 140, 90, 30);
 		jbtCharge.setBounds(150, 140, 90, 30);
 		jbtChange.setBounds(260, 140, 90, 30);
-		jbtMsg.setBounds(95, 185, 90, 30);
-		jbtExit.setBounds(205, 185, 90, 30);
+		jbtMsg.setBounds(40, 185, 90, 30);
+		jbtExit.setBounds(150, 185, 90, 30);
+		jbtMileage.setBounds(260, 185, 90, 30);
 		
 		add(pan6);
 		add(jbtOrder);
@@ -89,6 +94,7 @@ public class PUMainView extends JFrame{
 		add(jbtChange);
 		add(jbtMsg);
 		add(jbtExit);
+		add(jbtMileage);
 		
 		PUMainController pumc=new PUMainController(this);
 		jbtOrder.addActionListener(pumc);
@@ -96,11 +102,13 @@ public class PUMainView extends JFrame{
 		jbtChange.addActionListener(pumc);
 		jbtMsg.addActionListener(pumc);
 		jbtExit.addActionListener(pumc);
+		jbtMileage.addActionListener(pumc);
 		addWindowListener(pumc);
 		
 		setBounds(20, 20, 400, 290);
 		setVisible(true);
 	}//PUMainView
+	
 
 	public JLabel getJlSeatNum() {
 		return jlSeatNum;
@@ -129,9 +137,14 @@ public class PUMainView extends JFrame{
 	public JButton getJbtExit() {
 		return jbtExit;
 	}
+	public JButton getJbtMileage() {
+		return jbtMileage;
+	}
+	public String getId() {
+		return id;
+	}
 	
 //	public static void main(String[] args) {
 //		new PUMainView();
 //	}//main
 }//class
-

@@ -45,7 +45,10 @@ public class PMProductDetailController extends WindowAdapter implements ActionLi
 			if (pmp_dao.deletePrd(code)) {// 상품을 삭제
 				pmpc.setPrd();// 상품 리스트를 갱신한다.
 				// 파일을 삭제
-				File file = new File("C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img/" + originImg);
+				String path = System.getProperty("user.dir");
+				String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\";
+				String imgPath = path+filepath;				
+				File file = new File(imgPath + originImg);
 				// 하나가지고 하면 파일명을 읽어들이지 못하는 문제가 발생할 수도 있기 때문에 따로 두개를 줌
 				File rmFile = new File(file.getAbsolutePath());// 큰 파일
 				File rmFile2 = new File(file.getParent() + "/s_" + file.getName());// 작은파일
@@ -54,6 +57,8 @@ public class PMProductDetailController extends WindowAdapter implements ActionLi
 				rmFile2.delete();
 
 				JOptionPane.showMessageDialog(pmpdv, "상품이 삭제되었습니다.");
+				pmpdv.dispose();
+				
 			} else {
 				JOptionPane.showMessageDialog(pmpdv, "상품이 존재하지 않습니다.");
 			} // end else
@@ -150,7 +155,11 @@ public class PMProductDetailController extends WindowAdapter implements ActionLi
 								try {
 									//이전 이미지를 삭제한 후.
 									// 파일을 삭제 
-									File originfile = new File("C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img/" + originImg);
+									String path = System.getProperty("user.dir");
+									String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\"; 
+									String imgPath = path+filepath;
+									
+									File originfile = new File(imgPath + originImg);
 									// 하나가지고 하면 파일명을 읽어들이지 못하는 문제가 발생할 수도 있기 때문에 따로 두개를 줌
 									File rmFile = new File(originfile.getAbsolutePath());// 큰 파일
 									File rmFile2 = new File(originfile.getParent() + "/s_" + originfile.getName());// 작은파일
@@ -185,7 +194,12 @@ public class PMProductDetailController extends WindowAdapter implements ActionLi
 		FileOutputStream fos = null;
 		try {
 			byte[] readData = new byte[512];
-			String uploadPath = "C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img/";
+			
+			String path = System.getProperty("user.dir");
+			String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\"; 
+			String imgPath = path+filepath;
+			
+			String uploadPath = imgPath;
 
 			int len =0;
 			//작은 이미지 업로드

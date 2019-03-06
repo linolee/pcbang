@@ -63,8 +63,8 @@ public class PMSeatSetController extends WindowAdapter implements ActionListener
 		try {
 			Integer totalDelete = pms_dao.deleteSeatSetInfo();
 			Integer totalInsert = pms_dao.insertSeatSetInfo(seat);
-			System.out.println(totalDelete+"개 좌석정보 DB에서 삭제 완료");/////////////////////////JOptionPane처리할것
-			System.out.println(totalInsert+"개 좌석정보 DB에 입력완료");/////////////////////////JOptionPane처리할것
+//			System.out.println(totalDelete+"개 좌석정보 DB에서 삭제 완료");/////////////////////////JOptionPane처리할것
+//			System.out.println(totalInsert+"개 좌석정보 DB에 입력완료");/////////////////////////JOptionPane처리할것
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

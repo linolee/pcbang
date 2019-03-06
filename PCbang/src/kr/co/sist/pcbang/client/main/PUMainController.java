@@ -16,11 +16,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import kr.co.sist.pcbang.client.charge.PUChargeView;
+import kr.co.sist.pcbang.client.mileage.PUMileageStore;
 import kr.co.sist.pcbang.client.ordering.PUOrderingView;
 
 public class PUMainController extends WindowAdapter implements ActionListener,Runnable{
 
-	private PUMainView pumv;
+	private static PUMainView pumv;
 	private PUMainDAO pum_dao;
 	private PUManager pu_manager;
 	
@@ -28,21 +29,45 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	private int RestTime;
 	private Thread threadOrdering;
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	private String id;
+	private static PUMainController pumco;
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	private String card;
+	
+	
 	public PUMainController(PUMainView pumv) {
 		this.pumv=pumv;
 		pu_manager = new PUManager(this);
 		pum_dao=PUMainDAO.getInstance();
+		
+		
 		try {
-			String id=pumv.id;
-			String card=pumv.card;
+			int seatNum = pumv.seat;
+			if(seatNum !=0) {
+				changeSeatMsg(seatNum);
+			}//end if
+		} catch (IOException e1) {
+			JOptionPane.showMessageDialog(pumv, "이전 PC의 좌석번호를 관리자에게 보내는데 오류");
+			e1.printStackTrace();
+		}//end catch
+		
+		
+		try {
+			id=pumv.id;
+//			String card=pumv.card;
+			card=pumv.card;
 			if(id==null) {
 				id="";
 			}//end if
 			if(card==null) {
 				card="";
 			}//end if
+
 			searchUseInfo(id,card);//사용자 정보 조회
 			//System.out.println("로그인 되었습니다.");
+
 		} catch (UnknownHostException e) {
 			System.out.println("아이피주소를 출력할수 없음");
 			e.printStackTrace();
@@ -56,16 +81,19 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		}//end if
 	}//PUMainController
 
+
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==pumv.getJbtOrder()) {//상품주문
-			new PUOrderingView();
+			JLabel jlSeat=pumv.getJlSeatNum();
+			new PUOrderingView(Integer.parseInt(jlSeat.getText()));
 		}//end if
 		if(ae.getSource()==pumv.getJbtCharge()) {//시간충전
 			//JOptionPane.showMessageDialog(pumv, "시간충전");
+
 			JLabel jlSeat=pumv.getJlSeatNum();
-			new PUChargeView(Integer.parseInt(jlSeat.getText()));
-			//RestTime받아서...
+			new PUChargeView(Integer.parseInt(jlSeat.getText()), this);
+			//RestTime
 		}//end if
 		if(ae.getSource()==pumv.getJbtChange()) {//좌석변경
 			int flag=JOptionPane.showConfirmDialog(pumv, "자리변경을 하시겠습니까?");
@@ -77,21 +105,35 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		if(ae.getSource()==pumv.getJbtMsg()) {//메세지
 			pu_manager.getPumsgv().setVisible(true);
 		}//end if
+
+
+		
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		if(ae.getSource()==pumv.getJbtMileage()) {
+			if(!id.equals("")) {
+			new PUMileageStore(this);
+			} else {
+				JOptionPane.showMessageDialog(pumv, "회원만 이용가능한 버튼입니다");
+			}
+		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		
+	
 		if(ae.getSource()==pumv.getJbtExit()) {//사용종료
 			//비회원일때에는 시간이 저장되지 않습니다...
+
 			if(!pumv.card.equals("")) {
-				int flag=JOptionPane.showConfirmDialog(pumv, "비회원은 남은시간이 저장되지 않습니다.\n로그아웃 하시겠습니까?");
+				int flag=JOptionPane.showConfirmDialog(pumv, "비회원은 남은시간이 저장되지 않습니다.\\n로그아웃 하시겠습니까?");
 				if(flag==0) {
 					logout();
-					pumv.dispose();
-					System.exit(0);//모든 객체 종료
 				}//end if
 			}else {			
-				int flag=JOptionPane.showConfirmDialog(pumv, "로그아웃 하시겠습니까?");
+				int flag=JOptionPane.showConfirmDialog(pumv, "로그아웃 하시겠습니까??");
 				if(flag==0) {
 					logout();
-					pumv.dispose();
-					System.exit(0);//모든 객체 종료
 				}//end if
 			}//end else
 		}//end if
@@ -101,7 +143,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	public void run() {
 		for(int i=0; ; i++) {
 			try {
-				//사용시간을 가져와서 +1
+				// 사용시간을 가져와서 +1
 				JLabel jlUseTime=pumv.getJlUseTime();//00:00
 				jlUseTime.setText(hourTime(String.valueOf(i)));
 				
@@ -113,7 +155,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 				//남은시간이 없으면 사용종료
 				callcharge(RestTime);
 				
-				Thread.sleep(1000*1);//60초
+				Thread.sleep(60000*1);//
 				jlRestTime.setText(hourTime(String.valueOf(RestTime-1)));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -125,7 +167,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	public void windowClosing(WindowEvent we) {
 		//비회원일때에는 시간이 저장되지 않습니다...
 		if(!pumv.card.equals("")) {
-			int flag=JOptionPane.showConfirmDialog(pumv, "비회원은 남은시간이 저장되지 않습니다.\n로그아웃 하시겠습니까?");
+			int flag=JOptionPane.showConfirmDialog(pumv, "비회원은 남은시간이 저장되지 않습니다.\\n로그아웃 하시겠습니까?");
 			if(flag==0) {
 				logout();
 				pumv.dispose();
@@ -163,15 +205,16 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			jlRestTime.setText(hourTime(restTime));
 			if(Integer.parseInt(restTime)==0) {//만약 시간이 0이라면 충전창
 				//new PUChargeView();//만약 시간이 남았는데 충전하면 닫기가능 충전된 시간이 없으면 충전창
-				JOptionPane.showMessageDialog(pumv, "충전하세요");
+				JOptionPane.showMessageDialog(pumv, "");
 			}//end if
 		}else if(!cardNum.equals("")) {//카드번호를 가진다면 비회원
 			jlName.setText("guest"+seatnum);
 			String time="0";
 			jlRestTime.setText(hourTime(time));
-//			if(Integer.parseInt(time)==0) {//만약 시간이 0이라면 충전창
-//				new PUChargeView(Integer.parseInt(jlSeat.getText()));
-//			}//end if
+
+			if(Integer.parseInt(time)==0) {//만약 시간이 0이라면 충전창
+				new PUChargeView(Integer.parseInt(jlSeat.getText()), this);
+			}//end if
 		}//end else
 	}//searchUseInfo
 	
@@ -193,26 +236,27 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	 * @param cardNum
 	 * @param seatNum
 	 */
-	private void logout() {
+	public void logout() {
 		try {
-		//먼저 로그저장(String memberId,useDate/int useTime,chargePrice)
+		//    먼저 로그저장 (String memberId,useDate/int useTime,chargePrice)
 		String id=pumv.id;
 		String card=pumv.card;
 		String useDate = String.valueOf(Calendar.getInstance());
 		
-		JLabel jlUseTime=pumv.getJlRestTime();
+		JLabel jlUseTime=pumv.getJlUseTime();
 		String useTimestr=jlUseTime.getText();//00:00
-		int uTime=minutesTime(useTimestr);//520
+		int uTime=minutesTime(useTimestr);//사용한시간
 		
-		JLabel jlSeatNum=pumv.getJlSeatNum();
-		String seatNum=jlSeatNum.getText();
 		
-		JLabel jlRestTime=pumv.getJlRestTime();//->RestTime
+		
 		//String restTimestr=jlRestTime.getText();
 		//int restTime=minutesTime(restTimestr);
-		
+
 		if(!id.equals("")) {//아이디를 가진다면 회원
 			PUMainUserLogVO pumLogvo=new PUMainUserLogVO(id, useDate, uTime, chargePrice);
+			PUMainRestTimeVO pumrtvo=new PUMainRestTimeVO(uTime, id); //남은시간과 아이디
+			
+			pum_dao.updateRestTime(pumrtvo);//남은시간 갱신
 			pum_dao.updatePC(id);
 			pum_dao.updateLog(pumLogvo);
 		
@@ -237,6 +281,8 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			pu_manager.getWriteStream().close();
 			pu_manager.getReadStream().close();
 			pu_manager.getClient().close();
+			pumv.dispose();
+			System.exit(0);//모든 객체 종료
 		} catch (IOException e) {
 			e.printStackTrace();	
 		} catch (SQLException e) {
@@ -278,32 +324,48 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	private void callcharge(int restTime) {
 		pumv.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		if(restTime==0) {
-			int flag=JOptionPane.showConfirmDialog(pumv, "충전된 시간이 없습니다.\n충전하시겠습니까?");
+
+			int flag=JOptionPane.showConfirmDialog(pumv, "충전된 시간이 없습니다.\\n충전하시겠습니까?");
+
 			if(flag==JOptionPane.OK_OPTION) {
 				JLabel jlSeat=pumv.getJlSeatNum();
-				new PUChargeView(Integer.parseInt(jlSeat.getText()));
+				new PUChargeView(Integer.parseInt(jlSeat.getText()), this);
 			}else if(flag==JOptionPane.NO_OPTION){
 				//return;
+
 				//JOptionPane.showMessageDialog(pumv, "사용이 종료됩니다.");
+
 				//pumv.dispose();
 			}//end else
 		}//end if
 		
 		/*
+
 		int flag=JOptionPane.showConfirmDialog(this, "점심 맛있게 드셨어요?");
 //		System.out.println(flag);//0,1,2순으로 나온다.
 		switch (flag) {
 //		case 0 ,1 ,2 로도 줄수 있지만 무엇인지 명확하지 않기때문에 상수표현을 쓴다.
 		case JOptionPane.OK_OPTION : 
-			JOptionPane.showMessageDialog(this, "행복한 오후 되세요!"); 
+			JOptionPane.showMessageDialog(this, "!"); 
 			break;
 		case JOptionPane.NO_OPTION: String menu = JOptionPane.showInputDialog("어떤 점심 메뉴였어요?"); 
 			JOptionPane.showMessageDialog(this,menu+"가 다 그렇죠 뭐!");
 			break;
 		case JOptionPane.CANCEL_OPTION:	JOptionPane.showMessageDialog(this, "하기 싫으냐??");
+
 		}//end switch
 		*/
 	}//callcharge
+	
+	public void changeSeatMsg(int seatNum) throws IOException {
+		// 스트림에 기록하고
+		pu_manager.getWriteStream().writeUTF("[close]" + seatNum);
+		// 스트림의 내용을 목적지로 분출
+		pu_manager.getWriteStream().flush();
+}// sendMsg
+	
+	
+	
 
 	public int getRestTime() {
 		return RestTime;
@@ -319,4 +381,17 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		return pu_manager;
 	}
 
-}//class
+	///////////////////////////////////////////////////////////////////////////////////////////////////////
+	public String getId() {
+		return id;
+	}
+	///////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+	public String getCard() {
+		return card;
+	}
+
+	
+	
+	
+}//class 
