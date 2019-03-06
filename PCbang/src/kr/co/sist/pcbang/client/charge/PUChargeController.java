@@ -59,6 +59,7 @@ public class PUChargeController extends WindowAdapter implements ActionListener 
 		for(int i=0; i<pucv.getJbtPrice().length; i++) {
 				if(ae.getSource()==pucv.getJbtPrice()[i]) {
 					addTime(pucv.getSeatNum(), pucv.getTime()[i], pucv.getPrice()[i] );
+					pucv.dispose();
 				}//end if
 		}//end for
 	}//actionPerformed
