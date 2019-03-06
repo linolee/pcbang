@@ -8,7 +8,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 @SuppressWarnings("serial")
 public class PMUserView extends JPanel {
@@ -38,12 +41,34 @@ public class PMUserView extends JPanel {
 				return false;
 			}
 		};
-		
 		jtMember = new JTable(dtmMember); 
+		
+		
+		// DefaultTableCellHeaderRenderer 생성 (가운데 정렬을 위한)
 
+		DefaultTableCellRenderer tScheduleCellRenderer = new DefaultTableCellRenderer();
+
+		// DefaultTableCellHeaderRenderer의 정렬을 가운데 정렬로 지정
+
+		tScheduleCellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+		// 정렬할 테이블의 ColumnModel을 가져옴
+
+		TableColumnModel tcmSchedule = jtMember.getColumnModel();
+
+		 
+		// 반복문을 이용하여 테이블을 가운데 정렬로 지정
+
+		for (int i = 0; i < tcmSchedule.getColumnCount(); i++) {
+
+		tcmSchedule.getColumn(i).setCellRenderer(tScheduleCellRenderer);
+
+		}
+
+		
 		jtMember.getTableHeader().setReorderingAllowed(false);	
 		
-		jtMember.getColumnModel().getColumn(0).setPreferredWidth(10);
+		jtMember.getColumnModel().getColumn(0).setPreferredWidth(5);
 		jtMember.getColumnModel().getColumn(1).setPreferredWidth(40);
 		jtMember.getColumnModel().getColumn(2).setPreferredWidth(65);
 		jtMember.getColumnModel().getColumn(3).setPreferredWidth(55);
@@ -52,7 +77,7 @@ public class PMUserView extends JPanel {
 		jtMember.getColumnModel().getColumn(7).setPreferredWidth(140);
 		jtMember.getColumnModel().getColumn(8).setPreferredWidth(35);
 		jtMember.getColumnModel().getColumn(9).setPreferredWidth(35);
-		jtMember.getColumnModel().getColumn(10).setPreferredWidth(40);
+		jtMember.getColumnModel().getColumn(10).setPreferredWidth(45);
 		jtMember.getColumnModel().getColumn(11).setPreferredWidth(50);
 		jtMember.setRowHeight(55);
 		
