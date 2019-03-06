@@ -2,11 +2,11 @@ package kr.co.sist.pcbang.manager.user;
 
 public class PMUserVO {
 	
-	private int leftTime, totalPrice;
+	private int mileage, leftTime, totalPrice;
 	  private String id, name, birth, gender, tel, email, detailAddress, inputDate;
 
 	  public PMUserVO(String id, String name, String birth, String gender, String tel, String email,
-			String detailAddress, int leftTime, int totalPrice, String inputDate) {
+			String detailAddress, int mileage, int leftTime, int totalPrice, String inputDate) {
 		this.id = id;
 		this.name = name;
 		this.birth = birth;
@@ -14,6 +14,7 @@ public class PMUserVO {
 		this.tel = tel;
 		this.email = email;
 		this.detailAddress = detailAddress;
+		this.mileage = mileage;
 		this.leftTime = leftTime;
 		this.totalPrice = totalPrice;
 		this.inputDate = inputDate;
@@ -47,6 +48,10 @@ public class PMUserVO {
 
 	public String getDetailAddress() {
 		return detailAddress;
+	}
+	
+	public int getMileage() {
+		return mileage;
 	}
 
 	public int getLeftTime() {

@@ -51,7 +51,7 @@ public class PMUserController implements ActionListener, MouseListener {
 			for(int i=0; i<listUser.size();i++) {
 				usvo=listUser.get(i);
 				
-				rowData = new Object[11];
+				rowData = new Object[12];
 				rowData[0] = new Integer(i+1);
 				rowData[1] = usvo.getId();
 				rowData[2] = usvo.getName();
@@ -60,9 +60,10 @@ public class PMUserController implements ActionListener, MouseListener {
 				rowData[5] = usvo.getTel();
 				rowData[6] = usvo.getEmail();
 				rowData[7] = usvo.getDetailAddress();
-				rowData[8] = usvo.getLeftTime();
-				rowData[9] = usvo.getTotalPrice();
-				rowData[10] = usvo.getInputDate().substring(0, 10);
+				rowData[8] = usvo.getMileage();
+				rowData[9] = usvo.getLeftTime();
+				rowData[10] = usvo.getTotalPrice();
+				rowData[11] = usvo.getInputDate().substring(0, 10);
 				dtmUser.addRow(rowData);
 			}
 			
