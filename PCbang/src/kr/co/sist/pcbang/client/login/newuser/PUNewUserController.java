@@ -79,7 +79,8 @@ public class PUNewUserController extends WindowAdapter implements ActionListener
 		JTextField jtftel2 = punuv.getJtfPhone2();
 		JTextField jtftel3 = punuv.getJtfPhone3();
 		JTextField jtfemail = punuv.getJtfEmail();
-		JTextField jtfdAdd = punuv.getJtfAddr();
+		JTextField jtfAddress = punuv.getJtfAddr();
+		JTextField jtfDetailAddr = punuv.getJtfDetailAddr();
 
 		String pass = "";
 		pass = new String(jtfPass.getPassword());
@@ -101,11 +102,13 @@ public class PUNewUserController extends WindowAdapter implements ActionListener
 
 		String birth = String.valueOf(jcbBirth1.getSelectedItem()) + String.valueOf(jcbBirth2.getSelectedItem())
 				+ String.valueOf(jcbBirth3.getSelectedItem());
-		String phone = String.valueOf(jtftel1.getText()+"-"+ jtftel2.getText()+"-"+jtftel3.getText());
-
+		String phone = String.valueOf(jtftel1.getText().trim()+"-"+ jtftel2.getText()+"-"+jtftel3.getText().trim());
+		
+		String address = String.valueOf(jtfAddress.getText().trim()+" "+jtfDetailAddr.getText().trim());
+		
 		// 입력한 값으로 객체 생성
 		PUNewUserVO punuvo = new PUNewUserVO(jtfId.getText().trim(), pass.trim(), jtfName.getText().trim(),
-				birth, gibonCode, phone, jtfemail.getText().trim(), jtfdAdd.getText().trim());
+				birth, gibonCode, phone, jtfemail.getText().trim(), address);
 
 		// 계정 추가 dao호출
 		PUNewUserDAO.getInstance().insertMember(punuvo);
