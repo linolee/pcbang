@@ -225,5 +225,26 @@ public class PUOrderingDAO {
 	
 	}//InsertOrder
 	
+	public void UpdatePcStatus(int seatNum) throws SQLException{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		
+		try {
+			con=getConn();
+		//3.
+			StringBuilder updateSt=new StringBuilder();
+			updateSt.append("UPDATE PC_STATUS SET ORDER_STATUS='Y' WHERE SEAT_NUM=?");
+			pstmt=con.prepareStatement(updateSt.toString());
+		//4.바인드변수 값넣기
+			pstmt.setString(1, String.valueOf(seatNum));
+		//5.
+			pstmt.executeUpdate();
+		}finally {
+			//6.
+			if(pstmt!=null) {pstmt.close();}//end if
+			if(con!=null) {con.close();}//end if
+		}//end finally
+		
+	}//UpdatePcStatus
 	
 }//class

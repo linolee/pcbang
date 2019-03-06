@@ -324,18 +324,20 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	private void callcharge(int restTime) {
 		pumv.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		if(restTime==0) {
-
-			int flag=JOptionPane.showConfirmDialog(pumv, "충전된 시간이 없습니다.\\n충전하시겠습니까?");
-
+			int flag=JOptionPane.showConfirmDialog(pumv, "충전된 시간이 없습니다.충전하시겠습니까?");
 			if(flag==JOptionPane.OK_OPTION) {
 				JLabel jlSeat=pumv.getJlSeatNum();
 				new PUChargeView(Integer.parseInt(jlSeat.getText()), this);
 			}else if(flag==JOptionPane.NO_OPTION){
 				//return;
-
-				//JOptionPane.showMessageDialog(pumv, "사용이 종료됩니다.");
-
-				//pumv.dispose();
+				int exitFlag=JOptionPane.showConfirmDialog(pumv, "충전을 하시지 않으면 사용이 종료됩니다.");
+				if(exitFlag==JOptionPane.OK_OPTION) {
+					logout();
+					pumv.dispose();
+					System.exit(0);
+				}else if(exitFlag==JOptionPane.NO_OPTION){
+					callcharge(restTime);
+				}//end else
 			}//end else
 		}//end if
 		

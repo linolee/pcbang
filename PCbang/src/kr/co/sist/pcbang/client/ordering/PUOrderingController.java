@@ -581,6 +581,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 					list.add(puoAdd);
 				}//end for
 				puo_dao.InsertOrder(list,seatNum);//DB에 저장
+				puo_dao.UpdatePcStatus(seatNum);//update
 				JOptionPane.showMessageDialog(puov, "주문이 완료 되었습니다.\n항상 최선을 다하는 1조PC방이 되겠습니다.\n감사합니다.");
 				//주문이 완료되었으므로 주문창을 닫는다
 				puov.dispose();
