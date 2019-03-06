@@ -79,7 +79,7 @@ public class PUNewUserController extends WindowAdapter implements ActionListener
 		JTextField jtftel2 = punuv.getJtfPhone2();
 		JTextField jtftel3 = punuv.getJtfPhone3();
 		JTextField jtfemail = punuv.getJtfEmail();
-		JTextField jtfdetailAdd = punuv.getJtfDetailAddr();
+		JTextField jtfdAdd = punuv.getJtfAddr();
 
 		String pass = "";
 		pass = new String(jtfPass.getPassword());
@@ -105,7 +105,7 @@ public class PUNewUserController extends WindowAdapter implements ActionListener
 
 		// 입력한 값으로 객체 생성
 		PUNewUserVO punuvo = new PUNewUserVO(jtfId.getText().trim(), pass.trim(), jtfName.getText().trim(),
-				birth, gibonCode, phone, jtfemail.getText().trim(), jtfdetailAdd.getText().trim());
+				birth, gibonCode, phone, jtfemail.getText().trim(), jtfdAdd.getText().trim());
 
 		// 계정 추가 dao호출
 		PUNewUserDAO.getInstance().insertMember(punuvo);
