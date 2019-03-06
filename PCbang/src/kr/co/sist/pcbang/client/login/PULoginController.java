@@ -63,6 +63,8 @@ public class PULoginController extends WindowAdapter implements ActionListener {
 //						openPUMV(id);
 //					}
 				} catch (SQLException e) {
+					//예외가 발생하면 현재 좌석번호가 아닌 다른좌석번호를 삭제
+					
 					e.printStackTrace();
 				}
 			}else {
