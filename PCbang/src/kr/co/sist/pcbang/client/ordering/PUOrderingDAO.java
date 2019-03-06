@@ -209,7 +209,7 @@ public class PUOrderingDAO {
 				pstmt=con.prepareStatement(insertOrder.toString());
 			//4.바인드변수 값넣기
 				puoadd=list.get(i);
-				System.out.println(puoadd.getProductCode()+"/"+puoadd.getProductQuan()+"/"+seatNum);
+				//System.out.println(puoadd.getProductCode()+"/"+puoadd.getProductQuan()+"/"+seatNum);
 				pstmt.setInt(1, puoadd.getProductQuan());
 				pstmt.setString(2, puoadd.getProductCode());
 				pstmt.setInt(3, seatNum);
