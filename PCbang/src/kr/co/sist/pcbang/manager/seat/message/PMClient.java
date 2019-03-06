@@ -92,16 +92,22 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 				mv.getJspTalkDisplay().getVerticalScrollBar().setValue(mv.getJspTalkDisplay().getVerticalScrollBar().getMaximum());
 				break;
 			case "[close]":// 기존 좌석을 로그아웃 해야할 때
+				mv.getJtaMsg().setText(temp+"\n");
 				closeOrder(Integer.parseInt(temp.substring(temp.indexOf("]") + 1)));
+				mv.setVisible(true);
 				break;
 			case "[logout]":// 사용자가 종료할 때
+				mv.getJtaMsg().setText(temp+"\n");
 				dropClient();
 				pmsc.seatLoad();
 				pmsc.setBtnSeat();
+				mv.setVisible(true);
 				break;
 			case "[update time]":
+				mv.getJtaMsg().setText(temp+"\n");
 				String msg="[update time]";
 				writeStream(msg);
+				mv.setVisible(true);
 				break;
 //			default:
 //				System.out.println("알 수 없는 형식");
