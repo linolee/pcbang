@@ -2,9 +2,9 @@ package kr.co.sist.pcbang.client.login.newuser;
 
 public class PUNewUserVO {
 
-	private String id, pass, name, birth, gender, tel, email, detailadd;
+	private String id, pass, name, birth, gender, tel, email, address;
 
-	public PUNewUserVO(String id, String pass, String name, String birth, String gender, String tel, String email,String detailadd) {
+	public PUNewUserVO(String id, String pass, String name, String birth, String gender, String tel, String email,String address) {
 		this.id = id;
 		this.pass = pass;
 		this.name = name;
@@ -12,7 +12,7 @@ public class PUNewUserVO {
 		this.gender = gender;
 		this.tel = tel;
 		this.email = email;
-		this.detailadd = detailadd;
+		this.address = address;
 	}
 
 	public String getId() {
@@ -43,11 +43,8 @@ public class PUNewUserVO {
 		return email;
 	}
 
-	public String getDetailadd() {
-		return detailadd;
+	public String getAddress() {
+		return address;
 	}
 
-	
-	
-
-} // clss
+} // class
