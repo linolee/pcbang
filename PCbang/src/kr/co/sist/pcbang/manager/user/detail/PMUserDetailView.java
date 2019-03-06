@@ -30,7 +30,7 @@ public class PMUserDetailView extends JFrame {
 		 jlName = new JLabel("이름");
 		 jlId = new JLabel("아이디");
 		 jlGender = new JLabel("성별");
-		 jlInputDate = new JLabel("입력일");
+		 jlInputDate = new JLabel("가입일");
 		 jlEmail = new JLabel("이메일");
 		 jlTel = new JLabel("전화번호");
 		 jlBirth = new JLabel("생년월일");

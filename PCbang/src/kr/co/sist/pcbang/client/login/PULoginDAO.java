@@ -39,11 +39,7 @@ private static PULoginDAO pul_dao;
 	}//getConn
 	
 	/**
-<<<<<<< HEAD
-	 * PC占쎈퓠占쎄퐣 id�몴占� 占쎌뵠沃섓옙 占쎄텢占쎌뒠餓λ쵐�뵥筌욑옙 占쎈솇占쎈뼊
-=======
 	 * PC방 회원테이블에 존재하는 아이디인지 판별
->>>>>>> refs/heads/master
 	 * @param id
 	 * @return
 	 * @throws SQLException
@@ -88,11 +84,7 @@ private static PULoginDAO pul_dao;
 	}//selectMember
 	
 	/**
-<<<<<<< HEAD
-	 * PC占쎈퓠占쎄퐣 燁삳�諭띈린�뜇�깈�몴占� 占쎌뵠沃섓옙 占쎄텢占쎌뒠餓λ쵐�뵥筌욑옙 占쎈솇占쎈뼊
-=======
 	 * PC방 비회원테이블에 존재하는 카드번호인지 판별
->>>>>>> refs/heads/master
 	 * @param cardNum
 	 * @return
 	 * @throws SQLException
@@ -139,11 +131,7 @@ private static PULoginDAO pul_dao;
 	}//selectGuest
 	
 	/**
-<<<<<<< HEAD
-	 * 占쎌돳占쎌뜚占쎌벥 占쎈툡占쎌뵠占쎈탵揶쏉옙 占쎌겱占쎌삺 PC占쎈퓠占쎄퐣 占쎌쁽�뵳�딆뵠占쎈짗 占쎈쾻 占쎌벥 占쎄맒占쎄묶揶쏉옙 揶쏉옙占쎈뮟占쎈립筌욑옙 占쎈연�겫占�
-=======
 	 * 회원이 현재 PC를 이용중인지 아닌지 자리바꿈상태인지 등의 상태를 확인
->>>>>>> refs/heads/master
 	 * @param id
 	 * @return
 	 * @throws SQLException
@@ -185,11 +173,7 @@ private static PULoginDAO pul_dao;
 	}//memberIdStatus
 	
 	/**
-<<<<<<< HEAD
-	 * �뜮袁れ돳占쎌뜚占쎌벥 燁삳�諭뜹첎占� 占쎌겱占쎌삺 PC占쎈퓠占쎄퐣 占쎌쁽�뵳�딆뵠占쎈짗 占쎈쾻占쎌벥 占쎄맒占쎄묶揶쏉옙 揶쏉옙占쎈뮟占쎈립筌욑옙 占쎈연�겫占�
-=======
 	 * 비회원이 현재 PC를 이용중인지 아닌지 자리바꿈상태인지 등의 상태를 확인
->>>>>>> refs/heads/master
 	 * @param cardNum
 	 * @return
 	 * @throws SQLException
@@ -230,11 +214,7 @@ private static PULoginDAO pul_dao;
 	}//guestIdStatus
 	
 	/**
-<<<<<<< HEAD
-	 * 占쎌돳占쎌뜚占쎌벥 占쎈툡占쎌뵠占쎈탵占쏙옙 �뜮袁⑨옙甕곕뜇�깈揶쏉옙 筌띿쉶�뼄筌롳옙 占쎄텚占쏙옙占쎈뻻揶쏉옙 占쎌젟癰귣�占쏙옙 揶쏉옙占쎌죬占쎌궎占쎈뮉 占쎌뵬
-=======
 	 * 회원이 로그인 하였을때 아이디와 비밀번호가 일치하는지 판별 후 회원의 잔여시간을 반환 
->>>>>>> refs/heads/master
 	 * @param pucvo
 	 * @return
 	 * @throws SQLException
@@ -277,11 +257,7 @@ private static PULoginDAO pul_dao;
 	}//memberLogin
 	
 	/**
-<<<<<<< HEAD
-	 * �뜮袁れ돳占쎌뜚占쎌벥 燁삳�諭띈린�뜇�깈揶쏉옙 筌띿쉶�뮉筌욑옙 占쎈솇占쎈뼊
-=======
 	 * 비회원이 로그인 하였을때 카드번호가 일치하는지 판별
->>>>>>> refs/heads/master
 	 * @param cardNum
 	 * @return
 	 * @throws SQLException
@@ -324,11 +300,7 @@ private static PULoginDAO pul_dao;
 	}//guestCheck
 	
 	/**
-<<<<<<< HEAD
-	 * 占쎌돳占쎌뜚占쎌뵠 嚥≪뮄�젃占쎌뵥 占쎈뻥占쎌뱽 占쎈르 嚥≪뮄�젃占쎌뵥占쎈립 PC占쎌벥 占쎄맒占쎄묶癰귨옙野껓옙
-=======
 	 * 회원이 로그인 할 때 로그인한 PC에 회원 아이디를 등록하고 회원의 PC상태를 변경
->>>>>>> refs/heads/master
 	 * @param pumsvo
 	 * @throws SQLException
 	 */
@@ -355,7 +327,7 @@ private static PULoginDAO pul_dao;
 			="update pc_status set pc_status='Y' where seat_num=(select seat_num from pc where pc_ip=?)";
 			pstmt2=con.prepareStatement(updateStatus);
 		//4.
-			pstmt2.setString(1, pumsvo.getMemberId());
+			pstmt2.setString(1, pumsvo.getPcIp());
 		//5.
 			int cnt2 = pstmt2.executeUpdate();
 			
@@ -373,12 +345,8 @@ private static PULoginDAO pul_dao;
 	}//changeMemberState
 	
 	/**
-<<<<<<< HEAD
-	 * �뜮袁れ돳占쎌뜚占쎌뵠 嚥≪뮄�젃占쎌뵥 占쎈뻥占쎌뱽 占쎈르 嚥≪뮄�젃占쎌뵥占쎈립 PC占쎌벥 占쎄맒占쎄묶癰귨옙野껓옙
-=======
 	 * 비회원이 로그인 하였을 때 비회원이 로그인한 PC에 로그인한 비회원 카드번호를 등록 후
 	 * 등록한 PC의 PC상태를 변경
->>>>>>> refs/heads/master
 	 * @param pugsvo
 	 * @return
 	 * @throws SQLException
@@ -424,11 +392,7 @@ private static PULoginDAO pul_dao;
 	}//changeGuestState
 	
 	/**
-<<<<<<< HEAD
-	 * �꽴占썹뵳�딆쁽占쎌벥 �⑤벊占쏙옙沅쀯옙鍮�
-=======
 	 * 관리자가 갱신한 공지사항의 최신버전의 공지사항 내용을 반환
->>>>>>> refs/heads/master
 	 * @return
 	 * @throws SQLException
 	 */

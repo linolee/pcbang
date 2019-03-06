@@ -50,15 +50,21 @@ public class PULoginController extends WindowAdapter implements ActionListener {
 					if (memberIdStatus.equals("Y")) {// 사용중
 						JOptionPane.showMessageDialog(pulv, "좌석변경을 먼저 해주세요.");
 						return;
-					}else {
+					}else if(memberIdStatus.equals("C")){
+						PUMainView.seatNum = pul_dao.selectMemberSeatNum(id);
 						openPUMV(id);
-					} 
+					} else {
+						PUMainView.seatNum = 0;
+						openPUMV(id);
+					}
 //					else if (memberIdStatus.equals("N")) {// 비사용중
 //						openPUMV(id);
 //					} else if (memberIdStatus.equals("C")) {// 사용중이지만 좌석변경 신청
 //						openPUMV(id);
 //					}
 				} catch (SQLException e) {
+					//예외가 발생하면 현재 좌석번호가 아닌 다른좌석번호를 삭제
+					
 					e.printStackTrace();
 				}
 			}else {
@@ -74,7 +80,11 @@ public class PULoginController extends WindowAdapter implements ActionListener {
 						String guestIdStatus = pul_dao.selectGuestIdStatus(cardNum);
 						if (guestIdStatus.equals("Y")) {// 사용중
 							JOptionPane.showMessageDialog(pulv, "좌석변경을 먼저 해주세요.");
+						}else if(guestIdStatus.equals("C")) {
+							PUMainView.seatNum = pul_dao.selectMemberSeatNum(id);
+							openPUMV(cardNum);
 						}else {
+							PUMainView.seatNum = 0;
 							openPUMV(cardNum);
 						}
 //						else if (guestIdStatus.equals("N")) {// 비사용중
@@ -123,14 +133,17 @@ public class PULoginController extends WindowAdapter implements ActionListener {
 	private void openPUMV(String id) throws SQLException {
 		PUMainView.userId = id;// 로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
 		PUMainView.cardNum = "";
-		PUMainView.seatNum = pul_dao.selectMemberSeatNum(id);
 		InetAddress ip;
 		try {
 			ip = InetAddress.getLocalHost();
 			String pcIp = String.valueOf(ip).substring(InetAddress.getLocalHost().toString().indexOf("/") + 1);
-			pul_dao.updateMemberState(new PUMemberStateVO(id, pcIp));
-			new PUMainView();
-			pulv.dispose();
+			if(pul_dao.updateMemberState(new PUMemberStateVO(id, pcIp))) {
+				new PUMainView();
+				pulv.dispose();
+				
+			}else {
+				JOptionPane.showMessageDialog(pulv, "안됨");
+			}
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
