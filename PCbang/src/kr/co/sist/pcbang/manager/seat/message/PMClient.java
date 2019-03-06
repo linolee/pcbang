@@ -28,7 +28,7 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 	private Thread thread;
 
 	public PMClient(Socket client, PMSeatController pmsc) {
-		System.out.println("메세지창생성");
+//		System.out.println("메세지창생성");
 		mv = new PMMsgView(this);
 		mv.setBounds(100, 100, 600, 300);
 		mv.setVisible(false);//첫 생성에서는 false로 생성
@@ -84,7 +84,7 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 				pmsc.setBtnSeat();
 				break;
 			case "[message]":// 메세지 값이 도착했을 때
-				System.out.println("메시지 도착");
+//				System.out.println("메시지 도착");
 				
 				mv.getJtaMsg().setText(mv.getJtaMsg().getText()+"[상대] : "+temp.substring(temp.indexOf("]") + 1)+"\n");
 				mv.setVisible(true);
@@ -103,9 +103,9 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 				String msg="[update time]";
 				writeStream(msg);
 				break;
-			default:
-				System.out.println("알 수 없는 형식");
-				break;
+//			default:
+//				System.out.println("알 수 없는 형식");
+//				break;
 			}
 		}
 	}
@@ -149,7 +149,7 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 	}
 
 	private void dropClient() {
-		System.out.println("클라이언트 접속종료");
+//		System.out.println("클라이언트 접속종료");
 		try {
 			if (dis != null) {
 				dis.close();
@@ -164,9 +164,9 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 			e.printStackTrace();
 		}
 		clientSocketList.remove(this);
-		for (int i = 0; i < clientSocketList.size(); i++) {
-			System.out.println(clientSocketList.get(i));
-		}
+//		for (int i = 0; i < clientSocketList.size(); i++) {
+//			System.out.println(clientSocketList.get(i));
+//		}
 		mv.dispose();
 		try {
 			this.finalize();

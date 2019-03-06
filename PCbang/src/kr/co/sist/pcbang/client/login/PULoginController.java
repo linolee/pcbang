@@ -44,11 +44,9 @@ public class PULoginController extends WindowAdapter implements ActionListener {
 
 		if (!id.equals("") && (!pass.equals(""))) {// 회원 정보가 입력됐을 때
 			if (checkID(new PUCertificationVO(id, pass))) {// 아이디 정보가 있다면
-				System.out.println(id + pass);
 				String memberIdStatus;
 				try {
 					memberIdStatus = pul_dao.selectMemberIdStatus(id);
-					System.out.println(memberIdStatus);
 					if (memberIdStatus.equals("Y")) {// 사용중
 						JOptionPane.showMessageDialog(pulv, "좌석변경을 먼저 해주세요.");
 						return;
@@ -63,6 +61,8 @@ public class PULoginController extends WindowAdapter implements ActionListener {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
+			}else {
+				JOptionPane.showMessageDialog(pulv, "아이디나 비밀번호를 확인해주세요.");
 			}
 		} else if (!strCardNum.equals("")) {// 비회원 정보가 입력됐을 때
 			int cardNum;
@@ -72,7 +72,6 @@ public class PULoginController extends WindowAdapter implements ActionListener {
 					// 이미 사용중인지 확인
 					try {
 						String guestIdStatus = pul_dao.selectGuestIdStatus(cardNum);
-						System.out.println(guestIdStatus);
 						if (guestIdStatus.equals("Y")) {// 사용중
 							JOptionPane.showMessageDialog(pulv, "좌석변경을 먼저 해주세요.");
 						}else {
@@ -86,6 +85,8 @@ public class PULoginController extends WindowAdapter implements ActionListener {
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
+				}else {
+					JOptionPane.showMessageDialog(pulv, "등록되지 않은 카드번호입니다..");
 				}
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(pulv, "카드번호는 숫자를 입력해주세요.");
