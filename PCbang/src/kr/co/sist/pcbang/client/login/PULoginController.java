@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
+import kr.co.sist.pcbang.client.login.finduser.PUFindUserView;
+import kr.co.sist.pcbang.client.login.newuser.PUPolicyView;
 import kr.co.sist.pcbang.client.main.PUMainView;
 
 /**
@@ -34,6 +36,14 @@ public class PULoginController extends WindowAdapter implements ActionListener {
 		if (ae.getSource() == pulv.getJbtStart()) {// 로그인 버튼이 눌렸을 때
 			loginBtn();
 		}
+		if(ae.getSource()==pulv.getJbtMembership()) {
+			//JOptionPane.showMessageDialog(pulv, "회원가입!");
+			new PUPolicyView();
+			//pulv.dispose();
+		}//end if
+		if(ae.getSource()==pulv.getJbtFind()) {
+			new PUFindUserView();
+		}//end if
 	}// actionPerformed
 
 	private void loginBtn() {
