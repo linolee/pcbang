@@ -23,8 +23,10 @@ public class PMProductAddView extends JDialog {
 	private JButton jbImg, jbAdd, jbEnd;
 	
 	public PMProductAddView(PMProductView pmpv, PMProductController pmpc) {
-		
-		ImageIcon iiProduct = new ImageIcon("C:/dev/workspace/lunch_prj/src/kr/co/sist/lunch/admin/img/no_img.jpg");
+		String imgSavePath = System.getProperty("user.dir");
+		String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\";
+		String imgPath = imgSavePath + filepath;
+		ImageIcon iiProduct = new ImageIcon(imgPath+"no_img.jpg");
 		jlImg = new JLabel(iiProduct);
 		jtfMenuName = new JTextField();
 		jtfPrice = new JTextField();
