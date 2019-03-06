@@ -62,7 +62,7 @@ public class PMUserController implements ActionListener, MouseListener {
 				rowData[7] = usvo.getDetailAddress();
 				rowData[8] = usvo.getLeftTime();
 				rowData[9] = usvo.getTotalPrice();
-				rowData[10] = usvo.getInputDate();
+				rowData[10] = usvo.getInputDate().substring(0, 10);
 				dtmUser.addRow(rowData);
 			}
 			

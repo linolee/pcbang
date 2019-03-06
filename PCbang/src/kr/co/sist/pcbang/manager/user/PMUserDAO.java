@@ -131,7 +131,8 @@ public class PMUserDAO {
 				usv = new PMUserVO(rs.getString("member_id"), rs.getString("member_name"), rs.getString("member_birth"),
 						rs.getString("member_gender"), rs.getString("member_tel"), rs.getString("member_email"),
 						rs.getString("member_detailadd"), rs.getInt("member_rest_time"),
-						rs.getInt("member_total_price"), rs.getString("member_input_date")	);
+						rs.getInt("member_total_price"), 
+						rs.getString("member_input_date")	);
 				list.add(usv);
 			}
 			

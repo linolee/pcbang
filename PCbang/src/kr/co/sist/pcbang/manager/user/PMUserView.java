@@ -32,7 +32,7 @@ public class PMUserView extends JPanel {
 		
 		setLayout(null);
 		
-		String[] memberColumns = {"순차", "아이디", "이름", "생년월일", "성별", "전화번호", "이메일",  "상세주소", "잔여시간", "총 사용 금액", "입력일"};
+		String[] memberColumns = {"순차", "아이디", "이름", "생년월일", "성별", "전화번호", "이메일",  "주소", "잔여시간", "총 사용 금액", "가입일"};
 		dtmMember = new DefaultTableModel(memberColumns, 0){
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -45,14 +45,14 @@ public class PMUserView extends JPanel {
 		
 		jtMember.getColumnModel().getColumn(0).setPreferredWidth(10);
 		jtMember.getColumnModel().getColumn(1).setPreferredWidth(40);
-		jtMember.getColumnModel().getColumn(2).setPreferredWidth(40);
-		jtMember.getColumnModel().getColumn(3).setPreferredWidth(35);
+		jtMember.getColumnModel().getColumn(2).setPreferredWidth(65);
+		jtMember.getColumnModel().getColumn(3).setPreferredWidth(70);
 		jtMember.getColumnModel().getColumn(4).setPreferredWidth(10);
 		jtMember.getColumnModel().getColumn(6).setPreferredWidth(110);
 		jtMember.getColumnModel().getColumn(7).setPreferredWidth(160);
 		jtMember.getColumnModel().getColumn(8).setPreferredWidth(35);
 		jtMember.getColumnModel().getColumn(9).setPreferredWidth(40);
-		jtMember.getColumnModel().getColumn(10).setPreferredWidth(100);
+		jtMember.getColumnModel().getColumn(10).setPreferredWidth(50);
 		jtMember.setRowHeight(55);
 		
 		JScrollPane jspMember = new JScrollPane(jtMember);
