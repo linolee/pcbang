@@ -142,7 +142,6 @@ public class PMSeatController implements Runnable, ActionListener {
 		PMClient client = new PMClient(clientSocket, this);//클라이언트 객체를 만들고
 		clientSocketList.add(client);//리스트에 넣는다.
 //		client.run();//클라이언트의 Thread를 실행한다.
-		System.out.println(clientSocket.getInetAddress());
 	}
 
 	public PMSeatView getPmsv() {
