@@ -82,6 +82,8 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 			flag = temp.substring(0, temp.indexOf("]") + 1);// [order]
 			switch (flag) {
 			case "[order]":// 주문을 넣었을 때
+				pmsc.getPmsv().getPmov().getPmoc().setOrder();
+				pmsc.getPmsv().getPmov().getPmoc().setOrderComplete();
 			case "[login]":// 처음 접속했을 때
 				pmsc.seatLoad();
 				pmsc.setBtnSeat();
