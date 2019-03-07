@@ -85,7 +85,6 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 				// DTM에 추가
 				dtmPrd.addRow(rowData);
 			} // end for
-			
 
 			if (listproduct.isEmpty()) {// 입력된 상품이 없을 때
 

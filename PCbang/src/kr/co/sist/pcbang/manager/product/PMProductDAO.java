@@ -45,7 +45,7 @@ public class PMProductDAO {
 
 	/**
 	 * 입력된 상품의 코드, 이름, 이미지, 가격, 판매량, 총판매량 조회
-	 * 
+	 *
 	 * @return
 	 * @throws SQLException
 	 */
@@ -66,7 +66,7 @@ public class PMProductDAO {
 					"	select menu_code, menu_name, img, menu_price,quan, menu_price* quan as total ")
 					.append("	from (select m.menu_code, m.menu_name, m.img, m.menu_price, nvl((select sum(o1.quan) from ordering2 o1 where (m.menu_code=o1.menu_code) group by m.menu_code),0) as quan  ")
 					.append("	from menu m) ")
-					.append("	order by menu_code desc		");
+					.append("	order by menu_price desc, menu_code desc 	");
 
 			pstmt = con.prepareStatement(selectAllPrd.toString());
 			// 4.
@@ -275,7 +275,7 @@ public class PMProductDAO {
 			// 2.
 			con = getConn();
 			// 3.
-			String deleteMenu = "DELETE FROM menu WHERE menu_code = ? ";
+			String deleteMenu = "update menu set menu_price=-100, menu_name='(삭제)'||menu_name where menu_code=? ";
 			pstmt = con.prepareStatement(deleteMenu);
 			// 4.
 			pstmt.setString(1, code);
@@ -323,7 +323,7 @@ public class PMProductDAO {
 			if (!pmpuvo.getImg().equals("")) {
 				updatePrd.append(", img=? ");
 			} // end if
-			updatePrd.append("where menu_name=?");
+			updatePrd.append("where menu_code=?");
 			pstmt = con.prepareStatement(updatePrd.toString());
 			// 4.
 			pstmt.setString(1, pmpuvo.getMenuName());
@@ -334,7 +334,7 @@ public class PMProductDAO {
 			if (!pmpuvo.getImg().equals("")) {
 				pstmt.setString(index++, pmpuvo.getImg()); // ++index
 			} // end if
-			pstmt.setString(index, pmpuvo.getMenuName());
+			pstmt.setString(index, pmpuvo.getMenuCode());
 
 			// 5.
 			int cnt = pstmt.executeUpdate();
