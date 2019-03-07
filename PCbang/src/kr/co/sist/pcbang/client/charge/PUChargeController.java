@@ -8,7 +8,9 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import kr.co.sist.pcbang.client.login.PULoginController;
 import kr.co.sist.pcbang.client.main.PUMainController;
+import kr.co.sist.pcbang.client.main.PUMainView;
 
 public class PUChargeController extends WindowAdapter implements ActionListener {
 	private PUChargeView pucv;
@@ -30,7 +32,6 @@ public class PUChargeController extends WindowAdapter implements ActionListener 
 				puc_dao.memberUpdate(mpuvo, time, price);
 				pumc.setRestTime(pumc.getRestTime()+time);
 				this.chargeLog=this.chargeLog+price;
-				System.out.println(chargeLog);
 				
 				if(puc_dao.updateMemberMileage(mmvo)) {
 					JOptionPane.showMessageDialog(pucv, "시간이 충전되었습니다~ "+price*0.1+"마일리지가 적립되었습니다!");
@@ -46,6 +47,7 @@ public class PUChargeController extends WindowAdapter implements ActionListener 
 			try {
 				GuestPriceUpdateVO gpuvo=new GuestPriceUpdateVO(puc_dao.selectGuestNum(seatNum));
 				puc_dao.guestUpdate(gpuvo, time, price);
+				this.chargeLog=this.chargeLog+price;
 				pumc.setRestTime(pumc.getRestTime()+time);
 				JOptionPane.showMessageDialog(pucv, "시간이 충전되었습니다~");
 			} catch (SQLException se) {

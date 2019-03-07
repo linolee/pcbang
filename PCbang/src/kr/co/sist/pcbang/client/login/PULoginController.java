@@ -11,23 +11,29 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
+import kr.co.sist.pcbang.client.charge.PUChargeView;
 import kr.co.sist.pcbang.client.login.finduser.PUFindUserView;
 import kr.co.sist.pcbang.client.login.newuser.PUPolicyView;
+import kr.co.sist.pcbang.client.main.PUMainController;
+import kr.co.sist.pcbang.client.main.PUMainDAO;
+import kr.co.sist.pcbang.client.main.PUMainInfoVO;
 import kr.co.sist.pcbang.client.main.PUMainView;
 
 /**
  * 클라이언트 로그인
- * 
  * @author owner
  */
 public class PULoginController extends WindowAdapter implements ActionListener {
 
 	private PULoginView pulv;
+	private PUMainController pumc;
 	private PULoginDAO pul_dao;
+	private PUMainDAO pum_dao;
 
 	public PULoginController(PULoginView pulv) {
 		this.pulv = pulv;
 		pul_dao = PULoginDAO.getInstance();
+		pum_dao = PUMainDAO.getInstance();
 		setNotice();
 	}// PULoginController
 
@@ -144,20 +150,27 @@ public class PULoginController extends WindowAdapter implements ActionListener {
 		PUMainView.userId = id;// 로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
 		PUMainView.cardNum = "";
 		InetAddress ip;
-		try {
-			ip = InetAddress.getLocalHost();
-			String pcIp = String.valueOf(ip).substring(InetAddress.getLocalHost().toString().indexOf("/") + 1);
-			if(pul_dao.updateMemberState(new PUMemberStateVO(id, pcIp))) {
-				new PUMainView();
-				pulv.dispose();
-				
-			}else {
-				JOptionPane.showMessageDialog(pulv, "안됨");
-			}
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
-	}
+			int seatNum;
+			try {
+				seatNum = pum_dao.selectSeatNum();
+				new PUChargeView(seatNum, pumc);
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			}//end catch
+		
+			try {
+				ip = InetAddress.getLocalHost();
+				String pcIp = String.valueOf(ip).substring(InetAddress.getLocalHost().toString().indexOf("/") + 1);
+				if(pul_dao.updateMemberState(new PUMemberStateVO(id, pcIp))) {
+					new PUMainView();
+					pulv.dispose();
+				}else {
+					JOptionPane.showMessageDialog(pulv, "안됨");
+				}//end else
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			}//end catch
+	}//openPUMV
 
 	private void openPUMV(int cardNum) throws SQLException {
 		PUMainView.userId = "";
