@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import kr.co.sist.pcbang.manager.order.PMOrderDAO;
 import kr.co.sist.pcbang.manager.seat.PMSeatController;
 import kr.co.sist.pcbang.manager.seat.PMSeatVO;
 
@@ -28,14 +29,16 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 	private List<PMClient> clientSocketList;
 	private Thread thread;
 	private int seatNum;
+	private PMMessageDAO pmm_dao;
 
 	public PMClient(Socket client, PMSeatController pmsc) {
 //		System.out.println("메세지창생성");
 		mv = new PMMsgView(this);
 		mv.setBounds(100, 100, 650, 350);
-		mv.setVisible(false);//첫 생성에서는 false로 생성
+		mv.setVisible(false);// 첫 생성에서는 false로 생성
 		mv.getJbtSendMsg().addActionListener(this);
 		mv.getJbtSendClose().addActionListener(this);
+		mv.getJbtOrderDone().addActionListener(this);
 		mv.getJtfMsg().addActionListener(this);
 		this.client = client;
 		try {
@@ -49,22 +52,23 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 		thread = new Thread(this);
 		thread.start();
 		seatNum = setTitle();
-		
+		pmm_dao = PMMessageDAO.getInstance();
+
 	}
 
 	private Integer setTitle() {
 		seatNum = 0;
 		for (int i = 0; i < pmsc.getSeat().length; i++) {
 			for (int j = 0; j < pmsc.getSeat()[i].length; j++) {
-				if (client.getInetAddress().toString().equals("/"+pmsc.getSeat()[i][j].getPcIP())) {
+				if (client.getInetAddress().toString().equals("/" + pmsc.getSeat()[i][j].getPcIP())) {
 					seatNum = pmsc.getSeat()[i][j].getSeatNum();
 				}
 			}
 		}
-		mv.setTitle(Integer.toString(seatNum)+"번 좌석"+client.getInetAddress().toString());
+		mv.setTitle(Integer.toString(seatNum) + "번 좌석" + client.getInetAddress().toString());
 		return seatNum;
 	}
-	
+
 	public void run() {
 		try {
 			readStream();
@@ -90,36 +94,38 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 				pmsc.setBtnSeat();
 				break;
 			case "[message]":// 메세지 값이 도착했을 때
-				if (mv.isVisible()) {//메세지창이 켜져 이미 켜져있다면
-					//Message_Status를 'N'로 바꾼다.
+				if (mv.isVisible()) {// 메세지창이 켜져 이미 켜져있다면
+					// Message_Status를 'N'로 바꾼다.
 					try {
 						pmsc.getPms_dao().chgMsgStatusYtoN(seatNum);
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
 				}
-				mv.getJtaMsg().setText(mv.getJtaMsg().getText()+"[상대] : "+temp.substring(temp.indexOf("]") + 1)+"\n");
+				mv.getJtaMsg()
+						.setText(mv.getJtaMsg().getText() + "[상대] : " + temp.substring(temp.indexOf("]") + 1) + "\n");
 //				mv.setVisible(true);
 //				mv.requestFocus();
-				mv.getJspTalkDisplay().getVerticalScrollBar().setValue(mv.getJspTalkDisplay().getVerticalScrollBar().getMaximum());
+				mv.getJspTalkDisplay().getVerticalScrollBar()
+						.setValue(mv.getJspTalkDisplay().getVerticalScrollBar().getMaximum());
 				pmsc.seatLoad();
 				pmsc.setBtnSeat();
 				break;
 			case "[close]":// 기존 좌석을 로그아웃 해야할 때
-				mv.getJtaMsg().setText(temp+"\n");
+				mv.getJtaMsg().setText(temp + "\n");
 				closeOrder(Integer.parseInt(temp.substring(temp.indexOf("]") + 1)));
 				mv.setVisible(true);
 				break;
 			case "[logout]":// 사용자가 종료할 때
-				mv.getJtaMsg().setText(temp+"\n");
+				mv.getJtaMsg().setText(temp + "\n");
 				dropClient();
 				pmsc.seatLoad();
 				pmsc.setBtnSeat();
 				mv.setVisible(true);
 				break;
 			case "[update time]":
-				mv.getJtaMsg().setText(temp+"\n");
-				String msg="[update time]";
+				mv.getJtaMsg().setText(temp + "\n");
+				String msg = "[update time]";
 				writeStream(msg);
 				mv.setVisible(true);
 				break;
@@ -136,33 +142,34 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 	}
 
 	private void sendMsg(String msg) throws IOException {
-		if (!msg.equals("")) {//공백이 아닐 경우
-			mv.getJtaMsg().append("[관리자] : "+msg.substring(msg.indexOf("]") + 1)+"\n");
+		if (!msg.equals("")) {// 공백이 아닐 경우
+			mv.getJtaMsg().append("[관리자] : " + msg.substring(msg.indexOf("]") + 1) + "\n");
 			mv.getJtfMsg().setText("");
 			msg = "[message]" + msg;
 			writeStream(msg);
-			mv.getJspTalkDisplay().getVerticalScrollBar().setValue(mv.getJspTalkDisplay().getVerticalScrollBar().getMaximum());
-		}else {//공백이 입력될 경우
+			mv.getJspTalkDisplay().getVerticalScrollBar()
+					.setValue(mv.getJspTalkDisplay().getVerticalScrollBar().getMaximum());
+		} else {// 공백이 입력될 경우
 			mv.getJtfMsg().setText("");
 		}
 	}
 
-	private void closeOrder(int seatNum) throws IOException {//해당 pc에 종료명령을 내리는 메소드
+	private void closeOrder(int seatNum) throws IOException {// 해당 pc에 종료명령을 내리는 메소드
 		String ipAddr = "";
-		
-		PMSeatVO[][] seat = pmsc.getSeat();//현재 좌석 중에서
+
+		PMSeatVO[][] seat = pmsc.getSeat();// 현재 좌석 중에서
 		for (int i = 0; i < seat.length; i++) {
 			for (int j = 0; j < seat[i].length; j++) {
-				if (seatNum == seat[i][j].getSeatNum()) {//받은 좌석번호와 동일한 좌석정보를 찾아서
-					ipAddr = seat[i][j].getPcIP();//ip를 저장하고
+				if (seatNum == seat[i][j].getSeatNum()) {// 받은 좌석번호와 동일한 좌석정보를 찾아서
+					ipAddr = seat[i][j].getPcIP();// ip를 저장하고
 				}
 			}
 		}
-		
-		for (Iterator<PMClient> iterator = clientSocketList.iterator(); iterator.hasNext();) {//clientSocketList에서
+
+		for (Iterator<PMClient> iterator = clientSocketList.iterator(); iterator.hasNext();) {// clientSocketList에서
 			PMClient pmClient = (PMClient) iterator.next();
-			if (pmClient.getClient().getInetAddress().toString().substring(1).equals(ipAddr)) {//해당 ip를 찾아서
-				pmClient.getDos().writeUTF("[logout]");//로그아웃 명령을 보낸다.
+			if (pmClient.getClient().getInetAddress().toString().substring(1).equals(ipAddr)) {// 해당 ip를 찾아서
+				pmClient.getDos().writeUTF("[logout]");// 로그아웃 명령을 보낸다.
 				pmClient.getDos().flush();
 			}
 		}
@@ -197,7 +204,7 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if (ae.getSource() == mv.getJbtSendMsg() || ae.getSource() == mv.getJtfMsg()) {//엔터키나 메세지 보내기 버튼이 눌려졌을 때
+		if (ae.getSource() == mv.getJbtSendMsg() || ae.getSource() == mv.getJtfMsg()) {// 엔터키나 메세지 보내기 버튼이 눌려졌을 때
 			try {
 				sendMsg(mv.getJtfMsg().getText().trim());
 			} catch (IOException ie) {
@@ -205,8 +212,9 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 				ie.printStackTrace();
 			}
 		}
-		if (ae.getSource() == mv.getJbtSendClose()) {//원격 종료 버튼이 눌려졌을 때
-			if (JOptionPane.showConfirmDialog(mv, "해당 사용자를 정말 로그아웃 시키시겠습니까?", "경고", JOptionPane.WARNING_MESSAGE)==JOptionPane.OK_OPTION) {
+		if (ae.getSource() == mv.getJbtSendClose()) {// 원격 종료 버튼이 눌려졌을 때
+			if (JOptionPane.showConfirmDialog(mv, "해당 사용자를 정말 로그아웃 시키시겠습니까?", "경고",
+					JOptionPane.WARNING_MESSAGE) == JOptionPane.OK_OPTION) {
 				try {
 					writeStream("[logout]");
 				} catch (IOException ie) {
@@ -215,8 +223,24 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 				}
 			}
 		}
+		if (ae.getSource() == mv.getJbtOrderDone()) {// 주문 완료 버튼이 눌려졌을 때
+			if (JOptionPane.showConfirmDialog(mv, "해당 사용자의 주문이 모두 완료되었습니까?", "확인",
+					JOptionPane.WARNING_MESSAGE) == JOptionPane.OK_OPTION) {
+				try {
+					orderDone(seatNum);//좌석번호에 해당하는 모든 주문의 STATUS를 'Y'로 변경하고 좌석번호에 해당하는 PC_STATUS의 ORDER_STATUS를 'N'으로 변경
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			pmsc.seatLoad();
+			pmsc.setBtnSeat();
+		}
 	}
-	
+
+	private int orderDone(int seatNum) throws SQLException{
+		return pmm_dao.orderDone(seatNum);
+	}
+
 	public Socket getClient() {
 		return client;
 	}
@@ -247,10 +271,9 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		mv.setVisible(false);//종료되는 대신 visible을 false로 바꿈
+		mv.setVisible(false);// 종료되는 대신 visible을 false로 바꿈
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		return "PMClient [mv=" + mv + ", client=" + client + ", dis=" + dis + ", dos=" + dos + ", clientSocketList="

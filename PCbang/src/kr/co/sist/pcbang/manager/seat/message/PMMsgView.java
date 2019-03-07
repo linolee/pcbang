@@ -16,15 +16,16 @@ public class PMMsgView extends JFrame {
 
 	private JTextArea jtaMsg;
 	private JTextField jtfMsg;
-	private JButton jbtSendMsg, jbtSendClose;
+	private JButton jbtSendMsg, jbtSendClose, jbtOrderDone;
 	private JScrollPane jspTalkDisplay;
 
 	public PMMsgView(PMClient client) {
-		//super(client.);//클라이언트의 좌석번호랑 IP주소 표시////////////////////////////////////////
+		// super(client.);//클라이언트의 좌석번호랑 IP주소 표시////////////////////////////////////////
 		jtaMsg = new JTextArea();
 		jtfMsg = new JTextField(40);
 		jbtSendMsg = new JButton("전송");
 		jbtSendClose = new JButton("원격 종료");
+		jbtOrderDone = new JButton("주문 완료");
 		jbtSendClose.setBackground(Color.ORANGE);
 		jspTalkDisplay = new JScrollPane();
 
@@ -34,12 +35,16 @@ public class PMMsgView extends JFrame {
 		jtaMsg.setEditable(false);
 
 		JPanel pnlS = new JPanel();
-		pnlS.add(jbtSendClose);
 		pnlS.add(jtfMsg);
 		pnlS.add(jbtSendMsg);
 
+		JPanel pnlN = new JPanel();
+		pnlN.add(jbtSendClose);
+		pnlN.add(jbtOrderDone);
+
 		add("Center", jspTalkDisplay);
 		add("South", pnlS);
+		add("North", pnlN);
 
 	}
 
@@ -61,6 +66,10 @@ public class PMMsgView extends JFrame {
 
 	public JButton getJbtSendClose() {
 		return jbtSendClose;
+	}
+
+	public JButton getJbtOrderDone() {
+		return jbtOrderDone;
 	}
 
 }
