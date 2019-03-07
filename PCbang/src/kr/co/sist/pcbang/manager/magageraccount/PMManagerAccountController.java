@@ -27,7 +27,6 @@ public class PMManagerAccountController extends WindowAdapter implements ActionL
 
 		pmma_dao = PMManagerAccountDAO.getInstance();
 		setAccount();
-		System.out.println(adminId);
 	} // PMManagerAccountController
 
 	/* 계정 조회 메소드 */
@@ -84,7 +83,7 @@ public class PMManagerAccountController extends WindowAdapter implements ActionL
 					setAccount();
 
 				} else {
-					JOptionPane.showMessageDialog(pmmav, adminId + "주문이 삭제 되지 않았습니다.","실패",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(pmmav, adminId + "계정이 삭제 되지 않았습니다.","실패",JOptionPane.ERROR_MESSAGE);
 
 				} // end else
 			} catch (SQLException e) {
