@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
 public class JtestRun2 extends JFrame{
-
+//
 	private JTabbedPane jtp;
 	
 	public JtestRun2() {
