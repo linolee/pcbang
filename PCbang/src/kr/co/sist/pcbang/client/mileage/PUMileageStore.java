@@ -319,8 +319,8 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 				
 				if(x==i && y==420) {
 //					JOptionPane.showMessageDialog(this, "¤²¤²");
-					x=100;
-					y=100;
+					x=3000;
+					y=3000;
 					this.dispose();
 				}
 				
