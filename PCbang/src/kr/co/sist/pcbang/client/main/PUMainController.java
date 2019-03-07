@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -15,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import kr.co.sist.pcbang.client.charge.PUChargeController;
 import kr.co.sist.pcbang.client.charge.PUChargeView;
 import kr.co.sist.pcbang.client.mileage.PUMileageStore;
 import kr.co.sist.pcbang.client.ordering.PUOrderingView;
@@ -242,6 +244,11 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		String id=pumv.id;
 		String card=pumv.card;
 		String useDate = String.valueOf(Calendar.getInstance());
+		InetAddress ip;
+		ip = InetAddress.getLocalHost();
+		String pcIp = String.valueOf(ip).substring(InetAddress.getLocalHost().toString().indexOf("/") + 1);
+		chargePrice=PUChargeController.chargeLog;
+		System.out.println(chargePrice);
 		
 		JLabel jlUseTime=pumv.getJlUseTime();
 		String useTimestr=jlUseTime.getText();//00:00
@@ -253,12 +260,12 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		//int restTime=minutesTime(restTimestr);
 
 		if(!id.equals("")) {//아이디를 가진다면 회원
-			PUMainUserLogVO pumLogvo=new PUMainUserLogVO(id, useDate, uTime, chargePrice);
+			PUMainUserLogVO pumLogvo=new PUMainUserLogVO(id, uTime, chargePrice);
 			PUMainRestTimeVO pumrtvo=new PUMainRestTimeVO(uTime, id); //남은시간과 아이디
 			
 			pum_dao.updateRestTime(pumrtvo);//남은시간 갱신
-			pum_dao.updatePC(id);
-			pum_dao.updateLog(pumLogvo);
+			pum_dao.updatePC(pcIp);
+			pum_dao.insertLog(pumLogvo);
 		
 			
 		}else if(!card.equals("")) {//카드번호를 가진다면 비회원

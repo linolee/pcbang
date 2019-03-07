@@ -14,6 +14,7 @@ public class PUChargeController extends WindowAdapter implements ActionListener 
 	private PUChargeView pucv;
 	private PUChargeDAO puc_dao;
 	private PUMainController pumc;
+	public static int chargeLog=0;
 	
 	public PUChargeController(PUChargeView pucv, PUMainController pumc) {
 		this.pucv=pucv;
@@ -27,8 +28,9 @@ public class PUChargeController extends WindowAdapter implements ActionListener 
 				MemberPriceUpdateVO mpuvo=new MemberPriceUpdateVO(puc_dao.selectMemberId(seatNum));
 				MemberMileageVO mmvo=new MemberMileageVO(price, puc_dao.selectMemberId(seatNum));
 				puc_dao.memberUpdate(mpuvo, time, price);
-				System.out.println(pumc.getRestTime());
 				pumc.setRestTime(pumc.getRestTime()+time);
+				this.chargeLog=this.chargeLog+price;
+				System.out.println(chargeLog);
 				
 				if(puc_dao.updateMemberMileage(mmvo)) {
 					JOptionPane.showMessageDialog(pucv, "시간이 충전되었습니다~ "+price*0.1+"마일리지가 적립되었습니다!");
