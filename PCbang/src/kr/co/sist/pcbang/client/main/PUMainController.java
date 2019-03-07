@@ -243,12 +243,10 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		//    먼저 로그저장 (String memberId,useDate/int useTime,chargePrice)
 		String id=pumv.id;
 		String card=pumv.card;
-		String useDate = String.valueOf(Calendar.getInstance());
 		InetAddress ip;
 		ip = InetAddress.getLocalHost();
 		String pcIp = String.valueOf(ip).substring(InetAddress.getLocalHost().toString().indexOf("/") + 1);
 		chargePrice=PUChargeController.chargeLog;
-		System.out.println(chargePrice);
 		
 		JLabel jlUseTime=pumv.getJlUseTime();
 		String useTimestr=jlUseTime.getText();//00:00
@@ -260,19 +258,21 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		//int restTime=minutesTime(restTimestr);
 
 		if(!id.equals("")) {//아이디를 가진다면 회원
-			PUMainUserLogVO pumLogvo=new PUMainUserLogVO(id, uTime, chargePrice);
+			PUMainMemberLogVO pummLogvo=new PUMainMemberLogVO(id, uTime, chargePrice);
 			PUMainRestTimeVO pumrtvo=new PUMainRestTimeVO(uTime, id); //남은시간과 아이디
 			
 			pum_dao.updateRestTime(pumrtvo);//남은시간 갱신
-			pum_dao.updatePC(pcIp);
-			pum_dao.insertLog(pumLogvo);
+			pum_dao.updateMemberPC(pcIp);
+			pum_dao.insertLog(pummLogvo);
 
 		
 			
 		}else if(!card.equals("")) {//카드번호를 가진다면 비회원
 			//System.out.println(card);
-			pum_dao.updatePC(Integer.parseInt(card));
+			PUMainGuestLogVO pumgLogvo=new PUMainGuestLogVO(Integer.parseInt(card), uTime, chargePrice);
 			
+			pum_dao.updateGuestPC(pcIp);
+			pum_dao.insertLog(pumgLogvo);
 		}//end else
 //		pum_dao.updateMsg(Integer.parseInt(seatNum));
 //		

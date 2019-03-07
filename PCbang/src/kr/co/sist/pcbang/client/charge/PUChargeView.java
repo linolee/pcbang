@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+import kr.co.sist.pcbang.client.login.PULoginController;
 import kr.co.sist.pcbang.client.main.PUMainController;
 
 

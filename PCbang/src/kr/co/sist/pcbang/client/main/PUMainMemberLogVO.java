@@ -1,10 +1,10 @@
 package kr.co.sist.pcbang.client.main;
 
-public class PUMainUserLogVO {
+public class PUMainMemberLogVO {
 	private String memberId;
 	private int useTime,chargePrice;
 	
-	public PUMainUserLogVO(String memberId, int useTime, int chargePrice) {
+	public PUMainMemberLogVO(String memberId, int useTime, int chargePrice) {
 		this.memberId = memberId;
 		this.useTime = useTime;
 		this.chargePrice = chargePrice;
