@@ -1,13 +1,14 @@
 package kr.co.sist.pcbang.manager.seat.detail;
 
-import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 
 import kr.co.sist.pcbang.manager.seat.PMSeatController;
 import kr.co.sist.pcbang.manager.seat.PMSeatVO;
 
-public class PMSeatDetailView extends JDialog {
+@SuppressWarnings("serial")
+public class PMSeatDetailView extends JFrame {
 
 	public PMSeatDetailView(PMSeatController pmsc, int i, int j) {
 		PMSeatVO seat = pmsc.getSeat()[i][j];
@@ -18,7 +19,7 @@ public class PMSeatDetailView extends JDialog {
 		lblIpAddr.setBorder(new TitledBorder("IP¡÷º“"));
 
 		setLayout(null);
-
+		
 		lblSeatNum.setBounds(10, 20, 260, 50);
 		lblIpAddr.setBounds(10, 90, 260, 50);
 
@@ -27,6 +28,8 @@ public class PMSeatDetailView extends JDialog {
 
 		setVisible(true);
 		setBounds(500, 300, 300, 200);
+		
+		addWindowListener(new PMSeatDetailController(this));
 
 	}// constructor
 
