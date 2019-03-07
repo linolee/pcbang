@@ -100,12 +100,10 @@ public class PMSeatDAO {
 	public Integer insertSeatSetInfo(PMSeatSetVO[][] seat) throws SQLException {
 
 		Connection con = null;
-		PreparedStatement pstmt= null, pstmt2 = null;//pstmt = pc테이블에 정보를 삽입, pstmt2 = pc_status 테이블에 정보를 삽입
+		PreparedStatement pstmt = null, pstmt2 = null;// pstmt = pc테이블에 정보를 삽입, pstmt2 = pc_status 테이블에 정보를 삽입
 
 		StringBuilder insertPC = new StringBuilder();
-		insertPC.append("	insert into pc (x_Coor, y_Coor, seat_num, pc_ip) values	")
-				.append("	(?,?,?,?)	")
-				;
+		insertPC.append("	insert into pc (x_Coor, y_Coor, seat_num, pc_ip) values	").append("	(?,?,?,?)	");
 
 		Integer totalInsert = 0;
 
@@ -122,14 +120,14 @@ public class PMSeatDAO {
 						pstmt.setString(4, seat[i][j].getPcIP());
 						// 해당하는 값을 입력
 						totalInsert += pstmt.executeUpdate();// DB에 값을 입력하고 입력한 행수를 저장
-						
+
 						pstmt2 = con.prepareStatement("	insert into pc_status (seat_num) values (?)");
 						pstmt2.setInt(1, seat[i][j].getSeatNum());
 						pstmt2.executeUpdate();
 					} // end if
 				} // end inner for
 			} // end outer for
-			
+
 			return totalInsert;
 		} finally {
 			if (pstmt != null) {
@@ -166,14 +164,14 @@ public class PMSeatDAO {
 	public PMSeatVO[][] selectSeatInfo() throws SQLException {
 
 		List<PMSeatLocVO> tempArr = new ArrayList<>();// DB의 정보를 담을 Arr를 생성
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		StringBuilder selectPC = new StringBuilder();
-		selectPC.append("	select x_coor, y_coor, pc.seat_num seat_num, pc_ip, member_id, card_num, pc_status, message_status, order_status	")
-				.append("	from pc, pc_status pcs	")
-				.append("	where pc.seat_num = pcs.seat_num	");
+		selectPC.append(
+				"	select x_coor, y_coor, pc.seat_num seat_num, pc_ip, member_id, card_num, pc_status, message_status, order_status	")
+				.append("	from pc, pc_status pcs	").append("	where pc.seat_num = pcs.seat_num	");
 
 		try {
 			con = getConn();
@@ -208,7 +206,8 @@ public class PMSeatDAO {
 //				seat[tempPmslvo.getxCoor()][tempPmslvo.getyCoor()] = new PMSeatVO(tempPmslvo.getSeatNum(), tempPmslvo.getPcIP(), tempPmslvo.getPcStatus(),
 //						!tempPmslvo.getMemberId().equals(null)?tempPmslvo.getMemberId():tempPmslvo.getCardNum(), "N");
 				seat[tempPmslvo.getxCoor()][tempPmslvo.getyCoor()] = new PMSeatVO(tempPmslvo.getSeatNum(),
-						tempPmslvo.getPcIP(), user, tempPmslvo.getPcStatus(), tempPmslvo.getMessageStatus(), tempPmslvo.getOrderStatus());
+						tempPmslvo.getPcIP(), user, tempPmslvo.getPcStatus(), tempPmslvo.getMessageStatus(),
+						tempPmslvo.getOrderStatus());
 			} // Arr에 저장된 값을 seatSet에 저장
 				//////////////////////////////////////////////////////////////////
 //			for (int i = 0; i < 10; i++) {
@@ -230,6 +229,38 @@ public class PMSeatDAO {
 				con.close();
 			}
 		}
+	}
+
+	public boolean chgMsgStatusYtoN(int seatNum) throws SQLException {
+		boolean flag = false;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = getConn();
+			// 3.
+			StringBuilder updateMsgStatus = new StringBuilder();
+			updateMsgStatus.append(" update pc_status set message_status = 'N' ").append(" where seat_num = ? ");
+
+			pstmt = con.prepareStatement(updateMsgStatus.toString());
+			// 4.
+			pstmt.setInt(1, seatNum);
+			// 5.
+			int cnt = pstmt.executeUpdate();
+			if (cnt == 1) {
+				flag = true;
+			}
+		} finally {
+			// 6.
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (con != null) {
+				con.close();
+			}
+		}
+
+		return flag;
 	}
 
 }

@@ -9,6 +9,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 	private PMSeatController pmsc;
 	private List<PMClient> clientSocketList;
 	private Thread thread;
+	private int seatNum;
 
 	public PMClient(Socket client, PMSeatController pmsc) {
 //		System.out.println("메세지창생성");
@@ -45,12 +47,12 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 		clientSocketList = pmsc.getClientSocket();
 		thread = new Thread(this);
 		thread.start();
+		seatNum = setTitle();
 		
-		setTitle();
 	}
 
-	private void setTitle() {
-		int seatNum = 0;
+	private Integer setTitle() {
+		seatNum = 0;
 		for (int i = 0; i < pmsc.getSeat().length; i++) {
 			for (int j = 0; j < pmsc.getSeat()[i].length; j++) {
 				if (client.getInetAddress().toString().equals("/"+pmsc.getSeat()[i][j].getPcIP())) {
@@ -59,6 +61,7 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 			}
 		}
 		mv.setTitle(Integer.toString(seatNum)+"번 좌석"+client.getInetAddress().toString());
+		return seatNum;
 	}
 	
 	public void run() {
@@ -84,10 +87,20 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 				pmsc.setBtnSeat();
 				break;
 			case "[message]":// 메세지 값이 도착했을 때
+				if (mv.isVisible()) {//메세지창이 켜져 이미 켜져있다면
+					//Message_Status를 'N'로 바꾼다.
+					try {
+						pmsc.getPms_dao().chgMsgStatusYtoN(seatNum);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
 				mv.getJtaMsg().setText(mv.getJtaMsg().getText()+"[상대] : "+temp.substring(temp.indexOf("]") + 1)+"\n");
 //				mv.setVisible(true);
 //				mv.requestFocus();
 				mv.getJspTalkDisplay().getVerticalScrollBar().setValue(mv.getJspTalkDisplay().getVerticalScrollBar().getMaximum());
+				pmsc.seatLoad();
+				pmsc.setBtnSeat();
 				break;
 			case "[close]":// 기존 좌석을 로그아웃 해야할 때
 				mv.getJtaMsg().setText(temp+"\n");

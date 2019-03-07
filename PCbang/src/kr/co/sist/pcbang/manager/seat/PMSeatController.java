@@ -33,7 +33,6 @@ public class PMSeatController implements Runnable, ActionListener {
 		try {
 			serverSocket = new ServerSocket(55000);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}//서버 소켓을 열고
 		setServer();
@@ -90,6 +89,8 @@ public class PMSeatController implements Runnable, ActionListener {
 			for (int j = 0; j < seat[i].length; j++) {
 				if (e.getSource() == pmsv.getBtnSeat()[i][j]) {// 각 좌석 버튼이 클릭 됐을 때
 					btnSeatClicked(i, j);
+					seatLoad();
+					setBtnSeat();
 				}// end if
 			} // end inner for
 		} // end outer for
@@ -102,8 +103,12 @@ public class PMSeatController implements Runnable, ActionListener {
 			} else {// 사용자가 있다면
 				for (PMClient pmClient : clientSocketList) {
 					if (pmClient.getClient().getInetAddress().toString().equals("/"+seat[i][j].getPcIP())) {//클라이언트 리스트에서 해당하는 좌석의 IP로 연결된 Client를 검색해서
-						//System.out.println(pmClient.getClient().getInetAddress().toString());
 						pmClient.getMv().setVisible(true);
+						try {
+							pms_dao.chgMsgStatusYtoN(seat[i][j].getSeatNum());//메세지를 확인하면 해당 좌석의 메세지 상태를 읽음으로 표시
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
 					}//end if
 				}//end for
 			}//end if

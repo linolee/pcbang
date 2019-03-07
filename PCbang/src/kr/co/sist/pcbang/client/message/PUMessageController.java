@@ -36,6 +36,11 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 		String sendMsg = pumv.getJtfChat().getText().trim();
 
 		if (!sendMsg.equals("")) {//공백이 입력되지 않았을 때
+			try {
+				pum_dao.chgMsgStatusNtoY(pu_manager.getClient().getInetAddress().toString().substring(1));//DAO 사용해서 PC_Status의 Message_Status를 변경
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 			// 스트림에 기록하고
 			pu_manager.getWriteStream().writeUTF("[message]" + sendMsg);
 			// 스트림의 내용을 목적지로 분출
@@ -46,11 +51,6 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 			pumv.getJtfChat().setText("");
 			pumv.getJspChat().getVerticalScrollBar().setValue(pumv.getJspChat().getVerticalScrollBar().getMaximum());
 			
-			try {
-				pum_dao.chgMsgStatusNtoY(pu_manager.getClient().getInetAddress().toString().substring(1));//DAO 사용해서 PC_Status의 Message_Status를 변경
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
 		}else {//공백이 입력됐을 때
 			pumv.getJtfChat().setText("");// T.F의 내용을 삭제한다.
 		}
@@ -65,41 +65,5 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 			e.printStackTrace();
 		}
 	}// actionPerformed
-
-//	public void connectToServer()throws IOException {
-//		clientNick=JOptionPane.showInputDialog("대화명 입력");
-//		//2.
-////		client=new Socket("211.63.89.134", 65535);
-//		client=new Socket("211.63.89.132", 35000);
-//		
-//		//4. 스트림 연결
-//		readStream=new DataInputStream(client.getInputStream());
-//		writeStream=new DataOutputStream(client.getOutputStream());
-//		
-//		//서버로 대화명 전달
-//		writeStream.writeUTF( clientNick );
-//		jta.setText("대화방에 \""+clientNick+"\"으로 입장하셨습니다.\n");
-//		//서버의 대화명을 저장
-//		serverNick=readStream.readUTF();
-//		
-//	}//connectToServer
-
-//	@Override
-//	public void run() {
-////		String revMsg="";
-////		if(pu_manager.getReadStream() != null) {
-////			try {
-////				while( true ) {
-////					revMsg=pu_manager.getReadStream().readUTF();
-////					pumv.getJtaChat().append("[ "+ id+" ] : "+revMsg+"\n");
-////					pumv.getJspChat().getVerticalScrollBar().setValue(pumv.getJspChat().getVerticalScrollBar().getMaximum());
-////				}//end while
-////			}catch(IOException ie) {
-////				JOptionPane.showMessageDialog(pumv, id
-////															+"님께서 사용종료");
-////				ie.printStackTrace();
-////			}//end catch
-////		}//end if		
-//	}//run
 
 }// class
