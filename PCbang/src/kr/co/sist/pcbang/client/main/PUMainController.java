@@ -88,7 +88,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource()==pumv.getJbtOrder()) {//상품주문
 			JLabel jlSeat=pumv.getJlSeatNum();
-			new PUOrderingView(Integer.parseInt(jlSeat.getText()));
+			new PUOrderingView(this,Integer.parseInt(jlSeat.getText()));
 		}//end if
 		if(ae.getSource()==pumv.getJbtCharge()) {//시간충전
 			//JOptionPane.showMessageDialog(pumv, "시간충전");
@@ -266,6 +266,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			pum_dao.updateRestTime(pumrtvo);//남은시간 갱신
 			pum_dao.updatePC(pcIp);
 			pum_dao.insertLog(pumLogvo);
+
 		
 			
 		}else if(!card.equals("")) {//카드번호를 가진다면 비회원

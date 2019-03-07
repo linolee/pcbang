@@ -14,6 +14,8 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import kr.co.sist.pcbang.client.main.PUMainController;
+
 @SuppressWarnings("serial")
 public class PUOrderingView extends JFrame {
 	
@@ -24,7 +26,7 @@ public class PUOrderingView extends JFrame {
 	private JTable jtBestProduct,jtMenu,jtRamen,jtSnack,jtDrink,jtOrderlist;
 	private JLabel jlProductPrice;
 
-	public PUOrderingView(int seatNum) {
+	public PUOrderingView(PUMainController pumc,int seatNum) {
 		super("상품주문창");
 		
 		//1.컴포넌트 생성
@@ -216,7 +218,7 @@ public class PUOrderingView extends JFrame {
 		add("Center",jporderCenter);
 		
 		//5.이벤트 등록
-		PUOrderingController puoc=new PUOrderingController(this,seatNum);
+		PUOrderingController puoc=new PUOrderingController(this,pumc,seatNum);
 		addWindowListener(puoc);
 		jtbMenu.addMouseListener(puoc);
 		jtBestProduct.addMouseListener(puoc);
@@ -289,8 +291,8 @@ public class PUOrderingView extends JFrame {
 		this.jbtDel = jbtDel;
 	}
 	
-	public static void main(String[] args) {
-		new PUOrderingView(100);
-	}//main///	
+//	public static void main(String[] args) {
+//		new PUOrderingView(100);
+//	}//main///	
 	
 }//class
