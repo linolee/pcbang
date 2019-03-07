@@ -31,20 +31,29 @@ commit;
 insert into pc (seat_num, pc_ip, pc_status, x_coor, y_coor) values (6, '211.63.89.147', 'O',1,2);
 commit;
 
-insert into ORDERING (order_num, quan, order_date, status, member_id, menu_code, card_num)
-values('OR_000000001','2',sysdate, 'N', 'silvergod', 'M_000022', null);
-insert into ORDERING (order_num, quan, order_date, status, member_id, menu_code, card_num)
-values('OR_000000002','3',sysdate, 'N', 'frank', 'M_000042', null);
-insert into ORDERING (order_num, quan, order_date, status, member_id, menu_code, card_num)
-values('OR_000000003','1',sysdate, 'N', null, 'M_000042', 100);
-insert into ORDERING (order_num, quan, order_date, status, member_id, menu_code, card_num)
-values('OR_000000004','7',sysdate, 'Y', 'bamidele', 'M_000004', null);
-insert into ORDERING (order_num, quan, order_date, status, member_id, menu_code, card_num)
-values('OR_000000005','3',sysdate, 'N', null, 'M_000042', 100);
-insert into ORDERING (order_num, quan, order_date, status, member_id, menu_code, card_num)
-values('OR_000000006','4',sysdate, 'N', null, 'M_000042', 100);
-insert into ORDERING (order_num, quan, order_date, status, member_id, menu_code, card_num)
-values('OR_000000007','5',sysdate, 'N', null, 'M_000042', 100);
+CREATE table ORDERING2(
+		order_num char(12) constraint pk_ordering2 primary key,
+		quan number(2) not null,
+		order_date date,
+		status char(1) not null,
+		menu_code char(8),
+        seat_num number(3)
+);
+
+insert into ORDERING2 (order_num, quan, order_date, status, menu_code, seat_num)
+values('OR_000000001','2',sysdate, 'N', 'M_000022', 1);
+insert into ORDERING2 (order_num, quan, order_date, status, menu_code, seat_num)
+values('OR_000000002','3',sysdate, 'N', 'M_000041', 2);
+insert into ORDERING2 (order_num, quan, order_date, status, menu_code, seat_num)
+values('OR_000000003','1',sysdate, 'N', 'M_000041', 3);
+insert into ORDERING2 (order_num, quan, order_date, status, menu_code, seat_num)
+values('OR_000000004','7',sysdate, 'Y', 'M_000004', 2);
+insert into ORDERING2 (order_num, quan, order_date, status, menu_code, seat_num)
+values('OR_000000005','3',sysdate, 'N', 'M_000041', 1);
+insert into ORDERING2 (order_num, quan, order_date, status, menu_code, seat_num)
+values('OR_000000006','4',sysdate, 'N', 'M_000041', 1);
+insert into ORDERING2 (order_num, quan, order_date, status, menu_code, seat_num)
+values('OR_000000007','5',sysdate, 'N', 'M_000041', 4);
 commit;
 
 

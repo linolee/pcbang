@@ -88,6 +88,10 @@ public class PMUserDAO {
 						System.out.println("이름만 빈칸아님");
 					}
 					
+					///////////////////////////////////////////////////////////////////
+					selectAllUser.append("order by member_input_date");
+					///////////////////////////////////////////////////////////////////
+					System.out.println(selectAllUser);
 					pstmt = con.prepareStatement(selectAllUser.toString());
 					
 					
@@ -111,9 +115,10 @@ public class PMUserDAO {
 						
 					}
 					
-					// 아이디, 이름 둘 다 빈칸이라면	
 				} 
+				// 아이디, 이름 둘 다 빈칸이라면	
 			else {
+				selectAllUser.append("order by member_input_date");
 				pstmt = con.prepareStatement(selectAllUser.toString());
 //				JOptionPane.showMessageDialog(uv, "아이디 혹은 이름을 입력해주세요");
 			} // end if
