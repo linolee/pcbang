@@ -32,9 +32,10 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 	public PMClient(Socket client, PMSeatController pmsc) {
 //		System.out.println("메세지창생성");
 		mv = new PMMsgView(this);
-		mv.setBounds(100, 100, 600, 300);
+		mv.setBounds(100, 100, 650, 350);
 		mv.setVisible(false);//첫 생성에서는 false로 생성
 		mv.getJbtSendMsg().addActionListener(this);
+		mv.getJbtSendClose().addActionListener(this);
 		mv.getJtfMsg().addActionListener(this);
 		this.client = client;
 		try {
@@ -196,12 +197,22 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		if (ae.getSource() == mv.getJbtSendMsg() || ae.getSource() == mv.getJtfMsg()) {
+		if (ae.getSource() == mv.getJbtSendMsg() || ae.getSource() == mv.getJtfMsg()) {//엔터키나 메세지 보내기 버튼이 눌려졌을 때
 			try {
 				sendMsg(mv.getJtfMsg().getText().trim());
 			} catch (IOException ie) {
 				JOptionPane.showMessageDialog(mv, "서버가 종료되어 메세지를 전송할 수 없습니다");
 				ie.printStackTrace();
+			}
+		}
+		if (ae.getSource() == mv.getJbtSendClose()) {//원격 종료 버튼이 눌려졌을 때
+			if (JOptionPane.showConfirmDialog(mv, "해당 사용자를 정말 로그아웃 시키시겠습니까?", "경고", JOptionPane.WARNING_MESSAGE)==JOptionPane.OK_OPTION) {
+				try {
+					writeStream("[logout]");
+				} catch (IOException ie) {
+					JOptionPane.showMessageDialog(mv, "서버가 종료되어 메세지를 전송할 수 없습니다");
+					ie.printStackTrace();
+				}
 			}
 		}
 	}

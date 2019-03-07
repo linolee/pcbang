@@ -1,5 +1,7 @@
 package kr.co.sist.pcbang.manager.seat.message;
 
+import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -14,14 +16,16 @@ public class PMMsgView extends JFrame {
 
 	private JTextArea jtaMsg;
 	private JTextField jtfMsg;
-	private JButton jbtSendMsg;
+	private JButton jbtSendMsg, jbtSendClose;
 	private JScrollPane jspTalkDisplay;
 
 	public PMMsgView(PMClient client) {
 		//super(client.);//클라이언트의 좌석번호랑 IP주소 표시////////////////////////////////////////
 		jtaMsg = new JTextArea();
-		jtfMsg = new JTextField(45);
+		jtfMsg = new JTextField(40);
 		jbtSendMsg = new JButton("전송");
+		jbtSendClose = new JButton("원격 종료");
+		jbtSendClose.setBackground(Color.ORANGE);
 		jspTalkDisplay = new JScrollPane();
 
 		jspTalkDisplay = new JScrollPane(jtaMsg);
@@ -30,6 +34,7 @@ public class PMMsgView extends JFrame {
 		jtaMsg.setEditable(false);
 
 		JPanel pnlS = new JPanel();
+		pnlS.add(jbtSendClose);
 		pnlS.add(jtfMsg);
 		pnlS.add(jbtSendMsg);
 
@@ -52,6 +57,10 @@ public class PMMsgView extends JFrame {
 
 	public JScrollPane getJspTalkDisplay() {
 		return jspTalkDisplay;
+	}
+
+	public JButton getJbtSendClose() {
+		return jbtSendClose;
 	}
 
 }
