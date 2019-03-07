@@ -13,8 +13,10 @@ import kr.co.sist.pcbang.manager.order.PMOrderView;
 public class PMSeatView extends JPanel {
 	private JButton[][] btnSeat;
 	private JButton btnSet;
+	private PMOrderView pmov;
 
 	public PMSeatView(PMOrderView pmov) {
+		this.pmov = pmov;
 		btnSet = new JButton("좌석설정");
 
 		btnSeat = new JButton[10][10];
@@ -23,9 +25,10 @@ public class PMSeatView extends JPanel {
 				btnSeat[i][j] = new JButton("<" + i + "," + j + ">");
 			}
 		}
-		
-		//0306 좌석 색상 정보 표시 추가
-		JLabel colorLabel1, colorLabel2, colorLabel3, colorLabel4, colorInfoLabel1, colorInfoLabel2, colorInfoLabel3, colorInfoLabel4;
+
+		// 0306 좌석 색상 정보 표시 추가
+		JLabel colorLabel1, colorLabel2, colorLabel3, colorLabel4, colorInfoLabel1, colorInfoLabel2, colorInfoLabel3,
+				colorInfoLabel4;
 		colorInfoLabel1 = new JLabel("사용중");
 		colorInfoLabel2 = new JLabel("주문");
 		colorInfoLabel3 = new JLabel("메세지");
@@ -63,15 +66,15 @@ public class PMSeatView extends JPanel {
 		add(colorInfoLabel3);
 		add(colorLabel4);
 		add(colorInfoLabel4);
-		
-		colorLabel1.setBounds(0,0,20,20);		
-		colorInfoLabel1.setBounds(25,0,70,20);		
-		colorLabel2.setBounds(100,0,20,20);		
-		colorInfoLabel2.setBounds(125,0,70,20);		
-		colorLabel3.setBounds(200,0,20,20);		
-		colorInfoLabel3.setBounds(225,0,70,20);		
-		colorLabel4.setBounds(300,0,20,20);		
-		colorInfoLabel4.setBounds(325,0,120,20);		
+
+		colorLabel1.setBounds(0, 0, 20, 20);
+		colorInfoLabel1.setBounds(25, 0, 70, 20);
+		colorLabel2.setBounds(100, 0, 20, 20);
+		colorInfoLabel2.setBounds(125, 0, 70, 20);
+		colorLabel3.setBounds(200, 0, 20, 20);
+		colorInfoLabel3.setBounds(225, 0, 70, 20);
+		colorLabel4.setBounds(300, 0, 20, 20);
+		colorInfoLabel4.setBounds(325, 0, 120, 20);
 		btnSet.setBounds(900, 0, 100, 20);
 		pnlMain.setBounds(0, 20, 1000, 550);
 
@@ -91,6 +94,10 @@ public class PMSeatView extends JPanel {
 
 	public JButton getBtnSet() {
 		return btnSet;
+	}
+
+	public PMOrderView getPmov() {
+		return pmov;
 	}
 
 }
