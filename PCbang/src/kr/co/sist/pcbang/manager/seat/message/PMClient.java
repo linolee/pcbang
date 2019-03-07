@@ -147,7 +147,8 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 		
 		for (Iterator<PMClient> iterator = clientSocketList.iterator(); iterator.hasNext();) {//clientSocketList에서
 			PMClient pmClient = (PMClient) iterator.next();
-			if (pmClient.getClient().getInetAddress().toString().equals(ipAddr)) {//해당 ip를 찾아서
+			if (pmClient.getClient().getInetAddress().toString().substring(1).equals(ipAddr)) {//해당 ip를 찾아서
+				System.out.println("if확인");
 				pmClient.getDos().writeUTF("[logout]");//로그아웃 명령을 보낸다.
 				pmClient.getDos().flush();
 			}
