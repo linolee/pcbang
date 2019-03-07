@@ -46,9 +46,9 @@ public class PMOrderDAO {
 			con = getConn();
 			//3.
 			StringBuilder selectAllOrder = new StringBuilder();
-			selectAllOrder.append(" select o.order_num, to_char( o.order_date, 'yy-mm-dd hh:mi' )as order_date, p.seat_num, m.menu_code, m.menu_name, o.quan, m.menu_price, o.quan*m.menu_price as total ")
-			.append(" from  ORDERING o, PC p, MENU m ")
-			.append(" where ((p.member_id = o.member_id) OR (p.card_num = o.card_num)) AND m.menu_code = o.menu_code ")
+			selectAllOrder.append(" select o.order_num, to_char( o.order_date, 'yy-mm-dd hh:mi' )as order_date, o.seat_num, m.menu_code, m.menu_name, o.quan, m.menu_price, o.quan*m.menu_price as total ")
+			.append(" from  ORDERING2 o, MENU m ")
+			.append(" where (m.menu_code = o.menu_code) ")
 			.append(" AND o.status = ? ");
 
 			pstmt = con.prepareStatement(selectAllOrder.toString());
@@ -83,7 +83,7 @@ public class PMOrderDAO {
 		try {
 			con = getConn();
 			//3.
-			String deleteOrder = " DELETE FROM ORDERING WHERE ORDER_NUM = ? ";
+			String deleteOrder = " DELETE FROM ORDERING2 WHERE ORDER_NUM = ? ";
 			pstmt = con.prepareStatement(deleteOrder);
 			//4.
 			pstmt.setString(1, orderNum);
@@ -110,7 +110,7 @@ public class PMOrderDAO {
 			con = getConn();
 			//3.
 			StringBuilder updateOrder = new StringBuilder();
-			updateOrder.append(" UPDATE	ORDERING ")
+			updateOrder.append(" UPDATE	ORDERING2 ")
 			.append(" SET STATUS = 'Y' ")
 			.append(" WHERE ORDER_NUM = ? ");
 
