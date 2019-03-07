@@ -19,8 +19,10 @@ import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
@@ -28,6 +30,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -51,6 +54,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	private Map<String, Integer> productPriceMap;
 	private int seatNum;
 	private PUManager pu_manager;
+	private int totalPrice;
     
 	public static final int DBL_CLICK=2;
 	
@@ -64,6 +68,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		productPriceMap=new HashMap<String,Integer>();
 		this.seatNum=seatNum;
 		pu_manager = pumc.getPu_manager();
+		totalPrice=0;
 		
 		try {
 			String[] fileNames=orderImageList();//클라이언트가 가진 이미지를 체크하여
@@ -146,18 +151,21 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 				ovoList.add(puovo);
 				productCntMap.put((String) jt.getValueAt(jt.getSelectedRow(), 1), 1);
 				productPriceMap.put((String) jt.getValueAt(jt.getSelectedRow(), 1), Integer.parseInt((String) jt.getValueAt(jt.getSelectedRow(), 2)));
+				//총가격..
+				setTotalPrice();
 			}//end switch
 		}//end if
 		if(me.getSource()==puov.getJtOrderlist()) {//주문
+//			DefaultTableModel dtm=puov.getDtmOrderlist();
 //			JTable jtO=puov.getJtOrderlist();
-//			//Object column=jtO.getValueAt(jtO.getSelectedRow(), jtO.getSelectedColumn());
-//			if(me.getSource()==puov.getJtOrderlist().getColumnModel().getColumn(3)) {
+//			Object column=jtO.getValueAt(jtO.getSelectedRow(), jtO.getSelectedColumn());
+//			if(me.getSource()==puov.getJtOrderlist().getColumnModel().getColumn(1)) {
 //				//JOptionPane.showMessageDialog(puov, "삭제");
-//				
 //			}else {
-//				//JOptionPane.showMessageDialog(puov, column);
+//				//JOptionPane.showMessageDialog(puov, column+"입니다.");
+//				 jtO.setColumnExt(0).setEditable(false);
+//				//dtm.isCellEditable(jtO.getSelectedRow(), jtO.getSelectedColumn());
 //			}//end else
-//			flagOrder = true;
 			//JTable jt = puov.getJtOrderlist();
 			//System.out.println(jt.getSelectedRow());
 			//orderNum = (String)jt.getValueAt(jt.getSelectedRow(), 0);
@@ -194,6 +202,8 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 				ovoList.add(puovo);
 				productCntMap.put((String) jtC.getValueAt(jtC.getSelectedRow(), 1), 1);
 				productPriceMap.put((String) jtC.getValueAt(jtC.getSelectedRow(), 1), Integer.parseInt((String) jtC.getValueAt(jtC.getSelectedRow(), 2)));
+				//총가격..
+
 			}//end switch
 		}//end if
 
@@ -219,6 +229,8 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 					ovoList.add(puovo);
 					productCntMap.put(puovo.getProductName(), 1);
 					productPriceMap.put(puovo.getProductName(), Integer.parseInt(puovo.getProductPrice()));
+					//총가격..
+
 				} catch (SQLException e) {
 					JOptionPane.showMessageDialog(puov, "상세정보 조회시 문제 발생!");
 					e.printStackTrace();
@@ -401,7 +413,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		combo.addItemListener(e -> {
 			try {
 			String str=e.getItemSelectable().toString();
-			System.out.println(productPriceMap.get(jtOrder.getValueAt(jtOrder.getSelectedRow(), 0)));
+			//System.out.println(productPriceMap.get(jtOrder.getValueAt(jtOrder.getSelectedRow(), 0)));
 			int price=productPriceMap.get(jtOrder.getValueAt(jtOrder.getSelectedRow(), 0));
 			int cnt=0;
 			if(str.substring(str.indexOf("selectedItemReminder")+21).contains("10")) {
@@ -411,13 +423,16 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			}
 			//System.out.println((String) jtOrder.getValueAt(jtOrder.getSelectedRow(), 0).toString());
 			productCntMap.put((String) jtOrder.getValueAt(jtOrder.getSelectedRow(), 0).toString(), cnt);
-			System.out.println(cnt+"/"+price);
+			//System.out.println(cnt+"/"+price);
+			
 			jtOrder.setValueAt(cnt*price, jtOrder.getSelectedRow(), 2);
+			//총가격..
+			setTotalPrice();
 			cnt=0;
 			e.getItemSelectable().addItemListener(new ItemListener() {
 				@Override
 				public void itemStateChanged(ItemEvent e) {
-					System.out.println("아이템이 바뀌었습니다"+e.getItem());
+					//System.out.println("아이템이 바뀌었습니다"+e.getItem());
 				}
 			});
 			}catch (ArrayIndexOutOfBoundsException aio) {
@@ -495,7 +510,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			dis=new DataInputStream(socket.getInputStream());
 			//서버가 보내오는 파일의 갯수 저장
 			int fileCnt=dis.readInt();
-			System.out.println("클라이언트"+fileCnt+"개 받음");
+			//System.out.println("클라이언트"+fileCnt+"개 받음");
 			String fileName="";
 			int fileSize=0;
 			int fileLen=0;
@@ -540,14 +555,14 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		try {
             data=new StringBuilder();
 			data
-			.append("------------------------------------------------\n")
-			.append("주문 목록\n")
-			.append("\t현금(소득공제)\n")
+			.append("----------------------------------------------------\n")
+			.append("                   주문 목록\n")
+			.append("\t     현금(소득공제)\n")
 			.append("역삼점(본점)\n")
 			.append("대표: 1조 2011-11-11212\n")
-			.append("------------------------------------------------\n")
-			.append("주문 상품명 : \n")
-			.append("------------------------------------------------\n");
+			.append("----------------------------------------------------\n")
+			.append("                   주문 상품명 \n")
+			.append("----------------------------------------------------\n");
 			
 			boolean flag=false;
 			for(int i=0; i<ovoList.size(); i++) {
@@ -560,23 +575,22 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 					cnt[i]=productCntMap.get(ovoList.get(i).getProductName());
 					data.append("수량 : ").append(cnt[i]).append("개\n")
 					.append("결제 금액 : ").append(Integer.parseInt(ovoList.get(i).getProductPrice())*cnt[i]).append("원\n")
-					.append("---------------------\n");
+					.append("-------------------------\n");
 				}//end if
 				totalPrice=(Integer.parseInt(ovoList.get(i).getProductPrice())*cnt[i])+totalPrice;
 			}//end for
 			
-			data.append("------------------------------------------------\n");
 			data.append("총 결제 금액 : ").append(totalPrice).append("원\n");
-			data.append("------------------------------------------------\n")
-			.append("자리번호 : ").append(seatNum).append("\n")
-			.append("------------------------------------------------\n")
+			data.append("----------------------------------------------------\n")
+			.append("자리번호 : ").append(seatNum).append("번\n")
+			.append("----------------------------------------------------\n")
 			.append("ip address : ").append(InetAddress.getLocalHost().getHostAddress()).append("\n")
-			.append("------------------------------------------------\n")
+			.append("----------------------------------------------------\n")
 			.append("위의 정보로 주문하시겠습니까?")
 			.append("\n")
 			.append("\n")
 			.append("\n")
-			.append("------------------------------------------------\n");
+			.append("----------------------------------------------------\n");
 		 //}//end for
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -677,5 +691,27 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			//model.removeRow(table.getSelectedRow());
 		}//end catch
     } // end public void JTableRemoveRow()
+	
+	public void setTotalPrice() {
+		int total=0;
+		JLabel jl=puov.getJlProductPrice();
+		if(!productPriceMap.isEmpty()) {
+				//totalPrice=totalPrice+(productPriceMap*productCntMap);
+			Set<String>     allKeyP=productPriceMap.keySet();
+			Set<String>     allKeyC=productCntMap.keySet();
+			Iterator<String> itaP =allKeyP.iterator();
+			Iterator<String> itaC =allKeyC.iterator();
+	           int price=0;
+	           int cnt=0;
+	           while(itaP.hasNext()&&itaC.hasNext()) { //키가 존재 한다면
+	        	   price=productPriceMap.get(itaP.next());//얻어낸 키를 가지고  Map의 값을 얻는다.
+	        	   cnt=productCntMap.get(itaC.next());//얻어낸 키를 가지고  Map의 값을 얻는다.
+	        	   total=total+(price*cnt);
+	           }//end while
+	           totalPrice=total;
+		}//end if
+		
+		jl.setText(String.valueOf(totalPrice));
+	}//setTotalPrice
 	
 }//class

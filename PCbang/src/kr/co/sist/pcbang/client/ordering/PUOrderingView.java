@@ -28,7 +28,6 @@ public class PUOrderingView extends JFrame {
 
 	public PUOrderingView(PUMainController pumc,int seatNum) {
 		super("상품주문창");
-		
 		//1.컴포넌트 생성
 		/////베스트 테이블///////
 		String[] columnsRank= {"1","2","3","4","5","6","7"};
@@ -126,7 +125,13 @@ public class PUOrderingView extends JFrame {
 		jtOrderlist=new JTable(dtmOrderlist) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
-				return super.isCellEditable(row, 2);
+                if(column!=1){
+                    return false;
+                }
+                if(column==1) {
+                	return true;
+                }
+                return false;
 			}//isCellEditable
 		};
 		jtOrderlist.getTableHeader().setResizingAllowed(false);//컬럼의 크기 변경 막기
