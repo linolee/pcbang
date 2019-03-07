@@ -84,11 +84,9 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 				pmsc.setBtnSeat();
 				break;
 			case "[message]":// 메세지 값이 도착했을 때
-//				System.out.println("메시지 도착");
-				
 				mv.getJtaMsg().setText(mv.getJtaMsg().getText()+"[상대] : "+temp.substring(temp.indexOf("]") + 1)+"\n");
-				mv.setVisible(true);
-				mv.requestFocus();
+//				mv.setVisible(true);
+//				mv.requestFocus();
 				mv.getJspTalkDisplay().getVerticalScrollBar().setValue(mv.getJspTalkDisplay().getVerticalScrollBar().getMaximum());
 				break;
 			case "[close]":// 기존 좌석을 로그아웃 해야할 때

@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-
+import java.sql.SQLException;
 
 import kr.co.sist.pcbang.client.main.PUMainController;
 import kr.co.sist.pcbang.client.main.PUManager;
@@ -14,6 +14,7 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 	private PUMessageView pumv;
 	private PUMainController pumc;
 	private PUManager pu_manager;
+	private PUMessageDAO pum_dao;
 //	private Socket client;
 //	private DataInputStream readStream;
 	private String id;
@@ -22,6 +23,7 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 		this.pumv = pumv;
 		this.pumc = pumc;
 		this.pu_manager = pu_manager;
+		pum_dao = PUMessageDAO.getInstance();
 	}
 
 	@Override
@@ -43,14 +45,15 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 			// T.F의 내용을 삭제한다.
 			pumv.getJtfChat().setText("");
 			pumv.getJspChat().getVerticalScrollBar().setValue(pumv.getJspChat().getVerticalScrollBar().getMaximum());
+			
+			try {
+				pum_dao.chgMsgStatusNtoY(pu_manager.getClient().getInetAddress().toString().substring(1));//DAO 사용해서 PC_Status의 Message_Status를 변경
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}else {//공백이 입력됐을 때
 			pumv.getJtfChat().setText("");// T.F의 내용을 삭제한다.
 		}
-    ///////////////////////////////////////////////////////////////////////////////////
-		///////////////////////////////////////////////////////////////////////////////////
-		//DAO 사용해서 PC_Status의 Message_Status를 변경해야함
-		///////////////////////////////////////////////////////////////////////////////////
-		///////////////////////////////////////////////////////////////////////////////////
 	}// sendMsg
 
 	@Override
