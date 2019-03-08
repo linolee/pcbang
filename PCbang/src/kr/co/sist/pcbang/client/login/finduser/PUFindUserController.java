@@ -11,15 +11,20 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
+import org.omg.CORBA.Request;
+
+import kr.co.sist.pcbang.client.login.PULoginView;
 import kr.co.sist.pcbang.client.login.finduser.updatepass.PUUpdatePassView;
 
 public class PUFindUserController extends WindowAdapter implements ActionListener, KeyListener {
 
 	private PUFindUserView pufuv;
+	private PULoginView pulv;
 	private PUFindUserDAO pufu_dao;
 	
-	public PUFindUserController(PUFindUserView pufuv) {
+	public PUFindUserController(PUFindUserView pufuv, PULoginView pulv) {
 		this.pufuv=pufuv;
+		this.pulv=pulv;
 		pufu_dao=PUFindUserDAO.getInstance();
 	}//PUFindUserController
 	
@@ -38,6 +43,9 @@ public class PUFindUserController extends WindowAdapter implements ActionListene
 			id=pufu_dao.searchId(pufuvo);
 			if(!id.equals("")) {
 				JOptionPane.showMessageDialog(pufuv, userName+"님의 아이디는 "+id+" 입니다.");
+				pufuv.dispose();
+				pulv.getJtfId().setText(id);
+				pulv.getJpfPass().requestFocus();
 			}//end if
 			if(id.equals("")) {
 				JOptionPane.showMessageDialog(pufuv, "등록된 정보로 아이디가 조회되지않습니다.");

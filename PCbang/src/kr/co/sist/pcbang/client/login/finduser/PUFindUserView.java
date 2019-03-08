@@ -7,15 +7,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import kr.co.sist.pcbang.client.login.PULoginView;
+
 @SuppressWarnings("serial")
 public class PUFindUserView extends JFrame {
 
 	private JTextField jtfUserIdName, jtfIdPhone1, jtfIdPhone2, jtfIdPhone3,
 				jtfUserPassId, jtfUserPassName, jtfPassPhone1, jtfPassPhone2, jtfPassPhone3;
 	private JButton jbtIdSearch, jbtPassSearch;
+	private PULoginView pulv;
 	
-	public PUFindUserView() {
+	public PUFindUserView(PULoginView pulv) {
 		super("아이디/비밀번호 찾기");
+		this.pulv=pulv;
 		jtfUserIdName = new JTextField();
 		jtfIdPhone1 = new JTextField();
 		jtfIdPhone2 = new JTextField();
@@ -98,7 +102,7 @@ public class PUFindUserView extends JFrame {
 		add(jbtPassSearch);
 		add(empty);
 		
-		PUFindUserController pufuc=new PUFindUserController(this);
+		PUFindUserController pufuc=new PUFindUserController(this,pulv);
 		jbtIdSearch.addActionListener(pufuc);
 		jbtPassSearch.addActionListener(pufuc);
 		jtfUserIdName.addActionListener(pufuc);
@@ -167,7 +171,4 @@ public class PUFindUserView extends JFrame {
 		return jbtPassSearch;
 	}
 
-	public static void main(String[] args) {
-		new PUFindUserView();
-	}
 }//class

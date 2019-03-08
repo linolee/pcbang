@@ -120,8 +120,7 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 				pmsc.setBtnSeat();
 				break;
 			case "[update time]":
-				String msg = "[update time]";
-				writeStream(msg);
+				updateOrder(temp.substring(temp.indexOf("]") + 1));
 				break;
 //			default:
 //				System.out.println("알 수 없는 형식");
@@ -167,6 +166,30 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 				pmClient.getDos().flush();
 			}
 		}
+	}
+	
+	private void updateOrder(String id) throws IOException {// 해당 pc에 종료명령을 내리는 메소드
+		int seatNum=0;
+		
+		
+		PMSeatVO[][] seat = pmsc.getSeat();// 현재 좌석 중에서
+		for (int i = 0; i < seat.length; i++) {
+			for (int j = 0; j < seat[i].length; j++) {
+				if (id == seat[i][j].getUser()) {// 받은 좌석번호와 동일한 좌석정보를 찾아서
+					seatNum = seat[i][j].getSeatNum();// ip를 저장하고
+				}
+			}
+		}
+		
+		if(seatNum != 0) {
+			for (Iterator<PMClient> iterator = clientSocketList.iterator(); iterator.hasNext();) {// clientSocketList에서
+				PMClient pmClient = (PMClient) iterator.next();
+				if (pmClient.getSeatNum()==seatNum) {// 해당 ip를 찾아서
+					pmClient.getDos().writeUTF("[update time]");// 로그아웃 명령을 보낸다.
+					pmClient.getDos().flush();
+				}//end if
+			}//end for
+		}//end if
 	}
 
 	private void dropClient() {
@@ -275,6 +298,14 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 	public String toString() {
 		return "PMClient [mv=" + mv + ", client=" + client + ", dis=" + dis + ", dos=" + dos + ", clientSocketList="
 				+ clientSocketList + ", thread=" + thread + "]";
+	}
+
+	public int getSeatNum() {
+		return seatNum;
+	}
+
+	public PMMessageDAO getPmm_dao() {
+		return pmm_dao;
 	}
 
 }

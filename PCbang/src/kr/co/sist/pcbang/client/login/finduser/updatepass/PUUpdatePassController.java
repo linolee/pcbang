@@ -72,6 +72,10 @@ public class PUUpdatePassController extends WindowAdapter implements ActionListe
 			checkNull();
 		}//end if
 		
+		if( ae.getSource() == puupv.getJbtCancel() ) {
+			puupv.dispose();
+		}//end if
+		
 	}//actionPerformed
 	
 	@Override
