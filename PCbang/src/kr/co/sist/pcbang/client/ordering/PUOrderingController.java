@@ -19,10 +19,8 @@ import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
@@ -54,7 +52,6 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	private Map<String, Integer> productPriceMap;
 	private int seatNum;
 	private PUManager pu_manager;
-	private int totalPrice;
     
 	public static final int DBL_CLICK=2;
 	
@@ -68,7 +65,6 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		productPriceMap=new HashMap<String,Integer>();
 		this.seatNum=seatNum;
 		pu_manager = pumc.getPu_manager();
-		totalPrice=0;
 		
 		try {
 			String[] fileNames=orderImageList();//클라이언트가 가진 이미지를 체크하여
@@ -557,7 +553,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			data
 			.append("----------------------------------------------------\n")
 			.append("                   주문 목록\n")
-			.append("\t     현금(소득공제)\n")
+			.append("\t        현금(소득공제)\n")
 			.append("역삼점(본점)\n")
 			.append("대표: 1조 2011-11-11212\n")
 			.append("----------------------------------------------------\n")
@@ -681,6 +677,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			if(ovoList.get(i).toString().contains((String)table.getValueAt(table.getSelectedRow(), 0))) {
 				ovoList.remove(i);
 				productCntMap.remove(table.getValueAt(table.getSelectedRow(), 0));
+				setTotalPrice();
 			}//end if
 		}//end for
 		try {
@@ -695,23 +692,17 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	public void setTotalPrice() {
 		int total=0;
 		JLabel jl=puov.getJlProductPrice();
-		if(!productPriceMap.isEmpty()) {
-				//totalPrice=totalPrice+(productPriceMap*productCntMap);
-			Set<String>     allKeyP=productPriceMap.keySet();
-			Set<String>     allKeyC=productCntMap.keySet();
-			Iterator<String> itaP =allKeyP.iterator();
-			Iterator<String> itaC =allKeyC.iterator();
-	           int price=0;
-	           int cnt=0;
-	           while(itaP.hasNext()&&itaC.hasNext()) { //키가 존재 한다면
-	        	   price=productPriceMap.get(itaP.next());//얻어낸 키를 가지고  Map의 값을 얻는다.
-	        	   cnt=productCntMap.get(itaC.next());//얻어낸 키를 가지고  Map의 값을 얻는다.
-	        	   total=total+(price*cnt);
-	           }//end while
-	           totalPrice=total;
+
+		JTable jtO=puov.getJtOrderlist();
+		if(ovoList.size()>0) {
+			for(int i=0; i<ovoList.size(); i++) {
+				System.out.println(jtO.getValueAt(i,2));
+				int price=Integer.parseInt((String) (jtO.getValueAt(i,2)).toString());
+				total=total+price;
+			}
 		}//end if
 		
-		jl.setText(String.valueOf(totalPrice));
+		jl.setText(String.valueOf(total)+" 원");
 	}//setTotalPrice
 	
 }//class
