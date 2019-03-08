@@ -46,7 +46,7 @@ public class PMProductDetailController extends WindowAdapter implements ActionLi
 		try {
 			if (pmp_dao.deletePrd(code)) {// 상품을 삭제
 				pmpc.setPrd();// 상품 리스트를 갱신한다.
-				// 파일을 삭제
+				/*// 파일을 삭제
 				String path = System.getProperty("user.dir");
 				String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\";
 				String imgPath = path + filepath;
@@ -56,7 +56,7 @@ public class PMProductDetailController extends WindowAdapter implements ActionLi
 				File rmFile2 = new File(file.getParent() + "/s_" + file.getName());// 작은파일
 
 				rmFile.delete();
-				rmFile2.delete();
+				rmFile2.delete();*/
 
 				JOptionPane.showMessageDialog(pmpdv, "상품이 삭제되었습니다.");
 				pmpdv.dispose();
@@ -195,7 +195,6 @@ public class PMProductDetailController extends WindowAdapter implements ActionLi
 						} catch (IOException e) {
 							e.printStackTrace();
 						} // end catch
-
 					} // end if
 					pmpc.setPrd();// 부모창의 리스트를 업데이트 한다.
 				} else {

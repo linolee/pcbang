@@ -96,14 +96,10 @@ public class PUManager extends Thread {
 				pumsgv.getJspChat().getVerticalScrollBar().setValue(pumsgv.getJspChat().getVerticalScrollBar().getMaximum());
 				break;
 			case "[logout]":
-				pumsgv.getJtaChat().append(temp+"\n");
-				pumsgv.setVisible(true);
 				updateTimeMsg();
 				pumc.logout();
 				break;
 			case "[update time]":
-				pumsgv.getJtaChat().append(temp+"\n");
-				pumsgv.setVisible(true);
 				String cardNum=pumc.getCard();
 				String id=pumc.getId();
 				try {

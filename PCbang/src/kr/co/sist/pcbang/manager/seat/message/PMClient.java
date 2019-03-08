@@ -112,22 +112,16 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 				pmsc.setBtnSeat();
 				break;
 			case "[close]":// 기존 좌석을 로그아웃 해야할 때
-				mv.getJtaMsg().setText(temp + "\n");
 				closeOrder(Integer.parseInt(temp.substring(temp.indexOf("]") + 1)));
-				mv.setVisible(true);
 				break;
 			case "[logout]":// 사용자가 종료할 때
-				mv.getJtaMsg().setText(temp + "\n");
 				dropClient();
 				pmsc.seatLoad();
 				pmsc.setBtnSeat();
-				mv.setVisible(true);
 				break;
 			case "[update time]":
-				mv.getJtaMsg().setText(temp + "\n");
 				String msg = "[update time]";
 				writeStream(msg);
-				mv.setVisible(true);
 				break;
 //			default:
 //				System.out.println("알 수 없는 형식");
@@ -224,7 +218,7 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 			}
 		}
 		if (ae.getSource() == mv.getJbtOrderDone()) {// 주문 완료 버튼이 눌려졌을 때
-			if (JOptionPane.showConfirmDialog(mv, "해당 사용자의 주문이 모두 완료되었습니까?", "확인",
+			if (JOptionPane.showConfirmDialog(mv, "해당 사용자의 주문이 모두 완료되었습니까? 해당 사용자의 모든 주문이 완료처리됩니다!", "확인",
 					JOptionPane.WARNING_MESSAGE) == JOptionPane.OK_OPTION) {
 				try {
 					orderDone(seatNum);//좌석번호에 해당하는 모든 주문의 STATUS를 'Y'로 변경하고 좌석번호에 해당하는 PC_STATUS의 ORDER_STATUS를 'N'으로 변경
@@ -238,7 +232,10 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 	}
 
 	private int orderDone(int seatNum) throws SQLException{
-		return pmm_dao.orderDone(seatNum);
+		int cnt = pmm_dao.orderDone(seatNum);//DB자료를 갱신하고
+		pmsc.getPmsv().getPmov().getPmoc().setOrder();
+		pmsc.getPmsv().getPmov().getPmoc().setOrderComplete();//주문테이블을 갱신
+		return cnt;
 	}
 
 	public Socket getClient() {

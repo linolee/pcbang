@@ -25,14 +25,12 @@ public class PMProductAddController extends WindowAdapter implements ActionListe
 	private PMProductAddView pmpav;
 	private String uploadImg;
 	private PMProductController pmpc;
-	private boolean chgImgFlag;
 	private PMProductDAO pmpdao;
 	
 	public PMProductAddController(PMProductAddView pmpav, PMProductController pmpc) {
 		this.pmpav = pmpav;
 		this.pmpc = pmpc;
 		uploadImg = "";
-		chgImgFlag = true;
 		pmpdao = PMProductDAO.getInstance();
 	}// 생성자
 
@@ -56,20 +54,26 @@ public class PMProductAddController extends WindowAdapter implements ActionListe
 			return;
 		} // end if
 
-		//제품명 확인
+		//제품명 및 이미지 확인
 		PMProductVO pmpvo = null;
 		try {
 			List<PMProductVO> listproduct = pmpdao.selectPrd();
-			String[] prdName = new String[1];
+			Object[] rowData = null;
 			for (int i = 0; i < listproduct.size(); i++) {
 				pmpvo = listproduct.get(i);
-				prdName[0] = pmpvo.getMenuName();
-				if(jtfName.getText().trim().equals(prdName[0])) {
+				rowData = new Object[2];
+				rowData[0] = pmpvo.getMenuName();
+				rowData[1] = new ImageIcon(pmpvo.getImg()); 
+				if(jtfName.getText().trim().equals(rowData[0])) {
 					JOptionPane.showMessageDialog(pmpav, "동일한 제품명이 존재합니다");
 					jtfName.setText("");
 					jtfName.requestFocus();
 					return;
 				}//end if
+				/*if((uploadImg.substring(uploadImg.lastIndexOf("\\")+1).toString()).equals(rowData[1].toString())){
+					JOptionPane.showMessageDialog(pmpav, "동일한 이미지를 가진 메뉴가 있습니다.");
+					return;
+				}//end if*/
 			}//end for
 			
 		} catch (SQLException e) {
@@ -199,7 +203,7 @@ public class PMProductAddController extends WindowAdapter implements ActionListe
 				JOptionPane.showMessageDialog(pmpav, name + "은 이미지가 아닙니다.");
 			} // end else
 			
-			String imgSavePath = System.getProperty("user.dir");
+		/*	String imgSavePath = System.getProperty("user.dir");
 			String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\";
 			String imgPath = imgSavePath + filepath;
 			
@@ -211,11 +215,8 @@ public class PMProductAddController extends WindowAdapter implements ActionListe
 			if (existFlag) {
 				JOptionPane.showMessageDialog(pmpav, "동일한 이미지를 가진 메뉴가 있습니다.");
 				pmpav.getjlImg().setIcon(new ImageIcon(imgPath+"no_img.jpg"));
-				chgImgFlag = false;
 				return;
-			} else {
-				chgImgFlag = true;
-			}
+			}*/
 
 		} // end if
 	}// setImg
@@ -228,12 +229,7 @@ public class PMProductAddController extends WindowAdapter implements ActionListe
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if (ae.getSource() == pmpav.getjbImg()) {
-			if (chgImgFlag) {
 				setImg();
-			} else {
-				JOptionPane.showMessageDialog(pmpav, "이미지 선택이 올바르지 않습니다. 새 이미지를 선택해주세요.");
-				return;
-			}
 		} // end if
 		if (ae.getSource() == pmpav.getJbAdd()) {
 			addPrd();

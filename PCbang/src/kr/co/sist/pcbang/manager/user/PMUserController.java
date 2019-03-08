@@ -132,6 +132,9 @@ public class PMUserController implements ActionListener, MouseListener {
 				leftTime = ((Integer)jt.getValueAt(jt.getSelectedRow(), 9));
 				inputDate = ((String)jt.getValueAt(jt.getSelectedRow(), 11));
 				
+				System.out.println(name);
+				System.out.println(id);
+				
 				PMUserDetailVO udvo = new PMUserDetailVO(id, name, gender, inputDate, email, tel, birth, leftTime);
 				new PMUserDetailView(udvo);
 				

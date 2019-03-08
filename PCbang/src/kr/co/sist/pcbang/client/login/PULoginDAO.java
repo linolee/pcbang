@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import kr.co.sist.pcbang.client.main.PUMainInfoVO;
+
 public class PULoginDAO {
 private static PULoginDAO pul_dao;
 	
@@ -512,5 +514,34 @@ private static PULoginDAO pul_dao;
 		}//end finally
 		return seatNum;
 	}//guestCheck
+	
+	public String selectRestTime(String id) throws SQLException{
+		String restTime="";
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+			
+		try {
+		//1.
+		//2.
+			con=getConn();
+		//3.
+			if(!id.equals("")) {//아이디를 가진다면 회원
+				String selectInfo="SELECT MEMBER_ID, MEMBER_REST_TIME , MEMBER_NAME FROM PC_MEMBER WHERE MEMBER_ID=?";
+				pstmt=con.prepareStatement(selectInfo);
+				pstmt.setString(1, id);
+			}//end if
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				restTime=rs.getString("MEMBER_REST_TIME");
+			}//end if
+		
+		}finally {
+			if(rs!=null) {rs.close();}//end if
+			if(pstmt!=null) {pstmt.close();}//end if
+			if(con!=null) {con.close();}//end if
+		}//end finally
+		return restTime;
+	}//selectInfo
 	
 }//class

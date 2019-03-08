@@ -9,6 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import kr.co.sist.pcbang.client.charge.PUChargeController;
+import kr.co.sist.pcbang.client.login.PUMemberStateVO;
+
 public class PUMainDAO {
 
 	private static PUMainDAO pum_dao;
@@ -138,51 +141,87 @@ public class PUMainDAO {
 	 * 회원이 로그아웃할 때 pc테이블 업데이트
 	 * @param pumlogvo
 	 */
-	public void updatePC(String id) throws SQLException{
+	public boolean updateMemberPC(String pcIp) throws SQLException{
 		Connection con=null;
-		PreparedStatement pstmt=null;
+		PreparedStatement pstmt1=null;
+		PreparedStatement pstmt2=null;
+		boolean flag=false;
 		
 		try {
+		//1.
+		//2.
 			con=getConn();
 		//3.
-			StringBuilder updatePcId=new StringBuilder();
-			updatePcId.append("UPDATE PC SET member_id='' WHERE member_id=?");
-			pstmt=con.prepareStatement(updatePcId.toString());
-		//4.바인드변수 값넣기
-			pstmt.setString(1, id);
+			StringBuilder updatePc=new StringBuilder();
+			updatePc.append("update pc set member_id='' where pc_ip='")
+			.append(pcIp).append("'");
+		//4.
+			pstmt1=con.prepareStatement(updatePc.toString());
 		//5.
-			pstmt.executeUpdate();
+			int cnt1 = pstmt1.executeUpdate();
+		//3.
+			StringBuilder updateStatus=new StringBuilder();
+			updateStatus.append("update pc_status set pc_status='N' where seat_num=(select seat_num from pc where pc_ip='")
+			.append(pcIp).append("')");
+		//4.
+			pstmt2=con.prepareStatement(updateStatus.toString());
+		//5.
+			int cnt2 = pstmt2.executeUpdate();
+			
+			if( cnt1==1 && cnt2 ==1 ) {
+				flag=true;
+			}//end if
 		}finally {
-			//6.
-			if(pstmt!=null) {pstmt.close();}//end if
-			if(con!=null) {con.close();}//end if
+		//6.
+			if( pstmt2 != null ) { pstmt2.close(); }//end if
+			if( pstmt1 != null ) { pstmt1.close(); }//end if
+			if( con != null ) { con.close(); }//end if
 		}//end finally
+		
+		return flag;
 	}//updatePC
 	/**
 	 * 비회원이 로그아웃할 때 pc테이블 업데이트
 	 * @param pumlogvo
 	 */
-	public void updatePC(int card) throws SQLException{
+	public boolean updateGuestPC(String pcIp) throws SQLException{
 		Connection con=null;
-		PreparedStatement pstmt=null;
+		PreparedStatement pstmt1=null;
+		PreparedStatement pstmt2=null;
+		boolean flag=false;
 		
 		try {
+		//1.
+		//2.
 			con=getConn();
 		//3.
-			StringBuilder updatePcCard=new StringBuilder();
-			updatePcCard.append("UPDATE PC SET card_num='' WHERE card_num=?");
-			pstmt=con.prepareStatement(updatePcCard.toString());
-		//4.바인드변수 값넣기
-			pstmt.setString(1, String.valueOf(card));
+			StringBuilder updatePc=new StringBuilder();
+			updatePc.append("update pc set card_num='' where pc_ip='")
+			.append(pcIp).append("'");
+		//4.
+			pstmt1=con.prepareStatement(updatePc.toString());
 		//5.
-			pstmt.executeUpdate();
+			int cnt1 = pstmt1.executeUpdate();
+		//3.
+			StringBuilder updateStatus=new StringBuilder();
+			updateStatus.append("update pc_status set pc_status='N' where seat_num=(select seat_num from pc where pc_ip='")
+			.append(pcIp).append("')");
+		//4.
+			pstmt2=con.prepareStatement(updateStatus.toString());
+		//5.
+			int cnt2 = pstmt2.executeUpdate();
+			
+			if( cnt1==1 && cnt2 ==1 ) {
+				flag=true;
+			}//end if
 		}finally {
-			//6.
-			if(pstmt!=null) {pstmt.close();}//end if
-			if(con!=null) {con.close();}//end if
-		}//end finally	
-		
-	}//updatePC
+		//6.
+			if( pstmt2 != null ) { pstmt2.close(); }//end if
+			if( pstmt1 != null ) { pstmt1.close(); }//end if
+			if( con != null ) { con.close(); }//end if
+		}//end finally
+		return flag;
+	}//updateGuestPC
 	
 	public void updateRestTime(PUMainRestTimeVO pumrtvo) throws SQLException{
 		Connection con=null;
@@ -219,8 +258,52 @@ public class PUMainDAO {
 	 * 로그아웃할 때 log저장
 	 * @param pumLogvo
 	 */
-	public void updateLog(PUMainUserLogVO pumLogvo) {
+	public void insertLog(PUMainMemberLogVO pummLogvo) throws SQLException{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		String insertLog="";
 		
-	}//updateMsg
+		try {
+			con=getConn();
+		//3.
+			insertLog="insert into member_log(member_id, member_usetime, member_usedate, member_chargeprice) values(?,?,sysdate,?)";
+			pstmt=con.prepareStatement(insertLog);
+		//4.바인드변수 값넣기
+			pstmt.setString(1, pummLogvo.getMemberId());
+			pstmt.setInt(2, pummLogvo.getUseTime());
+			pstmt.setInt(3, pummLogvo.getChargePrice());
+		//5.
+			pstmt.executeUpdate();
+		}finally {
+			//6.
+			if(pstmt!=null) {pstmt.close();}//end if
+			if(con!=null) {con.close();}//end if
+		}//end finally	
+		
+	}//insertLog
+	
+	public void insertLog(PUMainGuestLogVO pumgLogvo) throws SQLException{
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		String insertLog="";
+		
+		try {
+			con=getConn();
+			//3.
+			insertLog="insert into pc_guest_log(card_num, guest_usetime, guest_usedate, guest_chargeprice) values(?,?,sysdate,?)";
+			pstmt=con.prepareStatement(insertLog);
+			//4.바인드변수 값넣기
+			pstmt.setInt(1, pumgLogvo.getCardNum());
+			pstmt.setInt(2, pumgLogvo.getUseTime());
+			pstmt.setInt(3, pumgLogvo.getChargePrice());
+			//5.
+			pstmt.executeUpdate();
+		}finally {
+			//6.
+			if(pstmt!=null) {pstmt.close();}//end if
+			if(con!=null) {con.close();}//end if
+		}//end finally	
+		
+	}//insertLog
 	
 }//class

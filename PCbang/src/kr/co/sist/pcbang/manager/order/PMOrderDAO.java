@@ -133,5 +133,63 @@ public class PMOrderDAO {
 	
 	
 	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public boolean chkOrder(int seatNum) throws SQLException {
+		boolean flag=false;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs=null;
+		
+		try {
+			con = getConn();
+			//3.
+			String chkOrder=" select status  from ordering2 where status='N'  and seat_num=? ";
+
+			pstmt=con.prepareStatement(chkOrder);
+			//4.
+			pstmt.setInt(1, seatNum);
+			//5.
+			rs = pstmt.executeQuery();
+			
+			if(!rs.next()) {
+				flag=true;
+			}
+			
+		} finally {
+			//6.
+			if(pstmt != null) {pstmt.close();}
+			if(con != null) {con.close();}
+		}
+		return flag;
+	}
+	
+	public boolean updateOrderStat(int seatNum) throws SQLException  {
+		boolean flag=false;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = getConn();
+			//3.
+			String chkOrder=" update pc_status set order_status='N' where seat_num=? ";
+
+			pstmt=con.prepareStatement(chkOrder);
+			//4.
+			pstmt.setInt(1, seatNum);
+			//5.
+			
+			int cnt = pstmt.executeUpdate();
+			if(cnt == 1) {
+				flag = true;
+			}
+			
+		} finally {
+			//6.
+			if(pstmt != null) {pstmt.close();}
+			if(con != null) {con.close();}
+		}
+		return flag;
+	}
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 }
