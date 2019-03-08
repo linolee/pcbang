@@ -75,9 +75,9 @@ public class PUManager extends Thread {
 		} // end catch
 	}// run
 
-	public void updateTimeMsg() throws IOException {
+	public void updateTimeMsg(String id) throws IOException {
 			// 스트림에 기록하고
-			writeStream.writeUTF("[update time]");
+			writeStream.writeUTF("[update time]"+id);
 			// 스트림의 내용을 목적지로 분출
 			writeStream.flush();
 	}	
@@ -96,7 +96,7 @@ public class PUManager extends Thread {
 				pumsgv.getJspChat().getVerticalScrollBar().setValue(pumsgv.getJspChat().getVerticalScrollBar().getMaximum());
 				break;
 			case "[logout]":
-				updateTimeMsg();
+				updateTimeMsg(pumc.getId());
 				pumc.logout();
 				break;
 			case "[update time]":

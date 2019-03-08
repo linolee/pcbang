@@ -48,7 +48,7 @@ public class PULoginController extends WindowAdapter implements ActionListener {
 			//pulv.dispose();
 		}//end if
 		if(ae.getSource()==pulv.getJbtFind()) {
-			new PUFindUserView();
+			new PUFindUserView(pulv);
 		}//end if
 	}// actionPerformed
 
@@ -150,14 +150,6 @@ public class PULoginController extends WindowAdapter implements ActionListener {
 		PUMainView.userId = id;// 로그인이 성공했다면 id를 모든객체에서 사용할 수 있도록 static 변수로 설정한다.
 		PUMainView.cardNum = "";
 		InetAddress ip;
-			int seatNum;
-			try {
-				seatNum = pum_dao.selectSeatNum();
-				new PUChargeView(seatNum, pumc);
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
-			}//end catch
-		
 			try {
 				ip = InetAddress.getLocalHost();
 				String pcIp = String.valueOf(ip).substring(InetAddress.getLocalHost().toString().indexOf("/") + 1);
