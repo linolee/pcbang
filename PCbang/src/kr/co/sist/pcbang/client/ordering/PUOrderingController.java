@@ -689,6 +689,9 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		}//end catch
     } // end public void JTableRemoveRow()
 	
+	/**
+	 * 주문창의 총 가격 셋팅
+	 */
 	public void setTotalPrice() {
 		int total=0;
 		JLabel jl=puov.getJlProductPrice();
