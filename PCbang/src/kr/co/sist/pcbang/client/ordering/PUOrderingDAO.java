@@ -54,7 +54,7 @@ public class PUOrderingDAO {
 		//2.
 			con=getConn();
 		//3.
-			String selectLunch="SELECT MENU_CODE, MENU_NAME, IMG, MENU_PRICE FROM MENU WHERE MENU_PRICE>0 ORDER BY  CATEGORY,MENU_CODE";
+			String selectLunch="SELECT MENU_CODE, MENU_NAME, IMG, MENU_PRICE FROM MENU WHERE MENU_NAME NOT LIKE '%昏力%' ORDER BY  CATEGORY,MENU_CODE";
 			pstmt=con.prepareStatement(selectLunch);
 		//4.
 		//5.
@@ -94,7 +94,7 @@ public class PUOrderingDAO {
 		try {
 			con=getConn();
 			String selectLunch="SELECT MENU_CODE, MENU_NAME, IMG, MENU_PRICE FROM (select MENU_CODE, MENU_NAME, IMG, MENU_PRICE " + 
-								"from MENU where CATEGORY=?) WHERE MENU_PRICE>0 ORDER BY MENU_CODE";
+								"from MENU where CATEGORY=?) WHERE MENU_NAME NOT LIKE '%昏力%' ORDER BY MENU_CODE";
 			pstmt=con.prepareStatement(selectLunch);
 			pstmt.setString(1, category);
 			rs=pstmt.executeQuery();
@@ -132,7 +132,7 @@ public class PUOrderingDAO {
 					"from ORDERING2 o, menu m1\r\n" + 
 					"where (m1.menu_code=o.menu_code) and m1.menu_code = m2.menu_code\r\n" + 
 					"group by  m1.MENU_CODE)* MENU_PRICE ,0) as total\r\n" + 
-					"from menu m2 WHERE MENU_PRICE>0\r\n" + 
+					"from menu m2 WHERE MENU_NAME NOT LIKE '%昏力%'\r\n" + 
 					"order by total desc";
 			pstmt=con.prepareStatement(selectLunch);
 			rs=pstmt.executeQuery();
@@ -169,7 +169,7 @@ public class PUOrderingDAO {
 		//2.
 			con=getConn();
 		//3.
-			String selectPro="SELECT MENU_NAME,MENU_PRICE,IMG,MENU_CODE FROM MENU WHERE IMG=? AND ROWNUM<=1 AND MENU_PRICE>0";
+			String selectPro="SELECT MENU_NAME,MENU_PRICE,IMG,MENU_CODE FROM MENU WHERE IMG=? AND ROWNUM<=1 AND MENU_NAME NOT LIKE '%昏力%'";
 			pstmt=con.prepareStatement(selectPro);
 		//4.
 			pstmt.setString(1, img);
