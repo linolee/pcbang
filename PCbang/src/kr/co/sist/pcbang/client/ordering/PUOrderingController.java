@@ -677,11 +677,11 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			if(ovoList.get(i).toString().contains((String)table.getValueAt(table.getSelectedRow(), 0))) {
 				ovoList.remove(i);
 				productCntMap.remove(table.getValueAt(table.getSelectedRow(), 0));
-				setTotalPrice();
 			}//end if
 		}//end for
 		try {
 			model.removeRow(table.getSelectedRow());
+			setTotalPrice();
 		}catch (ArrayIndexOutOfBoundsException e) {
 			//JOptionPane.showMessageDialog(puov, "ÀÎµ¦½º ¿À·ù");
 			e.printStackTrace();
