@@ -66,7 +66,7 @@ public class PMProductDAO {
 					"	select menu_code, menu_name, img, menu_price,quan, menu_price* quan as total ")
 					.append("	from (select m.menu_code, m.menu_name, m.img, m.menu_price, nvl((select sum(o1.quan) from ordering2 o1 where (m.menu_code=o1.menu_code) group by m.menu_code),0) as quan  ")
 					.append("	from menu m) ")
-					.append("	order by menu_price desc, menu_code desc 	");
+					.append("	order by menu_name desc, menu_code desc 	");
 
 			pstmt = con.prepareStatement(selectAllPrd.toString());
 			// 4.

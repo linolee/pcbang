@@ -95,7 +95,7 @@ public class PMProductDetailController extends WindowAdapter implements ActionLi
 				JOptionPane.showMessageDialog(pmpdv, name + "은 이미지가 아닙니다.");
 			} // end else
 			
-			String imgSavePath = System.getProperty("user.dir");
+			/*			String imgSavePath = System.getProperty("user.dir");
 			String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\";
 			String imgPath = imgSavePath + filepath;
 			File origin = new File(imgPath+name);
@@ -110,7 +110,7 @@ public class PMProductDetailController extends WindowAdapter implements ActionLi
 				return;
 			}else {
 				
-			}
+			}*/
 			
 		} // end if
 		
