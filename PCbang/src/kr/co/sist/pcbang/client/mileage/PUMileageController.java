@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 import kr.co.sist.pcbang.client.main.PUMainController;
 
 @SuppressWarnings("serial")
-public class PUMileageStore extends JFrame implements KeyListener, Runnable {
+public class PUMileageController extends JFrame implements KeyListener, Runnable {
 
 	private int f_width;
 	private int f_height;
@@ -54,7 +54,7 @@ public class PUMileageStore extends JFrame implements KeyListener, Runnable {
 	private String id;
 	
 	
-	public PUMileageStore(PUMainController pumc) {
+	public PUMileageController(PUMainController pumc) {
 		
 		this.pumc=pumc;
 		a_dao=PUMileageDAO.getInstance();
