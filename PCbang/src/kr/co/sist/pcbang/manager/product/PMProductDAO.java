@@ -275,7 +275,7 @@ public class PMProductDAO {
 			// 2.
 			con = getConn();
 			// 3.
-			String deleteMenu = "update menu set menu_price=-100, menu_name='(삭제)'||menu_name where menu_code=? ";
+			String deleteMenu = "update menu set menu_name='(삭제)'||menu_name where menu_code=? ";
 			pstmt = con.prepareStatement(deleteMenu);
 			// 4.
 			pstmt.setString(1, code);
