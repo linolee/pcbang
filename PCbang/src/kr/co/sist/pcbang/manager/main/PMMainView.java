@@ -18,41 +18,37 @@ import kr.co.sist.pcbang.manager.product.PMProductView;
 import kr.co.sist.pcbang.manager.seat.PMSeatView;
 import kr.co.sist.pcbang.manager.user.PMUserView;
 
-import kr.co.sist.pcbang.manager.fare.PMFareView;
-import kr.co.sist.pcbang.manager.product.PMProductView;
-import kr.co.sist.pcbang.manager.seat.PMSeatView;
-import kr.co.sist.pcbang.manager.user.PMUserView;
-
 
 @SuppressWarnings("serial")
 public class PMMainView extends JFrame{
 
 	private JTabbedPane jtb;
 	private JButton jbtLogOut, jbtAccount, jbtNoticeSave;
-	private JTextArea jtaNotice;
-	private JLabel jlBoard, jlOrderNum, jlMsgNum, jlTodayMoneyNum, jlOrder, jlMsg, jlTodayMoney;
+	private JTextArea jtaNotice, jtaBoard;
+	private JLabel jlOrderNum, jlMsgNum, jlTodayMoneyNum, jlOrder, jlMsg, jlTodayMoney;
 	private JPanel seat, order, statistics, member, menu, price;
 	private PMOrderView pmov; // 19-02-27 이재찬 추가
 	
 	public static String adminId;	
 	
 	public PMMainView(String adminName) {
-		super("관리자 시스템 [ 로그인 계정 : "+adminName+" ]");
+		super("관리자 시스템 [ 로그인 계정 : "+adminName+" / "+adminId + " ]");
+		System.out.println("main view : "+ adminId );
 		
 		jtb = new JTabbedPane();
 		jbtLogOut = new JButton("로그아웃");
 		jbtAccount = new JButton("계정관리");
 		jbtNoticeSave = new JButton("공지사항저장");
-		jlBoard = new JLabel();						//현황
+		jtaBoard = new JTextArea();						//현황
 		jtaNotice = new JTextArea();				//공지사항
 		jlOrder = new JLabel("주문");
-		jlOrderNum = new JLabel("0");
+		jlOrderNum = new JLabel();
 		jlMsg = new JLabel("메세지");
-		jlMsgNum = new JLabel("0");
+		jlMsgNum = new JLabel();
 		jlTodayMoney = new JLabel("금일매출");
-		jlTodayMoneyNum = new JLabel("0");
+		jlTodayMoneyNum = new JLabel();
 		
-		JScrollPane jspBoard = new JScrollPane(jlBoard);
+		JScrollPane jspBoard = new JScrollPane(jtaBoard);
 		JScrollPane jspNotice = new JScrollPane(jtaNotice);
 		
 		setLayout(null);
@@ -71,7 +67,7 @@ public class PMMainView extends JFrame{
 		jtb.setBounds(150, 30, 1000, 600);
 		
 	    pmov = new PMOrderView(); // 19-02-27 이재찬 추가
-	    seat = new PMSeatView(pmov);
+	    seat = new PMSeatView(pmov, this);
 	    order = pmov; // 19-02-27 이재찬 추가
 	    statistics = new JPanel();
 	    member = new PMUserView();
@@ -102,7 +98,7 @@ public class PMMainView extends JFrame{
 		jspBoard.setBorder(new TitledBorder("현황"));
 		jspNotice.setBorder(new TitledBorder("공지사항"));
 		
-		jlBoard.setBackground(Color.white);
+		jtaBoard.setBackground(Color.white);
 		jlOrder.setHorizontalAlignment(JTextField.CENTER);
 		jlOrder.setBackground(Color.white);
 		jlMsg.setHorizontalAlignment(JTextField.CENTER);
@@ -117,7 +113,8 @@ public class PMMainView extends JFrame{
 		jlTodayMoneyNum.setBackground(Color.white);
 		jtb.setBackground(Color.white);
 		
-		jlBoard.setOpaque(true);
+		jtaBoard.setEditable(false);
+		jtaBoard.setOpaque(true);
 		jlOrder.setOpaque(true);
 		jlOrderNum.setOpaque(true);
 		jlMsg.setOpaque(true);
@@ -160,8 +157,8 @@ public class PMMainView extends JFrame{
 		return jtaNotice;
 	}
 
-	public JLabel getJlBoard() {
-		return jlBoard;
+	public JTextArea getJtaBoard() {
+		return jtaBoard;
 	}
 
 	public JLabel getJlOrderNum() {

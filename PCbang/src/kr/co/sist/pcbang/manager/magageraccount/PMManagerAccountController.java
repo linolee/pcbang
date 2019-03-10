@@ -1,5 +1,6 @@
 package kr.co.sist.pcbang.manager.magageraccount;
 
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -13,6 +14,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import kr.co.sist.pcbang.manager.magageraddaccount.PMManagerAddAccountView;
+import kr.co.sist.pcbang.manager.main.PMMainView;
 
 public class PMManagerAccountController extends WindowAdapter implements ActionListener, MouseListener {
 
@@ -66,36 +68,44 @@ public class PMManagerAccountController extends WindowAdapter implements ActionL
 	}// setAccount
 
 	public void removeAccount() {
-		
-		StringBuilder deleteMsg=new StringBuilder();
-		deleteMsg.append(adminId).append(" 을(를) 삭제하시겠습니까?");
-		
-		switch(JOptionPane.showConfirmDialog(pmmav, deleteMsg.toString())) {
+
+		StringBuilder deleteMsg = new StringBuilder();
+		deleteMsg.append(adminId).append("을(를) 삭제하시겠습니까?");
+
+		switch (JOptionPane.showConfirmDialog(pmmav, deleteMsg.toString())) {
 		case JOptionPane.OK_OPTION:
 
-			if(adminId != null) {
-			try {
-					
-				if (pmma_dao.deleteAccount(adminId)) { // DB테이블에서 해당 계정 삭제
-					//저기 값을 그대로 넘깁니다. 
-					JOptionPane.showMessageDialog(pmmav,  adminId + "이(가) 삭제 되었습니다.");
-					// 주문테이블을 생신
-					setAccount();
+			if (adminId != null) {
+				System.out.println(PMMainView.adminId);
+				
+				if (!PMMainView.adminId.equals(adminId)) {
+					try {
+						if (pmma_dao.deleteAccount(adminId)) { // DB테이블에서 해당 계정 삭제
+							// 저기 값을 그대로 넘깁니다.
+							JOptionPane.showMessageDialog(pmmav, adminId + "이(가) 삭제 되었습니다.");
+							// 주문테이블을 생신
+							setAccount();
 
+						} else {
+							JOptionPane.showMessageDialog(pmmav, adminId + "계정이 삭제 되지 않았습니다.", "실패",
+									JOptionPane.ERROR_MESSAGE);
+
+						}
+					} catch (HeadlessException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				} else {
-					JOptionPane.showMessageDialog(pmmav, adminId + "계정이 삭제 되지 않았습니다.","실패",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(pmmav, adminId + "은 접속중인 계정으로 삭제할 수 없습니다.", "실패", JOptionPane.ERROR_MESSAGE);
 
-				} // end else
-			} catch (SQLException e) {
-				JOptionPane.showMessageDialog(pmmav,  adminId + "DB에서 문제발생", "Error", JOptionPane.ERROR_MESSAGE);
-				e.printStackTrace();
-			} // end catch				
-			
+				}
+
 			} else {
 				JOptionPane.showMessageDialog(pmmav, "삭제할 계정을 선택하세요.", "Fail", JOptionPane.ERROR_MESSAGE);
 			} // end else
-		}//end switch		
-		
+		}// end switch
+
 	} // removeAccount
 
 	@Override

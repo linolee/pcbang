@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import kr.co.sist.pcbang.manager.main.PMMainView;
 import kr.co.sist.pcbang.manager.order.PMOrderView;
 
 @SuppressWarnings("serial")
@@ -14,9 +15,11 @@ public class PMSeatView extends JPanel {
 	private JButton[][] btnSeat;
 	private JButton btnSet;
 	private PMOrderView pmov;
+	private PMMainView pmmv;
 
-	public PMSeatView(PMOrderView pmov) {
+	public PMSeatView(PMOrderView pmov, PMMainView pmmv) {
 		this.pmov = pmov;
+		this.pmmv = pmmv;
 		btnSet = new JButton("ÁÂ¼®¼³Á¤");
 
 		btnSeat = new JButton[10][10];
@@ -78,7 +81,7 @@ public class PMSeatView extends JPanel {
 		btnSet.setBounds(900, 0, 100, 20);
 		pnlMain.setBounds(0, 20, 1000, 550);
 
-		PMSeatController pmsc = new PMSeatController(this);
+		PMSeatController pmsc = new PMSeatController(this, pmmv);
 		btnSet.addActionListener(pmsc);
 		for (int i = 0; i < btnSeat.length; i++) {
 			for (int j = 0; j < btnSeat[i].length; j++) {
@@ -98,6 +101,10 @@ public class PMSeatView extends JPanel {
 
 	public PMOrderView getPmov() {
 		return pmov;
+	}
+	
+	public PMMainView getMmov() {
+		return pmmv;
 	}
 
 }
