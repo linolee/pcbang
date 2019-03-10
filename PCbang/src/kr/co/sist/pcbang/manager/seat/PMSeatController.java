@@ -97,13 +97,13 @@ public class PMSeatController implements Runnable, ActionListener {
 			pmmv.getJlOrderNum().setText(String.valueOf(order));
 		} else {
 			pmmv.getJlOrderNum().setText(String.valueOf("0"));
-		}
+		} // end else
 
 		if (msg != 0) {
 			pmmv.getJlMsgNum().setText(String.valueOf(msg));
 		} else {
 			pmmv.getJlMsgNum().setText(String.valueOf("0"));
-		}
+		} // end else
 		
 	} // setStatus
 	
