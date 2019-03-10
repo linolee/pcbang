@@ -91,19 +91,19 @@ public class PMSeatController implements Runnable, ActionListener {
 			pmmv.getJtaBoard().setText(String.valueOf("ÃÑ ÁÂ¼® : 25"+"\n»ç¿ëÁß : "+ seat));
 		} else {
 			pmmv.getJtaBoard().setText(String.valueOf("»ç¿ëÁßÀÎ ÁÂ¼® ¼ö : 0 / ÃÑ ÁÂ¼® ¼ö : 25"));
-		}
+		} // end else
 
 		if (order != 0) {
 			pmmv.getJlOrderNum().setText(String.valueOf(order));
 		} else {
 			pmmv.getJlOrderNum().setText(String.valueOf("0"));
-		}
+		} // end else
 
 		if (msg != 0) {
 			pmmv.getJlMsgNum().setText(String.valueOf(msg));
 		} else {
 			pmmv.getJlMsgNum().setText(String.valueOf("0"));
-		}
+		} // end else
 		
 	} // setStatus
 	
