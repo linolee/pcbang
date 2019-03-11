@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.Random;
 
@@ -92,36 +93,28 @@ public class PUMileageController extends JFrame implements KeyListener, Runnable
 		f_width =671;
 		f_height = 506;
 
-		String path = this.getClass().getResource("/").getPath()+"kr/co/sist/pcbang/client/mileage/";
-//		URL path = (getClass().getClassLoader().getResource("e/"));
-//		String path=ClassLoader.getSystemClassLoader().getResource(".").getPath();
-//		URL path=getClass().getResource("background.png");
-//		URL path=getClass().getResource("game");
-		
 		Player_img = new Image[4];
 		for (int i = 0; i < Player_img.length; ++i) {
-			Player_img[i] = new ImageIcon(path+"img/char_f"+i+".png").getImage();
+			Player_img[i] = new ImageIcon(getClass().getResource("char_f"+i+".png")).getImage();
 		}
 		Player_img2 = new Image[4];
 		for (int i = 0; i < Player_img2.length; ++i) {
-			Player_img2[i] = new ImageIcon(path+"img/char_l"+i+".png").getImage();
+			Player_img2[i] = new ImageIcon(getClass().getResource("char_l"+i+".png")).getImage();
 		}
 		Player_img3 = new Image[4];
 		for (int i = 0; i < Player_img3.length; ++i) {
-			Player_img3[i] = new ImageIcon(path+"img/char_r"+i+".png").getImage();
+			Player_img3[i] = new ImageIcon(getClass().getResource("char_r"+i+".png")).getImage();
 		}
 		Player_img4 = new Image[4];
 		for (int i = 0; i < Player_img4.length; ++i) {
-			Player_img4[i] = new ImageIcon(path+"img/char_u"+i+".png").getImage();
+			Player_img4[i] = new ImageIcon(getClass().getResource("char_u"+i+".png")).getImage();
 		}
+		BackGround_img = new ImageIcon(getClass().getResource("background.png")).getImage();
 		
-
-		BackGround_img = new ImageIcon(path+"img/background.png").getImage();
 
 	}
 
 	public void start() {
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addKeyListener(this);
 
 		th = new Thread(this);
@@ -278,7 +271,6 @@ public class PUMileageController extends JFrame implements KeyListener, Runnable
 				if(x==0 && y==i) {
 					
 					if(a_dao.getMileage(id)>=500) {
-						System.out.println(addTime);
 						a_dao.updateMileage(addTime, 500, id);
 					pumc.setRestTime(pumc.getRestTime()+addTime);
 					JOptionPane.showMessageDialog(this, addTime+"분 당첨 !!! ㅊㅋㅊㅋ");
@@ -318,7 +310,6 @@ public class PUMileageController extends JFrame implements KeyListener, Runnable
 			for(int i=270;i<360;i++) {
 				
 				if(x==i && y==420) {
-//					JOptionPane.showMessageDialog(this, "ㅂㅂ");
 					x=3000;
 					y=3000;
 					this.dispose();
@@ -340,18 +331,6 @@ public class PUMileageController extends JFrame implements KeyListener, Runnable
 		buffg.drawString("1000마일리지 -> 1시간", 500, 200);
 		
 		buffg.drawString("닫기", 250, 500);
-
-		
-//	String path2 = this.getClass().getResource("/").getPath()+"game/";
-//	URL path2 = this.getClass().getClassLoader().getResource("game.java");
-//	String path2 = this.getClass().getab
-//		URL path = getClass().getClassLoader().getResource("game/");
-//	URL path2 = getClass().getClassLoader().getResource("game/images/");
-//		String path=ClassLoader.getSystemClassLoader().getResource(".").getPath();
-//		////////////////////////////
-//		buffg.drawString("경로 : "+path+"images/char_f1.png", 100, 270);
-//		buffg.drawString("경로 : "+path2, 100, 370);
-//		////////////////////////////
 		
 	}
 
