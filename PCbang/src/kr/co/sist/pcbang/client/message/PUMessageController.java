@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.sql.SQLException;
 
 import kr.co.sist.pcbang.client.main.PUMainController;
@@ -37,7 +38,8 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 
 		if (!sendMsg.equals("")) {//공백이 입력되지 않았을 때
 			try {
-				pum_dao.chgMsgStatusNtoY(pu_manager.getClient().getInetAddress().toString().substring(1));//DAO 사용해서 PC_Status의 Message_Status를 변경
+				
+				pum_dao.chgMsgStatusNtoY(InetAddress.getLocalHost().getHostAddress());//DAO 사용해서 PC_Status의 Message_Status를 변경
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
