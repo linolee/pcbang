@@ -205,18 +205,18 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			jlName.setText(name);
 			String restTime=puminfovo.getRestTime();
 			jlRestTime.setText(hourTime(restTime));
-			if(Integer.parseInt(restTime)==0) {//만약 시간이 0이라면 충전창
-				//new PUChargeView();//만약 시간이 남았는데 충전하면 닫기가능 충전된 시간이 없으면 충전창
-				JOptionPane.showMessageDialog(pumv, "");
-			}//end if
+//			if(Integer.parseInt(restTime)==0) {//만약 시간이 0이라면 충전창
+//				//new PUChargeView();//만약 시간이 남았는데 충전하면 닫기가능 충전된 시간이 없으면 충전창
+//				JOptionPane.showMessageDialog(pumv, "");
+//			}//end if
 		}else if(!cardNum.equals("")) {//카드번호를 가진다면 비회원
 			jlName.setText("guest"+seatnum);
 			String time="0";
 			jlRestTime.setText(hourTime(time));
-
-			if(Integer.parseInt(time)==0) {//만약 시간이 0이라면 충전창
-				new PUChargeView(Integer.parseInt(jlSeat.getText()), this);
-			}//end if
+//
+//			if(Integer.parseInt(time)==0) {//만약 시간이 0이라면 충전창
+//				new PUChargeView(Integer.parseInt(jlSeat.getText()), this);
+//			}//end if
 		}//end else
 	}//searchUseInfo
 	
@@ -251,7 +251,10 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		JLabel jlUseTime=pumv.getJlUseTime();
 		String useTimestr=jlUseTime.getText();//00:00
 		int uTime=minutesTime(useTimestr);//사용한시간
-		
+		System.out.println(pumv.getJlRestTime().getText());
+		if (pumv.getJlRestTime().getText().equals("00:-01")) {//
+			uTime -= 1;
+		}
 		
 		
 		//String restTimestr=jlRestTime.getText();
@@ -335,6 +338,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 			int flag=JOptionPane.showConfirmDialog(pumv, "충전된 시간이 없습니다.충전하시겠습니까?");
 			if(flag==JOptionPane.OK_OPTION) {
 				JLabel jlSeat=pumv.getJlSeatNum();
+				threadOrdering = null;
 				new PUChargeView(Integer.parseInt(jlSeat.getText()), this);
 			}else if(flag==JOptionPane.NO_OPTION){
 				//return;
@@ -348,6 +352,11 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 				}//end else
 			}//end else
 		}//end if
+		if(restTime==-1) {
+			logout();
+			pumv.dispose();
+			System.exit(0);
+		}
 		
 		/*
 		int flag=JOptionPane.showConfirmDialog(this, "점심 맛있게 드셨어요?");
