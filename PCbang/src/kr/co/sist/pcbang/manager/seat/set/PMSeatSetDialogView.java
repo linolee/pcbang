@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+@SuppressWarnings("serial")
 public class PMSeatSetDialogView extends JFrame {
 	private JTextField jtfSeatNum, jtfIPAddr;
 	private JButton btnUpdate, btnReset;
