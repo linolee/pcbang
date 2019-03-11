@@ -349,7 +349,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			for(int x=0; x<rowNum; x++) {
 				int i=0;
 				if(x==0) {
-					rowData=new Object[7];//5칸으로 나누어 
+					rowData=new Object[7];//7칸으로 나누어 배치 
 					for(i=0; i<7; i++){
 						//System.out.print(cntArr.get(i));
 						puovo=listProduct.get(i);
@@ -682,7 +682,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		JTable jtO=puov.getJtOrderlist();
 		if(ovoList.size()>0) {
 			for(int i=0; i<ovoList.size(); i++) {
-				System.out.println(jtO.getValueAt(i,2));
+				//System.out.println(jtO.getValueAt(i,2));
 				int price=Integer.parseInt((String) (jtO.getValueAt(i,2)).toString());
 				total=total+price;
 			}
