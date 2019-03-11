@@ -79,13 +79,19 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 	
 	private void checkAccountId() {
 		JTextField jtfId = pmmaav.getJtfAddId();
+		JPasswordField jpfPass = pmmaav.getJpfAddPass();
+		JTextField jtfName = pmmaav.getJtfAddName();
+		
 		String id = jtfId.getText().trim();
 		pmmaa_dao = PMManagerAddAccountDAO.getInstance();
 
 		try {
 			if (pmmaa_dao.selectAccount(id)) {
 				JOptionPane.showMessageDialog(pmmaav, "이미 사용중 입니다.");
-
+				jtfId.setText("");
+				jpfPass.setText("");
+				jtfName.setText("");
+				jtfId.requestFocus();				
 			} else {
 				addAccount();
 				flagCheck = true;
