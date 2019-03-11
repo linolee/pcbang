@@ -227,17 +227,18 @@ public class PUMainDAO {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		String updateRestTime="";
-		
 		try {
 			con=getConn();
 		//3.
 			updateRestTime="UPDATE PC_MEMBER SET member_rest_time=member_rest_time-? where member_id=?";
+			
 			pstmt=con.prepareStatement(updateRestTime);
 		//4.바인드변수 값넣기
 			pstmt.setInt(1, pumrtvo.getMemberUseTime());
 			pstmt.setString(2, pumrtvo.getMemberId());
 		//5.
 			pstmt.executeUpdate();
+			
 		}finally {
 			//6.
 			if(pstmt!=null) {pstmt.close();}//end if
