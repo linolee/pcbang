@@ -66,8 +66,8 @@ public class PMLoginController extends WindowAdapter implements ActionListener {
 				jpf.setText("");
 				jtf.requestFocus();
 			}else {
-				new PMMainView(adminName);
 				PMMainView.adminId=id; //로그인이 성공 했다면 id를
+				new PMMainView(adminName);
 				//모든 객체에서 사용할 수 있도록 static 변수에 설정한다. 
 				pmlv.dispose();
 				
