@@ -10,7 +10,6 @@ import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 
 import kr.co.sist.pcbang.manager.login.PMLoginView;
