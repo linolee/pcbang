@@ -51,7 +51,7 @@ public class PMFoodSalesView extends JPanel {
 
 		setLayout(new BorderLayout());
 
-		jlb = new JLabel("조회된 기간 : ");
+		jlb = new JLabel("조회된 기간 : ");//
 		add("North", jlb);
 		add("Center", jspFS);
 
