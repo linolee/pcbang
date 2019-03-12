@@ -44,7 +44,7 @@ public class PMProductDAO {
 	}// getConn
 
 	/**
-	 * 입력된 상품의 코드, 이름, 이미지, 가격, 판매량, 총판매량 조회
+	 * 입력된 상품의 코드, 이름, 이미지, 가격, 판매량, 총판매액 조회
 	 *
 	 * @return
 	 * @throws SQLException
