@@ -51,7 +51,7 @@ public class PMFoodSalesView extends JPanel {
 
 		setLayout(new BorderLayout());
 
-		jlb = new JLabel("조회기간 설정");
+		jlb = new JLabel("조회된 기간 : ");
 		add("North", jlb);
 		add("Center", jspFS);
 
@@ -60,6 +60,7 @@ public class PMFoodSalesView extends JPanel {
 	public void inputData(String beforeDate, String afterDate) {
 		dtmFoodSales.setRowCount(0);
 
+		jlb.setText("조회된 기간 : " + beforeDate + " ~ " + afterDate);
 		try {
 			// DB에서 상품 정보를 조회
 			List<PMFoodSalesVO> list = pmfsdao.selectFoodSales(beforeDate, afterDate);
