@@ -117,7 +117,7 @@ public class PMStaticsDAO {
 		return list;
 	}// end selectTodayOperating
 
-	public PMSOperatingTermVO selectTermOperating(String today) throws SQLException {
+	public PMSOperatingTermVO selectMemberTermOperating(String b_day, String a_day) throws SQLException {
 		PMSOperatingTermVO pmsovo = null;
 
 		Connection con = null;
@@ -135,28 +135,185 @@ public class PMStaticsDAO {
 
 			pstmt = con.prepareStatement(selectTermOperating.toString());
 			// 4.
-			pstmt.setString(1, today);
-			pstmt.setString(2, today);//
+			pstmt.setString(1, b_day);
+			pstmt.setString(2, a_day);//
 			// 5.
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				pmsovo = new PMSOperatingTermVO(today, rs.getInt("SUM_M_TIME"));
+				pmsovo = new PMSOperatingTermVO(a_day, rs.getInt("SUM_M_TIME"));
 			}
 		} finally {
 			// 6.
-			if (rs != null) {
-				rs.close();
+			if (rs != null) {rs.close();}
+			if (pstmt != null) {pstmt.close();}
+			if (con != null) {con.close();}
+		}
+
+		return pmsovo;
+	}// end selectTermOperating
+	
+	public PMSOperatingTermVO selectGuestTermOperating(String b_day, String a_day) throws SQLException {
+		PMSOperatingTermVO pmsovo = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = getConn();
+
+			// 3.
+			StringBuilder selectTermOperating = new StringBuilder();
+			selectTermOperating.append(" select nvl(SUM(guest_usetime), 0) sum_m_time ").append(" from PC_GUEST_LOG ")
+					.append(" where guest_usedate between TO_DATE(? ||' 00:00:00','YYYY-MM-DD HH24:MI:SS') ")
+					.append(" and TO_DATE(? ||' 23:59:59','YYYY-MM-DD HH24:MI:SS') ");
+
+			pstmt = con.prepareStatement(selectTermOperating.toString());
+			// 4.
+			pstmt.setString(1, b_day);
+			pstmt.setString(2, a_day);//
+			// 5.
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				pmsovo = new PMSOperatingTermVO(a_day, rs.getInt("SUM_M_TIME"));
 			}
-			if (pstmt != null) {
-				pstmt.close();
-			}
-			if (con != null) {
-				con.close();
-			}
+		} finally {
+			// 6.
+			if (rs != null) {rs.close();}
+			if (pstmt != null) {pstmt.close();}
+			if (con != null) {con.close();}
 		}
 
 		return pmsovo;
 	}// end selectTermOperating
 
+	
+	public PMSOrderVO selectTermFoodSell(String b_day, String a_day) throws SQLException {
+		PMSOrderVO pmsovo = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = getConn();
+
+			// 3.
+			StringBuilder selectTermFoodSell = new StringBuilder();
+			selectTermFoodSell
+			.append(" select sum(total) total ")
+			.append(" from(select o.quan, m.menu_price, o.quan*m.menu_price as total ")
+			.append(" from ORDERING2 o, MENU m ")
+			.append(" where (m.menu_code = o.menu_code) AND o.order_date between TO_DATE(? ||' 00:00:00','YYYY-MM-DD HH24:MI:SS') ")
+			.append(" and TO_DATE(? ||' 23:59:59','YYYY-MM-DD HH24:MI:SS')) ");
+			
+			pstmt = con.prepareStatement(selectTermFoodSell.toString());
+			// 4.
+			pstmt.setString(1, b_day);
+			pstmt.setString(2, a_day);//
+			// 5.
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				if(b_day.equals(a_day)) {
+					pmsovo = new PMSOrderVO(rs.getInt("total"), a_day);
+				}else {
+					pmsovo = new PMSOrderVO(rs.getInt("total"), b_day+" ~ "+a_day);
+				}
+			}
+		} finally {
+			// 6.
+			if (rs != null) {rs.close();}
+			if (pstmt != null) {pstmt.close();}
+			if (con != null) {con.close();}
+		}
+
+		return pmsovo;
+	}// end selectTermFoodSell
+	
+	public PMSOrderVO selectTermChargePriceMember(String b_day, String a_day) throws SQLException {
+		PMSOrderVO pmsovo = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = getConn();
+
+			// 3.
+			StringBuilder selectTermChargePriceMember = new StringBuilder();
+			selectTermChargePriceMember
+			.append(" select nvl(SUM(member_chargeprice), 0) sum_m_price ")
+			.append(" from MEMBER_LOG ")
+			.append(" where member_usedate between TO_DATE(? ||' 00:00:00','YYYY-MM-DD HH24:MI:SS') ")
+			.append(" and TO_DATE(? ||' 23:59:59','YYYY-MM-DD HH24:MI:SS') ");
+			
+			pstmt = con.prepareStatement(selectTermChargePriceMember.toString());
+			// 4.
+			pstmt.setString(1, b_day);
+			pstmt.setString(2, a_day);//
+			// 5.
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				if(b_day.equals(a_day)) {
+					pmsovo = new PMSOrderVO(rs.getInt("sum_m_price"), a_day);
+				}else {
+					pmsovo = new PMSOrderVO(rs.getInt("sum_m_price"), b_day+" ~ "+a_day);
+				}
+			}
+		} finally {
+			// 6.
+			if (rs != null) {rs.close();}
+			if (pstmt != null) {pstmt.close();}
+			if (con != null) {con.close();}
+		}
+
+		return pmsovo;
+	}// end selectTermFoodSell
+	
+	public PMSOrderVO selectTermChargePriceGuest(String b_day, String a_day) throws SQLException {
+		PMSOrderVO pmsovo = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = getConn();
+
+			// 3.
+			StringBuilder selectTermChargePriceGuest = new StringBuilder();
+			selectTermChargePriceGuest
+			.append(" select nvl(SUM(guest_chargeprice), 0) sum_g_price ")
+			.append(" from PC_GUEST_LOG ")
+			.append(" where guest_usedate between TO_DATE(? ||' 00:00:00','YYYY-MM-DD HH24:MI:SS') ")
+			.append(" and TO_DATE(? ||' 23:59:59','YYYY-MM-DD HH24:MI:SS') ");
+			
+			pstmt = con.prepareStatement(selectTermChargePriceGuest.toString());
+			// 4.
+			pstmt.setString(1, b_day);
+			pstmt.setString(2, a_day);//
+			// 5.
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				if(b_day.equals(a_day)) {
+					pmsovo = new PMSOrderVO(rs.getInt("sum_g_price"), a_day);
+				}else {
+					pmsovo = new PMSOrderVO(rs.getInt("sum_g_price"), b_day+" ~ "+a_day);
+				}
+			}
+		} finally {
+			// 6.
+			if (rs != null) {rs.close();}
+			if (pstmt != null) {pstmt.close();}
+			if (con != null) {con.close();}
+		}
+
+		return pmsovo;
+	}// end selectTermFoodSell
 }
