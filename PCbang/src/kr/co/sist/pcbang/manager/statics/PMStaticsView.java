@@ -12,29 +12,40 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+
 public class PMStaticsView extends JPanel {
 	// 190304 이재찬 작성
-	// private JComboBox<String> jcbStaticsChoice;
 	private JRadioButton jrbOperRate, jrbFoodSell, jrbTotalSell;
 	private JButton jbtFoodDetail, jbtCreateTable, jbtCreateGraph;
-	// private JTextField jlbResult;
 
 	private JComboBox<String> jcbBeforeYear, jcbBeforeMonth, jcbBeforeDay;
 	private JComboBox<String> jcbAfterYear, jcbAfterMonth, jcbAfterDay;
-	private JLabel jlb2;
+	private JPanel jlbResult;
 
 	private DefaultTableModel dtmMonthOper, dtmDayOper, dtmMonthFood, dtmDayFood, dtmMonthTotal, dtmDayTotal, dtmMaxData, dtmSumData;
 	private JScrollPane jspMT, jspDT, jspMF, jspDF, jspMO, jspDO, jspMax, jspSum;
 
+	private CategoryPlot plot;
+	private JFreeChart chart;
+	private ChartPanel cp;
+	
 	public PMStaticsView() {
 		String[] category = { "일간 통계", "주간 통계", "월간 통계" };
 		DefaultComboBoxModel<String> dcbm = new DefaultComboBoxModel<String>(category);
 		// jcbStaticsChoice = new JComboBox<String>(dcbm);//
 
+		//String[] category = { "일간 통계", "주간 통계", "월간 통계" };
+		//DefaultComboBoxModel<String> dcbm = new DefaultComboBoxModel<String>(category);
+		plot = new CategoryPlot();
+		chart = new JFreeChart(plot);
+		cp = new ChartPanel(chart);
+		
 		jcbBeforeYear = new JComboBox<String>();
 		jcbBeforeMonth = new JComboBox<String>();
 		jcbBeforeDay = new JComboBox<String>();
@@ -58,7 +69,6 @@ public class PMStaticsView extends JPanel {
 		jbtCreateTable = new JButton("표 생성");
 		jbtCreateGraph = new JButton("그래프 생성");
 
-		JPanel jlbResult;
 		jlbResult = new JPanel();
 		jlbResult.setBackground(Color.WHITE);
 		jlbResult.setLayout(null);
@@ -180,7 +190,7 @@ public class PMStaticsView extends JPanel {
 		setLayout(null);
 
 		JLabel jlb1 = new JLabel("조회기간 설정");
-		jlb2 = new JLabel("~");
+		JLabel jlb2 = new JLabel("~");
 		add(jlb1);
 
 		add(jcbBeforeYear);
@@ -191,7 +201,6 @@ public class PMStaticsView extends JPanel {
 		add(jcbAfterMonth);
 		add(jcbAfterDay);
 
-		// add(jcbStaticsChoice);
 		add(jrbOperRate);
 		add(jrbFoodSell);
 		add(jrbTotalSell);
@@ -209,21 +218,8 @@ public class PMStaticsView extends JPanel {
 		jlbResult.add(jspMax);
 		jlbResult.add(jspSum);
 		
-		// 1000, 600
-//		jcbStaticsChoice.setBounds(30,20,140,25);
-//		jlb1.setBounds(190,20,100,25);
-//		jcbBeforeYear.setBounds(280,20,60,25);
-//		jcbBeforeMonth.setBounds(340,20,40,25);
-//		jcbBeforeDay.setBounds(380,20,40,25);
-//		jlb2.setBounds(425,21,10,25);
-//		jcbAfterYear.setBounds(440,20,60,25);
-//		jcbAfterMonth.setBounds(500,20,40,25);
-//		jcbAfterDay.setBounds(540,20,40,25);
-//		jcbAfterYear.setVisible(false);
-//		jcbAfterMonth.setVisible(false);
-//		jcbAfterDay.setVisible(false);
-//		jlb2.setVisible(false);
-//		jcbStaticsChoice.setBounds(30,20,140,25);
+		jlbResult.add(cp);
+		
 		jlb1.setBounds(30, 20, 100, 25);
 		jcbBeforeYear.setBounds(120, 20, 60, 25);
 		jcbBeforeMonth.setBounds(180, 20, 40, 25);
@@ -232,10 +228,6 @@ public class PMStaticsView extends JPanel {
 		jcbAfterYear.setBounds(280, 20, 60, 25);
 		jcbAfterMonth.setBounds(340, 20, 40, 25);
 		jcbAfterDay.setBounds(380, 20, 40, 25);
-//		jcbAfterYear.setVisible(false);
-//		jcbAfterMonth.setVisible(false);
-//		jcbAfterDay.setVisible(false);
-//		jlb2.setVisible(false);
 
 		jrbOperRate.setBounds(830, 150, 100, 25);
 		jrbFoodSell.setBounds(830, 180, 100, 25);
@@ -254,6 +246,8 @@ public class PMStaticsView extends JPanel {
 		jspMax.setBounds(390, 20, 340, 80);
 		jspSum.setBounds(390, 120, 340, 80);
 		
+		cp.setBounds(0, 0, 750, 490);
+		
 		jspMT.setVisible(false);
 		jspDT.setVisible(false);
 		jspMF.setVisible(false);
@@ -262,11 +256,9 @@ public class PMStaticsView extends JPanel {
 		jspDO.setVisible(false);
 		jspMax.setVisible(false);
 		jspSum.setVisible(false);
-//		jlbResult.setVisible(false);
-		
+		cp.setVisible(false);
 
 		PMStaticsController pmsc = new PMStaticsController(this);
-//		jcbStaticsChoice.addActionListener(pmsc);
 		jbtFoodDetail.addActionListener(pmsc);
 		jbtCreateTable.addActionListener(pmsc);
 		jbtCreateGraph.addActionListener(pmsc);
@@ -275,7 +267,6 @@ public class PMStaticsView extends JPanel {
 		jcbBeforeMonth.addActionListener(pmsc);
 		jcbAfterYear.addActionListener(pmsc);
 		jcbAfterMonth.addActionListener(pmsc);
-
 	}
 
 	private void setDate(JComboBox<String> jcbYear, JComboBox<String> jcbMonth, JComboBox<String> jcbDay) {
@@ -306,10 +297,6 @@ public class PMStaticsView extends JPanel {
 		jcbDay.setSelectedIndex(cal.get(Calendar.DAY_OF_MONTH) - 1);
 	}
 
-//	public JComboBox<String> getJcbStaticsChoice() {
-//		return jcbStaticsChoice;
-//	}
-
 	public JRadioButton getJrbOperRate() {
 		return jrbOperRate;
 	}
@@ -333,10 +320,6 @@ public class PMStaticsView extends JPanel {
 	public JButton getJbtCreateGraph() {
 		return jbtCreateGraph;
 	}
-
-//	public JTextField getJlbResult() {
-//		return jlbResult;
-//	}
 
 	public JComboBox<String> getJcbBeforeYear() {
 		return jcbBeforeYear;
@@ -362,9 +345,9 @@ public class PMStaticsView extends JPanel {
 		return jcbAfterDay;
 	}
 
-	public JLabel getJlb2() {
-		return jlb2;
-	}
+//	public JLabel getJlb2() {
+//		return jlb2;
+//	}
 
 	public DefaultTableModel getDtmMonthOper() {
 		return dtmMonthOper;
@@ -428,6 +411,22 @@ public class PMStaticsView extends JPanel {
 
 	public JScrollPane getJspSum() {
 		return jspSum;
+	}
+
+	public CategoryPlot getPlot() {
+		return plot;
+	}
+
+	public JFreeChart getChart() {
+		return chart;
+	}
+
+	public ChartPanel getCp() {
+		return cp;
+	}
+
+	public JPanel getJlbResult() {
+		return jlbResult;
 	}
 
 }
