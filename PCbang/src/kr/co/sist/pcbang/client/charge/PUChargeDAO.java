@@ -210,7 +210,7 @@ public class PUChargeDAO {
 		return cardNum;
 	}//selectInform
 	
-	public List<PriceVO> Price(boolean member) throws SQLException {
+	public List<PriceVO> price(boolean member) throws SQLException {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;

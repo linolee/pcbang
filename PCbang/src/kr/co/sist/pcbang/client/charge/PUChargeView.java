@@ -30,7 +30,7 @@ public class PUChargeView extends JFrame{
 		String[] arr=null;
 		try {
 			member=puc_dao.selectCheckMember(seatNum);
-			arr=puc_dao.Price(member).toString().replace("[", "").replace("]", "").trim().split(",");
+			arr=puc_dao.price(member).toString().replace("[", "").replace("]", "").trim().split(",");
 			time=new int[(arr.length/2)];
 			Price=new int[(arr.length/2)];
 			int j=0;

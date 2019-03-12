@@ -8,7 +8,6 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import kr.co.sist.pcbang.client.login.PULoginController;
 import kr.co.sist.pcbang.client.main.PUMainController;
 import kr.co.sist.pcbang.client.main.PUMainView;
 
@@ -70,6 +69,10 @@ public class PUChargeController extends WindowAdapter implements ActionListener 
 	
 	@Override
 	public void windowClosing(WindowEvent we) {
+		int restTime=pumc.getRestTime();
+		if(restTime==0) {
+			new PUMainView().dispose();
+		}//end if
 		pucv.dispose();
 	}//windowClosing
 	
