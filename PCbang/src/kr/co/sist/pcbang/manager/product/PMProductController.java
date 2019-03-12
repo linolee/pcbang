@@ -4,9 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -19,32 +17,13 @@ import kr.co.sist.pcbang.manager.product.detail.PMProductDetailVO;
 import kr.co.sist.pcbang.manager.product.detail.PMProductDetailView;
 
 public class PMProductController extends MouseAdapter implements ActionListener {
-
-	public static List<String> PrdImgList;
 	private PMProductView pmpv;
 	private PMProductDAO pmpdao;
 	private Thread threadPrd;
 	
 	public static final int DBL_CLICK = 2;
-	
 
 	public PMProductController(PMProductView pmpv) {
-		PrdImgList=new ArrayList<String>();
-		//서버에 존재하는 이미지 입력
-		
-//		//String path = this.getClass().getResource("/").getPath()+"kr/co/sist/pcbang/manager/product/img/";
-		String path = System.getProperty("user.dir");
-		String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\"; 
-		String abspath = path+filepath;
-
-		File file = new File(abspath);
-		for(String tempName:file.list()) {
-			PrdImgList.add(tempName);
-		}//end for
-		
-		FileServer fs = new FileServer();
-		fs.start();
-
 		this.pmpv = pmpv;
 		pmpdao = PMProductDAO.getInstance();
 		// 상품 목록을 초기화한다.

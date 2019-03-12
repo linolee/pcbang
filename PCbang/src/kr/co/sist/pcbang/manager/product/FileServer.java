@@ -12,6 +12,8 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import kr.co.sist.pcbang.manager.login.PCRoomManagerRun;
+
 public class FileServer extends Thread{
 	@Override
 	public void run() {
@@ -45,15 +47,15 @@ public class FileServer extends Thread{
 					}//end for
 					
 					//서버에 존재하는 파일명을 배열로 복사
-					serverFileNames = new String[PMProductController.PrdImgList.size()];
-					PMProductController.PrdImgList.toArray(serverFileNames);
+					serverFileNames = new String[PCRoomManagerRun.PrdImgList.size()];
+					PCRoomManagerRun.PrdImgList.toArray(serverFileNames);
 					
 					System.out.println("서버 "+Arrays.toString(serverFileNames));
 					System.out.println("클라이언트 "+Arrays.toString(fileNames));
 					
 					//클라이언트가 보내온 파일명과 서버의 파일명을 비교하여
 					//클라이언트가 없는 파일명을 출력
-					for(String tName:PMProductController.PrdImgList) {
+					for(String tName:PCRoomManagerRun.PrdImgList) {
 						tempFileList.add(tName);
 						tempFileList.add("s_"+tName);
 					}//end for
