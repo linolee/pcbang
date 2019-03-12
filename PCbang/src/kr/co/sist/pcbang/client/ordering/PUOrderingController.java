@@ -242,6 +242,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			String path1=System.getProperty("user.dir");
 			String path2="/src/kr/co/sist/pcbang/manager/product/img";
 			File f = new File(path1+path2);
+			
 			//File f = new File("C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img");
 			List<PUOrderVO> listProduct=puo_dao.selectProductCategory(category);
 			DefaultTableModel dtmProduct=null;
