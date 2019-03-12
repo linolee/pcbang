@@ -106,6 +106,10 @@ public class PMMainController extends WindowAdapter implements ActionListener, M
 				pmmv.getPmsv().getPmsc().seatLoad();//좌석목록 갱신
 				pmmv.getPmsv().getPmsc().setBtnSeat();//좌석목록 버튼에 반영//
 			}
+			if(pmmv.getJtb().getSelectedIndex() == 0) {//좌석탭이 눌렸을 때 갱신
+				pmmv.getPmsv().getPmsc().seatLoad();//좌석목록 갱신
+				pmmv.getPmsv().getPmsc().setBtnSeat();//좌석목록 버튼에 반영//
+			}
 		}
 	} // mouseClicked
 	
