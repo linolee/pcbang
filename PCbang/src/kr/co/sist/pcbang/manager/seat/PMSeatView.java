@@ -16,6 +16,7 @@ public class PMSeatView extends JPanel {
 	private JButton btnSet;
 	private PMOrderView pmov;
 	private PMMainView pmmv;
+	private PMSeatController pmsc;
 
 	public PMSeatView(PMOrderView pmov, PMMainView pmmv) {
 		this.pmov = pmov;
@@ -81,7 +82,7 @@ public class PMSeatView extends JPanel {
 		btnSet.setBounds(900, 0, 100, 20);
 		pnlMain.setBounds(0, 20, 1000, 550);
 
-		PMSeatController pmsc = new PMSeatController(this, pmmv);
+		pmsc = new PMSeatController(this, pmmv);
 		btnSet.addActionListener(pmsc);
 		for (int i = 0; i < btnSeat.length; i++) {
 			for (int j = 0; j < btnSeat[i].length; j++) {
@@ -105,6 +106,10 @@ public class PMSeatView extends JPanel {
 	
 	public PMMainView getMmov() {
 		return pmmv;
+	}
+
+	public PMSeatController getPmsc() {
+		return pmsc;
 	}
 
 }

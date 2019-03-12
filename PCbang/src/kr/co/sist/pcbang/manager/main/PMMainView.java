@@ -29,6 +29,7 @@ public class PMMainView extends JFrame{
    private JLabel jlOrderNum, jlMsgNum, jlOrder, jlMsg;
    private JPanel seat, order, statistics, member, menu, price;
    private PMOrderView pmov; // 19-02-27 이재찬 추가
+   private PMSeatView pmsv;
    
    public static String adminId;   
    
@@ -67,8 +68,9 @@ public class PMMainView extends JFrame{
       jtb.setBounds(150, 30, 1000, 600);
       
        pmov = new PMOrderView(); // 19-02-27 이재찬 추가
-       seat = new PMSeatView(pmov, this);
+       pmsv = new PMSeatView(pmov, this);
        order = pmov; // 19-02-27 이재찬 추가
+       seat = pmsv;
        statistics = new JPanel();
        member = new PMUserView();
        menu = new PMProductView();
@@ -177,6 +179,10 @@ public class PMMainView extends JFrame{
    public PMOrderView getPmov() { // 19-02-27 이재찬 추가
       return pmov;
    }
+
+public PMSeatView getPmsv() {
+	return pmsv;
+}
    
    
    
