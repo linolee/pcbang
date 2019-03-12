@@ -17,6 +17,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import kr.co.sist.pcbang.manager.login.PCRoomManagerRun;
 import kr.co.sist.pcbang.manager.product.PMProductController;
 import kr.co.sist.pcbang.manager.product.PMProductDAO;
 import kr.co.sist.pcbang.manager.product.PMProductVO;
@@ -107,7 +108,7 @@ public class PMProductAddController extends WindowAdapter implements ActionListe
 			// 이미지를, 사용하는 폴더로 복사 (=스트림 필요)
 			uploadImg(file);
 			// 파일리스트에 새로운 파일명을 추가한다.
-			PMProductController.PrdImgList.add(file.getName());
+			PCRoomManagerRun.PrdImgList.add(file.getName());
 
 			// 리스트 갱신
 			pmpc.setPrd();
