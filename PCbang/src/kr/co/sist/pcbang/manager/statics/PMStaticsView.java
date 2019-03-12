@@ -33,7 +33,7 @@ public class PMStaticsView extends JPanel {
 	public PMStaticsView() {
 		String[] category = { "일간 통계", "주간 통계", "월간 통계" };
 		DefaultComboBoxModel<String> dcbm = new DefaultComboBoxModel<String>(category);
-		// jcbStaticsChoice = new JComboBox<String>(dcbm);
+		// jcbStaticsChoice = new JComboBox<String>(dcbm);//
 
 		jcbBeforeYear = new JComboBox<String>();
 		jcbBeforeMonth = new JComboBox<String>();
