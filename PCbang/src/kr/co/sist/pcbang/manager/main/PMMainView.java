@@ -17,6 +17,7 @@ import kr.co.sist.pcbang.manager.fare.PMFareView;
 import kr.co.sist.pcbang.manager.order.PMOrderView;
 import kr.co.sist.pcbang.manager.product.PMProductView;
 import kr.co.sist.pcbang.manager.seat.PMSeatView;
+import kr.co.sist.pcbang.manager.statics.PMStaticsView;
 import kr.co.sist.pcbang.manager.user.PMUserView;
 
 
@@ -71,7 +72,7 @@ public class PMMainView extends JFrame{
        pmsv = new PMSeatView(this);
        order = pmov; // 19-02-27 이재찬 추가
        seat = pmsv;
-       statistics = new JPanel();
+       statistics = new PMStaticsView();// 19-03-12 이재찬 추가
        member = new PMUserView();
        menu = new PMProductView();
        price = new PMFareView();
