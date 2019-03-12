@@ -68,7 +68,7 @@ public class PMMainView extends JFrame{
       jtb.setBounds(150, 30, 1000, 600);
       
        pmov = new PMOrderView(); // 19-02-27 이재찬 추가
-       pmsv = new PMSeatView(pmov, this);
+       pmsv = new PMSeatView(this);
        order = pmov; // 19-02-27 이재찬 추가
        seat = pmsv;
        statistics = new JPanel();
