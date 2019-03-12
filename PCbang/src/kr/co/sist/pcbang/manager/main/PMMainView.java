@@ -72,7 +72,7 @@ public class PMMainView extends JFrame{
        pmsv = new PMSeatView(this);
        order = pmov; // 19-02-27 이재찬 추가
        seat = pmsv;
-       statistics = new PMStaticsView();// 19-03-12 이재찬 추가
+       statistics = new PMStaticsView();// 19-03-12 이재찬 추가//
        member = new PMUserView();
        menu = new PMProductView();
        price = new PMFareView();
