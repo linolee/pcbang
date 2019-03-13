@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 
 import kr.co.sist.pcbang.client.charge.PUChargeController;
 import kr.co.sist.pcbang.client.charge.PUChargeView;
-import kr.co.sist.pcbang.client.mileage.PUMileageController;
+import kr.co.sist.pcbang.client.mileage.PUMileage;
 import kr.co.sist.pcbang.client.ordering.PUOrderingView;
 
 public class PUMainController extends WindowAdapter implements ActionListener,Runnable{
@@ -114,7 +114,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		if(ae.getSource()==pumv.getJbtMileage()) {
 			if(!id.equals("")) {
-			new PUMileageController(this);
+			new PUMileage(this);
 			} else {
 				JOptionPane.showMessageDialog(pumv, "회원만 이용가능한 버튼입니다");
 			}
