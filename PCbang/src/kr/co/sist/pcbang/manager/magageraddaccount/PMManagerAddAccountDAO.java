@@ -27,7 +27,7 @@ public class PMManagerAddAccountDAO {
 	} // getInstance
 
 	private Connection getConn() throws SQLException {
-		String url = "jdbc:oracle:thin:@211.63.89.152:1521:orcl";
+		String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 		String id = "zizon";
 		String pass = "darkness";
 
@@ -71,45 +71,45 @@ public class PMManagerAddAccountDAO {
 
 	/* 중복확인 */
 	public boolean selectAccount(String id) throws SQLException {
-		boolean flag = false;
-
+		boolean flag= false;
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		System.out.println("두번째 : " + id);
-
+		ResultSet rs = null;	
+	
+		System.out.println("두번째 : "+id);
+		
 		try {
+			
+		con = getConn();
+		
+		String selectAccId = ""; 
+		
+		selectAccId = "SELECT * FROM PC_ADMIN WHERE ADMIN_ID = ?";
+		
+		System.out.println("쿼리문 : "+selectAccId);
+		
+		pstmt = con.prepareStatement(selectAccId.toString());
+		pstmt.setString(1, id);
+		rs = pstmt.executeQuery();
+		
+		if(rs.next()) {
+			flag = true;
+		}
+		
+		}finally {
 
-			con = getConn();
-
-			String selectAccId = "";
-
-			selectAccId = "SELECT * FROM PC_ADMIN WHERE ADMIN_ID = ?";
-
-			System.out.println("쿼리문 : " + selectAccId);
-
-			pstmt = con.prepareStatement(selectAccId.toString());
-			pstmt.setString(1, id);
-			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				flag = true;
-			}
-
-		} finally {
-
-			if (rs != null) {
-				rs.close();
-			}
-			if (pstmt != null) {
-				pstmt.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		} // end finally
-
-		return flag;
-	} // selectAcount
+		if (rs != null) {
+			rs.close();
+		}
+		if (pstmt != null) {
+			pstmt.close();
+		}
+		if (con != null) {
+			con.close();
+		}
+	} // end finally
+		
+	return flag;
+} // selectAcount
 } // class
