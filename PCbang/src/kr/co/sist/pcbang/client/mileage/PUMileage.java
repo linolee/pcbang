@@ -7,6 +7,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.Random;
 import javax.swing.ImageIcon;
@@ -59,7 +61,9 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 		int f_xpos = (int) (screen.getWidth() / 2 - f_width / 2);
 		int f_ypos = (int) (screen.getHeight() / 2 - f_height / 2);
 
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		exitClass ex=new exitClass();
+		addWindowListener(ex);
+		
 		setLocation(f_xpos, f_ypos);
 		setResizable(false);
 		setVisible(true);
@@ -78,7 +82,7 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 		y = 120;
 		f_width =671;
 		f_height = 506;
-
+		
 		Player_img = new Image[4];
 		for (int i = 0; i < Player_img.length; ++i) {
 			Player_img[i] = new ImageIcon(getClass().getResource("char_f"+i+".png")).getImage();
@@ -105,6 +109,7 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 	}
 
 	public void run() {
+		
 		try {
 			while (!thFlag) {
 				KeyProcess();
@@ -230,9 +235,9 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 	}
 	
 	public void moveChar() {
-			
+		System.out.println(thFlag);
 		Random r=new Random();
-		int addTime=r.nextInt(100);
+		int addTime=r.nextInt(50);
 			
 		try {
 				
@@ -240,9 +245,9 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 				if(x==0 && y==i) {
 					
 					if(a_dao.getMileage(id)>=500) {
-						a_dao.updateMileage(addTime, 500, id);
-					pumc.setRestTime(pumc.getRestTime()+addTime);
-					JOptionPane.showMessageDialog(this, addTime+"碟 渡繩 !!! 內六內六");
+						a_dao.updateMileage((addTime+10), 500, id);
+					pumc.setRestTime(pumc.getRestTime()+(addTime+10));
+					JOptionPane.showMessageDialog(this, (addTime+10)+"碟 渡繩 !!! 內六內六");
 					setMileage();
 					resetKey();
 					} else{
@@ -359,4 +364,13 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 
 	public void keyTyped(KeyEvent e) {
 	}
+	
+	public class exitClass extends WindowAdapter{
+		@Override
+		public void windowClosing(WindowEvent e) {
+			thFlag=true;
+			dispose();
+		}
+	}
+	
 }
