@@ -82,7 +82,7 @@ public class FileServer extends Thread {
 //						} // end catch
 
 					} // end for
-
+//					dos.flush();
 				} // end while
 
 			} finally {
@@ -94,6 +94,7 @@ public class FileServer extends Thread {
 			JOptionPane.showMessageDialog(null, "파일 보내기 실패");
 			ie.printStackTrace();
 		} // end catch
+		
 	}// run
 
 	private void fileSend(String fname, DataOutputStream dos) throws IOException {
