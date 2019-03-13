@@ -27,7 +27,7 @@ public class PMManagerAddAccountDAO {
 	} // getInstance
 
 	private Connection getConn() throws SQLException {
-		String url="jdbc:oracle:thin:@211.63.89.152:1521:orcl";
+		String url = "jdbc:oracle:thin:@211.63.89.152:1521:orcl";
 		String id = "zizon";
 		String pass = "darkness";
 
@@ -36,7 +36,7 @@ public class PMManagerAddAccountDAO {
 		return con;
 	} // getConn
 
-	/* ê´€ë¦¬ì ê³„ì •ì¶”ê°€ */
+	/* °ü¸®ÀÚ °èÁ¤Ãß°¡ */
 	public void insertAccount(PMManagerAddAccountVO pmmaaVO) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -52,7 +52,7 @@ public class PMManagerAddAccountDAO {
 					.append("values(?,?,?  )");
 
 			pstmt = con.prepareStatement(insertAccount.toString());
-			// 4.ë°”ì¸ë“œ ë³€ìˆ˜ ê°’ë„£ê¸°
+			// 4.¹ÙÀÎµå º¯¼ö °ª³Ö±â
 			pstmt.setString(1, pmmaaVO.getAdminId());
 			pstmt.setString(2, pmmaaVO.getAdminPass());
 			pstmt.setString(3, pmmaaVO.getAdminName());
@@ -69,7 +69,7 @@ public class PMManagerAddAccountDAO {
 		} // end finally
 	}// insertAccount
 
-	/* ì¤‘ë³µí™•ì¸ */
+	/* Áßº¹È®ÀÎ */
 	public boolean selectAccount(String id) throws SQLException {
 		boolean flag= false;
 		
@@ -77,8 +77,6 @@ public class PMManagerAddAccountDAO {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;	
 	
-		System.out.println("ë‘ë²ˆì§¸ : "+id);
-		
 		try {
 			
 		con = getConn();
@@ -86,8 +84,6 @@ public class PMManagerAddAccountDAO {
 		String selectAccId = ""; 
 		
 		selectAccId = "SELECT * FROM PC_ADMIN WHERE ADMIN_ID = ?";
-		
-		System.out.println("ì¿¼ë¦¬ë¬¸ : "+selectAccId);
 		
 		pstmt = con.prepareStatement(selectAccId.toString());
 		pstmt.setString(1, id);
