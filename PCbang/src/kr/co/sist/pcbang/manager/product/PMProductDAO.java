@@ -44,7 +44,7 @@ public class PMProductDAO {
 	}// getConn
 
 	/**
-	 * 입력된 상품의 코드, 이름, 이미지, 가격, 판매량, 총판매량 조회
+	 * 입력된 상품의 코드, 이름, 이미지, 가격, 판매량, 총판매액 조회
 	 *
 	 * @return
 	 * @throws SQLException
@@ -182,24 +182,20 @@ public class PMProductDAO {
 			.append("	from (select m.category, m.menu_code, m.menu_name, m.img, m.menu_price, nvl((select sum(o.quan) from ordering2 o where (m.menu_code=o.menu_code) group by m.menu_code),0) as quan				")
 			.append("	from menu m)		");
 
-			
-				
 			// 카테고리와 이름이 둘다 빈칸이 아니라면 쿼리 추가
 			if(!menuName.equals("")) {
-				searchPrd.append("where category= ? and menu_name like '%'||?||'%'");
-				//.append("	order by menu_code desc		");
+				searchPrd.append("where category= ? and menu_name like '%'||?||'%'")
+				.append("	order by menu_name desc		");
 				pstmt=con.prepareStatement(searchPrd.toString());
 				//4.
 					pstmt.setString(1, category);
 					pstmt.setString(2, menuName);
 			}else {
-				searchPrd.append("where category= ? ");
-				//.append("	order by menu_code desc		");
+				searchPrd.append("where category= ? ")
+				.append("	order by menu_name desc		");
 				pstmt=con.prepareStatement(searchPrd.toString());
 				//4.
 				pstmt.setString(1, category);
-				
-				
 			}
 			
 			//5.

@@ -120,7 +120,7 @@ public class PMProductDetailController extends WindowAdapter implements ActionLi
 	 * 상품코드, 상품명, 가격을 입력받아 코드에 해당하는 상품의 정보를 변경
 	 */
 	private void modifyPrd() {// void로 하고 DB에서 T/F 가지고 오면 됨
-		// 유효성 검증 : 도시락명, 가격, 특장점이 ""가 아닐 때, 가격은 숫자인지,
+		// 유효성 검증 : 상품명, 가격이 ""가 아닐 때, 가격은 숫자인지,
 		// 이미지가 변경되었다면 이미지가 s_가 붙은 이미지가 존재하는 이미지인지
 		JTextField tfName = pmpdv.getJtfMenuName();
 		JTextField tfPrice = pmpdv.getJtfPrice();
@@ -157,8 +157,6 @@ public class PMProductDetailController extends WindowAdapter implements ActionLi
 				return;
 			} // end if
 		} // end if
-		
-		
 
 		StringBuilder updateMsg = new StringBuilder();
 		updateMsg.append("수정정보 \n").append("상품 명 : ").append(tfName.getText()).append("\n").append("가격 : ")
