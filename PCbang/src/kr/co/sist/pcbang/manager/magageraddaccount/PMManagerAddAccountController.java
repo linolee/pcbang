@@ -16,16 +16,13 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 
 	private PMManagerAddAccountView pmmaav;
 	private PMManagerAccountController pmmac;
-	private PMManagerAddAccountDAO pmmaa_dao;
-	
-	private boolean flagCheck = false;
 
 	public PMManagerAddAccountController(PMManagerAddAccountView pmmaav, PMManagerAccountController pmmac) {
 		this.pmmaav = pmmaav;
 		this.pmmac = pmmac;
 	}
 
-	/* ê³„ì • ì¶”ê°€ ë©”ì†Œë“œ */
+	/* °èÁ¤ Ãß°¡ ¸Ş¼Òµå */
 	private void addAccount() throws SQLException {
 
 		JTextField jtfId = pmmaav.getJtfAddId();
@@ -36,71 +33,46 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 		pass = new String(jpfPass.getPassword());
 
 		if (jtfId.getText().trim().equals("")) {
-			JOptionPane.showMessageDialog(pmmaav, "ì•„ì´ë””ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
+			JOptionPane.showMessageDialog(pmmaav, "¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
 			jtfId.setText("");
 			jtfId.requestFocus();
 			return;
 		} // end if
 
 		if (pass.equals("")) {
-			JOptionPane.showMessageDialog(pmmaav, "íŒ¨ìŠ¤ì›Œë“œë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
+			JOptionPane.showMessageDialog(pmmaav, "ÆĞ½º¿öµå¸¦ ÀÔ·ÂÇÏ¼¼¿ä.");
 			jpfPass.setText("");
 			jpfPass.requestFocus();
 			return;
 		} // end if
 
 		if (jtfName.getText().trim().equals("")) {
-			JOptionPane.showMessageDialog(pmmaav, "ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”.");
+			JOptionPane.showMessageDialog(pmmaav, "ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä.");
 			jtfName.setText("");
 			jtfName.requestFocus();
 			return;
 		} // end if
 
-		// ì…ë ¥í•œ ê°’ìœ¼ë¡œ ê°ì²´ ìƒì„±
+		// ÀÔ·ÂÇÑ °ªÀ¸·Î °´Ã¼ »ı¼º
 		PMManagerAddAccountVO pmmaaVO = new PMManagerAddAccountVO(jtfId.getText().trim(), pass.trim(),
 				jtfName.getText().trim());
 
-		// ê³„ì • ì¶”ê°€ daoí˜¸ì¶œ
+		// °èÁ¤ Ãß°¡ daoÈ£Ãâ
 		PMManagerAddAccountDAO.getInstance().insertAccount(pmmaaVO);
 
-		// ë¦¬ìŠ¤íŠ¸ ê°±ì‹  -> ì¶”ê°€ í›„ ì§„í–‰í•  ê²ƒ
+		// ¸®½ºÆ® °»½Å -> Ãß°¡ ÈÄ ÁøÇàÇÒ °Í
 		pmmac.setAccount();
 
-		// ë‹¤ìŒ ê³„ì •ì˜ ì…ë ¥ì„ í¸í•˜ê²Œ í•˜ê¸° ìœ„í•´ì„œ ì…ë ¥ í¼ ì´ˆê¸°í™”
+		// ´ÙÀ½ °èÁ¤ÀÇ ÀÔ·ÂÀ» ÆíÇÏ°Ô ÇÏ±â À§ÇØ¼­ ÀÔ·Â Æû ÃÊ±âÈ­
 		jtfId.setText("");
 		jpfPass.setText("");
 		jtfName.setText("");
 
-		JOptionPane.showMessageDialog(pmmaav, "ê´€ë¦¬ì ê³„ì •ì´ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤.");
+		JOptionPane.showMessageDialog(pmmaav, "°ü¸®ÀÚ °èÁ¤ÀÌ Ãß°¡µÇ¾ú½À´Ï´Ù.");
 
 		jtfId.requestFocus();
 
 	}// addAccount
-
-	private void checkAccountId() {
-		JTextField jtfId = pmmaav.getJtfAddId();
-		JPasswordField jpfPass = pmmaav.getJpfAddPass();
-		JTextField jtfName = pmmaav.getJtfAddName();
-		
-		String id = jtfId.getText().trim();
-		pmmaa_dao = PMManagerAddAccountDAO.getInstance();
-
-		try {
-			if (pmmaa_dao.selectAccount(id)) {
-				JOptionPane.showMessageDialog(pmmaav, "ì´ë¯¸ ì‚¬ìš©ì¤‘ ì…ë‹ˆë‹¤.");
-				jtfId.setText("");
-				jpfPass.setText("");
-				jtfName.setText("");
-				jtfId.requestFocus();				
-			} else {
-				addAccount();
-				flagCheck = true;
-			} // end else
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	} // checkAccountId
-
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -109,11 +81,14 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 		} // end if
 
 		if (ae.getSource() == pmmaav.getJbtAdd()) {
-			switch (JOptionPane.showConfirmDialog(pmmaav, "ì •ë§ ì¶”ê°€í•˜ì‹œê² ìŠµë‹ˆê¹Œ?")) {
+			switch (JOptionPane.showConfirmDialog(pmmaav, "Á¤¸» Ãß°¡ÇÏ½Ã°Ú½À´Ï±î?")) {
 			case JOptionPane.OK_OPTION:
-				System.out.println("ì²«ë²ˆì§¸ : "+pmmaav.getJtfAddId().getText());
-				checkAccountId();
-			break;
+				try {
+					addAccount();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} // end catch
+				break;
 			} // end switch
 		} // end if
 	}// actionPerformed
@@ -124,4 +99,3 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 	}
 
 }// class
-
