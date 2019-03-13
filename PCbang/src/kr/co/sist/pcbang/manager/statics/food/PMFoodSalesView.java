@@ -19,7 +19,7 @@ public class PMFoodSalesView extends JPanel {
 	// private JScrollPane jspFS;
 	// private JTable jtFoodSales;//
 
-	public PMFoodSalesView() {
+	public PMFoodSalesView() {//
 		pmfsdao = PMFoodSalesDAO.getInstance();
 		String[] foodSalesColumns = { "순위", "사진", "상품이름", "상품코드", "카테고리", "총판매량", "가격", "총가격" };
 		dtmFoodSales = new DefaultTableModel(foodSalesColumns, 4) {

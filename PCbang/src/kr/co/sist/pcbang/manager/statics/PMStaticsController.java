@@ -35,7 +35,7 @@ import org.jfree.ui.TextAnchor;
 import kr.co.sist.pcbang.manager.order.PMOrderVO;
 import kr.co.sist.pcbang.manager.statics.food.PMFoodSalesView;
 
-public class PMStaticsController implements ActionListener {
+public class PMStaticsController implements ActionListener {//
 	private PMStaticsView pmsv;
 	private PMStaticsDAO pms_dao;
 	private String beforeDate, afterDate;
