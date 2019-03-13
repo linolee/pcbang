@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import kr.co.sist.pcbang.manager.login.PCRoomManagerRun;
 
 public class FileServer extends Thread {
+	DataInputStream dis = null;
 	@Override
 	public void run() {
 		ServerSocket server = null;
@@ -23,7 +24,6 @@ public class FileServer extends Thread {
 			try {
 				server = new ServerSocket(19700);
 				Socket client = null;
-				DataInputStream dis = null;
 				int cnt = 0;
 				String[] fileNames = null;
 				String[] serverFileNames = null;
@@ -74,11 +74,12 @@ public class FileServer extends Thread {
 
 					for (String fName : tempFileList) {
 						fileSend(fName, dos);
-						try {
-							Thread.sleep(1000);
-						} catch (InterruptedException ie) {
-							ie.printStackTrace();
-						} // end catch
+				
+//						try {
+//							Thread.sleep(1000);
+//						} catch (InterruptedException ie) {
+//							ie.printStackTrace();
+//						} // end catch
 
 					} // end for
 
@@ -125,6 +126,7 @@ public class FileServer extends Thread {
 				dos.write(readData, 0, fileLen);// 생성한 파일로 기록
 			} // end while
 			dos.flush();
+			System.out.println("결과 "+	dis.readUTF());
 		} finally {
 			if (fis != null) {
 				fis.close();
