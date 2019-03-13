@@ -42,10 +42,9 @@ public class PMManagerAddAccountDAO {
 		PreparedStatement pstmt = null;
 
 		try {
-			// 1.
-			// 2.
+
 			con = getConn();
-			// 3.
+
 			StringBuilder insertAccount = new StringBuilder();
 
 			insertAccount.append("insert into pc_admin").append("(admin_Id,	admin_Pass,	admin_Name)")
