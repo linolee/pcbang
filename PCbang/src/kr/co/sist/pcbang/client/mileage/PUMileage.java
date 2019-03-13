@@ -8,7 +8,6 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.Random;
 
@@ -19,7 +18,7 @@ import javax.swing.JOptionPane;
 import kr.co.sist.pcbang.client.main.PUMainController;
 
 @SuppressWarnings("serial")
-public class PUMileageController extends JFrame implements KeyListener, Runnable {
+public class PUMileage extends JFrame implements KeyListener, Runnable {
 
 	private int f_width;
 	private int f_height;
@@ -54,17 +53,19 @@ public class PUMileageController extends JFrame implements KeyListener, Runnable
 	
 	private String id;
 	
+	private boolean thFlag;
 	
-	public PUMileageController(PUMainController pumc) {
+	
+	public PUMileage(PUMainController pumc) {
 		
 		this.pumc=pumc;
 		a_dao=PUMileageDAO.getInstance();
 		id = pumc.getId();
 		userName();
+		thFlag=false;
 		
 		init();
 		start();
-
 		setTitle("★★★ "+id+" ★★★");
 		setSize(f_width, f_height);
 
@@ -124,15 +125,17 @@ public class PUMileageController extends JFrame implements KeyListener, Runnable
 
 	public void run() {
 		try {
-			while (true) {
+			while (!thFlag) {
 				KeyProcess();
 				charMove();
 
-				getItem();
+				moveChar();
 				repaint();
 
 				Thread.sleep(20);
 				cnt++;
+				
+				System.out.println(thFlag);
 			}
 		} catch (Exception e) {
 		}
@@ -260,7 +263,7 @@ public class PUMileageController extends JFrame implements KeyListener, Runnable
 	}
 	
 	// 특정 영역에 이동시 값을 반환
-	public void getItem() {
+	public void moveChar() {
 			
 			Random r=new Random();
 			int addTime=r.nextInt(100);
@@ -289,10 +292,7 @@ public class PUMileageController extends JFrame implements KeyListener, Runnable
 					
 					a_dao.updateMileage(60, 1000, id);
 
-					/////////////////////////////////////////////////////////////////////////////
 					pumc.setRestTime(pumc.getRestTime()+60);
-					///////////////////////////////////////////////////////////////////////
-					
 					
 					JOptionPane.showMessageDialog(this, "1시간 추가 !");
 					userName();
@@ -305,18 +305,17 @@ public class PUMileageController extends JFrame implements KeyListener, Runnable
 			}} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			 
 			
 			for(int i=270;i<360;i++) {
 				
 				if(x==i && y==420) {
 					x=3000;
 					y=3000;
+					thFlag=true;
 					this.dispose();
+					
 				}
-				
 			}
-			
 		}
 	
 
@@ -412,5 +411,6 @@ public class PUMileageController extends JFrame implements KeyListener, Runnable
 	public void keyTyped(KeyEvent e) {
 	}
 
+	
 }
 
