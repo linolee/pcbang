@@ -19,11 +19,11 @@ import kr.co.sist.pcbang.client.main.PUMainController;
 @SuppressWarnings("serial")
 public class PUMileage extends JFrame implements KeyListener, Runnable {
 
-	private int x, y, f_width, f_height, cnt, mile, player_Status;
+	private int x, y, f_width, f_height, cnt, mile, playerStatus;
 	private boolean KeyUp, KeyDown, KeyLeft, KeyRight, thFlag;
 	private Thread th;
 	private Toolkit tk;
-	private Image[] Player_img, Player_img2, Player_img3, Player_img4;
+	private Image[] playerImg, playerImg2, playerImg3, playerImg4;
 	private Image BackGround_img, buffImage;
 	private Graphics buffg;
 	private PUMileageDAO a_dao;
@@ -35,7 +35,7 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 		this.pumc = pumc;
 		a_dao = PUMileageDAO.getInstance();
 		tk = Toolkit.getDefaultToolkit();
-		player_Status = 0;
+		playerStatus = 0;
 		thFlag = false;
 		KeyUp = false;
 		KeyDown = false;
@@ -44,7 +44,7 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 
 		id = pumc.getId();
 		setMileage();
-		init();
+		base();
 		start();
 		setTitle("★★★ " + id + " ★★★");
 		setSize(f_width, f_height);
@@ -70,27 +70,27 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 		}
 	}
 
-	public void init() {
+	public void base() {
 		x = 320;
 		y = 120;
 		f_width = 671;
 		f_height = 506;
 
-		Player_img = new Image[4];
-		for (int i = 0; i < Player_img.length; ++i) {
-			Player_img[i] = new ImageIcon(getClass().getResource("char_f" + i + ".png")).getImage();
+		playerImg = new Image[4];
+		for (int i = 0; i < playerImg.length; ++i) {
+			playerImg[i] = new ImageIcon(getClass().getResource("char_f" + i + ".png")).getImage();
 		}
-		Player_img2 = new Image[4];
-		for (int i = 0; i < Player_img2.length; ++i) {
-			Player_img2[i] = new ImageIcon(getClass().getResource("char_l" + i + ".png")).getImage();
+		playerImg2 = new Image[4];
+		for (int i = 0; i < playerImg2.length; ++i) {
+			playerImg2[i] = new ImageIcon(getClass().getResource("char_l" + i + ".png")).getImage();
 		}
-		Player_img3 = new Image[4];
-		for (int i = 0; i < Player_img3.length; ++i) {
-			Player_img3[i] = new ImageIcon(getClass().getResource("char_r" + i + ".png")).getImage();
+		playerImg3 = new Image[4];
+		for (int i = 0; i < playerImg3.length; ++i) {
+			playerImg3[i] = new ImageIcon(getClass().getResource("char_r" + i + ".png")).getImage();
 		}
-		Player_img4 = new Image[4];
-		for (int i = 0; i < Player_img4.length; ++i) {
-			Player_img4[i] = new ImageIcon(getClass().getResource("char_u" + i + ".png")).getImage();
+		playerImg4 = new Image[4];
+		for (int i = 0; i < playerImg4.length; ++i) {
+			playerImg4[i] = new ImageIcon(getClass().getResource("char_u" + i + ".png")).getImage();
 		}
 		BackGround_img = new ImageIcon(getClass().getResource("background.png")).getImage();
 	}
@@ -117,13 +117,13 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 
 	public void charMove() {
 		if (KeyLeft) {
-			player_Status = 1;
+			playerStatus = 1;
 		}
 		if (KeyRight) {
-			player_Status = 2;
+			playerStatus = 2;
 		}
 		if (KeyUp) {
-			player_Status = 3;
+			playerStatus = 3;
 		}
 	}
 
@@ -135,66 +135,66 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 	}
 
 	public void update(Graphics g) {
-		Draw_Background();
-		Draw_Player();
-		Draw_StatusText();
+		drawBackGround();
+		drawPlayer();
+		drawText();
 
 		g.drawImage(buffImage, 0, 0, this);
 	}
 
-	public void Draw_Background() {
+	public void drawBackGround() {
 		buffg.clearRect(0, 0, f_width, f_height);
 
 		buffg.drawImage(BackGround_img, 0, 0, this);
 	}
 
-	public void Draw_Player() {
-		switch (player_Status) {
+	public void drawPlayer() {
+		switch (playerStatus) {
 
 		case 0: // 평상시
 			if ((cnt / 5 % 4) == 0) {
-				buffg.drawImage(Player_img[0], x, y, this);
+				buffg.drawImage(playerImg[0], x, y, this);
 			} else if ((cnt / 5 % 4 == 1)) {
-				buffg.drawImage(Player_img[1], x, y, this);
+				buffg.drawImage(playerImg[1], x, y, this);
 			} else if ((cnt / 5 % 4 == 2)) {
-				buffg.drawImage(Player_img[2], x, y, this);
+				buffg.drawImage(playerImg[2], x, y, this);
 			} else if ((cnt / 5 % 4 == 3)) {
-				buffg.drawImage(Player_img[3], x, y, this);
+				buffg.drawImage(playerImg[3], x, y, this);
 			}
 			break;
 
 		case 1: // 왼쪽으로 이동
 			if ((cnt / 5 % 4) == 0) {
-				buffg.drawImage(Player_img2[0], x, y, this);
+				buffg.drawImage(playerImg2[0], x, y, this);
 			} else if ((cnt / 5 % 4 == 1)) {
-				buffg.drawImage(Player_img2[1], x, y, this);
+				buffg.drawImage(playerImg2[1], x, y, this);
 			} else if ((cnt / 5 % 4 == 2)) {
-				buffg.drawImage(Player_img2[2], x, y, this);
+				buffg.drawImage(playerImg2[2], x, y, this);
 			} else if ((cnt / 5 % 4 == 3)) {
-				buffg.drawImage(Player_img2[3], x, y, this);
+				buffg.drawImage(playerImg2[3], x, y, this);
 			}
 			break;
 
 		case 2: // 오른쪽으로 이동
 			if ((cnt / 5 % 4) == 0) {
-				buffg.drawImage(Player_img3[0], x, y, this);
+				buffg.drawImage(playerImg3[0], x, y, this);
 			} else if ((cnt / 5 % 4 == 1)) {
-				buffg.drawImage(Player_img3[1], x, y, this);
+				buffg.drawImage(playerImg3[1], x, y, this);
 			} else if ((cnt / 5 % 4 == 2)) {
-				buffg.drawImage(Player_img3[2], x, y, this);
+				buffg.drawImage(playerImg3[2], x, y, this);
 			} else if ((cnt / 5 % 4 == 3)) {
-				buffg.drawImage(Player_img3[3], x, y, this);
+				buffg.drawImage(playerImg3[3], x, y, this);
 			}
 			break;
 		case 3: // 위쪽으로 이동
 			if ((cnt / 5 % 4) == 0) {
-				buffg.drawImage(Player_img4[0], x, y, this);
+				buffg.drawImage(playerImg4[0], x, y, this);
 			} else if ((cnt / 5 % 4 == 1)) {
-				buffg.drawImage(Player_img4[1], x, y, this);
+				buffg.drawImage(playerImg4[1], x, y, this);
 			} else if ((cnt / 5 % 4 == 2)) {
-				buffg.drawImage(Player_img4[2], x, y, this);
+				buffg.drawImage(playerImg4[2], x, y, this);
 			} else if ((cnt / 5 % 4 == 3)) {
-				buffg.drawImage(Player_img4[3], x, y, this);
+				buffg.drawImage(playerImg4[3], x, y, this);
 			}
 			break;
 		}
@@ -208,12 +208,12 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 		x = 320;
 		y = 120;
 
-		player_Status = 0;
+		playerStatus = 0;
 	}
 
 	public void moveChar() {
 		Random r = new Random();
-		int addTime = r.nextInt(50) + 10;
+		int addTime = r.nextInt(60);
 
 		try {
 
@@ -224,12 +224,14 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 						a_dao.updateMileage((addTime), 500, id);
 						pumc.setRestTime(pumc.getRestTime() + (addTime));
 
-						if (addTime <= 10) {
+						if (addTime <= 10 && addTime>0) {
 							JOptionPane.showMessageDialog(this, (addTime) + "분 당첨 ㅠㅠ");
 						} else if (addTime > 11 && addTime <= 30) {
 							JOptionPane.showMessageDialog(this, (addTime) + "분 당첨 !");
 						} else if (addTime >= 31 && addTime <= 60) {
 							JOptionPane.showMessageDialog(this, "☆★☆★ " + (addTime) + "분 당첨 ☆★☆★");
+						} else if(addTime==0) {
+							JOptionPane.showMessageDialog(this, "꽝이욬ㅋㅋㅋㅋㅋㅋㅋㅋ");
 						}
 
 						setMileage();
@@ -270,7 +272,7 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 		}
 	}
 
-	public void Draw_StatusText() {
+	public void drawText() {
 		buffg.setFont(new Font("휴먼고딕", Font.BOLD, 15));
 
 		buffg.drawString("보유 마일리지 : " + mile + "원", 500, 50);
@@ -287,29 +289,29 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 			if (y > 20)
 				y -= 5;
 
-			player_Status = 0;
+			playerStatus = 0;
 		}
 
 		if (KeyDown == true) {
 
-			if (y + Player_img[0].getHeight(null) < f_height)
+			if (y + playerImg[0].getHeight(null) < f_height)
 				y += 5;
 
-			player_Status = 0;
+			playerStatus = 0;
 		}
 
 		if (KeyLeft == true) {
 			if (x > 0)
 				x -= 5;
 
-			player_Status = 0;
+			playerStatus = 0;
 		}
 
 		if (KeyRight == true) {
-			if (x + Player_img[0].getWidth(null) < f_width)
+			if (x + playerImg[0].getWidth(null) < f_width)
 				x += 5;
 
-			player_Status = 0;
+			playerStatus = 0;
 		}
 	}
 
