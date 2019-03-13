@@ -16,6 +16,9 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 
 	private PMManagerAddAccountView pmmaav;
 	private PMManagerAccountController pmmac;
+	private PMManagerAddAccountDAO pmmaa_dao;
+	
+	private boolean flagCheck = false;
 
 	public PMManagerAddAccountController(PMManagerAddAccountView pmmaav, PMManagerAccountController pmmac) {
 		this.pmmaav = pmmaav;
@@ -73,6 +76,30 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 		jtfId.requestFocus();
 
 	}// addAccount
+	
+	private void checkAccountId() {
+		JTextField jtfId = pmmaav.getJtfAddId();
+		JPasswordField jpfPass = pmmaav.getJpfAddPass();
+		JTextField jtfName = pmmaav.getJtfAddName();
+		
+		String id = jtfId.getText().trim();
+		pmmaa_dao = PMManagerAddAccountDAO.getInstance();
+
+		try {
+			if (pmmaa_dao.selectAccount(id)) {
+				JOptionPane.showMessageDialog(pmmaav, "이미 사용중 입니다.");
+				jtfId.setText("");
+				jpfPass.setText("");
+				jtfName.setText("");
+				jtfId.requestFocus();				
+			} else {
+				addAccount();
+				flagCheck = true;
+			} // end else
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} // end cathc
+	} // checkAccountId
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -83,12 +110,9 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 		if (ae.getSource() == pmmaav.getJbtAdd()) {
 			switch (JOptionPane.showConfirmDialog(pmmaav, "정말 추가하시겠습니까?")) {
 			case JOptionPane.OK_OPTION:
-				try {
-					addAccount();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} // end catch
-				break;
+				System.out.println("첫번째 : "+pmmaav.getJtfAddId().getText());
+				checkAccountId();
+			break;
 			} // end switch
 		} // end if
 	}// actionPerformed
@@ -99,3 +123,4 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 	}
 
 }// class
+
