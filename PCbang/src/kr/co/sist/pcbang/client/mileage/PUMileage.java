@@ -1,6 +1,5 @@
 package kr.co.sist.pcbang.client.mileage;
 
-
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -10,11 +9,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.SQLException;
 import java.util.Random;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
 import kr.co.sist.pcbang.client.main.PUMainController;
 
 @SuppressWarnings("serial")
@@ -22,48 +19,36 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 
 	private int f_width;
 	private int f_height;
-
 	private int x, y;
-
-	private boolean KeyUp = false;
-	private boolean KeyDown = false;
-	private boolean KeyLeft = false;
-	private boolean KeyRight = false;
-
+	private boolean KeyUp, KeyDown, KeyLeft, KeyRight;
 	private int cnt;
-
 	private int player_Status = 0;
-
 	private Thread th;
-
-	private Toolkit tk = Toolkit.getDefaultToolkit();
-
+	private Toolkit tk;
 	private Image[] Player_img, Player_img2, Player_img3, Player_img4;
 	private Image BackGround_img;
-
 	private Image buffImage;
 	private Graphics buffg;
-	
 	private PUMileageDAO a_dao;
 	private PUMainController pumc;
-	
-	
 	private int mile;
-	
-	
 	private String id;
-	
 	private boolean thFlag;
-	
 	
 	public PUMileage(PUMainController pumc) {
 		
 		this.pumc=pumc;
 		a_dao=PUMileageDAO.getInstance();
 		id = pumc.getId();
-		userName();
+		setMileage();
 		thFlag=false;
+		tk = Toolkit.getDefaultToolkit();
 		
+		KeyUp = false;
+		KeyDown = false;
+		KeyLeft = false;
+		KeyRight = false;
+		 
 		init();
 		start();
 		setTitle("★★★ "+id+" ★★★");
@@ -74,12 +59,13 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 		int f_xpos = (int) (screen.getWidth() / 2 - f_width / 2);
 		int f_ypos = (int) (screen.getHeight() / 2 - f_height / 2);
 
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setLocation(f_xpos, f_ypos);
 		setResizable(false);
 		setVisible(true);
 	}
 	
-	public void userName() {
+	public void setMileage() {
 		try {
 			mile = a_dao.getMileage(id);
 		} catch (SQLException e) {
@@ -87,9 +73,8 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 		}
 	}
 	
-	
 	public void init() {
-		x = 320;  // 캐릭터의 위치
+		x = 320;
 		y = 120;
 		f_width =671;
 		f_height = 506;
@@ -111,16 +96,12 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 			Player_img4[i] = new ImageIcon(getClass().getResource("char_u"+i+".png")).getImage();
 		}
 		BackGround_img = new ImageIcon(getClass().getResource("background.png")).getImage();
-		
-
 	}
 
 	public void start() {
 		addKeyListener(this);
-
 		th = new Thread(this);
 		th.start();
-
 	}
 
 	public void run() {
@@ -128,14 +109,10 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 			while (!thFlag) {
 				KeyProcess();
 				charMove();
-
 				moveChar();
 				repaint();
-
 				Thread.sleep(20);
 				cnt++;
-				
-				System.out.println(thFlag);
 			}
 		} catch (Exception e) {
 		}
@@ -162,11 +139,9 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 	}
 
 	public void update(Graphics g) {
-
-		Draw_Background(); // 배경 이미지 그리기 메소드 실행
-		Draw_Player(); // 플레이어를 그리는 메소드 이름 변경
-
-		Draw_StatusText();// 상태 표시 텍스트를 그리는 메소드 실행
+		Draw_Background();
+		Draw_Player(); 
+		Draw_StatusText();
 
 		g.drawImage(buffImage, 0, 0, this);
 	}
@@ -175,7 +150,7 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 
 		buffg.clearRect(0, 0, f_width, f_height);
 
-			buffg.drawImage(BackGround_img, 0, 0, this);
+		buffg.drawImage(BackGround_img, 0, 0, this);
 	}
 
 	public void Draw_Player() {
@@ -185,7 +160,6 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 		case 0: // 평상시
 			if ((cnt / 5 % 4) == 0) {
 				buffg.drawImage(Player_img[0], x, y, this);
-				
 			} 
 			else if((cnt / 5 % 4 == 1)) {
 				buffg.drawImage(Player_img[1], x, y, this);
@@ -196,13 +170,11 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 			else if((cnt / 5 % 4 == 3)) {
 				buffg.drawImage(Player_img[3], x, y, this);
 			}
-
 			break;
 
 		case 1: // 왼쪽으로 이동
 			if ((cnt / 5 % 4) == 0) {
 				buffg.drawImage(Player_img2[0], x, y, this);
-				
 			} 
 			else if((cnt / 5 % 4 == 1)) {
 				buffg.drawImage(Player_img2[1], x, y, this);
@@ -218,7 +190,6 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 		case 2: // 오른쪽으로 이동
 			if ((cnt / 5 % 4) == 0) {
 				buffg.drawImage(Player_img3[0], x, y, this);
-				
 			} 
 			else if((cnt / 5 % 4 == 1)) {
 				buffg.drawImage(Player_img3[1], x, y, this);
@@ -233,7 +204,6 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 		case 3: // 위쪽으로 이동
 			if ((cnt / 5 % 4) == 0) {
 				buffg.drawImage(Player_img4[0], x, y, this);
-				
 			} 
 			else if((cnt / 5 % 4 == 1)) {
 				buffg.drawImage(Player_img4[1], x, y, this);
@@ -244,14 +214,11 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 			else if((cnt / 5 % 4 == 3)) {
 				buffg.drawImage(Player_img4[3], x, y, this);
 			}
-
 			break;
-
 		}
-
 	}
 	
-	public void falseKey() {
+	public void resetKey() {
 		KeyUp=false;
 		KeyDown=false;
 		KeyLeft=false;
@@ -262,13 +229,12 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 		player_Status=0;
 	}
 	
-	// 특정 영역에 이동시 값을 반환
 	public void moveChar() {
 			
-			Random r=new Random();
-			int addTime=r.nextInt(100);
+		Random r=new Random();
+		int addTime=r.nextInt(100);
 			
-			try {
+		try {
 				
 			for(int i=70;i<150;i++) {
 				if(x==0 && y==i) {
@@ -277,16 +243,14 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 						a_dao.updateMileage(addTime, 500, id);
 					pumc.setRestTime(pumc.getRestTime()+addTime);
 					JOptionPane.showMessageDialog(this, addTime+"분 당첨 !!! ㅊㅋㅊㅋ");
-					userName();
-					falseKey();
+					setMileage();
+					resetKey();
 					} else{
-						JOptionPane.showMessageDialog(null, "마일리지 부족");
-						falseKey();
-						
+						JOptionPane.showMessageDialog(null, "마일리지가 부족합니다");
+						resetKey();
 					}
-					
 				}
-				if(x==625 && y==i) {
+				if(x==640 && y==i) {
 					
 					if(a_dao.getMileage(id)>=1000) {
 					
@@ -295,33 +259,29 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 					pumc.setRestTime(pumc.getRestTime()+60);
 					
 					JOptionPane.showMessageDialog(this, "1시간 추가 !");
-					userName();
-					falseKey();
+					setMileage();
+					resetKey();
 				} else {
-					JOptionPane.showMessageDialog(null, "마일리지 부족");
-					falseKey();
+					JOptionPane.showMessageDialog(null, "마일리지가 부족합니다");
+					resetKey();
 				}
 			}
 			}} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
 			for(int i=270;i<360;i++) {
 				
-				if(x==i && y==420) {
+				if(x==i && y==445) {
 					x=3000;
 					y=3000;
 					thFlag=true;
 					this.dispose();
-					
 				}
 			}
 		}
-	
 
 	public void Draw_StatusText() { 
-
-		buffg.setFont(new Font("Defualt", Font.BOLD, 15));
+		buffg.setFont(new Font("휴먼고딕", Font.BOLD, 15));
 
 		buffg.drawString("보유 마일리지 : "+mile+"원", 500, 50);
 
@@ -330,7 +290,6 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 		buffg.drawString("1000마일리지 -> 1시간", 500, 200);
 		
 		buffg.drawString("닫기", 250, 500);
-		
 	}
 
 	public void KeyProcess() {
@@ -343,10 +302,7 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 
 		if (KeyDown == true) {
 			
-			
-			/////////////////////////////////////// 이동값을 절대값으로 변경해야함? //////////////////////////////////////////////////////////////////////////////
-			if (y +90 < f_height)
-//				if (y + Player_img[0].getHeight(null) < f_height)
+			if (y + Player_img[0].getHeight(null) < f_height)
 				y += 5;
 
 			player_Status = 0;
@@ -360,18 +316,14 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 		}
 
 		if (KeyRight == true) {
-//			if (x + Player_img[0].getWidth(null) < f_width)
-			/////////////////////////////////////// 이동값을 절대값으로 변경해야함? //////////////////////////////////////////////////////////////////////////////
-				if (x+50 < f_width)
+			if (x + Player_img[0].getWidth(null) < f_width)
 				x += 5;
 
 			player_Status = 0;
-			
 		}
 	}
 
 	public void keyPressed(KeyEvent e) {
-
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
 			KeyUp = true;
@@ -385,12 +337,10 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 		case KeyEvent.VK_RIGHT:
 			KeyRight = true;
 			break;
-
 		}
 	}
 
 	public void keyReleased(KeyEvent e) {
-
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
 			KeyUp = false;
@@ -404,13 +354,9 @@ public class PUMileage extends JFrame implements KeyListener, Runnable {
 		case KeyEvent.VK_RIGHT:
 			KeyRight = false;
 			break;
-
 		}
 	}
 
 	public void keyTyped(KeyEvent e) {
 	}
-
-	
 }
-
