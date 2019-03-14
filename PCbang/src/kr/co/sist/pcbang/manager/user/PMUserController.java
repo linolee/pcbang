@@ -76,6 +76,33 @@ public class PMUserController implements ActionListener, MouseListener {
 		}
 	}
 	
+	public void selectDetailUser() {
+		JTable jt = uv.getJtMember();
+		
+		String name="";
+		String id="";
+		String gender="";
+		String inputDate="";
+		String email="";
+		String tel="";
+		String birth="";
+		int leftTime=0;
+		
+		name = ((String)jt.getValueAt(jt.getSelectedRow(), 1));
+		id = ((String)jt.getValueAt(jt.getSelectedRow(), 2));
+		birth = ((String)jt.getValueAt(jt.getSelectedRow(), 3));
+		gender = ((String)jt.getValueAt(jt.getSelectedRow(), 4));
+		tel = ((String)jt.getValueAt(jt.getSelectedRow(), 5));
+		email = ((String)jt.getValueAt(jt.getSelectedRow(), 6));
+		leftTime = ((Integer)jt.getValueAt(jt.getSelectedRow(), 9));
+		inputDate = ((String)jt.getValueAt(jt.getSelectedRow(), 11));
+		
+		PMUserDetailVO udvo = new PMUserDetailVO(id, name, gender, inputDate, email, tel, birth, leftTime);
+		new PMUserDetailView(udvo);
+		
+	}
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		
@@ -111,32 +138,7 @@ public class PMUserController implements ActionListener, MouseListener {
 		case 2 : 
 			
 			if(me.getSource() == uv.getJtMember()) {
-				
-				JTable jt = uv.getJtMember();
-				
-				String name="";
-				String id="";
-				String gender="";
-				String inputDate="";
-				String email="";
-				String tel="";
-				String birth="";
-				int leftTime=0;
-				
-				name = ((String)jt.getValueAt(jt.getSelectedRow(), 1));
-				id = ((String)jt.getValueAt(jt.getSelectedRow(), 2));
-				birth = ((String)jt.getValueAt(jt.getSelectedRow(), 3));
-				gender = ((String)jt.getValueAt(jt.getSelectedRow(), 4));
-				tel = ((String)jt.getValueAt(jt.getSelectedRow(), 5));
-				email = ((String)jt.getValueAt(jt.getSelectedRow(), 6));
-				leftTime = ((Integer)jt.getValueAt(jt.getSelectedRow(), 9));
-				inputDate = ((String)jt.getValueAt(jt.getSelectedRow(), 11));
-				
-				System.out.println(name);
-				System.out.println(id);
-				
-				PMUserDetailVO udvo = new PMUserDetailVO(id, name, gender, inputDate, email, tel, birth, leftTime);
-				new PMUserDetailView(udvo);
+				selectDetailUser();
 				
 			}
 		}
