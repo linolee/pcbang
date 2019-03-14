@@ -1,6 +1,9 @@
 package kr.co.sist.pcbang.manager.magageraddaccount;
 
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -56,6 +59,31 @@ public class PMManagerAddAccountView extends JFrame{
 		jpfAddPass.addActionListener(pmmaac);
 		jtfAddName.addActionListener(pmmaac);
 		jbtAdd.addActionListener(pmmaac);
+		
+		jtfAddId.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent ke) {
+				JTextField src = (JTextField)ke.getSource();
+				if(src.getText().length()>=10)ke.consume(); {
+					
+				}
+			}
+		});		
+		jpfAddPass.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent ke) {
+				JTextField src = (JTextField)ke.getSource();
+				if(src.getText().length()>=10)ke.consume(); {
+					
+				}
+			}
+		});		
+		jtfAddName.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent ke) {
+				JTextField src = (JTextField)ke.getSource();
+				if(src.getText().length()>=10)ke.consume(); {
+					
+				}
+			}
+		});		
 		
 		setBounds(800, 200, 400, 300);
 		setVisible(true);
