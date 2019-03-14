@@ -11,12 +11,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
-import kr.co.sist.pcbang.client.charge.PUChargeView;
 import kr.co.sist.pcbang.client.login.finduser.PUFindUserView;
 import kr.co.sist.pcbang.client.login.newuser.PUPolicyView;
-import kr.co.sist.pcbang.client.main.PUMainController;
-import kr.co.sist.pcbang.client.main.PUMainDAO;
-import kr.co.sist.pcbang.client.main.PUMainInfoVO;
 import kr.co.sist.pcbang.client.main.PUMainView;
 
 /**
@@ -26,14 +22,14 @@ import kr.co.sist.pcbang.client.main.PUMainView;
 public class PULoginController extends WindowAdapter implements ActionListener {
 
 	private PULoginView pulv;
-	private PUMainController pumc;
+//	private PUMainController pumc;
 	private PULoginDAO pul_dao;
-	private PUMainDAO pum_dao;
+//	private PUMainDAO pum_dao;
 
 	public PULoginController(PULoginView pulv) {
 		this.pulv = pulv;
 		pul_dao = PULoginDAO.getInstance();
-		pum_dao = PUMainDAO.getInstance();
+//		pum_dao = PUMainDAO.getInstance();
 		setNotice();
 	}// PULoginController
 
@@ -190,70 +186,6 @@ public class PULoginController extends WindowAdapter implements ActionListener {
 		} // end else
 	}// windowClosing
 
-	/**
-	 * 비회원 로그인
-	 * 
-	 * @param guestNum
-	 * @return
-	 */
-	private boolean login(int guestNum) {
-		boolean flag = false;
-		try {
-			PULoginDAO pul_dao = PULoginDAO.getInstance();
-			InetAddress ip = InetAddress.getLocalHost();
-			String pcIp = String.valueOf(ip).substring(InetAddress.getLocalHost().toString().indexOf("/") + 1);
-
-			if (pul_dao.selectGuestCheck(guestNum)) {
-				PUGuestStateVO pugsvo = new PUGuestStateVO(guestNum, pcIp);
-				pul_dao.updateGuestState(pugsvo);
-				flag = true;
-			} // end if
-		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(pulv, "DB에서 문제가 발생했습니다.");
-			e.printStackTrace();
-		} catch (UnknownHostException uhe) {
-			JOptionPane.showMessageDialog(pulv, "ip조회 실패");
-			uhe.printStackTrace();
-		} // end catch
-		return flag;
-	}// login guest
-
-	/**
-	 * 회원 로그인
-	 * 
-	 * @param pucvo
-	 * @return
-	 */
-	private boolean login(PUCertificationVO pucvo) {
-		// String adminName="";
-		boolean flag = false;
-		try {
-			PULoginDAO pul_dao = PULoginDAO.getInstance();
-
-			InetAddress ip = InetAddress.getLocalHost();
-			String pcIp = String.valueOf(ip).substring(InetAddress.getLocalHost().toString().indexOf("/") + 1);
-//			 System.out.println(pcIp);
-			// System.out.println(String.valueOf(pul_dao.selectMemberLogin(pucvo)).equals(""));
-			if (pul_dao.selectMemberLogin(pucvo) != -1) {
-
-				flag = true;
-				PUMemberStateVO pumsvo = new PUMemberStateVO(pucvo.getMemberId(), pcIp);
-				// System.out.println("여기까지?");
-				pul_dao.updateMemberState(pumsvo);
-				// System.out.println("여기까지?2222");
-//			}else {
-//				JOptionPane.showMessageDialog(pulv, "비밀번호가 틀렸습니다.");
-//				return false;
-			}
-		} catch (SQLException e) {
-//			JOptionPane.showMessageDialog(pulv, "DB에서 문제가 발생했습니다.");
-			e.printStackTrace();
-		} catch (UnknownHostException uhe) {
-			JOptionPane.showMessageDialog(pulv, "ip조회 실패");
-			uhe.printStackTrace();
-		} // end catch
-		return flag;
-	}// login member
 
 	/**
 	 * 공지사항 불러오기
