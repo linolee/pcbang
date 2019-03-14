@@ -153,7 +153,7 @@ public class PUMainController extends WindowAdapter implements ActionListener, R
 				// 남은시간이 없으면 사용종료
 				callcharge(RestTime);
 
-				Thread.sleep(60000 * 1);//
+				Thread.sleep(60000 * 1);///
 				jlRestTime.setText(hourTime(String.valueOf(RestTime - 1)));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
