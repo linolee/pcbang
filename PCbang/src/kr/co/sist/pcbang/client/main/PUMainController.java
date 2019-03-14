@@ -31,7 +31,6 @@ public class PUMainController extends WindowAdapter implements ActionListener, R
 	private int RestTime;
 	private Thread threadOrdering;
 	private boolean threadFlag;
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	private String id;
 	private static PUMainController pumco;
@@ -42,9 +41,8 @@ public class PUMainController extends WindowAdapter implements ActionListener, R
 	public PUMainController(PUMainView pumv) {
 		this.pumv = pumv;
 		pu_manager = new PUManager(this);
-		pum_dao = PUMainDAO.getInstance();
+		pum_dao=PUMainDAO.getInstance();
 		threadFlag = false;
-
 		try {
 			int seatNum = pumv.seat;
 			if (seatNum != 0) {
@@ -135,12 +133,11 @@ public class PUMainController extends WindowAdapter implements ActionListener, R
 
 	@Override
 	public void run() {
-		for (int i = 0;; i++) {
+		for(int i=0; ; i++) {
 			if (threadFlag) {
 				break;
 			}
 			try {
-				System.out.println("스레드 돌아간다.");
 				// 사용시간을 가져와서 +1
 				JLabel jlUseTime = pumv.getJlUseTime();// 00:00
 				jlUseTime.setText(hourTime(String.valueOf(i)));
