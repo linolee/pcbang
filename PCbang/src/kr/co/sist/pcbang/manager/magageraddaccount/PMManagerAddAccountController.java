@@ -32,6 +32,9 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 		JPasswordField jpfPass = pmmaav.getJpfAddPass();
 		JTextField jtfName = pmmaav.getJtfAddName();
 
+		String pass = "";
+		pass = new String(jpfPass.getPassword());
+
 		if (jtfId.getText().trim().equals("")) {
 			JOptionPane.showMessageDialog(pmmaav, "아이디를 입력하세요.");
 			jtfId.setText("");
@@ -39,7 +42,7 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 			return;
 		} // end if
 
-		if (jpfPass.getPassword().equals("")) {
+		if (pass.equals("")) {
 			JOptionPane.showMessageDialog(pmmaav, "패스워드를 입력하세요.");
 			jpfPass.setText("");
 			jpfPass.requestFocus();
@@ -53,14 +56,11 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 			return;
 		} // end if
 
-	      String pass = "";
-	      pass = new String(jpfPass.getPassword());
-	      
-	      //입력한 값으로 객체 생성
-	      PMManagerAddAccountVO pmmaaVO = new PMManagerAddAccountVO(jtfId.getText().trim(),pass.trim(), jtfName.getText().trim());		
-		
-		
-		//계정 추가 dao호출
+		// 입력한 값으로 객체 생성
+		PMManagerAddAccountVO pmmaaVO = new PMManagerAddAccountVO(jtfId.getText().trim(), pass.trim(),
+				jtfName.getText().trim());
+
+		// 계정 추가 dao호출
 		PMManagerAddAccountDAO.getInstance().insertAccount(pmmaaVO);
 
 		// 리스트 갱신 -> 추가 후 진행할 것
@@ -123,4 +123,3 @@ public class PMManagerAddAccountController extends WindowAdapter implements Acti
 	}
 
 }// class
-
