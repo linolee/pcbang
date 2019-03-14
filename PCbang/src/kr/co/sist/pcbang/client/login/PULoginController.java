@@ -180,12 +180,9 @@ public class PULoginController extends WindowAdapter implements ActionListener {
 
 	@Override
 	public void windowClosing(WindowEvent we) {
-		int flag = JOptionPane.showConfirmDialog(pulv, "로그인 하지 않으시면 사용이 불가능 합니다.\n그래도 종료하시겠습니까?");
-		if (flag == 0) {
+		if (JOptionPane.showConfirmDialog(pulv, "로그인 하지 않으시면 사용이 불가능 합니다.\n그래도 종료하시겠습니까?")==JOptionPane.OK_OPTION) {
 			pulv.dispose();
-		} else {
-			// 아니요를 누르면 다시 로그인 창으로ㅠㅠㅠ
-		} // end else
+		}
 	}// windowClosing
 
 
