@@ -89,8 +89,6 @@ public class PMManagerAddAccountView extends JFrame{
 		setVisible(true);
 		setResizable(false);
 		
-		
-		
 	}//PMManagerAddAccountView
 
 
