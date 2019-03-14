@@ -436,10 +436,10 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		DataOutputStream dos=null;
 		DataInputStream dis=null;
 		String path1=System.getProperty("user.dir");
-		String path2="/src/kr/co/sist/pcbang/manager/product/img1/";
+		String path2="\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img1\\";
 		
 		try {
-			socket=new Socket("211.63.89.152", 19700);
+			socket=new Socket("211.63.89.152", 63979);
 			dos=new DataOutputStream(socket.getOutputStream());
 			dos.writeInt(fileNames.length);
 			
@@ -462,10 +462,10 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 				
 				//전달받을 파일 조각의 갯수
 				fileSize=dis.readInt();
-				//System.out.println("---1"+fileSize);
+				System.out.println("---1"+fileSize);
 				//파일 명 받기
 				fileName=dis.readUTF();
-				//System.out.println("====2==="+fileName);
+				System.out.println("====2==="+fileName);
 				fos=new FileOutputStream(path1+path2+fileName);
 				
 				byte[] readData=new byte[512];
