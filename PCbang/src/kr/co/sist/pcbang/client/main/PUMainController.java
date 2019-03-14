@@ -94,11 +94,15 @@ public class PUMainController extends WindowAdapter implements ActionListener, R
 			// RestTime
 		} // end if
 		if (ae.getSource() == pumv.getJbtChange()) {// 좌석변경
-			int flag = JOptionPane.showConfirmDialog(pumv, "자리변경을 하시겠습니까?");
-			if (flag == 0) {
-				JLabel jlSeat = pumv.getJlSeatNum();
-				changeSeat(Integer.parseInt(jlSeat.getText()));
-			} // end if
+			if(!"".equals(id)) {
+				int flag = JOptionPane.showConfirmDialog(pumv, "자리변경을 하시겠습니까?");
+				if (flag == 0) {
+					JLabel jlSeat = pumv.getJlSeatNum();
+					changeSeat(Integer.parseInt(jlSeat.getText()));
+				} // end if
+			}else {
+				JOptionPane.showMessageDialog(pumv, "비회원은 좌석변경을 이용할 수 없습니다.");
+			}
 		} // end if
 		if (ae.getSource() == pumv.getJbtMsg()) {// 메세지
 			pu_manager.getPumsgv().setVisible(true);
