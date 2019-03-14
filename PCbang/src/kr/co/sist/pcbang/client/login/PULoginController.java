@@ -13,6 +13,8 @@ import javax.swing.JTextArea;
 
 import kr.co.sist.pcbang.client.login.finduser.PUFindUserView;
 import kr.co.sist.pcbang.client.login.newuser.PUPolicyView;
+import kr.co.sist.pcbang.client.main.PUMainController;
+import kr.co.sist.pcbang.client.main.PUMainDAO;
 import kr.co.sist.pcbang.client.main.PUMainView;
 
 /**
@@ -22,14 +24,14 @@ import kr.co.sist.pcbang.client.main.PUMainView;
 public class PULoginController extends WindowAdapter implements ActionListener {
 
 	private PULoginView pulv;
-//	private PUMainController pumc;
+	private PUMainController pumc;
 	private PULoginDAO pul_dao;
-//	private PUMainDAO pum_dao;
+	private PUMainDAO pum_dao;
 
 	public PULoginController(PULoginView pulv) {
 		this.pulv = pulv;
 		pul_dao = PULoginDAO.getInstance();
-//		pum_dao = PUMainDAO.getInstance();
+		pum_dao = PUMainDAO.getInstance();
 		setNotice();
 	}// PULoginController
 
