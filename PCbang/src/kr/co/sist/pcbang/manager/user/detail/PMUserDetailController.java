@@ -5,13 +5,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
 import kr.co.sist.pcbang.manager.user.PMUserController;
 import kr.co.sist.pcbang.manager.user.PMUserDAO;
-
-
 
 public class PMUserDetailController extends WindowAdapter implements ActionListener{
 
@@ -27,47 +26,47 @@ public class PMUserDetailController extends WindowAdapter implements ActionListe
 	
 	public void updateUser() {
 		try {
-		PMUpdateVO upvo = null;
+		PMUpdateVO upvo = null;	
 		upvo = new PMUpdateVO
 				(udv.getJtfEmail().getText(), udv.getJtfTel().getText(), udv.getJtfBirth().getText(), udv.getJtfId().getText(), 
 						Integer.parseInt(udv.getJtfLeftTime().getText()));
 		
+			String birth = udv.getJtfBirth().getText();
+			boolean chkBirth = Pattern.matches("^[0-9]*$", birth);
+
 			if(!udv.getJtfEmail().getText().contains("@")) {
-				JOptionPane.showMessageDialog(udv, "Àß¸øµÈ ÀÌ¸ŞÀÏ Çü½ÄÀÔ´Ï´Ù");
+				JOptionPane.showMessageDialog(udv, "ì˜ëª»ëœ ì´ë©”ì¼ í˜•ì‹ì…ë‹ˆë‹¤");
 				return;
 			}
 			if(udv.getJtfTel().getText().length()<=10 ) {
-				JOptionPane.showMessageDialog(udv, "Àß¸øµÈ ÀüÈ­¹øÈ£ Çü½ÄÀÔ´Ï´Ù");
+				JOptionPane.showMessageDialog(udv, "ì˜ëª»ëœ ì „í™”ë²ˆí˜¸ í˜•ì‹ì…ë‹ˆë‹¤");
 				return;
 			}
-			if(!(udv.getJtfBirth().getText().length()==8) ) {
-				JOptionPane.showMessageDialog(udv, "Àß¸øµÈ »ı³â¿ùÀÏ Çü½ÄÀÔ´Ï´Ù");
+			if(!chkBirth || !(birth.length()==8) ) {
+				JOptionPane.showMessageDialog(udv, "ì˜ëª»ëœ ìƒë…„ì›”ì¼ í˜•ì‹ì…ë‹ˆë‹¤");
 				return;
 			}
 			if(Integer.parseInt(udv.getJtfLeftTime().getText())>=10000) {
-				JOptionPane.showMessageDialog(udv, "ÀÜ¿©½Ã°£Àº 0~9999ÀÔ´Ï´Ù");
+				JOptionPane.showMessageDialog(udv, "ì”ì—¬ì‹œê°„ì€ 0~9999ì…ë‹ˆë‹¤");
 				return;
 				
 			}
 		
 			if(u_dao.updateMemberData(upvo)) {
-				JOptionPane.showMessageDialog(udv, "È¸¿øÁ¤º¸°¡ º¯°æµÇ¾ú½À´Ï´Ù");
+				JOptionPane.showMessageDialog(udv, "íšŒì›ì •ë³´ê°€ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤");
 				udv.dispose();
 				uc.selectUser();
 			}
 		}catch (SQLException e) {
-			JOptionPane.showMessageDialog(udv, "ÀÔ·Â°ªÀ» È®ÀÎÇØÁÖ¼¼¿ä");
+			JOptionPane.showMessageDialog(udv, "ì…ë ¥ê°’ì„ í™•ì¸í•´ì£¼ì„¸ìš”");
 		} catch(NullPointerException ne) {
-			JOptionPane.showMessageDialog(udv, "ºóÄ­À» ÀÔ·ÂÇÒ ¼ö ¾ø½À´Ï´Ù");
+			JOptionPane.showMessageDialog(udv, "ë¹ˆì¹¸ì„ ì…ë ¥í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤");
 		} 
 		catch(NumberFormatException nfe) {
-		JOptionPane.showMessageDialog(udv, "ÀÔ·Â°ªÀ» È®ÀÎÇØÁÖ¼¼¿ä");
+		JOptionPane.showMessageDialog(udv, "ì…ë ¥ê°’ì„ í™•ì¸í•´ì£¼ì„¸ìš”");
 	} 
 		
 	}
-	
-
-
 
 	@Override
 	public void windowClosing(WindowEvent e) {
