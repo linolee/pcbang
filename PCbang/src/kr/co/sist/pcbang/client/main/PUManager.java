@@ -2,12 +2,15 @@ package kr.co.sist.pcbang.client.main;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -117,6 +120,11 @@ public class PUManager extends Thread {
 			}
 		}
 	}
+	
+	/**
+	 * 상품 이미지 리스트
+	 */
+
 	
 	public DataInputStream getReadStream() {
 		return readStream;

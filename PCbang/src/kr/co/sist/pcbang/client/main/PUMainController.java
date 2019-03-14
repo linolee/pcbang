@@ -4,12 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -41,7 +44,7 @@ public class PUMainController extends WindowAdapter implements ActionListener, R
 	public PUMainController(PUMainView pumv) {
 		this.pumv = pumv;
 		pu_manager = new PUManager(this);
-		pum_dao=PUMainDAO.getInstance();
+		pum_dao = PUMainDAO.getInstance();
 		threadFlag = false;
 		try {
 			int seatNum = pumv.seat;
@@ -78,6 +81,23 @@ public class PUMainController extends WindowAdapter implements ActionListener, R
 			threadOrdering = new Thread(this);
 			threadOrdering.start();
 		} // end if
+
+		String orderList[] = orderImageList();
+		for (int i = 0; i < orderList.length; i++) {
+			System.out.println(orderList[i]);
+		}
+		try {
+			StringBuilder fileList = new StringBuilder();
+			fileList.append("[fileList]");
+			for (int i = 0; i < orderList.length; i++) {
+				fileList.append("/"+orderList[i]);
+			}
+			pu_manager.getWriteStream().writeUTF(fileList.toString());
+			pu_manager.getWriteStream().flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}// PUMainController
 
 	@Override
@@ -133,7 +153,7 @@ public class PUMainController extends WindowAdapter implements ActionListener, R
 
 	@Override
 	public void run() {
-		for(int i=0; ; i++) {
+		for (int i = 0;; i++) {
 			if (threadFlag) {
 				break;
 			}
@@ -386,6 +406,30 @@ public class PUMainController extends WindowAdapter implements ActionListener, R
 		// int restTime=minutesTime(timeString);//520
 		jlRestTime.setText(hourTime(String.valueOf(RestTime)));
 	}
+
+	private String[] orderImageList() {
+		String[] fileList = null;
+		String path1 = System.getProperty("user.dir");
+		String path2 = "/src/kr/co/sist/pcbang/manager/product/img/";
+		// String path="F:/dev/workspace/javase_teamprj2/src/img/";
+
+		File dir = new File(path1 + path2);
+		// s_가 붙은 파일명만 배열에
+		List<String> list = new ArrayList<String>();
+
+		for (String f_name : dir.list()) {
+			if (f_name.startsWith("s_")) {
+				list.add(f_name);
+
+			} // end if
+		} // end for
+
+		fileList = new String[list.size()];
+		list.toArray(fileList);
+
+		// System.out.println(Arrays.toString(fileList));
+		return fileList;
+	}// orderImageList
 
 	public PUManager getPu_manager() {
 		return pu_manager;

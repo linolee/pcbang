@@ -6,15 +6,19 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import kr.co.sist.pcbang.manager.login.PCRoomManagerRun;
 import kr.co.sist.pcbang.manager.order.PMOrderDAO;
 import kr.co.sist.pcbang.manager.seat.PMSeatController;
 import kr.co.sist.pcbang.manager.seat.PMSeatVO;
@@ -122,11 +126,77 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 			case "[update time]":
 				updateOrder(temp.substring(temp.indexOf("]") + 1));
 				break;
+			case "[fileList]":// 클라이언트에서 파일리스트가 오면
+				// 파일리스트 문자열을 배열로 쪼개서
+				List<String> clientFileList = recieveClientFileList(temp.substring(temp.indexOf("]") + 2));
+				// 가지고 있는 파일 문자열과 비교
+				for (int i = 0; i < PCRoomManagerRun.PrdImgList.size(); i++) {
+					System.out.println(PCRoomManagerRun.PrdImgList.get(i)+"있는파일");
+					if (clientFileList.contains(PCRoomManagerRun.PrdImgList.get(i))) {
+						clientFileList.remove("s_" + PCRoomManagerRun.PrdImgList.get(i));
+					}
+				}
+				
+				for (Iterator iterator = clientFileList.iterator(); iterator.hasNext();) {
+					System.out.println((String) iterator.next());
+					System.out.println("없는파일");
+//					fileSend(fname, dos);
+				}
+				// 클라이언트에 없는 파일 리스트는 보내준다.
+				break;
 //			default:
 //				System.out.println("알 수 없는 형식");
 //				break;
-			}
+			}//end switch
+		}//end while
+	}
+
+	private void fileSend(String fname, DataOutputStream dos) throws IOException {
+
+		FileInputStream fis = null;
+
+		try {
+			int fileData = 0;
+
+			String path = System.getProperty("user.dir");
+			String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\";
+			String abspath = path + filepath;
+
+			fis = new FileInputStream(abspath + fname);
+			byte[] readData = new byte[512];
+
+			int fileLen = 0;
+			while ((fileLen = fis.read(readData)) != -1) {
+				fileData++;
+			} // end while
+
+			fis.close();
+			dos.writeInt(fileData);
+			dos.flush();
+
+			dos.writeUTF(fname);// writeUTF
+
+			fis = new FileInputStream(abspath + fname);
+			while ((fileLen = fis.read(readData)) != -1) {// 서버에서 전송한 파일조각을 읽어들여
+				dos.write(readData, 0, fileLen);// 생성한 파일로 기록
+			} // end while
+			dos.flush();
+			System.out.println("결과 "+	dis.readUTF());
+		} finally {
+			if (fis != null) {
+				fis.close();
+			} // end if
+		} // end finally
+
+	}// fileSend
+	
+	private List<String> recieveClientFileList(String fileList) {
+		List<String> clientFileList = new ArrayList<>();
+		String[] clientFile = fileList.split("/");
+		for (int i = 0; i < clientFile.length; i++) {
+			clientFileList.add(clientFile[i]);
 		}
+		return clientFileList;
 	}
 
 	private void writeStream(String info) throws IOException {
@@ -167,11 +237,10 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 			}
 		}
 	}
-	
+
 	private void updateOrder(String id) throws IOException {// 해당 pc에 종료명령을 내리는 메소드
-		int seatNum=0;
-		
-		
+		int seatNum = 0;
+
 		PMSeatVO[][] seat = pmsc.getSeat();// 현재 좌석 중에서
 		for (int i = 0; i < seat.length; i++) {
 			for (int j = 0; j < seat[i].length; j++) {
@@ -180,16 +249,16 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 				}
 			}
 		}
-		
-		if(seatNum != 0) {
+
+		if (seatNum != 0) {
 			for (Iterator<PMClient> iterator = clientSocketList.iterator(); iterator.hasNext();) {// clientSocketList에서
 				PMClient pmClient = (PMClient) iterator.next();
-				if (pmClient.getSeatNum()==seatNum) {// 해당 ip를 찾아서
+				if (pmClient.getSeatNum() == seatNum) {// 해당 ip를 찾아서
 					pmClient.getDos().writeUTF("[update time]");// 로그아웃 명령을 보낸다.
 					pmClient.getDos().flush();
-				}//end if
-			}//end for
-		}//end if
+				} // end if
+			} // end for
+		} // end if
 	}
 
 	private void dropClient() {
@@ -244,7 +313,8 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 			if (JOptionPane.showConfirmDialog(mv, "해당 사용자의 주문이 모두 완료되었습니까? 해당 사용자의 모든 주문이 완료처리됩니다!", "확인",
 					JOptionPane.WARNING_MESSAGE) == JOptionPane.OK_OPTION) {
 				try {
-					orderDone(seatNum);//좌석번호에 해당하는 모든 주문의 STATUS를 'Y'로 변경하고 좌석번호에 해당하는 PC_STATUS의 ORDER_STATUS를 'N'으로 변경
+					orderDone(seatNum);// 좌석번호에 해당하는 모든 주문의 STATUS를 'Y'로 변경하고 좌석번호에 해당하는 PC_STATUS의 ORDER_STATUS를 'N'으로
+										// 변경
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -254,10 +324,10 @@ public class PMClient extends WindowAdapter implements Runnable, ActionListener 
 		}
 	}
 
-	private int orderDone(int seatNum) throws SQLException{
-		int cnt = pmm_dao.orderDone(seatNum);//DB자료를 갱신하고
+	private int orderDone(int seatNum) throws SQLException {
+		int cnt = pmm_dao.orderDone(seatNum);// DB자료를 갱신하고
 		pmsc.getPmsv().getPmov().getPmoc().setOrder();
-		pmsc.getPmsv().getPmov().getPmoc().setOrderComplete();//주문테이블을 갱신
+		pmsc.getPmsv().getPmov().getPmoc().setOrderComplete();// 주문테이블을 갱신
 		return cnt;
 	}
 
