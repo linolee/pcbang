@@ -68,10 +68,10 @@ public class PMUserController implements ActionListener, MouseListener {
 			}
 			
 			if(listUser.isEmpty()) {
-				JOptionPane.showMessageDialog(uv, "조회된 값이 없습니다");
+				JOptionPane.showMessageDialog(uv, "조회된 값이 없습니다", "Message", JOptionPane.ERROR_MESSAGE);
 			}
 		} catch(SQLException se) {
-			JOptionPane.showMessageDialog(uv,  "아이디 혹은 이름을 입력해주세요");
+			JOptionPane.showMessageDialog(uv,  "아이디 혹은 이름을 입력해주세요", "Message", JOptionPane.ERROR_MESSAGE);
 			// se.printStackTrace();
 		}
 	}
@@ -113,7 +113,7 @@ public class PMUserController implements ActionListener, MouseListener {
 			// 아이디, 이름이 빈칸이면
 			if("".equals(id)&&"".equals(name)) {
 				// 내용입력 메세지창 출력
-				JOptionPane.showMessageDialog(uv, "아이디 혹은 이름을 입력해주세요");
+				JOptionPane.showMessageDialog(uv, "아이디 혹은 이름을 입력해주세요", "Message", JOptionPane.ERROR_MESSAGE);
 			} else {
 			// 유저 조회
 			selectUser();

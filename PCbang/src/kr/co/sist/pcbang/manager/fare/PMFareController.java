@@ -35,7 +35,7 @@ public class PMFareController implements ActionListener {
 		} 
 		
 		} catch(NumberFormatException nfe) {
-			JOptionPane.showMessageDialog(fv,  "입력값을 확인해주세요");
+			JOptionPane.showMessageDialog(fv,  "입력값을 확인해주세요", "Message", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
