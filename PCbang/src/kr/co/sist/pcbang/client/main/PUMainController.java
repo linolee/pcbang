@@ -31,6 +31,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	private int chargePrice;
 	private int RestTime;
 	private Thread threadOrdering;
+	private boolean threadFlag;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	private String id;
@@ -44,6 +45,7 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 		this.pumv=pumv;
 		pu_manager = new PUManager(this);
 		pum_dao=PUMainDAO.getInstance();
+		threadFlag = false;
 		
 		
 		try {
@@ -145,6 +147,9 @@ public class PUMainController extends WindowAdapter implements ActionListener,Ru
 	@Override
 	public void run() {
 		for(int i=0; ; i++) {
+			if (threadFlag) {
+				break;
+			}
 			try {
 				// 사용시간을 가져와서 +1
 				JLabel jlUseTime=pumv.getJlUseTime();//00:00
