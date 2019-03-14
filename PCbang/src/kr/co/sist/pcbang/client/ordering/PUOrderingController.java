@@ -67,6 +67,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			String[] fileNames=orderImageList();//클라이언트가 가진 이미지를 체크하여
 			orderImageSend(fileNames);//서버로 보내 없는 이미지를 받은 후  
 		}catch (IOException e) {
+			JOptionPane.showMessageDialog(puov, "이미지를 받을수 없습니다.");
 			e.printStackTrace();
 		}//end catch
 
@@ -439,7 +440,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		String path2="/src/kr/co/sist/pcbang/manager/product/img1/";
 		
 		try {
-			socket=new Socket("211.63.89.152", 19700);
+			socket=new Socket("211.63.89.152", 63979);
 			dos=new DataOutputStream(socket.getOutputStream());
 			dos.writeInt(fileNames.length);
 			
