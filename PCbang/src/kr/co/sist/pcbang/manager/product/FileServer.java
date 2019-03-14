@@ -9,9 +9,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.JOptionPane;
-
 import kr.co.sist.pcbang.manager.login.PCRoomManagerRun;
 
 public class FileServer extends Thread {
@@ -19,7 +17,6 @@ public class FileServer extends Thread {
 	@Override
 	public void run() {
 		ServerSocket server = null;
-
 		try {
 			try {
 				server = new ServerSocket(63979);
