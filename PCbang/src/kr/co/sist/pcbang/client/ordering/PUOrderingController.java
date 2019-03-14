@@ -412,11 +412,9 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		File dir=new File(path1+path2);
 		//s_가 붙은 파일명만 배열에
 		List<String> list=new ArrayList<String>();
-		
 		for(String f_name: dir.list()) {
 			if(f_name.startsWith("s_")) {
 				list.add(f_name);
-				
 			}//end if
 		}//end for
 		
@@ -462,14 +460,15 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 				
 				//전달받을 파일 조각의 갯수
 				fileSize=dis.readInt();
-				System.out.println("---1"+fileSize);
+//				System.out.println("---1"+fileSize);
 				//파일 명 받기
 				fileName=dis.readUTF();
-				System.out.println("====2==="+fileName);
+//				System.out.println("====2==="+fileName);
+//				System.out.println(path1+path2+fileName);
 				fos=new FileOutputStream(path1+path2+fileName);
+//				System.out.println("===="+path1+path2+fileName);
 				
 				byte[] readData=new byte[512];
-				
 				while(fileSize>0) {
 					fileLen=dis.read(readData);//서버에서 전송한 파일조각을 읽어들여
 					fos.write(readData, 0, fileLen);//생성한 파일로 기록
