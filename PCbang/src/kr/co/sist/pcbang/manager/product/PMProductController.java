@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.ServerSocket;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -30,6 +31,7 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 		setPrd();
 	}// PMProductController
 
+	
 	/**
 	 * JTable에 DB에서 조회한 상품 정보를 보여준다.
 	 */
@@ -185,5 +187,7 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 	@Override
 	public void mouseExited(MouseEvent e) {
 	}
+
+	
 	
 }// class
