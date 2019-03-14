@@ -38,12 +38,11 @@ public class PMUserDetailController extends WindowAdapter implements ActionListe
 				uc.selectUser();
 			}
 		}catch (SQLException e) {
-			JOptionPane.showMessageDialog(udv, "스미마셍");
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(udv, "입력값을 확인해주세요");
 		} catch(NullPointerException ne) {
 			JOptionPane.showMessageDialog(udv, "빈칸을 입력할 수 없습니다");
 		} catch(NumberFormatException nfe) {
-		JOptionPane.showMessageDialog(udv, "빈칸을 입력할 수 없습니다");
+		JOptionPane.showMessageDialog(udv, "입력값을 확인해주세요");
 	} 
 		
 	}
