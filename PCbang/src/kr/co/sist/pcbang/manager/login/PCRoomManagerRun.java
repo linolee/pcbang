@@ -27,9 +27,9 @@ public class PCRoomManagerRun {
 	}//»ý¼ºÀÚ
 	
 	public static void main(String[] args) {
-		new PCRoomManagerRun();
-		FileServer fs = new FileServer();
-		fs.start();
+//		new PCRoomManagerRun();
+//		FileServer fs = new FileServer();
+		//fs.start();
 		new PMLoginView();
 	}//main
 

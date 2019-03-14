@@ -63,12 +63,12 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		this.seatNum=seatNum;
 		pu_manager = pumc.getPu_manager();
 		
-		try {
-			String[] fileNames=orderImageList();//클라이언트가 가진 이미지를 체크하여
-			orderImageSend(fileNames);//서버로 보내 없는 이미지를 받은 후  
-		}catch (IOException e) {
-			e.printStackTrace();
-		}//end catch
+//		try {
+//			String[] fileNames=orderImageList();//클라이언트가 가진 이미지를 체크하여
+//			orderImageSend(fileNames);//서버로 보내 없는 이미지를 받은 후  
+//		}catch (IOException e) {
+//			e.printStackTrace();
+//		}//end catch
 
 		setProduct();//JTable을 조회 갱신
 		setBestProduct();//bestMenu
@@ -439,7 +439,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		String path2="/src/kr/co/sist/pcbang/manager/product/img1/";
 		
 		try {
-			socket=new Socket("211.63.89.152", 19700);
+			socket=new Socket("211.63.89.130", 19700);
 			dos=new DataOutputStream(socket.getOutputStream());
 			dos.writeInt(fileNames.length);
 			
