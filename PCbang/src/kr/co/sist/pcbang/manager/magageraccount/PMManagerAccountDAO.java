@@ -77,40 +77,6 @@ public class PMManagerAccountDAO {
 		return list;	
 	} // searchAccount
 	
-	/*계정추가*/
-	public void insertAccount(PMManagerAddAccountVO pmmaaVO) throws SQLException {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-
-		try {
-			// 1.
-			// 2.
-			con = getConn();
-			// 3.
-			StringBuilder insertAccount = new StringBuilder();
-			
-			insertAccount.append("insert into pc_admin").append("(admin_Id,	admin_Pass,	admin_Name)")
-					.append("values(?,?,?  )");
-
-			pstmt = con.prepareStatement(insertAccount.toString());
-			// 4.바인드 변수 값넣기
-			pstmt.setString(1, pmmaaVO.getAdminId());
-			pstmt.setString(2, pmmaaVO.getAdminPass());
-			pstmt.setString(3, pmmaaVO.getAdminName());
-			// 5.
-			pstmt.executeUpdate();
-		} finally {
-			// 6.
-			if (pstmt != null) {
-				pstmt.close();
-			} // end if
-			if (con != null) {
-				con.close();
-			} // end if
-		} // end finally
-	}// insertAccount
-	
-	
 	/*계정삭제*/
 	public boolean deleteAccount(String adminId) throws SQLException {
 		boolean flag=false;
