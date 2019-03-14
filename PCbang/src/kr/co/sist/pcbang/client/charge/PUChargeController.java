@@ -26,9 +26,9 @@ public class PUChargeController extends WindowAdapter implements ActionListener 
 	public  void addTime(int seatNum, int time, int price) {
 		if(pucv.isMember()) {
 			try {
-				MemberPriceUpdateVO mpuvo=new MemberPriceUpdateVO(puc_dao.selectMemberId(seatNum));
+				MemberPriceUpdateVO mpuvo=new MemberPriceUpdateVO(puc_dao.selectMemberId(seatNum), time, price);
 				MemberMileageVO mmvo=new MemberMileageVO(price, puc_dao.selectMemberId(seatNum));
-				puc_dao.memberUpdate(mpuvo, time, price);
+				puc_dao.memberUpdate(mpuvo);
 				pumc.setRestTime(pumc.getRestTime()+time);
 				this.chargeLog=this.chargeLog+price;
 				
@@ -44,8 +44,8 @@ public class PUChargeController extends WindowAdapter implements ActionListener 
 		}//end if
 		if(!pucv.isMember()) {
 			try {
-				GuestPriceUpdateVO gpuvo=new GuestPriceUpdateVO(puc_dao.selectGuestNum(seatNum));
-				puc_dao.guestUpdate(gpuvo, time, price);
+				GuestPriceUpdateVO gpuvo=new GuestPriceUpdateVO(puc_dao.selectGuestNum(seatNum), time, price);
+				puc_dao.guestUpdate(gpuvo);
 				this.chargeLog=this.chargeLog+price;
 				pumc.setRestTime(pumc.getRestTime()+time);
 				JOptionPane.showMessageDialog(pucv, "시간이 충전되었습니다~");
