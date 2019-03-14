@@ -347,6 +347,20 @@ public class PUMainController extends WindowAdapter implements ActionListener, R
 //					System.exit(0);
 				} else if (exitFlag == JOptionPane.NO_OPTION) {
 					callcharge(restTime);
+				} else if (exitFlag == JOptionPane.CANCEL_OPTION) {
+					callcharge(restTime);
+				} // end else
+			}else if (flag == JOptionPane.CANCEL_OPTION) {
+				// return;
+				int exitFlag = JOptionPane.showConfirmDialog(pumv, "충전을 하시지 않으면 사용이 종료됩니다.");
+				if (exitFlag == JOptionPane.OK_OPTION) {
+					logout();
+//					pumv.dispose();
+//					System.exit(0);
+				} else if (exitFlag == JOptionPane.NO_OPTION) {
+					callcharge(restTime);
+				} else if (exitFlag == JOptionPane.CANCEL_OPTION) {
+					callcharge(restTime);
 				} // end else
 			} // end else
 		} // end if
