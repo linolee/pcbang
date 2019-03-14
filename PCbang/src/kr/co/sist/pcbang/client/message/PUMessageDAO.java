@@ -65,7 +65,6 @@ public class PUMessageDAO {
 			if(pstmt != null) {pstmt.close();}
 			if(con != null) {con.close();}
 		}
-
 		return flag;
 	}
 	
