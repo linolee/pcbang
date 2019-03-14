@@ -18,8 +18,9 @@ public class PMSeatView extends JPanel {
 	private PMMainView pmmv;
 	private PMSeatController pmsc;
 
-	public PMSeatView(PMMainView pmmv) {
+	public PMSeatView(PMMainView pmmv, PMOrderView pmov) {
 		this.pmmv = pmmv;
+		this.pmov = pmov;
 		btnSet = new JButton("ÁÂ¼®¼³Á¤");
 
 		btnSeat = new JButton[10][10];
