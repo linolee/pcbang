@@ -38,7 +38,7 @@ public class PMUserDetailController extends WindowAdapter implements ActionListe
 				JOptionPane.showMessageDialog(udv, "잘못된 이메일 형식입니다");
 				return;
 			}
-			if(udv.getJtfTel().getText().length()<=10 ) {
+			if(chkPhone(udv.getJtfTel().getText()) ) {
 				JOptionPane.showMessageDialog(udv, "잘못된 전화번호 형식입니다");
 				return;
 			}
@@ -67,6 +67,17 @@ public class PMUserDetailController extends WindowAdapter implements ActionListe
 	} 
 		
 	}
+	
+	
+		public boolean chkPhone(String phone) {
+		boolean flag=false;
+		if(!(phone.charAt(3)=='-') || !(phone.charAt(8)=='-') || !(phone.length()==13) ) {
+			flag=true;
+		}
+		return flag;
+	}
+	
+	
 
 	@Override
 	public void windowClosing(WindowEvent e) {
