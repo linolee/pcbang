@@ -31,7 +31,7 @@ public class PMFareController implements ActionListener {
 		f_dao.updatePrice(fvo);
 		} // for
 		if(f_dao.updatePrice(fvo)) {
-			JOptionPane.showMessageDialog(fv, "수정완료");
+			JOptionPane.showMessageDialog(fv, "요금제가 변경되었습니다");
 		} 
 		
 		} catch(NumberFormatException nfe) {
