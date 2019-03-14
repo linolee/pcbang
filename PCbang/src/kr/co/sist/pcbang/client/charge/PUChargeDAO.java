@@ -101,9 +101,9 @@ public class PUChargeDAO {
 			.append(" where member_id=?");
 			
 			pstmt=con.prepareStatement(check.toString());
-			pstmt.setString(1, mpuvo.getId());
-			pstmt.setInt(2, mpuvo.getTime());
-			pstmt.setInt(3, mpuvo.getPrice());
+			pstmt.setInt(1, mpuvo.getTime());
+			pstmt.setInt(2, mpuvo.getPrice());
+			pstmt.setString(3, mpuvo.getId());
 			pstmt.executeUpdate();
 			//4.
 			//5.
@@ -131,9 +131,9 @@ public class PUChargeDAO {
 			.append(" where card_num=?");
 			
 			pstmt=con.prepareStatement(check.toString());
-			pstmt.setInt(1, gpuvo.getCardNum());
-			pstmt.setInt(2, gpuvo.getTime());
-			pstmt.setInt(3, gpuvo.getPrice());
+			pstmt.setInt(1, gpuvo.getTime());
+			pstmt.setInt(2, gpuvo.getPrice());
+			pstmt.setInt(3, gpuvo.getCardNum());
 			pstmt.executeUpdate();
 			//4.
 			//5.
