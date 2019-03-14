@@ -33,37 +33,44 @@ public class PMUserDetailController extends WindowAdapter implements ActionListe
 		
 			String birth = udv.getJtfBirth().getText();
 			boolean chkBirth = Pattern.matches("^[0-9]*$", birth);
+			
+			String phone1 = udv.getJtfTel().getText().substring(0, 2);
+			String phone2 = udv.getJtfTel().getText().substring(4, 7);
+			String phone3 = udv.getJtfTel().getText().substring(9, 13);
+			boolean chkPhone1 = Pattern.matches("^[0-9]*$", phone1);
+			boolean chkPhone2 = Pattern.matches("^[0-9]*$", phone2);
+			boolean chkPhone3 = Pattern.matches("^[0-9]*$", phone3);
 
-			if(!udv.getJtfEmail().getText().contains("@")) {
-				JOptionPane.showMessageDialog(udv, "ì˜ëª»ëœ ì´ë©”ì¼ í˜•ì‹ì…ë‹ˆë‹¤");
+			if(!udv.getJtfEmail().getText().contains("@")||!udv.getJtfEmail().getText().contains(".")) {
+				JOptionPane.showMessageDialog(udv, "Àß¸øµÈ ÀÌ¸ŞÀÏ Çü½ÄÀÔ´Ï´Ù");
 				return;
 			}
-			if(chkPhone(udv.getJtfTel().getText()) ) {
-				JOptionPane.showMessageDialog(udv, "ì˜ëª»ëœ ì „í™”ë²ˆí˜¸ í˜•ì‹ì…ë‹ˆë‹¤");
+			if(chkPhone(udv.getJtfTel().getText())|| !chkPhone1 || !chkPhone2 || !chkPhone3 ) {
+				JOptionPane.showMessageDialog(udv, "Àß¸øµÈ ÀüÈ­¹øÈ£ Çü½ÄÀÔ´Ï´Ù");
 				return;
 			}
 			if(!chkBirth || !(birth.length()==8) ) {
-				JOptionPane.showMessageDialog(udv, "ì˜ëª»ëœ ìƒë…„ì›”ì¼ í˜•ì‹ì…ë‹ˆë‹¤");
+				JOptionPane.showMessageDialog(udv, "Àß¸øµÈ »ı³â¿ùÀÏ Çü½ÄÀÔ´Ï´Ù");
 				return;
 			}
 			if(Integer.parseInt(udv.getJtfLeftTime().getText())>=10000) {
-				JOptionPane.showMessageDialog(udv, "ì”ì—¬ì‹œê°„ì€ 0~9999ì…ë‹ˆë‹¤");
+				JOptionPane.showMessageDialog(udv, "ÀÜ¿©½Ã°£Àº 0~9999ÀÔ´Ï´Ù");
 				return;
 				
 			}
 		
 			if(u_dao.updateMemberData(upvo)) {
-				JOptionPane.showMessageDialog(udv, "íšŒì›ì •ë³´ê°€ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤");
+				JOptionPane.showMessageDialog(udv, "È¸¿øÁ¤º¸°¡ º¯°æµÇ¾ú½À´Ï´Ù");
 				udv.dispose();
 				uc.selectUser();
 			}
 		}catch (SQLException e) {
-			JOptionPane.showMessageDialog(udv, "ì…ë ¥ê°’ì„ í™•ì¸í•´ì£¼ì„¸ìš”");
+			JOptionPane.showMessageDialog(udv, "ÀÔ·Â°ªÀ» È®ÀÎÇØÁÖ¼¼¿ä");
 		} catch(NullPointerException ne) {
-			JOptionPane.showMessageDialog(udv, "ë¹ˆì¹¸ì„ ì…ë ¥í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤");
+			JOptionPane.showMessageDialog(udv, "ºóÄ­À» ÀÔ·ÂÇÒ ¼ö ¾ø½À´Ï´Ù");
 		} 
 		catch(NumberFormatException nfe) {
-		JOptionPane.showMessageDialog(udv, "ì…ë ¥ê°’ì„ í™•ì¸í•´ì£¼ì„¸ìš”");
+		JOptionPane.showMessageDialog(udv, "ÀÔ·Â°ªÀ» È®ÀÎÇØÁÖ¼¼¿ä");
 	} 
 		
 	}
