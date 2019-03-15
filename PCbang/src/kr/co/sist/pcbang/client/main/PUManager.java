@@ -49,7 +49,7 @@ public class PUManager extends Thread {
 	public void connectToServer() throws UnknownHostException, IOException {
 		try {
 			if (client == null) {
-				String serverIp = "211.63.89.152"; // 고정 서버 IP
+				String serverIp = "211.63.89.130"; // 고정 서버 IP
 				client = new Socket(serverIp, 55000); // 입력한 ip address의 컴퓨터에 연결.
 
 				readStream = new DataInputStream(client.getInputStream());
