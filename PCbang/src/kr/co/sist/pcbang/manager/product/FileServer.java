@@ -9,21 +9,19 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.JOptionPane;
-
 import kr.co.sist.pcbang.manager.login.PCRoomManagerRun;
 
 public class FileServer extends Thread {
-	DataInputStream dis = null;
+	private DataInputStream dis;
 	@Override
 	public void run() {
 		ServerSocket server = null;
-
 		try {
 			try {
-				server = new ServerSocket(19700);
+				server = new ServerSocket(63979);
 				Socket client = null;
+				DataInputStream dis = null;
 				int cnt = 0;
 				String[] fileNames = null;
 				String[] serverFileNames = null;
@@ -80,16 +78,13 @@ public class FileServer extends Thread {
 //						} catch (InterruptedException ie) {
 //							ie.printStackTrace();
 //						} // end catch
-
 					} // end for
-//					dos.flush();
 				} // end while
 
 			} finally {
-				if (server != null) {
-					server.close();
-				} // end if
-			} // end finally
+				/*if (server != null) {server.close();} // end if*/
+				/*if(dis!=null) {dis.close();}//end if
+*/			} // end finally
 		} catch (IOException ie) {
 			JOptionPane.showMessageDialog(null, "파일 보내기 실패");
 			ie.printStackTrace();
@@ -129,14 +124,13 @@ public class FileServer extends Thread {
 			dos.flush();
 			System.out.println("결과 "+	dis.readUTF());
 		} finally {
-			if (fis != null) {
-				fis.close();
-			} // end if
+			if (fis != null) {fis.close();} // end if
 		} // end finally
 
 	}// fileSend
 
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		new FileServer().start(); // 인스턴스 +실행
 	}// main
-}// class
+*/
+	}// class

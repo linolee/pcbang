@@ -10,6 +10,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -18,6 +20,7 @@ import javax.swing.JTextField;
 
 import kr.co.sist.pcbang.manager.product.PMProductController;
 import kr.co.sist.pcbang.manager.product.PMProductDAO;
+import kr.co.sist.pcbang.manager.product.PMProductVO;
 
 public class PMProductDetailController extends WindowAdapter implements ActionListener {
 
@@ -137,7 +140,7 @@ public class PMProductDetailController extends WindowAdapter implements ActionLi
 			tfPrice.setText("");
 			tfPrice.requestFocus();
 		} // end if
-
+		
 		int price = 0;
 		try {
 			price = Integer.parseInt(tfPrice.getText().trim());

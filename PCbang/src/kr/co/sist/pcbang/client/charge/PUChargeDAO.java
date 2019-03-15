@@ -84,7 +84,7 @@ public class PUChargeDAO {
 		return member;
 	}//checkMember
 	
-	public void memberUpdate(MemberPriceUpdateVO mpuvo, int time, int price) throws SQLException {
+	public void memberUpdate(MemberPriceUpdateVO mpuvo) throws SQLException {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		
@@ -96,12 +96,14 @@ public class PUChargeDAO {
 			StringBuilder check=new StringBuilder();
 			
 			check.append("update pc_member ")
-			.append(" set member_rest_time=(member_rest_time+").append(time)
-			.append("),").append("member_total_price=(member_total_price+").append(price).append(")")
+			.append(" set member_rest_time=(member_rest_time+?")
+			.append("),").append("member_total_price=(member_total_price+?)")
 			.append(" where member_id=?");
 			
 			pstmt=con.prepareStatement(check.toString());
-			pstmt.setString(1, mpuvo.getId());
+			pstmt.setInt(1, mpuvo.getTime());
+			pstmt.setInt(2, mpuvo.getPrice());
+			pstmt.setString(3, mpuvo.getId());
 			pstmt.executeUpdate();
 			//4.
 			//5.
@@ -112,7 +114,7 @@ public class PUChargeDAO {
 		}//end finally
 	}//checkMember
 	
-	public void guestUpdate(GuestPriceUpdateVO gpuvo, int time, int price) throws SQLException {
+	public void guestUpdate(GuestPriceUpdateVO gpuvo) throws SQLException {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		
@@ -124,12 +126,14 @@ public class PUChargeDAO {
 			StringBuilder check=new StringBuilder();
 			
 			check.append("update pc_guest ")
-			.append(" set guest_total_time=(guest_total_time+").append(time)
-			.append("),").append("guest_total_price=(guest_total_price+").append(price).append(")")
+			.append(" set guest_total_time=(guest_total_time+?")
+			.append("),").append("guest_total_price=(guest_total_price+?)")
 			.append(" where card_num=?");
 			
 			pstmt=con.prepareStatement(check.toString());
-			pstmt.setInt(1, gpuvo.getCardNum());
+			pstmt.setInt(1, gpuvo.getTime());
+			pstmt.setInt(2, gpuvo.getPrice());
+			pstmt.setInt(3, gpuvo.getCardNum());
 			pstmt.executeUpdate();
 			//4.
 			//5.

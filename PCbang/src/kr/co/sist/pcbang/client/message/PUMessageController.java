@@ -16,21 +16,18 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 	private PUMainController pumc;
 	private PUManager pu_manager;
 	private PUMessageDAO pum_dao;
-//	private Socket client;
-//	private DataInputStream readStream;
-	private String id;
 
 	public PUMessageController(PUMessageView pumv, PUMainController pumc, PUManager pu_manager) {
 		this.pumv = pumv;
 		this.pumc = pumc;
 		this.pu_manager = pu_manager;
 		pum_dao = PUMessageDAO.getInstance();
-	}
+	}//PUMessageController
 
 	@Override
 	public void windowClosing(WindowEvent we) {
 		pumv.setVisible(false);
-	}
+	}//windowClosing
 
 	public void sendMsg() throws IOException {
 		// 작성된 메세지를 가져와서
@@ -38,11 +35,10 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 
 		if (!sendMsg.equals("")) {//공백이 입력되지 않았을 때
 			try {
-				
 				pum_dao.chgMsgStatusNtoY(InetAddress.getLocalHost().getHostAddress());//DAO 사용해서 PC_Status의 Message_Status를 변경
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}
+			}//end catch
 			// 스트림에 기록하고
 			pu_manager.getWriteStream().writeUTF("[message]" + sendMsg);
 			// 스트림의 내용을 목적지로 분출
@@ -52,20 +48,17 @@ public class PUMessageController extends WindowAdapter implements ActionListener
 			// T.F의 내용을 삭제한다.
 			pumv.getJtfChat().setText("");
 			pumv.getJspChat().getVerticalScrollBar().setValue(pumv.getJspChat().getVerticalScrollBar().getMaximum());
-			
 		}else {//공백이 입력됐을 때
 			pumv.getJtfChat().setText("");// T.F의 내용을 삭제한다.
-		}
+		}//end else
 	}// sendMsg
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		try {
 			sendMsg();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}//end catch
 	}// actionPerformed
-
 }// class
