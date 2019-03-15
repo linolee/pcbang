@@ -20,7 +20,7 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 	private PMProductView pmpv;
 	private PMProductDAO pmpdao;
 	private Thread threadPrd;
-	
+
 	public static final int DBL_CLICK = 2;
 
 	public PMProductController(PMProductView pmpv) {
@@ -46,8 +46,9 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 
 			String path = System.getProperty("user.dir");
 			String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\";
-			String imgPath = path+filepath+"s_";
-			
+			// String imgPath = path+filepath+"s_";
+			// String imgPath = getClass().getResource("char_f" + i + ".png")+"s_";
+
 			Object[] rowData = null;
 			for (int i = 0; i < listproduct.size(); i++) {
 				pmpvo = listproduct.get(i);
@@ -56,11 +57,10 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 				rowData = new Object[6];
 				rowData[0] = pmpvo.getMenuCode();
 				rowData[1] = pmpvo.getMenuName();
-				rowData[2] = new ImageIcon(imgPath + pmpvo.getImg());
+				rowData[2] = new ImageIcon(getClass().getResource("s_" + pmpvo.getImg()));
 				rowData[3] = new Integer(pmpvo.getPrice());
 				rowData[4] = new Integer(pmpvo.getQuan());
 				rowData[5] = new Integer(pmpvo.getTotal());
-
 				// DTM에 추가
 				dtmPrd.addRow(rowData);
 			} // end for
@@ -97,11 +97,11 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 		try {
 			List<PMSchProductVO> list_pmspvo = pmpdao.searchPrd(category.toString(), menuName);
 			PMSchProductVO pmspvo = null;
-			
+
 			String path = System.getProperty("user.dir");
-			String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\"; 
-			String imgPath = path+filepath+"s_";
-			
+			String filepath = "\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img\\";
+			String imgPath = path + filepath + "s_";
+
 			Object[] rowData = null;
 			for (int i = 0; i < list_pmspvo.size(); i++) {
 				pmspvo = list_pmspvo.get(i);
@@ -131,9 +131,9 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 			new PMProductAddView(pmpv, this);
 		} // end if
 
-		if (ae.getSource() == pmpv.getJbtSchPrd()||ae.getSource()==pmpv.getJtfPrdName()) {// 조회 버튼
+		if (ae.getSource() == pmpv.getJbtSchPrd() || ae.getSource() == pmpv.getJtfPrdName()) {// 조회 버튼
 			searchPrd();
-			pmpv.getJtfPrdName().requestFocus();//커서 위치
+			pmpv.getJtfPrdName().requestFocus();// 커서 위치
 		}
 		if (ae.getSource() == pmpv.getJbtRstPrd()) {// 초기화 버튼
 			reset();
@@ -145,19 +145,19 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 	@Override
 	public void mouseClicked(MouseEvent me) {
 		if (me.getSource() == pmpv.getJbtSchPrd()) {
-				// 상품현황을 계속 조회하여 실시간으로 실시간으로 DB를 조회하여 갱신
-				if (threadPrd == null) { // 이걸쓰지않으면 계속해서 객체가 만들어짐
-					threadPrd = new Thread();
-					threadPrd.start();
-				} // end if
-					// 상품 조회 (쓰레드로 돌려야 함)
-				searchPrd();
+			// 상품현황을 계속 조회하여 실시간으로 실시간으로 DB를 조회하여 갱신
+			if (threadPrd == null) { // 이걸쓰지않으면 계속해서 객체가 만들어짐
+				threadPrd = new Thread();
+				threadPrd.start();
+			} // end if
+				// 상품 조회 (쓰레드로 돌려야 함)
+			searchPrd();
 		} // end if
-		
+
 		switch (me.getClickCount()) {
 		case DBL_CLICK:
-			if (me.getSource() == pmpv.getJtMenu()) { //테이블에서 더블클릭
-				//DB테이블을 검색하여 상세정보를 전달한다.
+			if (me.getSource() == pmpv.getJtMenu()) { // 테이블에서 더블클릭
+				// DB테이블을 검색하여 상세정보를 전달한다.
 				JTable jt = pmpv.getJtMenu();
 				try {
 					PMProductDetailVO pmpdvo = pmpdao.selectDetailPrd((String) jt.getValueAt(jt.getSelectedRow(), 0));
@@ -166,8 +166,8 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 					JOptionPane.showMessageDialog(pmpv, "DB에서 문제가 발생하였습니다.");
 					se.printStackTrace();
 				} // end catch
-				} // end if
-			} // end switch
+			} // end if
+		} // end switch
 	}
 
 	@Override
@@ -185,5 +185,5 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 	@Override
 	public void mouseExited(MouseEvent e) {
 	}
-	
+
 }// class
