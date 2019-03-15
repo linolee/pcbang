@@ -17,50 +17,48 @@ public class PMUserDetailController extends WindowAdapter implements ActionListe
 	private PMUserDetailView udv;
 	private PMUserDAO u_dao;
 	private PMUserController uc;
+	private PMUpdateVO upvo;
 	
 	public PMUserDetailController(PMUserDetailView udv) {
 		this.udv = udv;
 		u_dao = PMUserDAO.getInstance();		
 		uc=PMUserController.getInstance();
-	}
-	
-	public void updateUser() {
-		try {
-		PMUpdateVO upvo = null;	
+		
+		
+		upvo = null;	
 		upvo = new PMUpdateVO
 				(udv.getJtfEmail().getText(), udv.getJtfTel().getText(), udv.getJtfBirth().getText(), udv.getJtfId().getText(), 
 						Integer.parseInt(udv.getJtfLeftTime().getText()));
 		
-			String birth = udv.getJtfBirth().getText();
-			boolean chkBirth = Pattern.matches("^[0-9]*$", birth);
-			
-			String phone1 = udv.getJtfTel().getText().substring(0, 2);
-			String phone2 = udv.getJtfTel().getText().substring(4, 7);
-			String phone3 = udv.getJtfTel().getText().substring(9, udv.getJtfTel().getText().length());
-			boolean chkPhone1 = Pattern.matches("^[0-9]*$", phone1);
-			boolean chkPhone2 = Pattern.matches("^[0-9]*$", phone2);
-			boolean chkPhone3 = Pattern.matches("^[0-9]*$", phone3);
+	}
+	
+	public void updateUser() {
+		try {
 
-			if(!udv.getJtfEmail().getText().contains("@")||!udv.getJtfEmail().getText().contains(".")) {
+			String udvEmail=udv.getJtfEmail().getText().trim();
+			String udvTel=udv.getJtfTel().getText().trim();
+			String udvBirth=udv.getJtfBirth().getText().trim();
+			int udvLeftTime=Integer.parseInt(udv.getJtfLeftTime().getText().trim());
+			
+			if(!chkEmail(udvEmail)) {
 				JOptionPane.showMessageDialog(udv, "잘못된 이메일 형식입니다", "Message", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			if(chkPhone(udv.getJtfTel().getText())|| !chkPhone1 || !chkPhone2 || !chkPhone3 ) {
+			if(!chkPhone(udvTel)) {
 				JOptionPane.showMessageDialog(udv, "잘못된 전화번호 형식입니다", "Message", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			if(!chkBirth || !(birth.length()==8) ) {
+			if(!chkBirth(udvBirth) ) {
 				JOptionPane.showMessageDialog(udv, "잘못된 생년월일 형식입니다", "Message", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			if(Integer.parseInt(udv.getJtfLeftTime().getText())>=10000) {
-				JOptionPane.showMessageDialog(udv, "잔여시간은 0~9999입니다", "Message", JOptionPane.ERROR_MESSAGE);
+			if(!chkLeftTime(udvLeftTime)) {
+				JOptionPane.showMessageDialog(udv, "잔여시간은 숫자형식이고 0~9999입니다", "Message", JOptionPane.ERROR_MESSAGE);
 				return;
-				
 			}
 		
 			if(u_dao.updateMemberData(upvo)) {
-				JOptionPane.showMessageDialog(udv, "회원정보가 변경되었습니다", "Message", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(udv, "회원정보가 변경되었습니다", "Message", 1);
 				udv.dispose();
 				uc.selectUser();
 			}
@@ -72,20 +70,57 @@ public class PMUserDetailController extends WindowAdapter implements ActionListe
 		JOptionPane.showMessageDialog(udv, "잘못된 잔여시간 형식입니다", "Message", JOptionPane.ERROR_MESSAGE);
 		
 		} catch(Exception e) {
-			JOptionPane.showMessageDialog(udv, "error");
+			JOptionPane.showMessageDialog(udv, "error", "Message", JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}
 	
-	
 		public boolean chkPhone(String phone) {
-		boolean flag=false;
-		if(!(phone.charAt(3)=='-') || !(phone.charAt(8)=='-') || !(phone.length()==13) ) {
-			flag=true;
-		}
-		return flag;
+			boolean flag=false;
+			boolean flag2=Pattern.matches("^\\d{3}-\\d{3,4}-\\d{4}$", phone);
+			
+			if(flag2) {
+				flag=true;
+			}
+			
+			return flag;
 	}
-
+		
+		public boolean chkBirth(String birth) {
+			boolean flag=false;
+			boolean chkBirth = Pattern.matches("^[0-9]*$", birth.trim());
+			
+			if(chkBirth && birth.length()==8) {
+				flag=true;
+			}
+			
+			return flag;
+		}
+		
+		public boolean chkEmail(String email) {
+			boolean flag=false;
+			
+			boolean chkEmail = Pattern.matches("[\\w\\~\\-\\.]+@[\\w\\~\\-]+(\\.[\\w\\~\\-]+)+", email.trim());
+			
+			if(chkEmail) {
+				flag=true;
+			}
+			
+			return flag;
+		}
+		
+		public boolean chkLeftTime(int leftTime) {
+			boolean flag=false;
+			boolean chkLeftTime=Integer.toString(leftTime).matches("^[0-9]*$");
+			
+			if(chkLeftTime&&leftTime>=0&&leftTime<=9999) {
+				flag=true;
+			}
+			
+			return flag;
+		}
+		
+		
 	@Override
 	public void windowClosing(WindowEvent e) {
 		udv.dispose();
