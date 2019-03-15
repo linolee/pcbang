@@ -63,12 +63,12 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		this.seatNum=seatNum;
 		pu_manager = pumc.getPu_manager();
 		
-		try {
-			String[] fileNames=orderImageList();//클라이언트가 가진 이미지를 체크하여
-			orderImageSend(fileNames);//서버로 보내 없는 이미지를 받은 후  
-		}catch (IOException e) {
-			e.printStackTrace();
-		}//end catch
+//		try {
+//			String[] fileNames=orderImageList();//클라이언트가 가진 이미지를 체크하여
+//			orderImageSend(fileNames);//서버로 보내 없는 이미지를 받은 후  
+//		}catch (IOException e) {
+//			e.printStackTrace();
+//		}//end catch
 
 		setProduct();//JTable을 조회 갱신
 		setBestProduct();//bestMenu
@@ -171,8 +171,8 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 				//System.out.println(jt.getValueAt(0, jt.getSelectedColumn()));
 				
 				try {
-					String img=imgpath.toString().substring(imgpath.toString().indexOf("/")+3);
-					
+					String img=imgpath.toString().substring(imgpath.toString().indexOf("ordering")+11);
+					System.out.println(img);
 					PUOrderVO puovo=puo_dao.selectCode(img.toString());
 					String columninfo=puovo.getProductName()+"\n"+puovo.getProductPrice();
 					for(int i=0;i<ovoList.size(); i++) {
@@ -203,9 +203,11 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	private void setProduct() {
 		try {
 			List<PUOrderVO> listProduct=puo_dao.selectProduct();
-			String path1=System.getProperty("user.dir");
-			String path2="/src/kr/co/sist/pcbang/manager/product/img";
-			File f = new File(path1+path2);
+//			String path1=System.getProperty("user.dir");
+//			String path2="/src/kr/co/sist/pcbang/manager/product/img";
+			
+//			String path=getClass().getResource(this.toString()).toString();
+//			File f = new File(path);
 			//C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img
 			//this.toString()
 			
@@ -219,7 +221,8 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 				puovo=listProduct.get(i);
 				//테이블에 추가할 데이터 생성
 				rowData=new Object[4];
-				rowData[0]=new ImageIcon(f.getCanonicalPath()+"/s_"+puovo.getImg());
+				
+				rowData[0]=new ImageIcon(getClass().getResource("s_"+puovo.getImg()));
 				rowData[1]=puovo.getProductName();
 				rowData[2]=puovo.getProductPrice();
 				rowData[3]=puovo.getProductCode();
@@ -229,8 +232,8 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(puov, "상품 목록을 조회하는 중 문제 발생");
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
 		}//end catch
 	}//setProduct
 	
@@ -239,9 +242,10 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	 */
 	private void setProductCategory(String category) {
 		try {
-			String path1=System.getProperty("user.dir");
-			String path2="/src/kr/co/sist/pcbang/manager/product/img";
-			File f = new File(path1+path2);
+//			String path1=System.getProperty("user.dir");
+//			String path2="/src/kr/co/sist/pcbang/manager/product/img";
+//			String path=getClass().getResource(this.toString()).toString();
+//			File f = new File(path);
 			
 			//File f = new File("C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img");
 			List<PUOrderVO> listProduct=puo_dao.selectProductCategory(category);
@@ -266,7 +270,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 				puovo=listProduct.get(i);
 				//테이블에 추가할 데이터 생성
 				rowData=new Object[4];
-				rowData[0]=new ImageIcon(f.getCanonicalPath()+"/s_"+puovo.getImg());
+				rowData[0]=new ImageIcon(getClass().getResource("s_"+puovo.getImg()));
 				rowData[1]=puovo.getProductName();
 				rowData[2]=puovo.getProductPrice();
 				rowData[3]=puovo.getProductCode();
@@ -276,8 +280,8 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		} catch (SQLException e) {
 			JOptionPane.showMessageDialog(puov, "상품 목록을 조회하는 중 문제 발생");
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
 		}//end catch
 	}//setProduct
 	
@@ -286,9 +290,10 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	 */
 	private void setBestProduct() {
 		try {
-			String path1=System.getProperty("user.dir");
-			String path2="/src/kr/co/sist/pcbang/manager/product/img";
-			File f = new File(path1+path2);
+//			String path1=System.getProperty("user.dir");
+//			String path2="/src/kr/co/sist/pcbang/manager/product/img";
+//			String path=getClass().getResource(this.toString()).toString();
+//			File f = new File(path);
 			//File f = new File("C:/Users/owner/git/pcbang/PCbang/src/kr/co/sist/pcbang/manager/product/img");
 			List<PUOrderVO> listProduct=puo_dao.selectProductBest();
 			
@@ -315,7 +320,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 					for(i=0; i<7; i++){
 						//System.out.print(cntArr.get(i));
 						puovo=listProduct.get(i);
-						Object img=new ImageIcon(f.getCanonicalPath()+"/s_"+puovo.getImg());
+						Object img=new ImageIcon(getClass().getResource("s_"+puovo.getImg()));
 						rowData[i]=img;
 					}//end for
 					ImgCodeMap.put(puovo.getProductCode(), puovo.getImg());
@@ -326,9 +331,9 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			JOptionPane.showMessageDialog(puov, "상품 목록을 조회하는 중 문제 발생");
 			e.printStackTrace();
 		}//end catch
-		catch (IOException e) {
-			e.printStackTrace();
-		}
+//		catch (IOException e) {
+//			e.printStackTrace();
+//		}
 	}//setBestProduct
 	
 	/**
@@ -405,11 +410,12 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 	 */
 	private String[] orderImageList() {
 		String[] fileList=null;
-		String path1=System.getProperty("user.dir");
-		String path2="/src/kr/co/sist/pcbang/manager/product/img/";
+//		String path1=System.getProperty("user.dir");
+//		String path2="/src/kr/co/sist/pcbang/manager/product/img/";
 		//String path="F:/dev/workspace/javase_teamprj2/src/img/";
 		
-		File dir=new File(path1+path2);
+		String path=getClass().getResource(this.toString()).toString();
+		File dir=new File(path);
 		//s_가 붙은 파일명만 배열에
 		List<String> list=new ArrayList<String>();
 		
@@ -435,8 +441,8 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		Socket socket=null;
 		DataOutputStream dos=null;
 		DataInputStream dis=null;
-		String path1=System.getProperty("user.dir");
-		String path2="/src/kr/co/sist/pcbang/manager/product/img1/";
+//		String path1=System.getProperty("user.dir");
+//		String path2="/src/kr/co/sist/pcbang/manager/product/img1/";
 		
 		try {
 			socket=new Socket("211.63.89.152", 19700);
@@ -459,14 +465,14 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 			FileOutputStream fos=null;
 			
 			for(int i=0;i<fileCnt; i++) {
-				
+				String path=getClass().getResource("s_"+fileName).toString();
 				//전달받을 파일 조각의 갯수
 				fileSize=dis.readInt();
 				//System.out.println("---1"+fileSize);
 				//파일 명 받기
 				fileName=dis.readUTF();
 				//System.out.println("====2==="+fileName);
-				fos=new FileOutputStream(path1+path2+fileName);
+				fos=new FileOutputStream(path);
 				
 				byte[] readData=new byte[512];
 				
