@@ -28,11 +28,11 @@ public class PUManager extends Thread {
 		this.pumc=pumc;
 		try {
 			connectToServer();// 매니저와 접속하고
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} catch (UnknownHostException uhe) {
+			uhe.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}//end catch
 		// 메세지창을 만듦
 		pumsgv = new PUMessageView();// 뷰 생성
 		PUMessageController pumsgc = new PUMessageController(pumsgv, pumc, this);// 컨트롤러 생성
@@ -44,7 +44,7 @@ public class PUManager extends Thread {
 
 		thread = new Thread(this);
 		thread.start();
-	}
+	}//PUManager
 
 	public void connectToServer() throws UnknownHostException, IOException {
 		try {
@@ -58,12 +58,12 @@ public class PUManager extends Thread {
 				writeStream.flush();
 			} else {
 				JOptionPane.showMessageDialog(null, "error code #9980");
-			}
+			}//end else
 
 		} catch (ConnectException ce) {
 			JOptionPane.showMessageDialog(null, "서버에 접속할 수 없습니다");
-		}
-	}
+		}//end catch
+	}//end connectToServer
 
 	public void run() {
 		try {
@@ -80,7 +80,8 @@ public class PUManager extends Thread {
 			writeStream.writeUTF("[update time]"+id);
 			// 스트림의 내용을 목적지로 분출
 			writeStream.flush();
-	}	
+	}//updateTimeMsg
+	
 	private void readStream() throws IOException, SocketException {
 		String temp;
 		String flag;
@@ -109,14 +110,13 @@ public class PUManager extends Thread {
 					pumc.setRestTime(restTime);
 				} catch (SQLException e) {
 					e.printStackTrace();
-				}
-				
+				}//end catch
 			default:
 				System.out.println("알 수 없는 형식");
 				break;
-			}
-		}
-	}
+			}//end switch
+		}//end while
+	}//readStream
 	
 	public DataInputStream getReadStream() {
 		return readStream;
@@ -134,4 +134,4 @@ public class PUManager extends Thread {
 		return pumsgv;
 	}
 
-}
+}//class

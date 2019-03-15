@@ -1,6 +1,8 @@
 package kr.co.sist.pcbang.client.login.newuser;
 
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 
@@ -183,6 +185,81 @@ public class PUNewUserView extends JFrame {
 
 		jcMonth.addActionListener(punuc);
 
+		jtfUserName.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent ke) {
+				JTextField src = (JTextField)ke.getSource();
+				if(src.getText().length()>=10)ke.consume(); {
+					
+				}
+			}
+		});
+		jtfId.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent ke) {
+				JTextField src = (JTextField)ke.getSource();
+				if(src.getText().length()>=10)ke.consume(); {
+					
+				}
+			}
+		});
+		jpfPass.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent ke) {
+				JTextField src = (JTextField)ke.getSource();
+				if(src.getText().length()>=10)ke.consume(); {
+					
+				}
+			}
+		});
+		jpfPassCheck.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent ke) {
+				JTextField src = (JTextField)ke.getSource();
+				if(src.getText().length()>=10)ke.consume(); {
+					
+				}
+			}
+		});
+		jtfPhone1.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent ke) {
+				JTextField src = (JTextField)ke.getSource();
+				if(src.getText().length()>=3)ke.consume(); {
+					
+				}
+			}
+		});
+		jtfPhone2.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent ke) {
+				JTextField src = (JTextField)ke.getSource();
+				if(src.getText().length()>=4)ke.consume(); {
+					
+				}
+			}
+		});
+		jtfPhone3.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent ke) {
+				JTextField src = (JTextField)ke.getSource();
+				if(src.getText().length()>=4)ke.consume(); {
+					
+				}
+			}
+		});
+		jtfDetailAddr.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent ke) {
+				JTextField src = (JTextField)ke.getSource();
+				if(src.getText().length()>=180)ke.consume(); {
+					
+				}
+			}
+		});
+		jtfEmail.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent ke) {
+				JTextField src = (JTextField)ke.getSource();
+				if(src.getText().length()>=25)ke.consume(); {
+					
+				}
+			}
+		});
+		
+		
+		
 		setBounds(800, 200, 400, 650);
 		setVisible(true);
 		setResizable(false);
@@ -230,6 +307,8 @@ public class PUNewUserView extends JFrame {
 		jcDay.setSelectedItem(new Integer(nowDay));
 	}// setYear
 
+	
+	
 	public JTextField getJtfUserName() {
 		return jtfUserName;
 	}

@@ -94,11 +94,15 @@ public class PUMainController extends WindowAdapter implements ActionListener, R
 			// RestTime
 		} // end if
 		if (ae.getSource() == pumv.getJbtChange()) {// 좌석변경
-			int flag = JOptionPane.showConfirmDialog(pumv, "자리변경을 하시겠습니까?");
-			if (flag == 0) {
-				JLabel jlSeat = pumv.getJlSeatNum();
-				changeSeat(Integer.parseInt(jlSeat.getText()));
-			} // end if
+			if(!"".equals(id)) {
+				int flag = JOptionPane.showConfirmDialog(pumv, "자리변경을 하시겠습니까?");
+				if (flag == 0) {
+					JLabel jlSeat = pumv.getJlSeatNum();
+					changeSeat(Integer.parseInt(jlSeat.getText()));
+				} // end if
+			}else {
+				JOptionPane.showMessageDialog(pumv, "비회원은 좌석변경을 이용할 수 없습니다.");
+			}
 		} // end if
 		if (ae.getSource() == pumv.getJbtMsg()) {// 메세지
 			pu_manager.getPumsgv().setVisible(true);
@@ -346,6 +350,20 @@ public class PUMainController extends WindowAdapter implements ActionListener, R
 //					pumv.dispose();
 //					System.exit(0);
 				} else if (exitFlag == JOptionPane.NO_OPTION) {
+					callcharge(restTime);
+				} else if (exitFlag == JOptionPane.CANCEL_OPTION) {
+					callcharge(restTime);
+				} // end else
+			}else if (flag == JOptionPane.CANCEL_OPTION) {
+				// return;
+				int exitFlag = JOptionPane.showConfirmDialog(pumv, "충전을 하시지 않으면 사용이 종료됩니다.");
+				if (exitFlag == JOptionPane.OK_OPTION) {
+					logout();
+//					pumv.dispose();
+//					System.exit(0);
+				} else if (exitFlag == JOptionPane.NO_OPTION) {
+					callcharge(restTime);
+				} else if (exitFlag == JOptionPane.CANCEL_OPTION) {
 					callcharge(restTime);
 				} // end else
 			} // end else

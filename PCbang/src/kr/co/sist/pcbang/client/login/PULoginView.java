@@ -94,6 +94,7 @@ public class PULoginView extends JFrame{
 		jbtMembership.addActionListener(pulc);
 		jbtFind.addActionListener(pulc);
 		addWindowListener(pulc);
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		
 		setBounds(200, 200, 400, 400);
 		setVisible(true);

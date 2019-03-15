@@ -4,7 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -15,12 +19,12 @@ import javax.swing.table.DefaultTableModel;
 import kr.co.sist.pcbang.manager.product.add.PMProductAddView;
 import kr.co.sist.pcbang.manager.product.detail.PMProductDetailVO;
 import kr.co.sist.pcbang.manager.product.detail.PMProductDetailView;
+import kr.co.sist.pcbang.manager.seat.message.PMClient;
 
-public class PMProductController extends MouseAdapter implements ActionListener {
+public class PMProductController extends MouseAdapter implements ActionListener{
 	private PMProductView pmpv;
 	private PMProductDAO pmpdao;
 	private Thread threadPrd;
-
 	public static final int DBL_CLICK = 2;
 
 	public PMProductController(PMProductView pmpv) {
@@ -29,7 +33,8 @@ public class PMProductController extends MouseAdapter implements ActionListener 
 		// 상품 목록을 초기화한다.
 		setPrd();
 	}// PMProductController
-
+	
+	
 	/**
 	 * JTable에 DB에서 조회한 상품 정보를 보여준다.
 	 */

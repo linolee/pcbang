@@ -63,12 +63,13 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		this.seatNum=seatNum;
 		pu_manager = pumc.getPu_manager();
 		
-//		try {
-//			String[] fileNames=orderImageList();//클라이언트가 가진 이미지를 체크하여
-//			orderImageSend(fileNames);//서버로 보내 없는 이미지를 받은 후  
-//		}catch (IOException e) {
-//			e.printStackTrace();
-//		}//end catch
+		try {
+			String[] fileNames=orderImageList();//클라이언트가 가진 이미지를 체크하여
+			orderImageSend(fileNames);//서버로 보내 없는 이미지를 받은 후  
+		}catch (IOException e) {
+			JOptionPane.showMessageDialog(puov, "이미지를 받을수 없습니다.");
+			e.printStackTrace();
+		}//end catch
 
 		setProduct();//JTable을 조회 갱신
 		setBestProduct();//bestMenu
@@ -412,11 +413,9 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		File dir=new File(path1+path2);
 		//s_가 붙은 파일명만 배열에
 		List<String> list=new ArrayList<String>();
-		
 		for(String f_name: dir.list()) {
 			if(f_name.startsWith("s_")) {
 				list.add(f_name);
-				
 			}//end if
 		}//end for
 		
@@ -436,7 +435,7 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 		DataOutputStream dos=null;
 		DataInputStream dis=null;
 		String path1=System.getProperty("user.dir");
-		String path2="/src/kr/co/sist/pcbang/manager/product/img1/";
+		String path2="\\src\\kr\\co\\sist\\pcbang\\manager\\product\\img1\\";
 		
 		try {
 			socket=new Socket("211.63.89.130", 19700);
@@ -462,14 +461,15 @@ public class PUOrderingController extends WindowAdapter implements MouseListener
 				
 				//전달받을 파일 조각의 갯수
 				fileSize=dis.readInt();
-				//System.out.println("---1"+fileSize);
+//				System.out.println("---1"+fileSize);
 				//파일 명 받기
 				fileName=dis.readUTF();
-				//System.out.println("====2==="+fileName);
+//				System.out.println("====2==="+fileName);
+//				System.out.println(path1+path2+fileName);
 				fos=new FileOutputStream(path1+path2+fileName);
+//				System.out.println("===="+path1+path2+fileName);
 				
 				byte[] readData=new byte[512];
-				
 				while(fileSize>0) {
 					fileLen=dis.read(readData);//서버에서 전송한 파일조각을 읽어들여
 					fos.write(readData, 0, fileLen);//생성한 파일로 기록
