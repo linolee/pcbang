@@ -26,15 +26,15 @@ public class PMUserDetailController extends WindowAdapter implements ActionListe
       
       
       upvo = null;   
-      upvo = new PMUpdateVO
-            (udv.getJtfEmail().getText(), udv.getJtfTel().getText(), udv.getJtfBirth().getText(), udv.getJtfId().getText(), 
-                  Integer.parseInt(udv.getJtfLeftTime().getText()));
       
    }
    
    public void updateUser() {
       try {
 
+    	  upvo = new PMUpdateVO
+    			  (udv.getJtfEmail().getText(), udv.getJtfTel().getText(), udv.getJtfBirth().getText(), udv.getJtfId().getText(), 
+    					  Integer.parseInt(udv.getJtfLeftTime().getText()));
          String udvEmail=udv.getJtfEmail().getText().trim();
          String udvTel=udv.getJtfTel().getText().trim();
          String udvBirth=udv.getJtfBirth().getText().trim();
