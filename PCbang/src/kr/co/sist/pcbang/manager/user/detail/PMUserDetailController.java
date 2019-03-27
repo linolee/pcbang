@@ -26,48 +26,50 @@ public class PMUserDetailController extends WindowAdapter implements ActionListe
 		
 		
 		upvo = null;	
-		upvo = new PMUpdateVO
-				(udv.getJtfEmail().getText(), udv.getJtfTel().getText(), udv.getJtfBirth().getText(), udv.getJtfId().getText(), 
-						Integer.parseInt(udv.getJtfLeftTime().getText()));
+		
 		
 	}
 	
 	public void updateUser() {
 		try {
 
+			upvo = new PMUpdateVO
+				(udv.getJtfEmail().getText(), udv.getJtfTel().getText(), udv.getJtfBirth().getText(), udv.getJtfId().getText(), 
+						Integer.parseInt(udv.getJtfLeftTime().getText()));
+			
 			String udvEmail=udv.getJtfEmail().getText().trim();
 			String udvTel=udv.getJtfTel().getText().trim();
 			String udvBirth=udv.getJtfBirth().getText().trim();
 			int udvLeftTime=Integer.parseInt(udv.getJtfLeftTime().getText().trim());
 			
 			if(!chkEmail(udvEmail)) {
-				JOptionPane.showMessageDialog(udv, "Àß¸øµÈ ÀÌ¸ŞÀÏ Çü½ÄÀÔ´Ï´Ù", "Message", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(udv, "ì˜ëª»ëœ ì´ë©”ì¼ í˜•ì‹ì…ë‹ˆë‹¤", "Message", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			if(!chkPhone(udvTel)) {
-				JOptionPane.showMessageDialog(udv, "Àß¸øµÈ ÀüÈ­¹øÈ£ Çü½ÄÀÔ´Ï´Ù", "Message", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(udv, "ì˜ëª»ëœ ì „í™”ë²ˆí˜¸ í˜•ì‹ì…ë‹ˆë‹¤", "Message", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			if(!chkBirth(udvBirth) ) {
-				JOptionPane.showMessageDialog(udv, "Àß¸øµÈ »ı³â¿ùÀÏ Çü½ÄÀÔ´Ï´Ù", "Message", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(udv, "ì˜ëª»ëœ ìƒë…„ì›”ì¼ í˜•ì‹ì…ë‹ˆë‹¤", "Message", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			if(!chkLeftTime(udvLeftTime)) {
-				JOptionPane.showMessageDialog(udv, "ÀÜ¿©½Ã°£Àº ¼ıÀÚÇü½ÄÀÌ°í 0~9999ÀÔ´Ï´Ù", "Message", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(udv, "ì”ì—¬ì‹œê°„ì€ ìˆ«ìí˜•ì‹ì´ê³  0~9999ì…ë‹ˆë‹¤", "Message", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 		
 			if(u_dao.updateMemberData(upvo)) {
-				JOptionPane.showMessageDialog(udv, "È¸¿øÁ¤º¸°¡ º¯°æµÇ¾ú½À´Ï´Ù", "Message", 1);
+				JOptionPane.showMessageDialog(udv, "íšŒì›ì •ë³´ê°€ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤", "Message", 1);
 				udv.dispose();
 				uc.selectUser();
 			}
 		} catch (SQLException e) {
-			JOptionPane.showMessageDialog(udv, "ÀÔ·Â°ªÀ» È®ÀÎÇØÁÖ¼¼¿ä", "Message", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(udv, "ì…ë ¥ê°’ì„ í™•ì¸í•´ì£¼ì„¸ìš”", "Message", JOptionPane.ERROR_MESSAGE);
 		} catch(NullPointerException ne) {
-			JOptionPane.showMessageDialog(udv, "ºóÄ­À» ÀÔ·ÂÇÒ ¼ö ¾ø½À´Ï´Ù", "Message", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(udv, "ë¹ˆì¹¸ì„ ì…ë ¥í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤", "Message", JOptionPane.ERROR_MESSAGE);
 		} catch(NumberFormatException nfe) {
-		JOptionPane.showMessageDialog(udv, "Àß¸øµÈ ÀÜ¿©½Ã°£ Çü½ÄÀÔ´Ï´Ù", "Message", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(udv, "ì˜ëª»ëœ ì”ì—¬ì‹œê°„ í˜•ì‹ì…ë‹ˆë‹¤", "Message", JOptionPane.ERROR_MESSAGE);
 		
 		} catch(Exception e) {
 			JOptionPane.showMessageDialog(udv, "error", "Message", JOptionPane.ERROR_MESSAGE);
